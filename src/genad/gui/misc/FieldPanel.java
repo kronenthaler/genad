@@ -4,7 +4,7 @@ import java.awt.*;
 
 /**
  *
- * @author  kronenthaler
+ * @author  kronenthaler {the GOD of the DOGs}
  */
 public class FieldPanel extends javax.swing.JPanel {
 	
