@@ -36,10 +36,6 @@ public class Splash extends JDialog{
 				}
 				
 				JFrame frame=Main.getInstance();
-				//frame.setState(JFrame.MAXIMIZED_BOTH);
-				//frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-				//frame.setSize(500,500);
-				//frame.setAlwaysOnTop(true);
 				frame.setVisible(true);
 				
 				setVisible(false);
