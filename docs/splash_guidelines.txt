@@ -1,0 +1,6 @@
+color del progreso: 155,155,155
+posicion del progreso: 
+redondeo: 2 / 19
+posicion del texto de progeso: 20,107
+fuente: Courier New, plain, 10 
+font-color:153,153,153 

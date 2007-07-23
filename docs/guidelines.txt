@@ -1,0 +1,15 @@
+programming guidelines:
+1. Imports
+    a. the order of the imports must be from basic utilities to refinated ones. By instance, 
+	import java.io.*;
+	import java.util.*;
+	import java.awt.*;
+	import java.awt.events.*;
+	import javax.swing.*;
+	  ...
+    b. the imports related to this project must be the last, separated by one blank line and sorted in
+	the same way described in (a)
+    c. if the refinement of the pakages is tied, the packages belong to java go first, org and com come seconds, javax come third, so on.
+
+
+	  
