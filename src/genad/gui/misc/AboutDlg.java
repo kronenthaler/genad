@@ -4,6 +4,8 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.*;
 
+import genad.Utils;
+
 /**
  *
  * @author  kronenthaler
@@ -13,13 +15,7 @@ public class AboutDlg extends javax.swing.JDialog {
 		super(parent, modal);
 		initComponents();
 		
-		int width=getPreferredSize().width;
-		int height=getPreferredSize().height;
-		Toolkit tk=getToolkit();
-		setBounds(((int)tk.getScreenSize().getWidth()-width)>>1,
-				  ((int)tk.getScreenSize().getHeight()-height)>>1,
-				  width,
-				  height);//center the splash
+		Utils.centerComponent(this);
 		setVisible(true);
 	}
 	

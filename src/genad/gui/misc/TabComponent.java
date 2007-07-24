@@ -24,18 +24,23 @@ public class TabComponent extends javax.swing.JPanel {
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        titleLab = new javax.swing.JLabel();
+        crossLab = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 204, 204));
-        jLabel1.setBackground(Utils.getColor(Utils.TABBED_SELECTED));
-        jLabel1.setText(text);
+        titleLab.setBackground(Utils.getColor(Utils.TABBED_SELECTED));
+        titleLab.setText(text);
 
-        jButton1.setText("X");
-        jButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        crossLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileclose.png")));
+        crossLab.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crossLabMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                crossLabMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                crossLabMouseExited(evt);
             }
         });
 
@@ -44,24 +49,38 @@ public class TabComponent extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(titleLab, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1))
+                .addComponent(crossLab, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel1))
+            .addComponent(crossLab, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+            .addComponent(titleLab, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+	private void crossLabMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseExited
+		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/fileclose.png")));
+	}//GEN-LAST:event_crossLabMouseExited
+
+	private void crossLabMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseEntered
+		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/fileclose_over.png")));
+	}//GEN-LAST:event_crossLabMouseEntered
+
+	private void crossLabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseClicked
 		tb.remove(index);
-	}//GEN-LAST:event_jButton1ActionPerformed
-		
+	}//GEN-LAST:event_crossLabMouseClicked
+	
+	public void setBackground(Color c){
+		super.setBackground(c);
+		try{
+			crossLab.setBackground(c);
+		}catch(Exception e){}
+	}
+	
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JButton jButton1;
-    protected javax.swing.JLabel jLabel1;
+    protected javax.swing.JLabel crossLab;
+    protected javax.swing.JLabel titleLab;
     // End of variables declaration//GEN-END:variables
 }

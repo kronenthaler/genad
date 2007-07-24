@@ -1,5 +1,10 @@
 package genad.gui.misc;
 
+import java.awt.*;
+import javax.swing.*;
+
+import genad.*;
+
 /**
  *
  * @author  kronenthaler
@@ -9,6 +14,12 @@ public class ConfigureDlg extends javax.swing.JDialog {
 	public ConfigureDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
+		jTabbedPane1.setIconAt(0,new ImageIcon(getClass().getResource("/images/icons/home.png")));
+		jTabbedPane1.setIconAt(1,new ImageIcon(getClass().getResource("/images/icons/plugins.png")));
+		jTabbedPane1.setIconAt(2,new ImageIcon(getClass().getResource("/images/icons/fields.png")));
+		jTabbedPane1.setIconAt(3,new ImageIcon(getClass().getResource("/images/icons/module.png")));
+		
+		Utils.centerComponent(this);
 		setVisible(true);
 	}
 	
@@ -43,10 +54,13 @@ public class ConfigureDlg extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/cancel.png")));
         jButton1.setText("Cancel");
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/apply.png")));
         jButton2.setText("Apply");
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/ok.png")));
         jButton3.setText("OK");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -85,7 +99,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         jTabbedPane1.addTab("General", jPanel1);
 
@@ -135,7 +149,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addContainerGap())
@@ -214,7 +228,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jTabbedPane1.addTab("Fields", jPanel3);
@@ -292,7 +306,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
                     .addComponent(jComboBox6, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jTabbedPane1.addTab("Modules", jPanel4);
@@ -302,7 +316,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(233, Short.MAX_VALUE)
+                .addContainerGap(173, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
@@ -317,7 +331,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)

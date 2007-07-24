@@ -12,8 +12,18 @@ public class Utils{
 	public static final String TABBED_SELECTED="TabbedPane.selected";
 	public static final String TABBED_BACKGROUND="TabbedPane.background";
 	public static final String LIST_BACKGROUND="List.background";	
-	
+		
 	public static Color getColor(String context){
 		return javax.swing.UIManager.getDefaults().getColor(context);
+	}
+	
+	public static void centerComponent(Component comp){
+		Toolkit tk=comp.getToolkit();
+		int width=comp.getWidth();
+		int height=comp.getHeight();
+		comp.setBounds(((int)tk.getScreenSize().getWidth()-width)>>1,
+				  ((int)tk.getScreenSize().getHeight()-height)>>1,
+				  width,
+				  height);
 	}
 }

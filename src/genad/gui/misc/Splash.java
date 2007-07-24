@@ -36,6 +36,7 @@ public class Splash extends JDialog{
 				}
 				
 				JFrame frame=Main.getInstance();
+				frame.setSize(tk.getScreenSize());
 				frame.setVisible(true);
 				
 				setVisible(false);

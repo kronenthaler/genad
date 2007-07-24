@@ -34,24 +34,24 @@ public class Main extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        projectMen = new javax.swing.JMenu();
+        newItem = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JSeparator();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        openItem = new javax.swing.JMenuItem();
+        openRecentMen = new javax.swing.JMenu();
+        closeItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JSeparator();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        saveItem = new javax.swing.JMenuItem();
+        saveAsItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        propertiesItem = new javax.swing.JMenuItem();
+        generateItem = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        exitItem = new javax.swing.JMenuItem();
+        settingsMen = new javax.swing.JMenu();
+        configureItem = new javax.swing.JMenuItem();
+        helpMen = new javax.swing.JMenu();
+        aboutItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GenAd v1.0");
@@ -86,67 +86,83 @@ public class Main extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel1.setText("jLabel1");
 
-        jMenu1.setText("Project");
-        jMenuItem2.setText("New...");
-        jMenu1.add(jMenuItem2);
+        projectMen.setText("Project");
+        newItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filenew.png")));
+        newItem.setText("New...");
+        projectMen.add(newItem);
 
-        jMenu1.add(jSeparator3);
+        projectMen.add(jSeparator3);
 
-        jMenuItem1.setText("Open...");
-        jMenu1.add(jMenuItem1);
+        openItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileopen.png")));
+        openItem.setText("Open...");
+        projectMen.add(openItem);
 
-        jMenu2.setText("Open Recent");
-        jMenu1.add(jMenu2);
+        openRecentMen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileopen.png")));
+        openRecentMen.setText("Open Recent");
+        projectMen.add(openRecentMen);
 
-        jMenuItem7.setText("Close");
-        jMenu1.add(jMenuItem7);
+        closeItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileclose.png")));
+        closeItem.setText("Close");
+        projectMen.add(closeItem);
 
-        jMenu1.add(jSeparator4);
+        projectMen.add(jSeparator4);
 
-        jMenuItem3.setText("Save");
-        jMenu1.add(jMenuItem3);
+        saveItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filesave.png")));
+        saveItem.setText("Save");
+        projectMen.add(saveItem);
 
-        jMenuItem4.setText("Save As...");
-        jMenu1.add(jMenuItem4);
+        saveAsItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filesaveas.png")));
+        saveAsItem.setText("Save As...");
+        projectMen.add(saveAsItem);
 
-        jMenu1.add(jSeparator1);
+        projectMen.add(jSeparator1);
 
-        jMenuItem5.setText("Properties...");
-        jMenu1.add(jMenuItem5);
+        propertiesItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/properties.png")));
+        propertiesItem.setText("Properties...");
+        projectMen.add(propertiesItem);
 
-        jMenuItem10.setText("Generate...");
-        jMenu1.add(jMenuItem10);
+        generateItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/compfile.png")));
+        generateItem.setText("Generate...");
+        projectMen.add(generateItem);
 
-        jMenu1.add(jSeparator2);
+        projectMen.add(jSeparator2);
 
-        jMenuItem6.setText("Exit");
-        jMenu1.add(jMenuItem6);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu4.setText("Settings");
-        jMenuItem9.setText("Configure GenAd...");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        exitItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/exit.png")));
+        exitItem.setText("Exit");
+        exitItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                exitItemActionPerformed(evt);
             }
         });
 
-        jMenu4.add(jMenuItem9);
+        projectMen.add(exitItem);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(projectMen);
 
-        jMenu3.setText("Help");
-        jMenuItem8.setText("About GenAd...");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        settingsMen.setText("Settings");
+        configureItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/configure.png")));
+        configureItem.setText("Configure GenAd...");
+        configureItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                configureItemActionPerformed(evt);
             }
         });
 
-        jMenu3.add(jMenuItem8);
+        settingsMen.add(configureItem);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(settingsMen);
+
+        helpMen.setText("Help");
+        aboutItem.setText("About GenAd...");
+        aboutItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutItemActionPerformed(evt);
+            }
+        });
+
+        helpMen.add(aboutItem);
+
+        jMenuBar1.add(helpMen);
 
         setJMenuBar(jMenuBar1);
 
@@ -178,9 +194,13 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+	private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
+		System.exit(0);
+	}//GEN-LAST:event_exitItemActionPerformed
+
+	private void configureItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureItemActionPerformed
 		new ConfigureDlg(this,true);
-	}//GEN-LAST:event_jMenuItem9ActionPerformed
+	}//GEN-LAST:event_configureItemActionPerformed
 
 	private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
 		try{
@@ -197,39 +217,31 @@ public class Main extends javax.swing.JFrame {
 		}catch(Exception e){}
 	}//GEN-LAST:event_jTabbedPane1StateChanged
 
-	private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+	private void aboutItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutItemActionPerformed
 		new AboutDlg(this,true);
-	}//GEN-LAST:event_jMenuItem8ActionPerformed
+	}//GEN-LAST:event_aboutItemActionPerformed
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 		jTabbedPane1.addTab("texto", new EntityView());
 		jTabbedPane1.setTabComponentAt(0,new TabComponent(jTabbedPane1, 0, "hola"));
 		
-	//	jTabbedPane1.addTab("texto mas largo", new JPanel());
-	//	jTabbedPane1.setTabComponentAt(1,new TabComponent(jTabbedPane1, 1, "Mother fucker"));
+		jTabbedPane1.addTab("texto mas largo", new JPanel());
+		jTabbedPane1.setTabComponentAt(1,new TabComponent(jTabbedPane1, 1, "Mother fucker"));
 		
 		jTabbedPane1.setSelectedIndex(0);
 		jTabbedPane1StateChanged(null);
 	}//GEN-LAST:event_jButton1ActionPerformed
 		
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    protected javax.swing.JMenuItem aboutItem;
+    protected javax.swing.JMenuItem closeItem;
+    protected javax.swing.JMenuItem configureItem;
+    protected javax.swing.JMenuItem exitItem;
+    protected javax.swing.JMenuItem generateItem;
+    protected javax.swing.JMenu helpMen;
     protected javax.swing.JButton jButton1;
     protected javax.swing.JLabel jLabel1;
-    protected javax.swing.JMenu jMenu1;
-    protected javax.swing.JMenu jMenu2;
-    protected javax.swing.JMenu jMenu3;
-    protected javax.swing.JMenu jMenu4;
     protected javax.swing.JMenuBar jMenuBar1;
-    protected javax.swing.JMenuItem jMenuItem1;
-    protected javax.swing.JMenuItem jMenuItem10;
-    protected javax.swing.JMenuItem jMenuItem2;
-    protected javax.swing.JMenuItem jMenuItem3;
-    protected javax.swing.JMenuItem jMenuItem4;
-    protected javax.swing.JMenuItem jMenuItem5;
-    protected javax.swing.JMenuItem jMenuItem6;
-    protected javax.swing.JMenuItem jMenuItem7;
-    protected javax.swing.JMenuItem jMenuItem8;
-    protected javax.swing.JMenuItem jMenuItem9;
     protected javax.swing.JProgressBar jProgressBar1;
     protected javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JSeparator jSeparator1;
@@ -240,6 +252,14 @@ public class Main extends javax.swing.JFrame {
     protected javax.swing.JTabbedPane jTabbedPane1;
     protected javax.swing.JToolBar jToolBar1;
     protected javax.swing.JTree jTree1;
+    protected javax.swing.JMenuItem newItem;
+    protected javax.swing.JMenuItem openItem;
+    protected javax.swing.JMenu openRecentMen;
+    protected javax.swing.JMenu projectMen;
+    protected javax.swing.JMenuItem propertiesItem;
+    protected javax.swing.JMenuItem saveAsItem;
+    protected javax.swing.JMenuItem saveItem;
+    protected javax.swing.JMenu settingsMen;
     // End of variables declaration//GEN-END:variables
 
 	public static Main getInstance(){
