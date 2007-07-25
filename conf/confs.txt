@@ -1,0 +1,44 @@
+Se crea una carpeta por cada plugin instalado (con el id-name del plugin), en general los plugins seran
+solo para añadir nuevos lenguajes. Los plugins deberan ser capaces o proveer metodos para hacer las 
+funciones de bd de manera transparente, por ejemplo, variables de conf + metodo dinamico.s
+Dentro de cada carpeta se deben encontrar un archivo 
+- fields.xml
+- modules.xml
+para especificar el comportamiento de los campos y los modulos que se poseen para este lenguaje. Ademas de 
+poder configurar cuales valores por defecto pueden ser modificados en el dialogo de configuracion. Las
+dependencias entre modulos no son editables.
+
+En la carpeta res se encuentra la especificacion de los plugins como tal. En esta carpeta se va a encontrar
+una carpeta por cada plugin nombrada con el id-name del plugin.
+Esta es la estructura de directorios de un plugin
+
+/ id-name
+	+ xsl
+		- list.xsl
+		- mod.xsl
+		- exec.xsl
+		- fields.xsl
+		- js.xsl
+	+ modules
+		{+ <module-name>
+			[+ admin
+				- menu.<file-extension>]
+			[+ js
+				- <module-name>.js]
+			[+ objs
+				- class and object files]
+			- <module-name>.<file-extension>
+		}
+
+los archivos xsl son utilizados para renderizar las paginas personalizadas y los tipos de campos. Para la
+generacion del archivo javascript de validacion se hace un proceso similar.
+
+Los modulos pueden poseer una interfaz de administracion, ser un conjunto de funciones js, o un conjunto de
+objetos,o cualquier combinacion de las anteriores. En un modulo solo es mandatorio la existencia de un
+archivo en la raiz que contenga las instrucciones de carga/inclusion/importacion del modulo para la
+aplicacion completa, puede ser vacio.
+
+
+
+
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<default option="language" value="PHP(4.4.x)"/>
+	<default option="dbmanager" value="MySQL 4.0"/>
+	<!-- alguna otra cosa que pueda ser util para la configuracion -->
+	<plugins>
+		<plugin name="id-name" active="yes"/>
+		<plugin name="id-name" active="yes"/>
+		<plugin name="id-name" active="yes"/>
+		<plugin name="id-name" active="yes"/>
+	</plugins>
+</cofiguration>
