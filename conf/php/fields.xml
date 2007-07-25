@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<fields>
+	<!-- tipos basicos -->
+	<field type="hidden" class="CHidden" visible="0" listable="1"/>
+	<field type="check" class="CCheck" visible="1" listable="1"/>
+	<field type="radio" class="CRadio" visible="1" listable="1"/>
+	<field type="select" class="CSelect" visible="1" listable="1"/>
+	<field type="textfield" class="CTextField" visible="1" listable="1"/>
+	<field type="email" class="CEmail" visible="1" listable="1"/>
+	<field type="integer" class="CInteger" visible="1" listable="1"/>
+	<field type="decimal" class="CDecimal" visible="1" listable="1"/>
+	
+	<field type="textarea" class="CTextArea" visible="1" listable="0">
+		<option name="ROWS" value="150"/>
+		<option name="COLS" value="150"/>
+	</field>
+	
+	<!-- tipos complejos -->
+	<!--
+		En los valores de las opciones se hace una inferencia de tipo para determinar la clase de parametro:
+		si se puede castear a un boolean se pintara un check
+		si se puede castear a un int se pintara un textarea y se validara que solo se ingresen numeros
+		si se puede determinar que existen varias opciones estaticas (existe '|' en el valor) se pintara un select
+		sino se pinta un textfield libre.
+	-->
+	<field type="richtext" class="CRichText" visible="1" listable="0">
+		<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|"/>
+	</field>
+	
+	<field type="image" class="CImage" visible="1" listable="0">
+		<option name="DEST_PATH" value="archivos/"/>
+		<option name="PREFIX" value="arc_"/>
+		<option name="IMAGES_PATH" value="images/"/>
+		<option name="CONTROL_TYPE" value="BUTTON"/>
+		<option name="MAX_SIZE" value="(100*MB)"/>
+		<option name="VALID_EXTENSIONS" value="*"/>
+		
+		<option name="FORCE_SCALE" value="true"/>
+		<option name="ASPECT_RATIO" value="true"/>
+		<option name="ENABLE_PREVIEW" value="true"/>
+		<option name="MAX_IMG_WIDTH" value="150"/>
+		<option name="MAX_IMG_HEIGHT" value="150"/>
+	</field>
+	
+	<field type="file" class="CFile" visible="1" listable="1">
+		<option name="DEST_PATH" value="archivos/"/>
+		<option name="PREFIX" value="arc_"/>
+		<option name="IMAGES_PATH" value="images/"/>
+		<option name="CONTROL_TYPE" value="BUTTON"/>
+		<option name="MAX_SIZE" value="(100*MB)"/>
+		<option name="VALID_EXTENSIONS" value="*"/>
+	</field>
+	
+	<!--
+	<field type="flash" class="CFlash" visible="1" listable="0">
+		<option name="DEST_PATH" value="archivos/"/>
+		<option name="PREFIX" value="arc_"/>
+		<option name="IMAGES_PATH" value="images/"/>
+		<option name="CONTROL_TYPE" value="BUTTON"/>
+		<option name="MAX_SIZE" value="(100*MB)"/>
+		<option name="VALID_EXTENSIONS" value="*"/>
+	</field>
+	-->
+	
+	<field type="date" class="CDate" visible="1" listable="1">
+		<option name="FORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA"/>
+	</field>
+	
+	<field type="datetime" class="CDateTime" visible="1" listable="1">
+		<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA"/>
+		<option name="TIMEFORMAT" value="HHMMSS|HHMM"/>
+	</field>
+	
+	<field type="time" class="CTime" visible="1" listable="1">
+		<option name="FORMAT" value="HHMMSS|HHMM"/>
+	</field>
+	
+	<field type="password" class="CPassword" visible="1" listable="1">
+		<option name="MINLONG" value="1"/>
+	</field>
+</fields>
