@@ -9,7 +9,10 @@ programming guidelines:
 	  ...
     b. the imports related to this project must be the last, separated by one blank line and sorted in
 	the same way described in (a)
-    c. if the refinement of the pakages is tied, the packages belong to java go first, org and com come seconds, javax come third, so on.
+    c. if (b) is tie, the packages belong to java go first, org and com come seconds, javax come third.
+    d. if (c) doesn't break the tie, use length of the final package name, 
+    e. if (d) still tie, use lexicographical order.
+	
 
 
 	  

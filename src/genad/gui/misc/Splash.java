@@ -5,6 +5,7 @@ import java.awt.image.*;
 import javax.swing.*;
 
 import genad.gui.*;
+import genad.config.*;
 
 /**
  *
@@ -29,7 +30,9 @@ public class Splash extends JDialog{
 		//fire the thread initializing the environment
 		new Thread(new Runnable(){
 			public void run(){
-				setText("Loading something fancy and useless");
+				setText("Loading Configuration...");
+				ConfigManager cf=new ConfigManager();
+				
 				for(componentsLoaded=0;componentsLoaded<totalComponents;){
 					try{Thread.sleep(100);}catch(Exception e){}
 					nextStep();

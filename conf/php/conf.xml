@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin>
+	<name>php</name>
+	<description>Plugin to generate php pages from the entities structure</description>
+	<modules>
+		<!-- paquetes obligatorios -->
+		<module name="wkusers" mandatory="1">
+			<depends>
+				<depend name="wkobj"/>
+			</depends>
+		</module>
+
+		<module name="wkobj" mandatory="1">
+			<depends>
+				<depend name="wkupload"/>
+				<depend name="wklogs"/>
+			</depends>
+		</module>
+
+		<module name="wklogs" mandatory="1" />
+
+		<module name="wkupload" mandatory="1">
+			<options>
+				<option name="DEST_PATH" value="archivos/"/>
+				<option name="PREFIX" value="arc_"/>
+				<option name="IMAGES_PATH" value="images/"/>
+				<option name="CONTROL_TYPE" value="BUTTON|IMAGE"/>
+				<option name="MAX_SIZE" value="(100*MB)"/>
+				<option name="VALID_EXTENSIONS" value="*"/>
+				<option name="FORCE_SCALE" value="true|false"/>
+				<option name="ASPECT_RATIO" value="true|false"/>
+				<option name="ENABLE_PREVIEW" value="true|false"/>
+				<option name="MAX_IMG_WIDTH" value="150"/>
+				<option name="MAX_IMG_HEIGHT" value="150"/>
+				<option name="CREATE_THUMB" value="false|true"/>
+				<option name="MAX_THUMB_WIDTH" value="50"/>
+				<option name="MAX_THUMB_HEIGHT" value="50"/>
+			</options>
+		</module>
+
+		<module name="wkrte" mandatory="1">
+			<options>
+				<option name="TOOL_BAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons"/>
+			</options>
+		</module>
+
+		<!-- paquetes opcionales -->
+		<!-- webtalog -->
+		<module name="wkcatalogue">
+			<depends>
+				<depend name="wkobj"/>
+				<depend name="wkcategory"/>
+			</depends>
+		</module>
+
+		<module name="wkpurchases">
+			<depends>
+				<depend name="wkcatalogue"/>
+				<depend name="wklocations"/>
+				<depend name="wkusers"/>
+			</depends>
+		</module>
+
+		<module name="wkcombo">
+			<depends>
+				<depend name="wkcatalogue"/>
+			</depends>
+		</module>
+
+		<module name="wklocations">
+			<depends>
+				<depend name="wkobj"/>
+			</depends>
+		</module>
+		<!-- fin webtalog -->
+
+		<!-- otros paquetes -->
+		<module name="wknews">
+			<depends>
+				<depend name="wkobj"/>
+			</depends>
+			<options>
+				<option name="NEWS_MAX_THMB_WIDTH" value="100"/>
+				<option name="NEWS_MAX_THMB_HEIGHT" value="100"/>
+				<option name="NEWS_MAX_WIDTH" value="200"/>
+				<option name="NEWS_MAX_HEIGHT" value="200"/>
+			</options>
+		</module>
+
+		<module name="wkgallery">
+			<depends>
+				<depend name="wkupload"/>
+				<depend name="wkobj"/>
+			</depends>
+			<options>
+				<option name="GAL_MAX_BIG_WIDTH" value="500"/>
+				<option name="GAL_MAX_BIG_HEIGHT" value="500"/>
+				<option name="GAL_MAX_THUMB_WIDTH" value="150"/>
+				<option name="GAL_MAX_THUMB_HEIGHT" value="150"/>
+				<option name="GAL_PREFIX" value="gal_"/>
+				<option name="GAL_DEST_PATH" value="archivos/"/>
+				<option name="GAL_FORCE_SCALE" value="true|false"/>
+				<option name="GAL_ASPECT_RATIO" value="true|false"/>
+				<option name="GAL_ENABLE_PREVIEW" value="true|false"/>
+				<option name="GAL_ROWS" value="5"/>
+				<option name="GAL_COLUMNS" value="3"/>
+				<option name="GAL_TRANSITIONAL_INTERVAL" value="1000"/>
+				<option name="GAL_DELAY" value="5000"/>
+				<option name="GAL_WINDOW" value="1"/><!-- paginador -->
+				<option name="GAL_BACKGROUND_MODAL" value="#000000"/>
+				<option name="GAL_OPACTITY_MODAL" value="0.5"/>
+			</options>
+		</module>
+
+		<module name="wkcategory">
+			<depends>
+				<depend name="wkobj"/>
+			</depends>
+			<options>
+				<option name="CAT_ENTITY_CLASS" value="Product"/>
+				<option name="CAT_ENTITY_ID" value="t01_id"/>
+				<option name="CAT_ENTITY_NAME" value="t01_name"/>
+				<option name="CAT_ENTITY_TITLE" value="Productos"/>
+			</options>
+		</module>
+	</modules>
+	<!-- definicion de los campos -->
+	<fields>
+		<!-- tipos basicos -->
+		<field type="hidden" class="CHidden" visible="0" listable="1"/>
+		<field type="check" class="CCheck" visible="1" listable="1"/>
+		<field type="radio" class="CRadio" visible="1" listable="1"/>
+		<field type="select" class="CSelect" visible="1" listable="1"/>
+		<field type="textfield" class="CTextField" visible="1" listable="1"/>
+		<field type="email" class="CEmail" visible="1" listable="1"/>
+		<field type="integer" class="CInteger" visible="1" listable="1"/>
+		<field type="decimal" class="CDecimal" visible="1" listable="1"/>
+
+		<field type="textarea" class="CTextArea" visible="1" listable="0">
+			<option name="ROWS" value="150"/>
+			<option name="COLS" value="150"/>
+		</field>
+
+		<!-- tipos complejos -->
+		<!--
+			En los valores de las opciones se hace una inferencia de tipo para determinar la clase de parametro:
+			si se puede castear a un boolean se pintara un check
+			si se puede castear a un int se pintara un textarea y se validara que solo se ingresen numeros
+			si se puede determinar que existen varias opciones estaticas (existe '|' en el valor) se pintara un select
+			sino se pinta un textfield libre.
+		-->
+		<field type="richtext" class="CRichText" visible="1" listable="0">
+			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|"/>
+		</field>
+
+		<field type="image" class="CImage" visible="1" listable="0">
+			<option name="DEST_PATH" value="archivos/"/>
+			<option name="PREFIX" value="arc_"/>
+			<option name="IMAGES_PATH" value="images/"/>
+			<option name="CONTROL_TYPE" value="BUTTON"/>
+			<option name="MAX_SIZE" value="(100*MB)"/>
+			<option name="VALID_EXTENSIONS" value="*"/>
+
+			<option name="FORCE_SCALE" value="true"/>
+			<option name="ASPECT_RATIO" value="true"/>
+			<option name="ENABLE_PREVIEW" value="true"/>
+			<option name="MAX_IMG_WIDTH" value="150"/>
+			<option name="MAX_IMG_HEIGHT" value="150"/>
+		</field>
+
+		<field type="file" class="CFile" visible="1" listable="1">
+			<option name="DEST_PATH" value="archivos/"/>
+			<option name="PREFIX" value="arc_"/>
+			<option name="IMAGES_PATH" value="images/"/>
+			<option name="CONTROL_TYPE" value="BUTTON"/>
+			<option name="MAX_SIZE" value="(100*MB)"/>
+			<option name="VALID_EXTENSIONS" value="*"/>
+		</field>
+
+		<!--
+		<field type="flash" class="CFlash" visible="1" listable="0">
+			<option name="DEST_PATH" value="archivos/"/>
+			<option name="PREFIX" value="arc_"/>
+			<option name="IMAGES_PATH" value="images/"/>
+			<option name="CONTROL_TYPE" value="BUTTON"/>
+			<option name="MAX_SIZE" value="(100*MB)"/>
+			<option name="VALID_EXTENSIONS" value="*"/>
+		</field>
+		-->
+
+		<field type="date" class="CDate" visible="1" listable="1">
+			<option name="FORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA"/>
+		</field>
+
+		<field type="datetime" class="CDateTime" visible="1" listable="1">
+			<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA"/>
+			<option name="TIMEFORMAT" value="HHMMSS|HHMM"/>
+		</field>
+
+		<field type="time" class="CTime" visible="1" listable="1">
+			<option name="FORMAT" value="HHMMSS|HHMM"/>
+		</field>
+
+		<field type="password" class="CPassword" visible="1" listable="1">
+			<option name="MINLONG" value="1"/>
+		</field>
+	</fields>
+</plugin>

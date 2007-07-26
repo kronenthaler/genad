@@ -4,9 +4,9 @@
 	<default option="dbmanager" value="MySQL 4.0"/>
 	<!-- alguna otra cosa que pueda ser util para la configuracion -->
 	<plugins>
-		<plugin name="id-name" active="yes"/>
-		<plugin name="id-name" active="yes"/>
-		<plugin name="id-name" active="yes"/>
-		<plugin name="id-name" active="yes"/>
+		<plugin name="php" active="yes"/>
+		<!--<plugin name="id-name2" active="no"/>
+		<plugin name="id-name3" active="yes"/>
+		<plugin name="id-name4" active="yes"/> -->
 	</plugins>
-</cofiguration>
+</configuration>
