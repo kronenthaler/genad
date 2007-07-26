@@ -10,9 +10,10 @@ import javax.xml.parsers.*;
  *	@author kronenthaler
  */
 public class Config{
+	private String path;
 	private Hashtable<String, String> defaults;
-	private Vector<String> installed;
 	private Hashtable<String, Boolean> actives;
+	private Vector<String> installed;
 		
 	public Config(){
 		defaults=new Hashtable<String, String>();
@@ -20,8 +21,9 @@ public class Config{
 		actives=new Hashtable<String,Boolean>();
 	}
 	
-	public void load(String path){
+	public void load(String _path){
 		try{
+			path=_path;
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//dbf.setValidating(true); //si se define un dtd para este archivo
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -48,17 +50,13 @@ public class Config{
 		}
 	}
 	
-	public Hashtable<String, Boolean> getpluginsActive(){
-		return actives;
+	public void save()throws IOException{
+		
 	}
 	
-	public Vector getPluginsInstalled(){
-		return installed;
-	}
-	
-	public String getDefaultValue(String option){
-		return defaults.get(option);
-	}
+	public Hashtable<String, Boolean> getPluginsActive(){ return actives;}
+	public Vector getPluginsInstalled(){ return installed;	}
+	public String getDefaultValue(String option){ return defaults.get(option);	}
 	
 	public String toString(){
 		String ret="<configuration>\n";

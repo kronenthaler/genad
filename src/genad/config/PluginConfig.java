@@ -12,6 +12,7 @@ import javax.xml.parsers.*;
 public class PluginConfig{
 	private String name;
 	private String description;
+	private String path;
 	private Hashtable<String, FieldConfig> fields;
 	private Hashtable<String, ModuleConfig> modules;
 			
@@ -20,11 +21,12 @@ public class PluginConfig{
 		modules=new Hashtable<String, ModuleConfig>();
 		
 		load(path);
-		System.err.println(this);
+		//System.err.println(this);
 	}
 	
-	private void load(String path){
+	private void load(String _path){
 		try{
+			path=_path;
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//dbf.setValidating(true); //si se define un dtd para este archivo
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -92,6 +94,13 @@ public class PluginConfig{
 			}
 		}
 	}
+	
+	public void save()throws IOException{
+		
+	}
+	
+	public String getName(){return name;}
+	public String getDescription(){return description;}
 	
 	public String toString(){
 		String ret="<plugin>\n";

@@ -1,17 +1,19 @@
 package genad.gui.misc;
 
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
 import genad.*;
+import genad.config.*;
 
 /**
  *
  * @author  kronenthaler
  */
 public class ConfigureDlg extends javax.swing.JDialog {
-	
+	//@TODO: mover los paneles a clases separadas y agregar esos paneles a la paleta de componentes.
 	public ConfigureDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
@@ -38,7 +40,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
+        pluginTable = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jComboBox3 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
@@ -112,17 +114,18 @@ public class ConfigureDlg extends javax.swing.JDialog {
         jButton4.setText("Install Language");
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Installed Languages"));
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, "Plugin for generate JSP pages files"},
-                {null, "Plugin for generate PHP pages"},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Active", "Description"
-            }
-        ) {
+        ConfigManager cfgMan=ConfigManager.getInstance();
+        Hashtable<String, PluginConfig> configs=cfgMan.getPluginsConfig();
+        Config cfg=cfgMan.getMainConfig();
+
+        Object[][] data=new Object [configs.size()][2];
+        Enumeration<String> e=configs.keys();
+        for(int i=0;e.hasMoreElements();i++){
+            String pluginName=e.nextElement();
+            data[i]=new Object[]{cfg.getPluginsActive().get(pluginName), configs.get(pluginName).getDescription()};
+        }
+
+        pluginTable.setModel(new javax.swing.table.DefaultTableModel(data,new String [] { "Active", "Description" }){
             Class[] types = new Class [] {
                 java.lang.Boolean.class, java.lang.String.class
             };
@@ -138,15 +141,16 @@ public class ConfigureDlg extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        pluginTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         TableColumn column = null;
-        column = table.getColumnModel().getColumn(0);
+        column = pluginTable.getColumnModel().getColumn(0);
         column.setResizable(false);
         column.setMaxWidth(55);
         column.setMinWidth(50);
         column.setPreferredWidth(50);
-        table.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(table);
+        pluginTable.getTableHeader().setReorderingAllowed(false);
+
+        jScrollPane1.setViewportView(pluginTable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -401,7 +405,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
     protected javax.swing.JTabbedPane jTabbedPane1;
     protected javax.swing.JTable jTable2;
     protected javax.swing.JTable jTable3;
-    protected javax.swing.JTable table;
+    protected javax.swing.JTable pluginTable;
     // End of variables declaration//GEN-END:variables
 	
 }

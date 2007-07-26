@@ -1,0 +1,5 @@
+- reducir los niveles de acceso a los metodos de configuracion
+- separar los paneles de configureDlg
+    - implementar una interfaz Applicable
+- agregar a los archivos de configuracion los valores por defecto. attibute default, para tags option.
+- configManager metodo para salvar las configuraciones.

@@ -219,23 +219,15 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="table">
+                <Component class="javax.swing.JTable" name="pluginTable">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="2" rowCount="4">
-                        <Column editable="true" title="Active" type="java.lang.Boolean"/>
-                        <Column editable="false" title="Description" type="java.lang.String">
-                          <Data value="Plugin for generate JSP pages files"/>
-                          <Data value="Plugin for generate PHP pages"/>
-                          <Data value="null"/>
-                          <Data value="null"/>
-                        </Column>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="ConfigManager cfgMan=ConfigManager.getInstance();&#xa;Hashtable&lt;String, PluginConfig&gt; configs=cfgMan.getPluginsConfig();&#xa;Config cfg=cfgMan.getMainConfig();&#xa;&#xa;Object[][] data=new Object [configs.size()][2];&#xa;Enumeration&lt;String&gt; e=configs.keys();&#xa;for(int i=0;e.hasMoreElements();i++){&#xa;&#x9;String pluginName=e.nextElement();&#xa;&#x9;data[i]=new Object[]{cfg.getPluginsActive().get(pluginName), configs.get(pluginName).getDescription()};&#xa;}&#xa;&#x9;">
+                      <Connection code="new javax.swing.table.DefaultTableModel(data,new String [] { &quot;Active&quot;, &quot;Description&quot; }){&#xa;&#x9;Class[] types = new Class [] {&#xa;&#x9;&#x9;java.lang.Boolean.class, java.lang.String.class&#xa;&#x9;};&#xa;&#x9;boolean[] canEdit = new boolean [] {&#xa;&#x9;&#x9;true, false&#xa;&#x9;};&#xa;&#xa;&#x9;public Class getColumnClass(int columnIndex) {&#xa;&#x9;&#x9;return types [columnIndex];&#xa;&#x9;}&#xa;&#xa;&#x9;public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;&#x9;&#x9;return canEdit [columnIndex];&#xa;&#x9;}&#xa;}" type="code"/>
                     </Property>
                     <Property name="autoResizeMode" type="int" value="4"/>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn column = null;&#xa;column = table.getColumnModel().getColumn(0);&#xa;column.setResizable(false);&#xa;column.setMaxWidth(55);&#xa;column.setMinWidth(50);&#xa;column.setPreferredWidth(50);&#xa;table.getTableHeader().setReorderingAllowed(false);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn column = null;&#xa;column = pluginTable.getColumnModel().getColumn(0);&#xa;column.setResizable(false);&#xa;column.setMaxWidth(55);&#xa;column.setMinWidth(50);&#xa;column.setPreferredWidth(50);&#xa;pluginTable.getTableHeader().setReorderingAllowed(false);&#xa;&#x9;&#x9;&#xa;&#x9;&#x9;"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -362,7 +354,7 @@
                       </Table>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                      <ComponentRef name="null"/>
+                      <ComponentRef name="default"/>
                     </Property>
                   </Properties>
                 </Component>
@@ -484,7 +476,7 @@
                       </Table>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.ComponentChooserEditor">
-                      <ComponentRef name="null"/>
+                      <ComponentRef name="default"/>
                     </Property>
                   </Properties>
                 </Component>

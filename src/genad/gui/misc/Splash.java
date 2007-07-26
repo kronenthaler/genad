@@ -31,7 +31,7 @@ public class Splash extends JDialog{
 		new Thread(new Runnable(){
 			public void run(){
 				setText("Loading Configuration...");
-				ConfigManager cf=new ConfigManager();
+				ConfigManager cf=ConfigManager.getInstance();
 				
 				for(componentsLoaded=0;componentsLoaded<totalComponents;){
 					try{Thread.sleep(100);}catch(Exception e){}
