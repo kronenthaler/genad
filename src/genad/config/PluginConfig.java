@@ -55,9 +55,12 @@ public class PluginConfig{
 					if(childs.item(j).getNodeName().equals("options")){
 						NodeList childOpts=childs.item(j).getChildNodes();
 						for(int k=0,p=childOpts.getLength();k<p;k++){
-							if(childOpts.item(k).getNodeName().equals("option"))
-								mc.setOption(childOpts.item(k).getAttributes().getNamedItem("name").getTextContent(),
-											 childOpts.item(k).getAttributes().getNamedItem("value").getTextContent());
+							if(childOpts.item(k).getNodeName().equals("option")){
+								String name=childOpts.item(k).getAttributes().getNamedItem("name").getTextContent();
+								mc.setOption(name, childOpts.item(k).getAttributes().getNamedItem("value").getTextContent());
+								if(childOpts.item(k).getAttributes().getNamedItem("default")!=null)
+									mc.setDefault(name, childOpts.item(k).getAttributes().getNamedItem("default").getTextContent());
+							}
 						}
 					}else if(childs.item(j).getNodeName().equals("depends")){
 						NodeList childDeps=childs.item(j).getChildNodes();
@@ -84,9 +87,12 @@ public class PluginConfig{
 				
 				NodeList childs=current.getChildNodes();
 				for(int j=0,m=childs.getLength();j<m;j++){
-					if(childs.item(j).getNodeName().equals("option"))
-						fc.setOption(childs.item(j).getAttributes().getNamedItem("name").getTextContent(),
-									 childs.item(j).getAttributes().getNamedItem("value").getTextContent());
+					if(childs.item(j).getNodeName().equals("option")){
+						String name=childs.item(j).getAttributes().getNamedItem("name").getTextContent();
+						fc.setOption(name,childs.item(j).getAttributes().getNamedItem("value").getTextContent());
+						if(childs.item(j).getAttributes().getNamedItem("default")!=null)
+							fc.setDefault(name, childs.item(j).getAttributes().getNamedItem("default").getTextContent());
+					}
 				}
 				
 				//add the field config
@@ -95,12 +101,19 @@ public class PluginConfig{
 		}
 	}
 	
-	public void save()throws IOException{
-		
+	void save()throws IOException{
+		PrintStream out=new PrintStream(new FileOutputStream(path));
+		out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+		out.println(this);
+		out.flush();
+		out.close();
 	}
 	
 	public String getName(){return name;}
 	public String getDescription(){return description;}
+	//TODO: estos metodos no deberian devolver la referencia a la tabla hash, sino una copia o algo que no sea sensible a modificaciones.
+	public Hashtable<String, FieldConfig> getFieldsConfig(){ return fields;}
+	public Hashtable<String, ModuleConfig> getModulesConfig(){ return modules;}
 	
 	public String toString(){
 		String ret="<plugin>\n";

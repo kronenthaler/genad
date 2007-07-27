@@ -1,10 +1,18 @@
 package genad.gui;
 
+import java.io.*;
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.table.*;
 import com.jgoodies.looks.plastic.*;
 
 import genad.*;
+import genad.gui.*;
+import genad.model.*;
+import genad.config.*;
+import genad.engine.*;
 import genad.gui.misc.*;
 
 /**

@@ -47,7 +47,7 @@
                   <Component id="jPanel2" alignment="0" max="32767" attributes="1"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="fieldsPanel1" max="32767" attributes="0"/>
+              <Component id="fieldsPanel1" pref="304" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
           </Group>
       </Group>

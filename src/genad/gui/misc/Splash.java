@@ -1,11 +1,18 @@
 package genad.gui.misc;
 
+import java.io.*;
 import java.awt.*;
-import java.awt.image.*;
+import java.util.*;
 import javax.swing.*;
+import java.awt.event.*;
+import java.awt.image.*;
+import javax.swing.table.*;
 
+import genad.*;
 import genad.gui.*;
+import genad.model.*;
 import genad.config.*;
+import genad.engine.*;
 
 /**
  *
@@ -38,7 +45,7 @@ public class Splash extends JDialog{
 					nextStep();
 				}
 				
-				JFrame frame=Main.getInstance();
+				JFrame frame=genad.gui.Main.getInstance();
 				frame.setSize(tk.getScreenSize());
 				frame.setVisible(true);
 				

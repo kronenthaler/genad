@@ -50,13 +50,17 @@ public class Config{
 		}
 	}
 	
-	public void save()throws IOException{
-		
+	void save() throws IOException{
+		PrintStream out=new PrintStream(new FileOutputStream(path));
+		out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+		out.println(this);
+		out.flush();
+		out.close();
 	}
 	
-	public Hashtable<String, Boolean> getPluginsActive(){ return actives;}
-	public Vector getPluginsInstalled(){ return installed;	}
-	public String getDefaultValue(String option){ return defaults.get(option);	}
+	Hashtable<String, Boolean> getPluginsActive(){ return actives;}
+	Vector<String> getPluginsInstalled(){ return installed;	}
+	String getDefaultValue(String option){ return defaults.get(option);	}
 	
 	public String toString(){
 		String ret="<configuration>\n";

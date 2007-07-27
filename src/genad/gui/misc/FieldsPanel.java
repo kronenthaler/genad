@@ -1,10 +1,17 @@
 package genad.gui.misc;
 
-import genad.gui.misc.*;
-import java.util.*;
+import java.io.*;
 import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.table.*;
 
 import genad.*;
+import genad.gui.*;
+import genad.model.*;
+import genad.config.*;
+import genad.engine.*;
 
 /**
  *
