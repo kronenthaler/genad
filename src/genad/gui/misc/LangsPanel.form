@@ -16,9 +16,13 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jScrollPane1" alignment="0" pref="453" max="32767" attributes="0"/>
-                  <Component id="installBtn" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="progressBar" pref="310" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="installBtn" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -26,10 +30,13 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="189" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="175" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="installBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="installBtn" min="-2" max="-2" attributes="1"/>
+                  <Component id="progressBar" min="-2" max="-2" attributes="1"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -59,16 +66,18 @@
       <SubComponents>
         <Component class="javax.swing.JTable" name="pluginTable">
           <Properties>
-            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="Object[][] data=null;&#xa;try{&#xa;&#x9;ConfigManager cfgMan=ConfigManager.getInstance();&#xa;&#x9;Hashtable&lt;String, PluginConfig&gt; configs=cfgMan.getPluginsConfig();&#xa;&#xa;&#x9;data=new Object [configs.size()][2];&#xa;&#x9;Enumeration&lt;String&gt; e=configs.keys();&#xa;&#x9;for(int i=0;e.hasMoreElements();i++){&#xa;&#x9;&#x9;String pluginName=e.nextElement();&#xa;&#x9;&#x9;data[i]=new Object[]{cfgMan.getPluginsActive().get(pluginName), configs.get(pluginName).getDescription()};&#xa;&#x9;}&#xa;}catch(Exception e){&#xa;&#x9;data=new Object[][]{{true,&quot;Epac&quot;}};&#xa;}&#xa;&#xa;//*/">
-              <Connection code="new javax.swing.table.DefaultTableModel(data,new String [] { &quot;Active&quot;, &quot;Description&quot; }){&#xa;&#x9;Class[] types = new Class [] {&#xa;&#x9;&#x9;java.lang.Boolean.class, java.lang.String.class&#xa;&#x9;};&#xa;&#x9;boolean[] canEdit = new boolean [] {&#xa;&#x9;&#x9;true, false&#xa;&#x9;};&#xa;&#xa;&#x9;public Class getColumnClass(int columnIndex) {&#xa;&#x9;&#x9;return types [columnIndex];&#xa;&#x9;}&#xa;&#xa;&#x9;public boolean isCellEditable(int rowIndex, int columnIndex) {&#xa;&#x9;&#x9;return canEdit [columnIndex];&#xa;&#x9;}&#xa;}" type="code"/>
+            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor" postCode="fillTable();">
+              <Table columnCount="0" rowCount="0"/>
             </Property>
             <Property name="autoResizeMode" type="int" value="4"/>
           </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="TableColumn column = null;&#xa;column = pluginTable.getColumnModel().getColumn(0);&#xa;column.setResizable(false);&#xa;column.setMaxWidth(55);&#xa;column.setMinWidth(50);&#xa;column.setPreferredWidth(50);&#xa;pluginTable.getTableHeader().setReorderingAllowed(false);&#xa;&#x9;&#x9;&#xa;&#x9;&#x9;"/>
-          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JProgressBar" name="progressBar">
+      <Properties>
+        <Property name="stringPainted" type="boolean" value="true"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

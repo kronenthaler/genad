@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin>
-	<name>jsp</name>
-	<description>Plugin to generate jsp pages from the entities structure</description>
+	<name>csharp</name>
+	<description>Plugin to generate C# pages from the entities structure</description>
 	<!-- MODULES DEFINITION -->
 	<modules>
 		<module name="wknews" >
@@ -41,19 +41,19 @@
 			<options>
 				<option name="GAL_BACKGROUND_MODAL" value="#000000" />
 				<option name="GAL_MAX_BIG_WIDTH" value="500" />
-				<option name="GAL_FORCE_SCALE" value="true|false" />
+				<option name="GAL_FORCE_SCALE" value="true|false" default="true"/>
 				<option name="GAL_ROWS" value="5" />
 				<option name="GAL_MAX_THUMB_WIDTH" value="150" />
 				<option name="GAL_DELAY" value="5000" />
 				<option name="GAL_PREFIX" value="gal_" />
-				<option name="GAL_ASPECT_RATIO" value="true|false" />
+				<option name="GAL_ASPECT_RATIO" value="true|false" default="true"/>
 				<option name="GAL_WINDOW" value="1" />
 				<option name="GAL_OPACTITY_MODAL" value="0.5" />
 				<option name="GAL_MAX_BIG_HEIGHT" value="500" />
 				<option name="GAL_DEST_PATH" value="archivos/" />
 				<option name="GAL_COLUMNS" value="3" />
 				<option name="GAL_TRANSITIONAL_INTERVAL" value="1000" />
-				<option name="GAL_ENABLE_PREVIEW" value="true|false" />
+				<option name="GAL_ENABLE_PREVIEW" value="true|false" default="false"/>
 				<option name="GAL_MAX_THUMB_HEIGHT" value="150" />
 			</options>
 		</module>

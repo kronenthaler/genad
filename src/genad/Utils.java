@@ -1,6 +1,7 @@
 package genad;
 
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 
 /**
@@ -25,5 +26,21 @@ public class Utils{
 				  ((int)tk.getScreenSize().getHeight()-height)>>1,
 				  width,
 				  height);
+	}
+	
+	public static String[] convert(Enumeration<String> e){
+		Vector<String> aux=new Vector<String>();
+		
+		while(e.hasMoreElements()) aux.add(e.nextElement());
+		String[] ret=aux.toArray(new String[0]);
+		Arrays.sort(ret);
+		return ret;
+	}
+	
+	public static void sort(Vector<String> v){
+		String[] aux=v.toArray(new String[0]);
+		Arrays.sort(aux);
+		v.clear();
+		for(int i=0;i<aux.length;v.add(aux[i++]));
 	}
 }

@@ -4,15 +4,15 @@
 	<description>Plugin to generate php pages from the entities structure</description>
 	<!-- MODULES DEFINITION -->
 	<modules>
-		<module name="wknews">
+		<module name="wknews" >
 			<depends>
 				<depend name="wkobj"/>
 			</depends>
 			<options>
-				<option name="NEWS_MAX_WIDTH" value="200"/>
-				<option name="NEWS_MAX_THMB_HEIGHT" value="100"/>
-				<option name="NEWS_MAX_THMB_WIDTH" value="100"/>
-				<option name="NEWS_MAX_HEIGHT" value="200"/>
+				<option name="NEWS_MAX_WIDTH" value="200" />
+				<option name="NEWS_MAX_THMB_HEIGHT" value="100" />
+				<option name="NEWS_MAX_THMB_WIDTH" value="100" />
+				<option name="NEWS_MAX_HEIGHT" value="200" />
 			</options>
 		</module>
 		<module name="wkobj" mandatory="1">
@@ -21,40 +21,40 @@
 				<depend name="wklogs"/>
 			</depends>
 		</module>
-		<module name="wkcategory">
+		<module name="wkcategory" >
 			<depends>
 				<depend name="wkobj"/>
 			</depends>
 			<options>
-				<option name="CAT_ENTITY_NAME" value="t01_name"/>
-				<option name="CAT_ENTITY_CLASS" value="Product"/>
-				<option name="CAT_ENTITY_TITLE" value="Productos"/>
-				<option name="CAT_ENTITY_ID" value="t01_id"/>
+				<option name="CAT_ENTITY_NAME" value="t01_name" />
+				<option name="CAT_ENTITY_CLASS" value="Product" />
+				<option name="CAT_ENTITY_TITLE" value="Productos" />
+				<option name="CAT_ENTITY_ID" value="t01_id" />
 			</options>
 		</module>
 		<module name="wklogs" mandatory="1"/>
-		<module name="wkgallery">
+		<module name="wkgallery" >
 			<depends>
 				<depend name="wkupload"/>
 				<depend name="wkobj"/>
 			</depends>
 			<options>
-				<option name="GAL_BACKGROUND_MODAL" value="#000000"/>
-				<option name="GAL_MAX_BIG_WIDTH" value="500"/>
+				<option name="GAL_BACKGROUND_MODAL" value="#000000" />
+				<option name="GAL_MAX_BIG_WIDTH" value="500" />
 				<option name="GAL_FORCE_SCALE" value="true|false" default="true"/>
-				<option name="GAL_ROWS" value="5"/>
-				<option name="GAL_MAX_THUMB_WIDTH" value="150"/>
-				<option name="GAL_DELAY" value="5000"/>
-				<option name="GAL_PREFIX" value="gal_"/>
+				<option name="GAL_ROWS" value="5" />
+				<option name="GAL_MAX_THUMB_WIDTH" value="150" />
+				<option name="GAL_DELAY" value="5000" />
+				<option name="GAL_PREFIX" value="gal_" />
 				<option name="GAL_ASPECT_RATIO" value="true|false" default="true"/>
-				<option name="GAL_WINDOW" value="1"/>
-				<option name="GAL_OPACTITY_MODAL" value="0.5"/>
-				<option name="GAL_MAX_BIG_HEIGHT" value="500"/>
-				<option name="GAL_DEST_PATH" value="archivos/"/>
-				<option name="GAL_COLUMNS" value="3"/>
-				<option name="GAL_TRANSITIONAL_INTERVAL" value="1000"/>
+				<option name="GAL_WINDOW" value="1" />
+				<option name="GAL_OPACTITY_MODAL" value="0.5" />
+				<option name="GAL_MAX_BIG_HEIGHT" value="500" />
+				<option name="GAL_DEST_PATH" value="archivos/" />
+				<option name="GAL_COLUMNS" value="3" />
+				<option name="GAL_TRANSITIONAL_INTERVAL" value="1000" />
 				<option name="GAL_ENABLE_PREVIEW" value="true|false" default="false"/>
-				<option name="GAL_MAX_THUMB_HEIGHT" value="150"/>
+				<option name="GAL_MAX_THUMB_HEIGHT" value="150" />
 			</options>
 		</module>
 		<module name="wkusers" mandatory="1">
@@ -62,46 +62,46 @@
 				<depend name="wkobj"/>
 			</depends>
 		</module>
-		<module name="wklocations">
-			<depends>
-				<depend name="wkobj"/>
-			</depends>
-		</module>
-		<module name="wkcombo">
+		<module name="wkcombo" >
 			<depends>
 				<depend name="wkcatalogue"/>
 			</depends>
 		</module>
+		<module name="wklocations" >
+			<depends>
+				<depend name="wkobj"/>
+			</depends>
+		</module>
 		<module name="wkupload" mandatory="1">
 			<options>
-				<option name="MAX_SIZE" value="(100*MB)"/>
-				<option name="MAX_THUMB_HEIGHT" value="50"/>
-				<option name="FORCE_SCALE" value="true|false"/>
-				<option name="MAX_IMG_HEIGHT" value="150"/>
-				<option name="IMAGES_PATH" value="images/"/>
-				<option name="VALID_EXTENSIONS" value="*"/>
-				<option name="PREFIX" value="arc_"/>
-				<option name="DEST_PATH" value="archivos/"/>
-				<option name="CREATE_THUMB" value="false|true"/>
-				<option name="ASPECT_RATIO" value="true|false"/>
-				<option name="MAX_IMG_WIDTH" value="150"/>
-				<option name="MAX_THUMB_WIDTH" value="50"/>
-				<option name="CONTROL_TYPE" value="BUTTON|IMAGE"/>
-				<option name="ENABLE_PREVIEW" value="true|false"/>
+				<option name="MAX_SIZE" value="(100*MB)" />
+				<option name="MAX_THUMB_HEIGHT" value="50" />
+				<option name="FORCE_SCALE" value="true|false" />
+				<option name="MAX_IMG_HEIGHT" value="150" />
+				<option name="IMAGES_PATH" value="images/" />
+				<option name="VALID_EXTENSIONS" value="*" />
+				<option name="PREFIX" value="arc_" />
+				<option name="DEST_PATH" value="archivos/" />
+				<option name="CREATE_THUMB" value="false|true" />
+				<option name="ASPECT_RATIO" value="true|false" />
+				<option name="MAX_IMG_WIDTH" value="150" />
+				<option name="MAX_THUMB_WIDTH" value="50" />
+				<option name="CONTROL_TYPE" value="BUTTON|IMAGE" />
+				<option name="ENABLE_PREVIEW" value="true|false" />
 			</options>
 		</module>
 		<module name="wkrte" mandatory="1">
 			<options>
-				<option name="TOOL_BAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons"/>
+				<option name="TOOL_BAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons" />
 			</options>
 		</module>
-		<module name="wkcatalogue">
+		<module name="wkcatalogue" >
 			<depends>
 				<depend name="wkobj"/>
 				<depend name="wkcategory"/>
 			</depends>
 		</module>
-		<module name="wkpurchases">
+		<module name="wkpurchases" >
 			<depends>
 				<depend name="wkcatalogue"/>
 				<depend name="wklocations"/>
@@ -111,54 +111,54 @@
 	</modules>
 	<!-- FIELDS DEFINITION -->
 	<fields>
-		<field type="check" visible="true" listable="true"/>
-		<field type="radio" visible="true" listable="true"/>
-		<field type="time" visible="true" listable="true">
-			<option name="FORMAT" value="HHMMSS|HHMM"/>
+		<field type="check" visible="false" listable="false"/>
+		<field type="radio" visible="false" listable="false"/>
+		<field type="time" visible="false" listable="false">
+			<option name="FORMAT" value="HHMMSS|HHMM" />
 		</field>
-		<field type="date" visible="true" listable="true">
-			<option name="FORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA"/>
+		<field type="file" visible="false" listable="false">
+			<option name="CONTROL_TYPE" value="BUTTON" />
+			<option name="DEST_PATH" value="archivos/" />
+			<option name="VALID_EXTENSIONS" value="*" />
+			<option name="PREFIX" value="arc_" />
+			<option name="IMAGES_PATH" value="images/" />
+			<option name="MAX_SIZE" value="(100*MB)" />
 		</field>
-		<field type="file" visible="true" listable="true">
-			<option name="CONTROL_TYPE" value="BUTTON"/>
-			<option name="DEST_PATH" value="archivos/"/>
-			<option name="VALID_EXTENSIONS" value="*"/>
-			<option name="PREFIX" value="arc_"/>
-			<option name="IMAGES_PATH" value="images/"/>
-			<option name="MAX_SIZE" value="(100*MB)"/>
+		<field type="date" visible="false" listable="false">
+			<option name="FORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA" />
 		</field>
-		<field type="image" visible="true" listable="false">
-			<option name="MAX_SIZE" value="(100*MB)"/>
-			<option name="FORCE_SCALE" value="true"/>
-			<option name="MAX_IMG_HEIGHT" value="150"/>
-			<option name="IMAGES_PATH" value="images/"/>
-			<option name="VALID_EXTENSIONS" value="*"/>
-			<option name="PREFIX" value="arc_"/>
-			<option name="DEST_PATH" value="archivos/"/>
-			<option name="ASPECT_RATIO" value="true"/>
-			<option name="MAX_IMG_WIDTH" value="150"/>
-			<option name="CONTROL_TYPE" value="BUTTON"/>
-			<option name="ENABLE_PREVIEW" value="true"/>
+		<field type="image" visible="false" listable="false">
+			<option name="MAX_SIZE" value="(100*MB)" />
+			<option name="FORCE_SCALE" value="true" />
+			<option name="MAX_IMG_HEIGHT" value="150" />
+			<option name="IMAGES_PATH" value="images/" />
+			<option name="VALID_EXTENSIONS" value="*" />
+			<option name="PREFIX" value="arc_" />
+			<option name="DEST_PATH" value="archivos/" />
+			<option name="ASPECT_RATIO" value="true" />
+			<option name="MAX_IMG_WIDTH" value="150" />
+			<option name="CONTROL_TYPE" value="BUTTON" />
+			<option name="ENABLE_PREVIEW" value="true" />
 		</field>
-		<field type="decimal" visible="true" listable="true"/>
-		<field type="integer" visible="true" listable="true"/>
-		<field type="hidden" visible="false" listable="true"/>
-		<field type="textfield" visible="true" listable="true"/>
-		<field type="datetime" visible="true" listable="true">
-			<option name="TIMEFORMAT" value="HHMMSS|HHMM"/>
-			<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA"/>
+		<field type="decimal" visible="false" listable="false"/>
+		<field type="integer" visible="false" listable="false"/>
+		<field type="hidden" visible="false" listable="false"/>
+		<field type="textfield" visible="false" listable="false"/>
+		<field type="datetime" visible="false" listable="false">
+			<option name="TIMEFORMAT" value="HHMMSS|HHMM" />
+			<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA" />
 		</field>
-		<field type="email" visible="true" listable="true"/>
-		<field type="richtext" visible="true" listable="false">
-			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|"/>
+		<field type="email" visible="false" listable="false"/>
+		<field type="richtext" visible="false" listable="false">
+			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|" />
 		</field>
-		<field type="select" visible="true" listable="true"/>
-		<field type="textarea" visible="true" listable="false">
-			<option name="ROWS" value="150"/>
-			<option name="COLS" value="150"/>
+		<field type="select" visible="false" listable="false"/>
+		<field type="textarea" visible="false" listable="false">
+			<option name="ROWS" value="150" />
+			<option name="COLS" value="150" />
 		</field>
-		<field type="password" visible="true" listable="true">
-			<option name="MINLONG" value="1"/>
+		<field type="password" visible="false" listable="false">
+			<option name="MINLONG" value="1" />
 		</field>
 	</fields>
 </plugin>

@@ -21,11 +21,7 @@ public class ConfigManager{
 		
 	private ConfigManager(){
 		me=this;
-		
-		mainConfig=new Config();
-		pluginsConfig=new Hashtable<String, PluginConfig>();
-		
-		loadConfiguration();
+		refreshConfiguration();
 	}
 	
 	private void loadConfiguration(){
@@ -44,15 +40,30 @@ public class ConfigManager{
 			pluginsConfig.get(e.nextElement()).save();
 	}
 	
+	public void refreshConfiguration(){
+		mainConfig=new Config();
+		pluginsConfig=new Hashtable<String, PluginConfig>();
+		
+		loadConfiguration();
+	}
+	
 	public static ConfigManager getInstance(){
 		if(me==null)
 			me=new ConfigManager();
 		return me;
 	}
 	
+	public void installPlugin(String name){
+		mainConfig.getPluginsInstalled().add(name);
+		mainConfig.getPluginsActive().put(name,false);
+	}
+	
+	public void activePlugin(String name, boolean status){
+		mainConfig.getPluginsActive().put(name, status);
+	}
+	
 	public Hashtable<String,PluginConfig> getPluginsConfig(){ return pluginsConfig;}
 	public Hashtable<String, Boolean> getPluginsActive(){ return mainConfig.getPluginsActive();}
 	public Vector<String> getPluginsInstalled(){ return mainConfig.getPluginsInstalled();}
 	public String getDefaultValue(String option){ return mainConfig.getDefaultValue(option);}
-	
 }

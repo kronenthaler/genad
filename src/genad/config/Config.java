@@ -5,6 +5,8 @@ import java.util.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
+import genad.*;
+
 /**
  *	DTA to manipulate and consult the configuration of the plugins and genad itself
  *	@author kronenthaler
@@ -48,6 +50,8 @@ public class Config{
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		Utils.sort(installed);
 	}
 	
 	void save() throws IOException{

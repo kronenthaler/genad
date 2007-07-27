@@ -61,6 +61,11 @@ public class ConfigureDlg extends javax.swing.JDialog {
 
         okBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/ok.png")));
         okBtn.setText("OK");
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
 
         jTabbedPane1.addTab("Languages", new javax.swing.ImageIcon(getClass().getResource("/images/icons/plugins.png")), langsPanel1);
 
@@ -99,23 +104,24 @@ public class ConfigureDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+		applyBtnActionPerformed(evt);
+		dispose();
+		setVisible(false);
+	}//GEN-LAST:event_okBtnActionPerformed
+
 	private void applyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtnActionPerformed
-		
+		langsPanel1.apply();
+		fieldsConfigPanel1.apply();
+		modulesConfigPanel1.apply();
 	}//GEN-LAST:event_applyBtnActionPerformed
 
 	private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+		ConfigManager.getInstance().refreshConfiguration(); //doing rollback from any unsaved data
 		dispose();
 		setVisible(false);
 	}//GEN-LAST:event_cancelBtnActionPerformed
-	
-	public static void main(String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new ConfigureDlg(new javax.swing.JFrame(), true).setVisible(true);
-			}
-		});
-	}
-	
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton applyBtn;
     protected javax.swing.JButton cancelBtn;
