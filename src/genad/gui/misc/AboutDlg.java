@@ -95,7 +95,7 @@ public class AboutDlg extends javax.swing.JDialog {
 									"GNU General Public License\n" +
 									"(GPL) terms\n \n" +
 									"<b>Project Leader</b>\n" +
-									"Ignacio Calderón";
+									"Ignacio Calderon";
 		private Image background;
 		private Font font=new Font("Courier New",Font.PLAIN,14);
 		private RenderingHints rh = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

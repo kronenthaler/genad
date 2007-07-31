@@ -21,55 +21,54 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 	
 	public ModulesConfigPanel() {
 		initComponents();
+		langBoxActionPerformed(null);
+		moduleBoxActionPerformed(null);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        jComboBox3 = new javax.swing.JComboBox();
+        langBox = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        moduleBox = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        optionTable = new genad.gui.misc.OptionTable();
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ConfigManager cfgMan=ConfigManager.getInstance();
+        Vector<String> installed=cfgMan.getPluginsInstalled();
+        langBox.setModel(new DefaultComboBoxModel(installed.toArray(new String[0])));
+        langBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                langBoxActionPerformed(evt);
+            }
+        });
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Module:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Persistence", "Upload", "RTE", "Users" }));
-
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Options"));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {"Default Max. Length", null},
-                {"Default Min. Length", null},
-                {"Default Value", null},
-                {"Is visible", null}
-            },
-            new String [] {
-                "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        moduleBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Persistence", "Upload", "RTE", "Users" }));
+        moduleBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                moduleBoxActionPerformed(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable2);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Language:");
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Options"));
+        optionTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(optionTable);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -78,16 +77,16 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                         .add(layout.createSequentialGroup()
                             .add(jLabel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 77, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(jComboBox3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(langBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(layout.createSequentialGroup()
                             .add(jLabel4)
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(jComboBox4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                            .add(moduleBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -98,29 +97,61 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jComboBox3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(langBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel3))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel4)
-                    .add(jComboBox4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(moduleBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+	private void moduleBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleBoxActionPerformed
+		//sacar las opciones para el tipo de campo seleccionado y agregarlo en el modelo de la tabla
+		ConfigManager cfgMan=ConfigManager.getInstance();
+		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
+		ModuleConfig mc=pc.getModulesConfig().get((String)moduleBox.getSelectedItem()); 
+		
+		//sacar lista de opciones
+		String[] k=Utils.convert(mc.getOptions());
+		Object[][] data=new Object[mc.getOptionSize()][3];
+		for(int i=0;i<data.length;i++){
+			data[i][0]=k[i];
+			data[i][1]=mc.getOption((String)data[i][0]);
+			data[i][2]=mc.getDefault((String)data[i][0]);
+		}
+		
+		optionTable.setData(data);
+	}//GEN-LAST:event_moduleBoxActionPerformed
+
+	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
+		ConfigManager cfgMan=ConfigManager.getInstance();
+		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
+		Hashtable<String,ModuleConfig> mc=pc.getModulesConfig();
+		
+		Vector<String> options=new Vector<String>();
+		String[] key=Utils.convert(mc.keys());
+		for(int i=0;i<key.length;i++)
+			if(mc.get(key[i]).getOptionSize()!=0)
+				options.add(key[i]);
+		
+		moduleBox.setModel(new DefaultComboBoxModel(options));
+	}//GEN-LAST:event_langBoxActionPerformed
 
 	public boolean apply() {
 		return true;
 	}
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JComboBox jComboBox3;
-    protected javax.swing.JComboBox jComboBox4;
     protected javax.swing.JLabel jLabel3;
     protected javax.swing.JLabel jLabel4;
-    protected javax.swing.JScrollPane jScrollPane2;
-    protected javax.swing.JTable jTable2;
+    protected javax.swing.JScrollPane jScrollPane1;
+    protected javax.swing.JComboBox langBox;
+    protected javax.swing.JComboBox moduleBox;
+    protected genad.gui.misc.OptionTable optionTable;
     // End of variables declaration//GEN-END:variables
 	
 }

@@ -27,6 +27,8 @@ public class FieldConfig{
 	public boolean isListable(){ return listable; }
 	public String getOption(String key){ return options.get(key); } 
 	public String getDefault(String option){ return defaults.get(option); } 
+	public Enumeration<String> getOptions(){ return options.keys();}
+	public int getOptionSize(){ return options.size(); }
 		
 	public String toString(){
 		String ret="\t\t<field type=\""+type+"\" visible=\""+visible+"\" listable=\""+listable+"\""+(options.size()>0?"":"/")+">\n";

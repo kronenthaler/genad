@@ -25,6 +25,8 @@ public class ModuleConfig{
 	public String getDefault(String option){ return defaults.get(option); } 
 	public Vector<String> getDependencies(){ return depends; }
 	public String getName(){ return name;}
+	public int getOptionSize(){ return options.size();}
+	public Enumeration<String> getOptions(){ return options.keys();}
 
 	public void setName(String v){ name = v; }
 	public void setMandatory(boolean v){ mandatory = v; }

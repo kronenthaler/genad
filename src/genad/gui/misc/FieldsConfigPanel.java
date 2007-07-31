@@ -21,6 +21,8 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
 	
 	public FieldsConfigPanel() {
 		initComponents();
+		langBoxActionPerformed(null);
+		fieldBoxActionPerformed(null);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -29,8 +31,8 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         fieldBox = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        optionTable = new javax.swing.JTable();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        optionTable = new genad.gui.misc.OptionTable();
 
         ConfigManager cfgMan=ConfigManager.getInstance();
         Vector<String> installed=cfgMan.getPluginsInstalled();
@@ -54,35 +56,19 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
             }
         });
 
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder("Options"));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Options"));
         optionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Default Max. Length", null},
-                {"Default Min. Length", null},
-                {"Default Value", null},
-                {"Is visible", null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "", ""
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        optionTable.setTableHeader(null);
-        jScrollPane2.setViewportView(optionTable);
+        ));
+        jScrollPane1.setViewportView(optionTable);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -91,6 +77,7 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(jLabel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,8 +85,7 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(fieldBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(langBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                            .add(langBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -114,7 +100,7 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
                     .add(fieldBox, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel4))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -124,15 +110,31 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
 		ConfigManager cfgMan=ConfigManager.getInstance();
 		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
 		FieldConfig fc=pc.getFieldsConfig().get((String)fieldBox.getSelectedItem()); 
+		
 		//sacar lista de opciones
+		String[] k=Utils.convert(fc.getOptions());
+		Object[][] data=new Object[fc.getOptionSize()][3];
+		for(int i=0;i<data.length;i++){
+			data[i][0]=k[i];
+			data[i][1]=fc.getOption((String)data[i][0]);
+			data[i][2]=fc.getDefault((String)data[i][0]);
+		}
+		
+		optionTable.setData(data);
 	}//GEN-LAST:event_fieldBoxActionPerformed
 
 	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
 		ConfigManager cfgMan=ConfigManager.getInstance();
 		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
 		Hashtable<String,FieldConfig> fc=pc.getFieldsConfig();
+		//TODO: eliminar los fields que no tengan opciones de configuracion
+		Vector<String> options=new Vector<String>();
+		String[] key=Utils.convert(fc.keys());
+		for(int i=0;i<key.length;i++)
+			if(fc.get(key[i]).getOptionSize()!=0)
+				options.add(key[i]);
 		
-		fieldBox.setModel(new DefaultComboBoxModel(Utils.convert(fc.keys())));
+		fieldBox.setModel(new DefaultComboBoxModel(options));
 	}//GEN-LAST:event_langBoxActionPerformed
 
 	public boolean apply() {
@@ -144,9 +146,9 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
     protected javax.swing.JComboBox fieldBox;
     protected javax.swing.JLabel jLabel3;
     protected javax.swing.JLabel jLabel4;
-    protected javax.swing.JScrollPane jScrollPane2;
+    protected javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JComboBox langBox;
-    protected javax.swing.JTable optionTable;
+    protected genad.gui.misc.OptionTable optionTable;
     // End of variables declaration//GEN-END:variables
 	
 }

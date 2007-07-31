@@ -129,23 +129,23 @@
 		</field>
 		<field type="image" visible="false" listable="false">
 			<option name="MAX_SIZE" value="(100*MB)" />
-			<option name="FORCE_SCALE" value="true" />
+			<option name="FORCE_SCALE" value="true|false" />
 			<option name="MAX_IMG_HEIGHT" value="150" />
 			<option name="IMAGES_PATH" value="images/" />
 			<option name="VALID_EXTENSIONS" value="*" />
 			<option name="PREFIX" value="arc_" />
 			<option name="DEST_PATH" value="archivos/" />
-			<option name="ASPECT_RATIO" value="true" />
+			<option name="ASPECT_RATIO" value="true|false" />
 			<option name="MAX_IMG_WIDTH" value="150" />
-			<option name="CONTROL_TYPE" value="BUTTON" />
-			<option name="ENABLE_PREVIEW" value="true" />
+			<option name="CONTROL_TYPE" value="BUTTON|IMAGE" />
+			<option name="ENABLE_PREVIEW" value="true|false" />
 		</field>
 		<field type="decimal" visible="false" listable="false"/>
 		<field type="integer" visible="false" listable="false"/>
 		<field type="hidden" visible="false" listable="false"/>
 		<field type="textfield" visible="false" listable="false"/>
 		<field type="datetime" visible="false" listable="false">
-			<option name="TIMEFORMAT" value="HHMMSS|HHMM" />
+			<option name="TIMEFORMAT" value="HHMMSS|HHMM" default="HHMM"/>
 			<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA" />
 		</field>
 		<field type="email" visible="false" listable="false"/>

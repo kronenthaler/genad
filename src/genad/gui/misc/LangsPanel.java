@@ -39,14 +39,6 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
         });
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Installed Languages"));
-        pluginTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
         fillTable();
         pluginTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(pluginTable);

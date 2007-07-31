@@ -1,5 +1,8 @@
-- reducir los niveles de acceso a los metodos de configuracion
-- separar los paneles de configureDlg
-    - implementar una interfaz Applicable
+- dialogo de creacion/propiedades del proyecto. usar una tabla para la seleccion de los modulos igual a la de los plugins.
+- guardar las configuraciones de los Fields y los Modules.
+    - se debe avisar al cambiar la seleccion en alguno de los combos del mismo panel que se perdera si no se aplica.
++ reducir los niveles de acceso a los metodos de configuracion
++ separar los paneles de configureDlg
+    + implementar una interfaz Applicable
 + agregar a los archivos de configuracion los valores por defecto. attibute default, para tags option. solo si contiene un | el value
 + configManager metodo para salvar las configuraciones.
