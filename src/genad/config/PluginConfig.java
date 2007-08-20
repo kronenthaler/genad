@@ -6,7 +6,7 @@ import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
 /**
- *
+ *	Plugin is equal to Language
  *	@author kronenthaler
  */
 public class PluginConfig{

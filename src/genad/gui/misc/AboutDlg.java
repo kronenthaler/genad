@@ -72,7 +72,7 @@ public class AboutDlg extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
 	private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-		System.out.println(getLocationOnScreen());// TODO add your handling code here:
+	
 	}//GEN-LAST:event_formMouseClicked
 
 	private void aboutClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_aboutClosed
@@ -86,7 +86,9 @@ public class AboutDlg extends javax.swing.JDialog {
 	private class AboutPanel extends JPanel{
 		private int y;
 		private boolean loop=false,kill=false,intro=true;
-		private String msg="In a galaxy far, far away...\n" +
+		private String msg="<b>Project Leader</b>\n" +
+							"Ignacio Calderon\n\n"+
+							"In a galaxy far, far away...\n" +
 							"esto no va a bajarse de linea\n" +
 							"mas crap de relleno para ver que \n" +
 							"tan abajo queda el texto\n" +
@@ -94,8 +96,11 @@ public class AboutDlg extends javax.swing.JDialog {
 		private String intromsg="Distributed under\n" +
 									"GNU General Public License\n" +
 									"(GPL) terms\n \n" +
-									"<b>Project Leader</b>\n" +
-									"Ignacio Calderon";
+									"<b>Technologies involved </b>\n"+
+									"Java 6\n"+					
+									"XML & XSL\n\n"+					
+									"Dojo Toolkit\n"+
+									"Ajax";
 		private Image background;
 		private Font font=new Font("Courier New",Font.PLAIN,14);
 		private RenderingHints rh = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

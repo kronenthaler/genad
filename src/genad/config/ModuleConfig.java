@@ -3,7 +3,7 @@ package genad.config;
 import java.util.*;
 
 /**
- *
+ *	Is a component in a Language
  *	@author kronenthaler
  */
 public class ModuleConfig{

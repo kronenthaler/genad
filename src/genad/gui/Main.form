@@ -294,6 +294,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/icons/properties.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Edit the properties of the project"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[5, 5, 5, 5]"/>
             </Property>
@@ -310,6 +311,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/icons/compfile.png"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Generate the project files"/>
             <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
               <Insets value="[5, 5, 5, 5]"/>
             </Property>

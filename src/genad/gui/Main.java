@@ -124,6 +124,7 @@ public class Main extends javax.swing.JFrame {
         jToolBar1.add(jSeparator5);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/properties.png")));
+        jButton4.setToolTipText("Edit the properties of the project");
         jButton4.setMargin(new java.awt.Insets(5, 5, 5, 5));
         jButton4.setMaximumSize(new java.awt.Dimension(24, 24));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +136,7 @@ public class Main extends javax.swing.JFrame {
         jToolBar1.add(jButton4);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/compfile.png")));
+        jButton5.setToolTipText("Generate the project files");
         jButton5.setMargin(new java.awt.Insets(5, 5, 5, 5));
         jButton5.setMaximumSize(new java.awt.Dimension(24, 24));
         jButton5.addActionListener(new java.awt.event.ActionListener() {

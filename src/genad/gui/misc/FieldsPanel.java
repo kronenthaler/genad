@@ -5,7 +5,7 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.event.TableModelListener;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 import genad.*;
@@ -38,30 +38,40 @@ public class FieldsPanel extends javax.swing.JPanel {
         fieldsTable.setModel(new FieldsTableModel());
         scrollPanel.setViewportView(fieldsTable);
 
+        addBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/add.png")));
         addBtn.setText("Add Field");
+        addBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
             }
         });
 
+        moveUpBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/arrow_up.png")));
         moveUpBtn.setText("Move Up");
+        moveUpBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         moveUpBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 moveUpBtnActionPerformed(evt);
             }
         });
 
+        moveDownBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/arrow_down.png")));
         moveDownBtn.setText("Move Down");
+        moveDownBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         moveDownBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 moveDownBtnActionPerformed(evt);
             }
         });
 
+        optionsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/options.png")));
         optionsBtn.setText("Options");
+        optionsBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
+        removeBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/delete.png")));
         removeBtn.setText("Remove");
+        removeBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         removeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeBtnActionPerformed(evt);
@@ -73,7 +83,7 @@ public class FieldsPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
+                .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                     .add(addBtn, 0, 0, Short.MAX_VALUE)
@@ -96,7 +106,7 @@ public class FieldsPanel extends javax.swing.JPanel {
                 .add(moveDownBtn)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(optionsBtn)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 137, Short.MAX_VALUE)
                 .add(removeBtn))
             .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
         );
@@ -218,9 +228,4 @@ class FieldsTableModel implements TableModel{
 	/* useless for now */
 	public void addTableModelListener(TableModelListener l){}
 	public void removeTableModelListener(TableModelListener l){}
-}
-
-class Field{
-	public String label, map, type;
-	public boolean required,visible,listable;
 }
