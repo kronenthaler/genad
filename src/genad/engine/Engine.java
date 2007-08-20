@@ -16,7 +16,7 @@ public class Engine{
 	public Engine(){
 	}
 	
-	private void transformXML(String xml, String xsl){
+	public void transformXML(String xml, String xsl){
 		try {
 			//si se van a usar xml templates con DTD's deberia usarse el DOMSource
 			/*DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

@@ -305,9 +305,6 @@ public class Main extends javax.swing.JFrame {
 		jTabbedPane1.addTab("texto", new EntityView());
 		jTabbedPane1.setTabComponentAt(0,new TabComponent(jTabbedPane1, 0, "hola"));
 		
-		jTabbedPane1.addTab("texto mas largo", new JPanel());
-		jTabbedPane1.setTabComponentAt(1,new TabComponent(jTabbedPane1, 1, "Mother fucker"));
-		
 		jTabbedPane1.setSelectedIndex(0);
 		jTabbedPane1StateChanged(null);
 	}//GEN-LAST:event_jButton1ActionPerformed

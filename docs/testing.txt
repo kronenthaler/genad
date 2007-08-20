@@ -1,0 +1,61 @@
+Cronograma:
++ terminar el object, insert, update y delete.
++ metodo para usar en el buscador
++ paginador del list_.
++ list: falta mostrar el nombre de la entidad en algun lado
++ definir que data se puede guardar en el objeto.
+	+ mapeos de tabla con nombres: requeridos para el formulario
+	+ atributos de los campos: 
+		tipo,
+		listable,
+		visible, -> deberian ser interpretados como hiddens
+		buscables,
+		editable,
+		ancestro, 
+		clases hijas,
+		etc.
+	+ si se guardan los campos y los mapeos probablemente el schema desaparezca.
+
++ list:
+	+ cambiar el destino del search para que sea una llamada a getAndTransform o una funcion que haga algo similar, pero enviando 
+	un formulario. lo importante es que no se pierda la pagina.
+	+ cambiar el xsl de llist para renderizar los checks como imagenes con links que redireccionen a la misma pagina.
+	+ confirm al eliminar.
+	+ campos de tipo date, datetime o time deben transformarse a una forma legible
+	- boton o algo en la navegacion para volver a la pagina anterior, cuando se tienen ancestros en la jerarquia.
+
++ exec:
+	+ pagina exec tradicional add, mod, delete
+	+ codificacion de los campos de password, ahora se cuales son password por la definicion de los fields. (se puede mover al insert/update)
+	+ upload de los archivos. (se puede mover al insert/update)
+
+- mod:
+	+ construir el xml del mod_
+		+ definir todos los parametros que se le pueden pasar, incluir una sentencia de scripting
+		+ atributos comunes: map => fieldname y name => title
+		+ textfield, integer, decimal: 
+		+ password: confirm => title para el campo de confirmacion
+		- rte: toolbar => tipo de toolbar a usar
+		+ hidden: prefix => prefijo a usar.
+		+ radio, check, select: nodos hijos option con {name, value, selected}, para el select existe el onclick como atributo del tag
+		- falta por template xsl
+			+ date, time, 
+			+ datetime: 
+				+ format => 'DD/MM/YYYY HH:mm:ss' o cualquier string que siga las convenciones de letras YMDHms
+			- file, image: path => basepath	
+						
+	+ definir el xsl para el mod xml.
+	+ pagina que construya el xml. 
+	- usar los validadores de dojo para hacer validacion en realtime?
+	- problema con la creacion del rte fckeditor desde la respuesta ajax. quizas utilizar el de dojo :S
+
+index:
+	- algo que indique que linea del menu esta activa.
+
++ agregar en la info de las clases el orden de los elementos en el listado y en form
+- agregarle permisologia a las paginas o al contenido.
+
+notes:
+- la pagina list_engine, sirve de esqueleto.
+- la pagina exec_car sirve de esqueleto
+- la pagina Engine sirve de esqueleto de los objetos.

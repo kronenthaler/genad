@@ -114,7 +114,7 @@
 		<field type="check" visible="false" listable="false"/>
 		<field type="radio" visible="false" listable="false"/>
 		<field type="time" visible="false" listable="false">
-			<option name="FORMAT" value="HHMMSS|HHMM" />
+			<option name="FORMAT" value="HHmmss|HHmm" />
 		</field>
 		<field type="file" visible="false" listable="false">
 			<option name="CONTROL_TYPE" value="BUTTON" />
@@ -125,7 +125,7 @@
 			<option name="MAX_SIZE" value="(100*MB)" />
 		</field>
 		<field type="date" visible="false" listable="false">
-			<option name="FORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA" />
+			<option name="FORMAT" value="YYYYMMDD|DDMMYYYY|MMDDYYYY" />
 		</field>
 		<field type="image" visible="false" listable="false">
 			<option name="MAX_SIZE" value="(100*MB)" />
