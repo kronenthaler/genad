@@ -109,6 +109,7 @@ public class Model{
 			e.printStackTrace();
 			return false;
 		}
+		loadedPath=path.getAbsolutePath();
 		return true;
 	}
 	
@@ -131,11 +132,14 @@ public class Model{
 	
 	public String getLanguage(){ return language; }
 	public String getDestinationPath(){ return destPath; }
+	public String getLoadedPath(){ return loadedPath; }
+	public Enumeration<String> getEntities(){ return entities.keys(); }
+	public Entity getEntity(String name){ return entities.get(name);}
 	public String getDBHost(int mode){ return mode==PRODUCTION?pDBHost:dDBHost; }
 	public String getDBLogin(int mode){	return mode==PRODUCTION?pDBLogin:dDBLogin; }
 	public String getDBPassword(int mode){ return mode==PRODUCTION?pDBPassword:dDBPassword; }
 	public String getDBSchema(int mode){ return mode==PRODUCTION?pDBSchema:dDBSchema; }
-	
+		
 	// Model/View pattern
 	public void attachView(View v){
 		views.add(v);

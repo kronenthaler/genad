@@ -11,7 +11,7 @@
 - las paginas plantillas para php son las de la entidad engine.
 - los modulos de los lenguajes y la base deberia ser un zip para que extraiga facilmente igual que el 'install plugin'.
 - dialogo de creacion/propiedades simplificado.
-- implementar parser del proyecto.
++ implementar parser del proyecto.
 - seguir el esquema document/view.
 - cargar el arbol con el document
 	- manejar la addicion/remocion de entidades.

@@ -16,7 +16,7 @@ import genad.engine.*;
 import genad.gui.misc.*;
 
 /**
- *
+ *	
  * @author  kronenthaler
  */
 public class Main extends javax.swing.JFrame {
@@ -29,13 +29,20 @@ public class Main extends javax.swing.JFrame {
 		}catch(Exception e){}
 		
 		initComponents();
+		
+		genad.model.Model model=genad.model.Model.getInstance();
+		model.load(new File("project.xml"));
+		
+		((TreeView)tree).update(model);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTree1 = new javax.swing.JTree();
+        /*
+        tree = new javax.swing.JTree();
+        */ tree=new  TreeView();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
@@ -71,7 +78,13 @@ public class Main extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setState(JFrame.MAXIMIZED_BOTH);
         jSplitPane1.setDividerLocation(200);
-        jScrollPane1.setViewportView(jTree1);
+        tree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                treeMouseClicked(evt);
+            }
+        });
+
+        jScrollPane1.setViewportView(tree);
 
         jSplitPane1.setLeftComponent(jScrollPane1);
 
@@ -260,20 +273,28 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private void treeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeMouseClicked
+		if(evt.getButton()==evt.BUTTON3){
+			((TreeView)tree).contextMenu.setLocation(evt.getXOnScreen(),evt.getYOnScreen());
+			((TreeView)tree).contextMenu.setVisible(true);
+		}else
+			((TreeView)tree).contextMenu.setVisible(false);
+	}//GEN-LAST:event_treeMouseClicked
+
 	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-// TODO add your handling code here:
+		// TODO add your handling code here:
 	}//GEN-LAST:event_jButton5ActionPerformed
 
 	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-// TODO add your handling code here:
+		// TODO add your handling code here:
 	}//GEN-LAST:event_jButton4ActionPerformed
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-// TODO add your handling code here:
+		// TODO add your handling code here:
 	}//GEN-LAST:event_jButton3ActionPerformed
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-// TODO add your handling code here:
+		// TODO add your handling code here:
 	}//GEN-LAST:event_jButton2ActionPerformed
 
 	private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
@@ -335,7 +356,6 @@ public class Main extends javax.swing.JFrame {
     protected javax.swing.JSplitPane jSplitPane1;
     protected javax.swing.JTabbedPane jTabbedPane1;
     protected javax.swing.JToolBar jToolBar1;
-    protected javax.swing.JTree jTree1;
     protected javax.swing.JMenuItem newItem;
     protected javax.swing.JMenuItem openItem;
     protected javax.swing.JMenu openRecentMen;
@@ -344,6 +364,7 @@ public class Main extends javax.swing.JFrame {
     protected javax.swing.JMenuItem saveAsItem;
     protected javax.swing.JMenuItem saveItem;
     protected javax.swing.JMenu settingsMen;
+    protected javax.swing.JTree tree;
     // End of variables declaration//GEN-END:variables
 
 	public static Main getInstance(){

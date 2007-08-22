@@ -54,42 +54,42 @@ public class Utils{
 		try{
 			text=text.replaceAll("&","&amp;amp;");
 			
-			text=text.replaceAll("�","&amp;aacute;");
-			text=text.replaceAll("�","&amp;eacute;");
-			text=text.replaceAll("�","&amp;iacute;");
-			text=text.replaceAll("�","&amp;oacute;");
-			text=text.replaceAll("�","&amp;uacute;");
+			text=text.replaceAll("á","&amp;aacute;");
+			text=text.replaceAll("é","&amp;eacute;");
+			text=text.replaceAll("í","&amp;iacute;");
+			text=text.replaceAll("ó","&amp;oacute;");
+			text=text.replaceAll("ú","&amp;uacute;");
 			
-			text=text.replaceAll("�","&amp;Aacute;");
-			text=text.replaceAll("�","&amp;Eacute;");
-			text=text.replaceAll("�","&amp;Iacute;");
-			text=text.replaceAll("�","&amp;Oacute;");
-			text=text.replaceAll("�","&amp;Uacute;");
+			text=text.replaceAll("Á","&amp;Aacute;");
+			text=text.replaceAll("É","&amp;Eacute;");
+			text=text.replaceAll("Í","&amp;Iacute;");
+			text=text.replaceAll("Ó","&amp;Oacute;");
+			text=text.replaceAll("Ú","&amp;Uacute;");
 			
-			text=text.replaceAll("�","&amp;ntilde;");
-			text=text.replaceAll("�","&amp;Ntilde;");
+			text=text.replaceAll("ñ","&amp;ntilde;");
+			text=text.replaceAll("Ñ","&amp;Ntilde;");
 			
-		}catch(Exception e){}	
+		}catch(Exception e){}
 		return text;
 	}
 		
 		
 	public static String revertXMLSafe(String text){
 		try{
-			text=text.replaceAll("&aacute;","�");
-			text=text.replaceAll("&eacute;","�");
-			text=text.replaceAll("&iacute;","�");
-			text=text.replaceAll("&oacute;","�");
-			text=text.replaceAll("&uacute;","�");
+			text=text.replaceAll("&aacute;","á");
+			text=text.replaceAll("&eacute;","é");
+			text=text.replaceAll("&iacute;","í");
+			text=text.replaceAll("&oacute;","ó");
+			text=text.replaceAll("&uacute;","ú");
 			                                 
-			text=text.replaceAll("&Aacute;","�");
-			text=text.replaceAll("&Eacute;","�");
-			text=text.replaceAll("&Iacute;","�");
-			text=text.replaceAll("&Oacute;","�");
-			text=text.replaceAll("&Uacute;","�");
+			text=text.replaceAll("&Aacute;","Á");
+			text=text.replaceAll("&Eacute;","É");
+			text=text.replaceAll("&Iacute;","Í");
+			text=text.replaceAll("&Oacute;","Ó");
+			text=text.replaceAll("&Uacute;","Ú");
 			                                 
-			text=text.replaceAll("&ntilde;","�");
-			text=text.replaceAll("&Ntilde;","�");
+			text=text.replaceAll("&ntilde;","ñ");
+			text=text.replaceAll("&Ntilde;","Ñ");
 
 
 			text=text.replaceAll("&amp;","&");

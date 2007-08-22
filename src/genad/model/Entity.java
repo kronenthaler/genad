@@ -85,6 +85,12 @@ public class Entity{
 		Model.getInstance().setChanged();
 	}
 	
+	public String getName(){ return name; }
+	public void setName(String s){ name=s; setChanged();} 
+	
+	public Enumeration<String> getChilds(){ return childs.keys(); } 
+	public Entity getChild(String name){ return childs.get(name); }
+	
 	private String toString(String deep){
 		Enumeration<String> e;
 		String key,

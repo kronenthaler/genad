@@ -204,7 +204,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTree" name="jTree1">
+            <Component class="javax.swing.JTree" name="tree">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="treeMouseClicked"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="*/ tree=new  TreeView();"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="/*"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
