@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project lastsaved="1187810047902" by="kronenthaler" language="php">
+	<file-server-conf>
+		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
+	</file-server-conf>
+	<db-server-conf>
+		<dev-host><![CDATA[prado]]></dev-host>
+		<dev-user><![CDATA[root]]></dev-user>
+		<dev-password><![CDATA[root]]></dev-password>
+		<dev-schema><![CDATA[testing]]></dev-schema>
+		<prod-host><![CDATA[prado]]></prod-host>
+		<prod-user><![CDATA[root]]></prod-user>
+		<prod-password><![CDATA[root]]></prod-password>
+		<prod-schema><![CDATA[testing]]></prod-schema>
+	</db-server-conf>
+	<modules>
+		<module name="module1">
+			<option name="adsf" value="ass"/>
+		</module>
+	</modules>
+	<entities>
+		<entity name="A_" title="Entidad A">
+			<table name="t106_a" primary-key="t106_id"/>
+			<splitpage value="1"/>
+			<search value="0"/>
+			<just-pages value="1"/>
+			<just-schema value="0"/>
+			<sortable value="0"/>
+			<form>
+				<field type="check">
+					<label>Nombre</label>
+					<db-field>t06_nombre</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="check">
+					<label>OK</label>
+					<db-field>t06_ok</db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="radio">
+					<label>Publicado</label>
+					<db-field>t06_publicado</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="file">
+					<label>Archivo</label>
+					<db-field>t06_arc_arc1</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="image">
+					<label>Imagen</label>
+					<db-field>t06_arc_img1</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="hidden">
+					<label></label>
+					<db-field>t06_hidden</db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>0</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="email">
+					<label>Correo</label>
+					<db-field>t06_email</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="select">
+					<label>Select</label>
+					<db-field>t06_sel</db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="textarea">
+					<label>Desc corta</label>
+					<db-field>t06_text</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="richtext">
+					<label>Desc Larga</label>
+					<db-field>t06_desc_larga</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="password">
+					<label>Password</label>
+					<db-field>t06_password</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+			<entity name="A1" title="Ent A1">
+				<table name="t108_a1" primary-key="t108_id"/>
+				<splitpage value="1"/>
+				<search value="0"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="0"/>
+				<form>
+					<field type="check">
+						<label>Nombre</label>
+						<db-field>t108_nombre</db-field>
+						<required>1</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+					<field type="email">
+						<label>Apellido</label>
+						<db-field>t108_apellido</db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>0</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+					<field type="textfield">
+						<label>idpadre</label>
+						<db-field>t106_id</db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+			</entity>
+		</entity>
+		<entity name="C" title="sd">
+			<table name="sd" primary-key="sd"/>
+			<splitpage value="1"/>
+			<search value="0"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
+			<sortable value="0"/>
+			<form>
+				<field type="textfield">
+					<label>s</label>
+					<db-field>d</db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+		</entity>
+		<entity name="B" title="Entidad B">
+			<table name="t100_b" primary-key="t100_id"/>
+			<splitpage value="1"/>
+			<search value="0"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
+			<sortable value="0"/>
+			<form>
+				<field type="textfield">
+					<label>campo1</label>
+					<db-field>t100_campo1</db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+			<entity name="B2" title="Ent B2">
+				<table name="t102_b2" primary-key="t102_id"/>
+				<splitpage value="0"/>
+				<search value="0"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="0"/>
+				<form>
+					<field type="textfield">
+						<label>campo b2</label>
+						<db-field>t102_campob2</db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+				<entity name="B22" title="ent b22">
+					<table name="t103_b22" primary-key="t103_id"/>
+					<splitpage value="1"/>
+					<search value="0"/>
+					<just-pages value="0"/>
+					<just-schema value="0"/>
+					<sortable value="0"/>
+					<form>
+						<field type="textfield">
+							<label>campo b22</label>
+							<db-field>t103_campob22</db-field>
+							<required>0</required><!-- 0|1 -->
+							<show-in-list>1</show-in-list><!-- 0|1 -->
+							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<options>
+							</options>
+						</field>
+					</form>
+				</entity>
+				<entity name="B21" title="ent B21">
+					<table name="t104_b21" primary-key="t104_id"/>
+					<splitpage value="1"/>
+					<search value="0"/>
+					<just-pages value="0"/>
+					<just-schema value="0"/>
+					<sortable value="0"/>
+					<form>
+						<field type="textfield">
+							<label>label</label>
+							<db-field>t104_campo</db-field>
+							<required>0</required><!-- 0|1 -->
+							<show-in-list>1</show-in-list><!-- 0|1 -->
+							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<options>
+							</options>
+						</field>
+					</form>
+				</entity>
+			</entity>
+			<entity name="B1" title="ent B1">
+				<table name="t105_b1" primary-key="t105_id"/>
+				<splitpage value="1"/>
+				<search value="0"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="0"/>
+				<form>
+					<field type="time">
+						<label><![CDATA[&eacute;]]></label>
+						<db-field>t105_campo</db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+			</entity>
+		</entity>
+	</entities>
+</project>
+
