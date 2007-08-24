@@ -61,10 +61,10 @@ public class PropertiesDlg extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Properties");
         setResizable(false);
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/cancel.png")));
+        jButton1.setIcon(IconsManager.CANCEL);
         jButton1.setText("Cancel");
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/ok.png")));
+        jButton3.setIcon(IconsManager.OK);
         jButton3.setText("OK");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("General"));

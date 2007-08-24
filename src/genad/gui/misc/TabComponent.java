@@ -39,7 +39,7 @@ public class TabComponent extends javax.swing.JPanel {
         titleLab.setText(text);
 
         crossLab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        crossLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/tabclose.png")));
+        crossLab.setIcon(IconsManager.TABCLOSE);
         crossLab.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 crossLabMouseClicked(evt);
@@ -63,21 +63,24 @@ public class TabComponent extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crossLab, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-            .addComponent(titleLab, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+            .addComponent(crossLab, javax.swing.GroupLayout.DEFAULT_SIZE, 15, Short.MAX_VALUE)
+            .addComponent(titleLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 	private void crossLabMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseExited
-		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/tabclose.png")));
+		crossLab.setIcon(IconsManager.TABCLOSE);
 	}//GEN-LAST:event_crossLabMouseExited
 
 	private void crossLabMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseEntered
-		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/tabclose_over.png")));
+		crossLab.setIcon(IconsManager.TABCLOSEOVER);
 	}//GEN-LAST:event_crossLabMouseEntered
 
 	private void crossLabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseClicked
-		tb.remove(index);
+		//buscar en que index se encuentra este component
+		for(int i=0,n=tb.getTabCount();i<n;i++)
+			if(tb.getTabComponentAt(index=i)==this) break;
+		tb.removeTabAt(index);
 	}//GEN-LAST:event_crossLabMouseClicked
 	
 	public void setBackground(Color c){
@@ -86,6 +89,9 @@ public class TabComponent extends javax.swing.JPanel {
 			crossLab.setBackground(c);
 		}catch(Exception e){}
 	}
+	
+	public String getTitle(){ return text; }
+	public void setTitle(String v){ text=v; }
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JLabel crossLab;

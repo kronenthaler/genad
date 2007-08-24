@@ -33,9 +33,10 @@ public class Entity{
 		childs=new Hashtable<String, Entity>();
 	}
 	
-	public Entity(String _name){
-		super();
+	public Entity(String _name,Entity _parent){
+		this();
 		name=_name;
+		parent=_parent;
 	}
 	
 	//load an entity from xml Node
@@ -95,6 +96,17 @@ public class Entity{
 	
 	public Enumeration<String> getChilds(){ return childs.keys(); } 
 	public Entity getChild(String name){ return childs.get(name); }
+	public boolean addChild(String name){
+		if(childs.get(name)!=null) return false;
+		childs.put(name,new Entity(name,this));
+		setChanged();
+		return true;
+	}
+	
+	public void removeChild(String name){
+		childs.remove(name);
+		setChanged();
+	}
 	
 	private String toString(String deep){
 		Enumeration<String> e;

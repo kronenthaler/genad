@@ -28,8 +28,6 @@ public class Splash extends JDialog{
 	private Splash(){
 		super(new Frame("GenAd"),true);
 		
-		me=this; //singleton pattern
-		
 		ImageIcon background=new ImageIcon(getClass().getResource("/images/splash.png"));
 		final int width=background.getIconWidth();
 		final int height=background.getIconHeight();
@@ -78,8 +76,7 @@ public class Splash extends JDialog{
 	
 	//singleton pattern
 	public static Splash getInstance(){
-		if(me==null)
-			me=new Splash();
+		if(me==null) me=new Splash();
 		return me;
 	}
 	

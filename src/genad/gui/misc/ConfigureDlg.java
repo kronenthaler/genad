@@ -23,10 +23,10 @@ public class ConfigureDlg extends javax.swing.JDialog {
 	public ConfigureDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
-		//jTabbedPane1.setIconAt(0,new ImageIcon(getClass().getResource("/images/icons/home.png")));
-		jTabbedPane1.setIconAt(0,new ImageIcon(getClass().getResource("/images/icons/plugins.png")));
-		jTabbedPane1.setIconAt(1,new ImageIcon(getClass().getResource("/images/icons/fields.png")));
-		jTabbedPane1.setIconAt(2,new ImageIcon(getClass().getResource("/images/icons/module.png")));
+		
+		jTabbedPane1.setIconAt(0,IconsManager.LANGS);
+		//jTabbedPane1.setIconAt(1,IconsManager.FIELDS);
+		//jTabbedPane1.setIconAt(2,IconsManager.MODS);
 		
 		Utils.centerComponent(this);
 		setVisible(true);
@@ -39,11 +39,9 @@ public class ConfigureDlg extends javax.swing.JDialog {
         okBtn = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         langsPanel1 = new genad.gui.misc.LangsPanel();
-        fieldsConfigPanel1 = new genad.gui.misc.FieldsConfigPanel();
-        modulesConfigPanel1 = new genad.gui.misc.ModulesConfigPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        cancelBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/cancel.png")));
+        cancelBtn.setIcon(IconsManager.CANCEL);
         cancelBtn.setText("Cancel");
         cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -51,7 +49,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
             }
         });
 
-        applyBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/apply.png")));
+        applyBtn.setIcon(IconsManager.APPLY);
         applyBtn.setText("Apply");
         applyBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,7 +57,7 @@ public class ConfigureDlg extends javax.swing.JDialog {
             }
         });
 
-        okBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/ok.png")));
+        okBtn.setIcon(IconsManager.OK);
         okBtn.setText("OK");
         okBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,10 +66,6 @@ public class ConfigureDlg extends javax.swing.JDialog {
         });
 
         jTabbedPane1.addTab("Languages", new javax.swing.ImageIcon(getClass().getResource("/images/icons/plugins.png")), langsPanel1);
-
-        jTabbedPane1.addTab("Fields", new javax.swing.ImageIcon(getClass().getResource("/images/icons/fields.png")), fieldsConfigPanel1);
-
-        jTabbedPane1.addTab("Modules", new javax.swing.ImageIcon(getClass().getResource("/images/icons/module.png")), modulesConfigPanel1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -112,8 +106,8 @@ public class ConfigureDlg extends javax.swing.JDialog {
 
 	private void applyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtnActionPerformed
 		langsPanel1.apply();
-		fieldsConfigPanel1.apply();
-		modulesConfigPanel1.apply();
+		//fieldsConfigPanel1.apply();
+		//modulesConfigPanel1.apply();
 	}//GEN-LAST:event_applyBtnActionPerformed
 
 	private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
@@ -125,10 +119,8 @@ public class ConfigureDlg extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton applyBtn;
     protected javax.swing.JButton cancelBtn;
-    protected genad.gui.misc.FieldsConfigPanel fieldsConfigPanel1;
     protected javax.swing.JTabbedPane jTabbedPane1;
     protected genad.gui.misc.LangsPanel langsPanel1;
-    protected genad.gui.misc.ModulesConfigPanel modulesConfigPanel1;
     protected javax.swing.JButton okBtn;
     // End of variables declaration//GEN-END:variables
 	

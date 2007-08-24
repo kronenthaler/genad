@@ -20,7 +20,6 @@ public class ConfigManager{
 	private Config mainConfig;
 		
 	private ConfigManager(){
-		me=this;
 		refreshConfiguration();
 	}
 	
@@ -48,8 +47,7 @@ public class ConfigManager{
 	}
 	
 	public static ConfigManager getInstance(){
-		if(me==null)
-			me=new ConfigManager();
+		if(me==null) me=new ConfigManager();
 		return me;
 	}
 	

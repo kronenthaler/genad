@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 import genad.*;
@@ -19,8 +20,21 @@ import genad.gui.misc.*;
  * @author  kronenthaler
  */
 public class EntityView extends javax.swing.JPanel {
-	public EntityView() {
+	private Entity entity;
+	
+	public EntityView(Entity _entity) {
+		entity=_entity;
 		initComponents();
+		System.err.println(System.getProperty("java.version"));
+		classNameTxt.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e){ nameChanged(e);}
+			public void insertUpdate(DocumentEvent e){ nameChanged(e);}
+			public void removeUpdate(DocumentEvent e){ nameChanged(e);}
+		});
+	}
+	
+	private void nameChanged(DocumentEvent evt){
+		System.err.println(classNameTxt.getText());
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -33,7 +47,7 @@ public class EntityView extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        classNameTxt = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -61,13 +75,8 @@ public class EntityView extends javax.swing.JPanel {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Primary Key:");
 
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField3");
+        classNameTxt.setText(entity.getName());
+        classNameTxt.setVerifyInputWhenFocusTarget(false);
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Section Name:");
@@ -89,7 +98,7 @@ public class EntityView extends javax.swing.JPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(propertiesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 149, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 149, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(classNameTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 149, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -97,7 +106,7 @@ public class EntityView extends javax.swing.JPanel {
 
         propertiesPanelLayout.linkSize(new java.awt.Component[] {jLabel1, jLabel2, jLabel3, jLabel4}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
-        propertiesPanelLayout.linkSize(new java.awt.Component[] {jTextField1, jTextField2, jTextField3}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
+        propertiesPanelLayout.linkSize(new java.awt.Component[] {classNameTxt, jTextField1, jTextField2}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
         propertiesPanelLayout.setVerticalGroup(
             propertiesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -108,7 +117,7 @@ public class EntityView extends javax.swing.JPanel {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(propertiesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel1)
-                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(classNameTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(propertiesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -248,7 +257,7 @@ public class EntityView extends javax.swing.JPanel {
                     .add(jPanel1, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(fieldsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(fieldsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                 .add(13, 13, 13))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -256,6 +265,7 @@ public class EntityView extends javax.swing.JPanel {
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.ButtonGroup buttonGroup1;
+    protected javax.swing.JTextField classNameTxt;
     protected genad.gui.misc.FieldsPanel fieldsPanel1;
     protected javax.swing.JButton jButton2;
     protected javax.swing.JLabel jLabel1;
@@ -270,7 +280,6 @@ public class EntityView extends javax.swing.JPanel {
     protected javax.swing.JRadioButton jRadioButton4;
     protected javax.swing.JTextField jTextField1;
     protected javax.swing.JTextField jTextField2;
-    protected javax.swing.JTextField jTextField3;
     protected javax.swing.JTextField jTextField4;
     protected javax.swing.JCheckBox justPagesChk;
     protected javax.swing.JCheckBox justSchemaChk;
@@ -279,4 +288,17 @@ public class EntityView extends javax.swing.JPanel {
     protected javax.swing.JCheckBox searchChk;
     protected javax.swing.JCheckBox sortableChk;
     // End of variables declaration//GEN-END:variables
+
+	public static void main(String a[]){
+		Frame f=new Frame();
+		JSplitPane sp=new JSplitPane();
+		JTabbedPane tp=new JTabbedPane();
+		sp.setRightComponent(tp);
+		f.add(sp);
+		tp.addTab("aglo",new EntityView(new Entity("pepe",null)));
+		tp.setTabComponentAt(0,new TabComponent(tp, 0, "algo"));
+		
+		f.setSize(1000,768);
+		f.setVisible(true);
+	}
 }

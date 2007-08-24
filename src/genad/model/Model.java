@@ -39,7 +39,6 @@ public class Model{
 		views=new Vector<View>();
 		entities=new Hashtable<String, Entity>();
 		modules=new Hashtable<String, Module>();
-		me=this;
 		cfgMan=ConfigManager.getInstance();
 	}
 	
@@ -118,6 +117,10 @@ public class Model{
 			PrintStream out=new PrintStream(path);
 			out.println(toString());
 			out.close();
+			
+			changed = false;
+			notifyViews();
+			
 			return true;
 		}catch(Exception e){
 			return false;
@@ -141,7 +144,20 @@ public class Model{
 	public String getDBLogin(int mode){	return mode==PRODUCTION?pDBLogin:dDBLogin; }
 	public String getDBPassword(int mode){ return mode==PRODUCTION?pDBPassword:dDBPassword; }
 	public String getDBSchema(int mode){ return mode==PRODUCTION?pDBSchema:dDBSchema; }
-		
+	
+	public void setLoadedPath(String path) { loadedPath=path; }
+	
+	public boolean addEntity(String name){
+		if(entities.get(name)!=null) return false;
+		entities.put(name,new Entity(name,null));
+		setChanged();
+		return true;
+	}
+	public void removeEntity(String name){
+		entities.remove(name);
+		setChanged();
+	}
+	
 	// Model/View pattern
 	public void attachView(View v){
 		views.add(v);
@@ -155,7 +171,7 @@ public class Model{
 	
 	//singleton pattern
 	public static Model getInstance(){
-		if(me==null) new Model();
+		if(me==null) me=new Model();
 		return me;
 	}
 	
@@ -188,4 +204,6 @@ public class Model{
 		ret+="</project>\n";
 		return ret;
 	}
+
+	
 }

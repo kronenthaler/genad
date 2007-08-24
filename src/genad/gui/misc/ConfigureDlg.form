@@ -48,8 +48,8 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="cancelBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/cancel.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.CANCEL" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
@@ -59,8 +59,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="applyBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/apply.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.APPLY" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Apply"/>
       </Properties>
@@ -70,8 +70,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="okBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/ok.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.OK" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="OK"/>
       </Properties>
@@ -90,30 +90,6 @@
                 <Property name="tabTitle" type="java.lang.String" value="Languages"/>
                 <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/icons/plugins.png"/>
-                </Property>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="genad.gui.misc.FieldsConfigPanel" name="fieldsConfigPanel1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Fields">
-                <Property name="tabTitle" type="java.lang.String" value="Fields"/>
-                <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icons/fields.png"/>
-                </Property>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="genad.gui.misc.ModulesConfigPanel" name="modulesConfigPanel1">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Modules">
-                <Property name="tabTitle" type="java.lang.String" value="Modules"/>
-                <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/images/icons/module.png"/>
                 </Property>
               </JTabbedPaneConstraints>
             </Constraint>

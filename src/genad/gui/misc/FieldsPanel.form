@@ -43,10 +43,10 @@
               <Component id="moveDownBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="optionsBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="138" max="32767" attributes="0"/>
+              <EmptySpace pref="139" max="32767" attributes="0"/>
               <Component id="removeBtn" min="-2" max="-2" attributes="0"/>
           </Group>
-          <Component id="scrollPanel" alignment="0" pref="285" max="32767" attributes="0"/>
+          <Component id="scrollPanel" alignment="0" pref="286" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -66,8 +66,8 @@
     </Container>
     <Component class="javax.swing.JButton" name="addBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/add.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.ADD" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Add Field"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
@@ -78,8 +78,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="moveUpBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/arrow_up.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.MOVEUP" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Move Up"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
@@ -90,8 +90,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="moveDownBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/arrow_down.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.MOVEDOWN" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Move Down"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
@@ -102,8 +102,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="optionsBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/options.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.OPTIONS" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Options"/>
         <Property name="horizontalAlignment" type="int" value="2"/>
@@ -111,8 +111,8 @@
     </Component>
     <Component class="javax.swing.JButton" name="removeBtn">
       <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/images/icons/delete.png"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="IconsManager.DELETE" type="code"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Remove"/>
         <Property name="horizontalAlignment" type="int" value="2"/>

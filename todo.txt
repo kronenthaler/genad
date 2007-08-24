@@ -12,11 +12,13 @@
 - los modulos de los lenguajes y la base deberia ser un zip para que extraiga facilmente igual que el 'install plugin'.
 - dialogo de creacion/propiedades simplificado.
 + implementar parser del proyecto.
-- seguir el esquema document/view.
++ seguir el esquema document/view.
 + cargar el arbol con el document
-	- manejar la addicion/remocion de entidades.
+	+ manejar la addicion/remocion de entidades.
++ save/saveAs
++ open
++ exit 
+    - vincular con el exit de la ventana
 - cargar la data de un entidad desde el modelo
 	- manejar los eventos de edicion/validacion.
-
-	
 

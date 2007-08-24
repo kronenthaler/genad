@@ -15,23 +15,32 @@ import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
 import genad.engine.*;
+import genad.gui.misc.*;
 
 /**
  *
  *	@author kronenthaler
  */
 public class TreeView extends JTree implements View{
-	private JPopupMenu contextMenu;
-	private JMenuItem edit, add, delete;
+	private JPopupMenu entityContextMenu,moduleContextMenu;
+	private JMenuItem editEntity, addEntity, deleteEntity, editModule;
+	private JTabbedPane viewer;
 	private int x,y;
 	
-	public TreeView(){
-		contextMenu=new JPopupMenu();
-		contextMenu.add(edit=new JMenuItem("Edit",new ImageIcon(getClass().getResource("/images/icons/page.png"))));
-		contextMenu.add(add=new JMenuItem("Add Child",new ImageIcon(getClass().getResource("/images/icons/page_add.png"))));
-		contextMenu.add(delete=new JMenuItem("Delete",new ImageIcon(getClass().getResource("/images/icons/page_delete.png"))));
+	
+	public TreeView(JTabbedPane _viewer){
+		viewer=_viewer;
 		
-		add(contextMenu);
+		entityContextMenu=new JPopupMenu();
+		entityContextMenu.add(editEntity=new JMenuItem("Edit",IconsManager.EDITENTITY));
+		entityContextMenu.add(addEntity=new JMenuItem("Add Child",IconsManager.ADDENTITY));
+		entityContextMenu.add(deleteEntity=new JMenuItem("Delete",IconsManager.DELENTITY));
+		add(entityContextMenu);
+		
+		moduleContextMenu=new JPopupMenu();
+		moduleContextMenu.add(editModule=new JMenuItem("Edit",IconsManager.EDITMODULE));
+		add(moduleContextMenu);
+		
 		setCellRenderer(new TreeViewRenderer());
 		
 		setModel(new DefaultTreeModel(new DefaultMutableTreeNode("No project loaded")));
@@ -39,19 +48,25 @@ public class TreeView extends JTree implements View{
 	}
 	
 	private void setHandlers(){
-		edit.addActionListener(new ActionListener(){
+		editEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				editEntity(evt);
 			}
 		});
-		add.addActionListener(new ActionListener(){
+		addEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				addEntity(evt);
 			}
 		});
-		delete.addActionListener(new ActionListener(){
+		deleteEntity.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt){
 				deleteEntity(evt);
+			}
+		});
+		
+		editModule.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				editModule(evt);
 			}
 		});
 		
@@ -65,33 +80,93 @@ public class TreeView extends JTree implements View{
 	private void editEntity(ActionEvent evt){
 		TreePath tp=getPathForLocation(x,y);
 		Object[] path=tp.getPath();
-		//for(Object t: path)
-		//	System.out.println(t);
-		JOptionPane.showMessageDialog(Main.getInstance(),path[path.length-1]);
+		Model model=Model.getInstance();
+		Entity current=model.getEntity(path[2].toString());
+		
+		for(int i=3;i<path.length;i++)
+			current=current.getChild(path[i].toString());
+		
+		for(int i=0,n=viewer.getTabCount();i<n;i++){
+			if(((TabComponent)viewer.getTabComponentAt(i)).getTitle().equals(path[path.length-1].toString())){
+				viewer.setSelectedIndex(i);
+				return;
+			}
+		}
+		
+		viewer.addTab("", new EntityView(current));
+		viewer.setTabComponentAt(viewer.getTabCount()-1,new TabComponent(viewer, viewer.getTabCount()-1, path[path.length-1].toString()));
+		viewer.setSelectedIndex(viewer.getTabCount()-1);
+		//viewer.getChangeListeners()[0].stateChanged(null);
 	}
 	
 	private void addEntity(ActionEvent evt){
 		String name=JOptionPane.showInputDialog(Main.getInstance(),"Entity name");
+		if(name==null || name.equals("")) return;
+		
 		TreePath tp=getPathForLocation(x,y);
 		Object[] path=tp.getPath();
-		
-		
+		Model model=Model.getInstance();
+		if(path.length==2){
+			if(!model.addEntity(Utils.sanitize(name)))
+				JOptionPane.showMessageDialog(Main.getInstance(),"An entity with this name already exists");
+		}else{ //subentidad
+			Entity current=model.getEntity(path[2].toString());
+			for(int i=3;i<path.length;i++)
+				current=current.getChild(path[i].toString());
+			
+			if(!current.addChild(Utils.sanitize(name)))
+				JOptionPane.showMessageDialog(Main.getInstance(),"An entity with this name already exists");
+		}
 	}
 	
 	private void deleteEntity(ActionEvent evt){
-		
+		TreePath tp=getPathForLocation(x,y);
+		Object[] path=tp.getPath();
+		Model model=Model.getInstance();
+		if(path.length==3){
+			if(JOptionPane.showConfirmDialog(Main.getInstance(),
+											 "Are you really sure?",
+											 "Confirmation",
+											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+				model.removeEntity(path[2].toString());
+		}else{
+			Entity current=model.getEntity(path[2].toString());
+			for(int i=3;i<path.length-1;i++)
+				current=current.getChild(path[i].toString());
+			
+			if(JOptionPane.showConfirmDialog(Main.getInstance(),
+											 "Are you really sure?",
+											 "Confirmation",
+											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+				current.removeChild(path[path.length-1].toString());
+		}
+	}
+	
+	private void editModule(ActionEvent evt){
+		TreePath tp=getPathForLocation(x,y);
+		Object[] path=tp.getPath();
+		JOptionPane.showMessageDialog(Main.getInstance(),path[path.length-1]);//add or focus the tab in the tabbedpane
 	}
 	
 	private void treeMouseClicked(MouseEvent evt){
+		TreePath tp=getPathForLocation(x=evt.getX(),y=evt.getY());
+		if(tp==null) return;
+
+		Object[] path=tp.getPath();
 		if(evt.getButton()==evt.BUTTON3){
-			TreePath tp=getPathForLocation(x=evt.getX(),y=evt.getY());
-			if(tp==null) return;
-			
-			Object[] path=tp.getPath();
-			if(path.length>=2){
-				edit.setEnabled(path.length!=2 || !path[1].toString().equalsIgnoreCase("entities"));
-				delete.setEnabled(path.length!=2 || !path[1].toString().equalsIgnoreCase("entities"));
-				contextMenu.show(evt.getComponent(),x,y);
+			if(path.length>=2 && path[1].toString().equalsIgnoreCase("entities")){
+				editEntity.setEnabled(path.length!=2 || !path[1].toString().equalsIgnoreCase("entities"));
+				deleteEntity.setEnabled(path.length!=2 || !path[1].toString().equalsIgnoreCase("entities"));
+				entityContextMenu.show(evt.getComponent(),x,y);
+			}else if(path.length>2 && path[1].toString().equalsIgnoreCase("modules")){
+				moduleContextMenu.show(evt.getComponent(),x,y);
+			}
+		}else{
+			if(evt.getClickCount()==2){
+				if(path.length>2 && path[1].toString().equalsIgnoreCase("entities"))
+					editEntity(null);
+				else if(path.length>2 && path[1].toString().equalsIgnoreCase("modules"))
+					editModule(null);//open for edition
 			}
 		}
 	}
@@ -121,6 +196,9 @@ public class TreeView extends JTree implements View{
 			makeTree(ents, subject.getEntity(s));
 		
 		setModel(new DefaultTreeModel(root));
+		for(int i=0;i<getRowCount();i++)
+			expandRow(i);
+			
 		updateUI();
 	}
 	
@@ -134,24 +212,24 @@ class TreeViewRenderer extends DefaultTreeCellRenderer{
 													  boolean sel, boolean expanded, boolean leaf, int row,
 													  boolean hasFocus) {
 		super.getTreeCellRendererComponent(tree,value,selected,expanded,leaf,row,hasFocus);
+		
 		if(value instanceof DefaultMutableTreeNode){
 			DefaultMutableTreeNode node=(DefaultMutableTreeNode)value;
 			TreeNode path[]=node.getPath();
 			if(node.getParent()==null)//root node
-				setIcon(new ImageIcon(getClass().getResource("/images/icons/folder_project.png")));
+				setIcon(IconsManager.PROJECT);
 			else if(path.length==2){
 				if(path[1].toString().equalsIgnoreCase("Entities"))
-					setIcon(new ImageIcon(getClass().getResource("/images/icons/folder_page.png")));
+					setIcon(IconsManager.ENTITIES);
 				else if(path[1].toString().equalsIgnoreCase("Modules"))
-					setIcon(new ImageIcon(getClass().getResource("/images/icons/folder_plugin.png")));
+					setIcon(IconsManager.MODULES);
 				else
-					setIcon(new ImageIcon(getClass().getResource("/images/icons/folder.png"))); //default folder icon
-				
+					setIcon(IconsManager.FOLDER);
 			}else{
 				if(path[1].toString().equalsIgnoreCase("Entities"))
-					setIcon(new ImageIcon(getClass().getResource("/images/icons/page.png")));
+					setIcon(IconsManager.ENTITY);
 				else if(path[1].toString().equalsIgnoreCase("Modules"))
-					setIcon(new ImageIcon(getClass().getResource("/images/icons/plugin.png")));
+					setIcon(IconsManager.MODULE);
 			}
 		}
 		

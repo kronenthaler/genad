@@ -106,7 +106,7 @@ public class AboutDlg extends javax.swing.JDialog {
 		private RenderingHints rh = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		AboutPanel(){
-			background=new ImageIcon(getClass().getResource("/images/about.png")).getImage();
+			background=IconsManager.ABOUT.getImage();
 			y=background.getHeight(this);
 			new Thread(new Runnable(){
 				public void run(){
