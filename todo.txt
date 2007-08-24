@@ -13,7 +13,7 @@
 - dialogo de creacion/propiedades simplificado.
 + implementar parser del proyecto.
 - seguir el esquema document/view.
-- cargar el arbol con el document
++ cargar el arbol con el document
 	- manejar la addicion/remocion de entidades.
 - cargar la data de un entidad desde el modelo
 	- manejar los eventos de edicion/validacion.

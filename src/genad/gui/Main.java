@@ -19,8 +19,10 @@ import genad.gui.misc.*;
  *	
  * @author  kronenthaler
  */
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements View{
 	private static Main me=null;
+	private Model model;
+	
 	private Main() {
 		me=this;
 		try{
@@ -29,11 +31,6 @@ public class Main extends javax.swing.JFrame {
 		}catch(Exception e){}
 		
 		initComponents();
-		
-		genad.model.Model model=genad.model.Model.getInstance();
-		model.load(new File("project.xml"));
-		
-		((TreeView)tree).update(model);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -45,9 +42,9 @@ public class Main extends javax.swing.JFrame {
         */ tree=new  TreeView();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jToolBar1 = new javax.swing.JToolBar();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        newBtn = new javax.swing.JButton();
+        openBtn = new javax.swing.JButton();
+        saveBtn = new javax.swing.JButton();
         jSeparator5 = new javax.swing.JSeparator();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -78,12 +75,6 @@ public class Main extends javax.swing.JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setState(JFrame.MAXIMIZED_BOTH);
         jSplitPane1.setDividerLocation(200);
-        tree.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                treeMouseClicked(evt);
-            }
-        });
-
         jScrollPane1.setViewportView(tree);
 
         jSplitPane1.setLeftComponent(jScrollPane1);
@@ -98,38 +89,38 @@ public class Main extends javax.swing.JFrame {
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filenew.png")));
-        jButton1.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton1.setMaximumSize(new java.awt.Dimension(24, 24));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        newBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filenew.png")));
+        newBtn.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        newBtn.setMaximumSize(new java.awt.Dimension(24, 24));
+        newBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                newActionPerformed(evt);
             }
         });
 
-        jToolBar1.add(jButton1);
+        jToolBar1.add(newBtn);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileopen.png")));
-        jButton2.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton2.setMaximumSize(new java.awt.Dimension(24, 24));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        openBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileopen.png")));
+        openBtn.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        openBtn.setMaximumSize(new java.awt.Dimension(24, 24));
+        openBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                openActionPerformed(evt);
             }
         });
 
-        jToolBar1.add(jButton2);
+        jToolBar1.add(openBtn);
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filesave.png")));
-        jButton3.setMargin(new java.awt.Insets(5, 5, 5, 5));
-        jButton3.setMaximumSize(new java.awt.Dimension(24, 24));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        saveBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filesave.png")));
+        saveBtn.setMargin(new java.awt.Insets(5, 5, 5, 5));
+        saveBtn.setMaximumSize(new java.awt.Dimension(24, 24));
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                saveActionPerformed(evt);
             }
         });
 
-        jToolBar1.add(jButton3);
+        jToolBar1.add(saveBtn);
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator5.setMaximumSize(new java.awt.Dimension(5, 666));
@@ -168,16 +159,29 @@ public class Main extends javax.swing.JFrame {
         projectMen.setText("Project");
         newItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filenew.png")));
         newItem.setText("New...");
+        newItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newActionPerformed(evt);
+            }
+        });
+
         projectMen.add(newItem);
 
         projectMen.add(jSeparator3);
 
         openItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileopen.png")));
         openItem.setText("Open...");
+        openItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openActionPerformed(evt);
+            }
+        });
+
         projectMen.add(openItem);
 
         openRecentMen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileopen.png")));
         openRecentMen.setText("Open Recent");
+        openRecentMen.setEnabled(false);
         projectMen.add(openRecentMen);
 
         closeItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileclose.png")));
@@ -188,6 +192,12 @@ public class Main extends javax.swing.JFrame {
 
         saveItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filesave.png")));
         saveItem.setText("Save");
+        saveItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+
         projectMen.add(saveItem);
 
         saveAsItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/filesaveas.png")));
@@ -273,14 +283,6 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	private void treeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_treeMouseClicked
-		if(evt.getButton()==evt.BUTTON3){
-			((TreeView)tree).contextMenu.setLocation(evt.getXOnScreen(),evt.getYOnScreen());
-			((TreeView)tree).contextMenu.setVisible(true);
-		}else
-			((TreeView)tree).contextMenu.setVisible(false);
-	}//GEN-LAST:event_treeMouseClicked
-
 	private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 		// TODO add your handling code here:
 	}//GEN-LAST:event_jButton5ActionPerformed
@@ -289,13 +291,19 @@ public class Main extends javax.swing.JFrame {
 		// TODO add your handling code here:
 	}//GEN-LAST:event_jButton4ActionPerformed
 
-	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+	private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
 		// TODO add your handling code here:
-	}//GEN-LAST:event_jButton3ActionPerformed
+	}//GEN-LAST:event_saveActionPerformed
 
-	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_jButton2ActionPerformed
+	private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
+		JFileChooser fc=new JFileChooser("."/*System.getProperty("user.home")*/);
+		if(fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
+			model=Model.getInstance();
+			model.load(fc.getSelectedFile());
+			
+			attachToModel(model);
+		}
+	}//GEN-LAST:event_openActionPerformed
 
 	private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
 		System.exit(0);
@@ -324,13 +332,14 @@ public class Main extends javax.swing.JFrame {
 		new AboutDlg(this,true);
 	}//GEN-LAST:event_aboutItemActionPerformed
 
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-		jTabbedPane1.addTab("texto", new EntityView());
-		jTabbedPane1.setTabComponentAt(0,new TabComponent(jTabbedPane1, 0, "hola"));
+	private void newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newActionPerformed
+		/*jTabbedPane1.addTab("texto", new EntityView());
+		jTabbedPane1.setTabComponentAt(0,new TabComponent(jTabbedPane1, 0, "hola kfkfk sfd"));
 		
 		jTabbedPane1.setSelectedIndex(0);
-		jTabbedPane1StateChanged(null);
-	}//GEN-LAST:event_jButton1ActionPerformed
+		jTabbedPane1StateChanged(null);//*/
+		new PropertiesDlg(this, true).setVisible(true);
+	}//GEN-LAST:event_newActionPerformed
 		
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JMenuItem aboutItem;
@@ -339,9 +348,6 @@ public class Main extends javax.swing.JFrame {
     protected javax.swing.JMenuItem exitItem;
     protected javax.swing.JMenuItem generateItem;
     protected javax.swing.JMenu helpMen;
-    protected javax.swing.JButton jButton1;
-    protected javax.swing.JButton jButton2;
-    protected javax.swing.JButton jButton3;
     protected javax.swing.JButton jButton4;
     protected javax.swing.JButton jButton5;
     protected javax.swing.JLabel jLabel1;
@@ -356,12 +362,15 @@ public class Main extends javax.swing.JFrame {
     protected javax.swing.JSplitPane jSplitPane1;
     protected javax.swing.JTabbedPane jTabbedPane1;
     protected javax.swing.JToolBar jToolBar1;
+    protected javax.swing.JButton newBtn;
     protected javax.swing.JMenuItem newItem;
+    protected javax.swing.JButton openBtn;
     protected javax.swing.JMenuItem openItem;
     protected javax.swing.JMenu openRecentMen;
     protected javax.swing.JMenu projectMen;
     protected javax.swing.JMenuItem propertiesItem;
     protected javax.swing.JMenuItem saveAsItem;
+    protected javax.swing.JButton saveBtn;
     protected javax.swing.JMenuItem saveItem;
     protected javax.swing.JMenu settingsMen;
     protected javax.swing.JTree tree;
@@ -371,5 +380,14 @@ public class Main extends javax.swing.JFrame {
 		if(me==null)
 			me=new Main();
 		return me;
+	}
+
+	public void update(Model subject) {
+		setTitle("GenAd - "+subject.getLoadedPath()+(subject.isChanged()?" *":""));
+	}
+
+	public void attachToModel(Model subject) {
+		model.attachView(this);
+		((TreeView)tree).attachToModel(model);
 	}
 }

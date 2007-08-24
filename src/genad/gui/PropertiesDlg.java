@@ -1,5 +1,20 @@
 package genad.gui;
 
+import java.io.*;
+import java.awt.*;
+import java.util.*;
+import javax.swing.*;
+import java.awt.event.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
+
+import genad.*;
+import genad.gui.*;
+import genad.model.*;
+import genad.config.*;
+import genad.engine.*;
+
+
 /**
  *
  * @author  kronenthaler
@@ -9,6 +24,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	public PropertiesDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
+		Utils.centerComponent(this);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -45,8 +61,10 @@ public class PropertiesDlg extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Properties");
         setResizable(false);
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/cancel.png")));
         jButton1.setText("Cancel");
 
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/ok.png")));
         jButton3.setText("OK");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("General"));
@@ -60,7 +78,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 
         jTextField1.setText("jTextField1");
 
-        jButton2.setText("jButton2");
+        jButton2.setText("...");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,7 +208,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Database Producction"));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Database Production"));
         jTextField6.setText("jTextField2");
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);

@@ -33,6 +33,11 @@ public class Entity{
 		childs=new Hashtable<String, Entity>();
 	}
 	
+	public Entity(String _name){
+		super();
+		name=_name;
+	}
+	
 	//load an entity from xml Node
 	protected Entity load(Node current, Entity _parent){
 		parent=_parent;

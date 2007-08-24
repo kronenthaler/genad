@@ -38,7 +38,8 @@ public class TabComponent extends javax.swing.JPanel {
         titleLab.setBackground(Utils.getColor(Utils.TABBED_SELECTED));
         titleLab.setText(text);
 
-        crossLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/fileclose.png")));
+        crossLab.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        crossLab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons/tabclose.png")));
         crossLab.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 crossLabMouseClicked(evt);
@@ -56,7 +57,7 @@ public class TabComponent extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(titleLab, javax.swing.GroupLayout.PREFERRED_SIZE, 36, Short.MAX_VALUE)
+                .addComponent(titleLab, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(crossLab, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -68,11 +69,11 @@ public class TabComponent extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	private void crossLabMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseExited
-		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/fileclose.png")));
+		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/tabclose.png")));
 	}//GEN-LAST:event_crossLabMouseExited
 
 	private void crossLabMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseEntered
-		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/fileclose_over.png")));
+		crossLab.setIcon(new ImageIcon(getClass().getResource("/images/icons/tabclose_over.png")));
 	}//GEN-LAST:event_crossLabMouseEntered
 
 	private void crossLabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crossLabMouseClicked

@@ -5,4 +5,5 @@ package genad.model;
  */
 public interface View {
 	public void update(Model subject);
+	public void attachToModel(Model subject);
 }
