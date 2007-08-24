@@ -25,8 +25,8 @@ public class Main extends javax.swing.JFrame implements View{
 	
 	private Main() {
 		try{
-		//	PlasticXPLookAndFeel.setTabStyle("Metal");
-		//	UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+			PlasticXPLookAndFeel.setTabStyle("Metal");
+			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
 		}catch(Exception e){}
 		
 		initComponents();

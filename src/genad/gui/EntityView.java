@@ -293,6 +293,7 @@ public class EntityView extends javax.swing.JPanel {
 		Frame f=new Frame();
 		JSplitPane sp=new JSplitPane();
 		JTabbedPane tp=new JTabbedPane();
+		tp.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 		sp.setRightComponent(tp);
 		f.add(sp);
 		tp.addTab("aglo",new EntityView(new Entity("pepe",null)));
