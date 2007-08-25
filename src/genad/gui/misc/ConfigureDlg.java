@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.event.*;
 import javax.swing.table.*;
 
 import genad.*;
@@ -13,39 +14,71 @@ import genad.model.*;
 import genad.config.*;
 import genad.engine.*;
 
-
 /**
  *
  * @author  kronenthaler
  */
 public class ConfigureDlg extends javax.swing.JDialog {
-	//@TODO: mover los paneles a clases separadas y agregar esos paneles a la paleta de componentes.
+	
 	public ConfigureDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
-		
-		jTabbedPane1.setIconAt(0,IconsManager.LANGS);
-		//jTabbedPane1.setIconAt(1,IconsManager.FIELDS);
-		//jTabbedPane1.setIconAt(2,IconsManager.MODS);
-		
 		Utils.centerComponent(this);
 		setVisible(true);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        cancelBtn = new javax.swing.JButton();
-        applyBtn = new javax.swing.JButton();
-        okBtn = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        langsPanel1 = new genad.gui.misc.LangsPanel();
+        langsPanel = new LangsPanel();
+        fieldsConfigPanel = new FieldsConfigPanel();
+        modulesConfigPanel = new ModulesConfigPanel();
+        okBtn = new javax.swing.JButton();
+        applyBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        cancelBtn.setIcon(IconsManager.CANCEL);
-        cancelBtn.setText("Cancel");
-        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+        org.jdesktop.layout.GroupLayout langsPanelLayout = new org.jdesktop.layout.GroupLayout(langsPanel);
+        langsPanel.setLayout(langsPanelLayout);
+        langsPanelLayout.setHorizontalGroup(
+            langsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 419, Short.MAX_VALUE)
+        );
+        langsPanelLayout.setVerticalGroup(
+            langsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 230, Short.MAX_VALUE)
+        );
+        jTabbedPane1.addTab("Languages", langsPanel);
+
+        org.jdesktop.layout.GroupLayout fieldsConfigPanelLayout = new org.jdesktop.layout.GroupLayout(fieldsConfigPanel);
+        fieldsConfigPanel.setLayout(fieldsConfigPanelLayout);
+        fieldsConfigPanelLayout.setHorizontalGroup(
+            fieldsConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 419, Short.MAX_VALUE)
+        );
+        fieldsConfigPanelLayout.setVerticalGroup(
+            fieldsConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 230, Short.MAX_VALUE)
+        );
+        jTabbedPane1.addTab("Fields", fieldsConfigPanel);
+
+        org.jdesktop.layout.GroupLayout modulesConfigPanelLayout = new org.jdesktop.layout.GroupLayout(modulesConfigPanel);
+        modulesConfigPanel.setLayout(modulesConfigPanelLayout);
+        modulesConfigPanelLayout.setHorizontalGroup(
+            modulesConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 419, Short.MAX_VALUE)
+        );
+        modulesConfigPanelLayout.setVerticalGroup(
+            modulesConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 230, Short.MAX_VALUE)
+        );
+        jTabbedPane1.addTab("Modules", modulesConfigPanel);
+
+        okBtn.setIcon(IconsManager.OK);
+        okBtn.setText("OK");
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelBtnActionPerformed(evt);
+                okBtnActionPerformed(evt);
             }
         });
 
@@ -57,58 +90,44 @@ public class ConfigureDlg extends javax.swing.JDialog {
             }
         });
 
-        okBtn.setIcon(IconsManager.OK);
-        okBtn.setText("OK");
-        okBtn.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setIcon(IconsManager.CANCEL);
+        cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okBtnActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
             }
         });
 
-        jTabbedPane1.addTab("Languages", new javax.swing.ImageIcon(getClass().getResource("/images/icons/plugins.png")), langsPanel1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(173, Short.MAX_VALUE)
-                .addComponent(okBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(applyBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancelBtn)
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(175, Short.MAX_VALUE)
+                .add(okBtn)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(applyBtn)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(cancelBtn)
                 .addContainerGap())
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {applyBtn, cancelBtn, okBtn});
+        layout.linkSize(new java.awt.Component[] {applyBtn, cancelBtn, okBtn}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cancelBtn)
-                    .addComponent(applyBtn)
-                    .addComponent(okBtn))
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 257, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(cancelBtn)
+                    .add(applyBtn)
+                    .add(okBtn))
                 .addContainerGap())
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-		applyBtnActionPerformed(evt);
-		dispose();
-		setVisible(false);
-	}//GEN-LAST:event_okBtnActionPerformed
-
-	private void applyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtnActionPerformed
-		langsPanel1.apply();
-		//fieldsConfigPanel1.apply();
-		//modulesConfigPanel1.apply();
-	}//GEN-LAST:event_applyBtnActionPerformed
 
 	private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
 		ConfigManager.getInstance().refreshConfiguration(); //doing rollback from any unsaved data
@@ -116,12 +135,25 @@ public class ConfigureDlg extends javax.swing.JDialog {
 		setVisible(false);
 	}//GEN-LAST:event_cancelBtnActionPerformed
 
+	private void applyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtnActionPerformed
+		((Applicable)langsPanel).apply();
+		((Applicable)fieldsConfigPanel).apply();
+		((Applicable)modulesConfigPanel).apply();
+	}//GEN-LAST:event_applyBtnActionPerformed
+
+	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+		applyBtnActionPerformed(evt);
+		dispose();
+		setVisible(false);
+	}//GEN-LAST:event_okBtnActionPerformed
+	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton applyBtn;
     protected javax.swing.JButton cancelBtn;
+    protected javax.swing.JPanel fieldsConfigPanel;
     protected javax.swing.JTabbedPane jTabbedPane1;
-    protected genad.gui.misc.LangsPanel langsPanel1;
+    protected javax.swing.JPanel langsPanel;
+    protected javax.swing.JPanel modulesConfigPanel;
     protected javax.swing.JButton okBtn;
     // End of variables declaration//GEN-END:variables
-	
 }

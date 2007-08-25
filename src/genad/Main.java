@@ -16,6 +16,7 @@ public class Main {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Splash.getInstance();
+				//genad.gui.Main.getInstance();
 			}
 		});
 	}

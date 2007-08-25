@@ -26,8 +26,7 @@ public class TreeView extends JTree implements View{
 	private JMenuItem editEntity, addEntity, deleteEntity, editModule;
 	private JTabbedPane viewer;
 	private int x,y;
-	
-	
+		
 	public TreeView(JTabbedPane _viewer){
 		viewer=_viewer;
 		
@@ -77,7 +76,7 @@ public class TreeView extends JTree implements View{
         });
 	}
 	
-	private void editEntity(ActionEvent evt){
+	public void editEntity(ActionEvent evt){
 		TreePath tp=getPathForLocation(x,y);
 		Object[] path=tp.getPath();
 		Model model=Model.getInstance();
@@ -86,17 +85,19 @@ public class TreeView extends JTree implements View{
 		for(int i=3;i<path.length;i++)
 			current=current.getChild(path[i].toString());
 		
-		for(int i=0,n=viewer.getTabCount();i<n;i++){
+		/*for(int i=0,n=viewer.getTabCount();i<n;i++){
 			if(((TabComponent)viewer.getTabComponentAt(i)).getTitle().equals(path[path.length-1].toString())){
 				viewer.setSelectedIndex(i);
 				return;
 			}
-		}
+		}*/
 		
-		viewer.addTab("", new EntityView(current));
-		viewer.setTabComponentAt(viewer.getTabCount()-1,new TabComponent(viewer, viewer.getTabCount()-1, path[path.length-1].toString()));
+		viewer.addTab("",new EntityView(current));
+		//viewer.setTabComponentAt(viewer.getTabCount()-1,new TabComponent(viewer, viewer.getTabCount()-1,path[path.length-1].toString() ));//path[path.length-1].toString()
 		viewer.setSelectedIndex(viewer.getTabCount()-1);
-		//viewer.getChangeListeners()[0].stateChanged(null);
+		viewer.getChangeListeners()[0].stateChanged(null);
+		viewer.doLayout();
+		viewer.validate();
 	}
 	
 	private void addEntity(ActionEvent evt){

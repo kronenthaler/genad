@@ -32,6 +32,8 @@ public class Splash extends JDialog{
 		final int width=background.getIconWidth();
 		final int height=background.getIconHeight();
 				
+		
+		
 		//fire the thread initializing the environment
 		new Thread(new Runnable(){
 			public void run(){
@@ -45,13 +47,11 @@ public class Splash extends JDialog{
 				
 				JFrame frame=genad.gui.Main.getInstance();
 				frame.setSize(tk.getScreenSize());
-				frame.setVisible(true);
 				
 				setVisible(false);
 				dispose();
-				//System.exit(0);
 			}
-		}).start();
+		}).start();//*/
 		
 		setAlwaysOnTop(true);
 		setResizable(false);

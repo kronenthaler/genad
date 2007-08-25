@@ -30,6 +30,13 @@ public class Main extends javax.swing.JFrame implements View{
 		}catch(Exception e){}
 		
 		initComponents();
+		
+		//openActionPerformed(null);
+		//model=Model.getInstance();
+		//model.load(new File("project.xml"));
+		//attachToModel(model);
+		
+		setVisible(true);
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -147,6 +154,12 @@ public class Main extends javax.swing.JFrame implements View{
 
         jSplitPane1.setDividerLocation(200);
         tabbedPanel.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        tabbedPanel.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabbedPanelStateChanged(evt);
+            }
+        });
+
         jSplitPane1.setRightComponent(tabbedPanel);
 
         jScrollPane1.setViewportView(tree);
@@ -222,7 +235,7 @@ public class Main extends javax.swing.JFrame implements View{
         propertiesItem.setEnabled(false);
         propertiesItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                propertiesItempropertiesActionPerformed(evt);
+                propertiesActionPerformed(evt);
             }
         });
 
@@ -308,6 +321,23 @@ public class Main extends javax.swing.JFrame implements View{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private void tabbedPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPanelStateChanged
+		/*try{
+			int index=tabbedPanel.getSelectedIndex();
+			if(index==-1) return;
+			Component comp=tabbedPanel.getTabComponentAt(index);
+			
+			if(comp!=null){
+				for(int i=0;i<tabbedPanel.getTabCount();i++){
+					tabbedPanel.getTabComponentAt(i)
+					.setBackground(Utils.getColor(i==index?Utils.TABBED_SELECTED:Utils.TABBED_BACKGROUND));
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}*/
+	}//GEN-LAST:event_tabbedPanelStateChanged
+/*}*/
 	private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
 		JFileChooser fc=new JFileChooser("."/*System.getProperty("user.home")*/);
 		//TODO: add filterfiles
@@ -322,7 +352,7 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_aboutItemActionPerformed
 
 	private void configureItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_configureItemActionPerformed
-		// TODO	add your handling code here:
+		new ConfigureDlg(this,true);
 	}//GEN-LAST:event_configureItemActionPerformed
 
 	private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
@@ -341,10 +371,6 @@ public class Main extends javax.swing.JFrame implements View{
 		// TODO add your handling code here:
 	}//GEN-LAST:event_generateItemgenerateActionPerformed
 
-	private void propertiesItempropertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesItempropertiesActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_propertiesItempropertiesActionPerformed
-
 	private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
 		exitItemActionPerformed(null);
 	}//GEN-LAST:event_windowClosing
@@ -354,7 +380,7 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_generateActionPerformed
 
 	private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed
-		// TODO add your handling code here:
+		new PropertiesDlg(this, true);
 	}//GEN-LAST:event_propertiesActionPerformed
 
 	private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
@@ -379,24 +405,9 @@ public class Main extends javax.swing.JFrame implements View{
 			attachToModel(model);
 		}
 	}//GEN-LAST:event_openActionPerformed
-/*
- try{
-			int index=tabbedPanel.getSelectedIndex();
-			if(index==-1) return;
-			Component comp=tabbedPanel.getTabComponentAt(index);
-			
-			if(comp!=null){
-				for(int i=0;i<tabbedPanel.getTabCount();i++){
-					tabbedPanel.getTabComponentAt(i)
-					.setBackground(Utils.getColor(i==index?Utils.TABBED_SELECTED:Utils.TABBED_BACKGROUND));
-				}
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
- */
+
 	private void newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newActionPerformed
-		new PropertiesDlg(this, true).setVisible(true);
+		new PropertiesDlg(this, true);
 	}//GEN-LAST:event_newActionPerformed
 		
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -453,9 +464,14 @@ public class Main extends javax.swing.JFrame implements View{
 		
 		generateBtn.setEnabled(subject.getLoadedPath()!=null);
 		generateItem.setEnabled(subject.getLoadedPath()!=null);
+		
+		//invalidate();
+		//repaint();
+		//SwingUtilities.updateComponentTreeUI(this);
 	}
 
 	public void attachToModel(Model subject) {
+		model=subject;
 		model.attachView(this);
 		((TreeView)tree).attachToModel(model);
 	}

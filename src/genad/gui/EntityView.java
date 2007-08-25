@@ -31,6 +31,8 @@ public class EntityView extends javax.swing.JPanel {
 			public void insertUpdate(DocumentEvent e){ nameChanged(e);}
 			public void removeUpdate(DocumentEvent e){ nameChanged(e);}
 		});
+		classNameTxt.requestFocus();
+		setVisible(true);
 	}
 	
 	private void nameChanged(DocumentEvent evt){
@@ -289,17 +291,26 @@ public class EntityView extends javax.swing.JPanel {
     protected javax.swing.JCheckBox sortableChk;
     // End of variables declaration//GEN-END:variables
 
-	public static void main(String a[]){
-		Frame f=new Frame();
+	/*public static void main(String a[]){
+		final JFrame f=new JFrame();
 		JSplitPane sp=new JSplitPane();
+
 		JTabbedPane tp=new JTabbedPane();
-		tp.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-		sp.setRightComponent(tp);
-		f.add(sp);
-		tp.addTab("aglo",new EntityView(new Entity("pepe",null)));
-		tp.setTabComponentAt(0,new TabComponent(tp, 0, "algo"));
+		tp.addTab("JTextField",new JTextField("some"));
+		tp.addTab("TextField",new TextField("some"));
 		
+		JButton b = new JButton("push me");
+		sp.setRightComponent(tp);
+		sp.setLeftComponent(b);
+		b.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				JOptionPane.showMessageDialog(new Frame(),"");
+
+			}
+		});
+
+		f.getContentPane().add(sp);
 		f.setSize(1000,768);
 		f.setVisible(true);
-	}
+	}*/
 }
