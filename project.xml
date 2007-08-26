@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1187810047902" by="kronenthaler" language="php">
+<project lastsaved="1188162634697" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
 	</file-server-conf>
@@ -28,8 +28,8 @@
 			<sortable value="0"/>
 			<form>
 				<field type="check">
-					<label>Nombre</label>
-					<db-field>t06_nombre</db-field>
+					<label><![CDATA[Nombre]]></label>
+					<db-field><![CDATA[t06_nombre]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -37,8 +37,8 @@
 					</options>
 				</field>
 				<field type="check">
-					<label>OK</label>
-					<db-field>t06_ok</db-field>
+					<label><![CDATA[OK]]></label>
+					<db-field><![CDATA[t06_ok]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -46,8 +46,8 @@
 					</options>
 				</field>
 				<field type="radio">
-					<label>Publicado</label>
-					<db-field>t06_publicado</db-field>
+					<label><![CDATA[Publicado]]></label>
+					<db-field><![CDATA[t06_publicado]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -55,8 +55,8 @@
 					</options>
 				</field>
 				<field type="file">
-					<label>Archivo</label>
-					<db-field>t06_arc_arc1</db-field>
+					<label><![CDATA[Archivo]]></label>
+					<db-field><![CDATA[t06_arc_arc1]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -64,8 +64,8 @@
 					</options>
 				</field>
 				<field type="image">
-					<label>Imagen</label>
-					<db-field>t06_arc_img1</db-field>
+					<label><![CDATA[Imagen]]></label>
+					<db-field><![CDATA[t06_arc_img1]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -73,8 +73,8 @@
 					</options>
 				</field>
 				<field type="hidden">
-					<label></label>
-					<db-field>t06_hidden</db-field>
+					<label><![CDATA[]]></label>
+					<db-field><![CDATA[t06_hidden]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>0</show-in-form><!-- 0|1 -->
@@ -82,8 +82,8 @@
 					</options>
 				</field>
 				<field type="email">
-					<label>Correo</label>
-					<db-field>t06_email</db-field>
+					<label><![CDATA[Correo]]></label>
+					<db-field><![CDATA[t06_email]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -91,8 +91,8 @@
 					</options>
 				</field>
 				<field type="select">
-					<label>Select</label>
-					<db-field>t06_sel</db-field>
+					<label><![CDATA[Select]]></label>
+					<db-field><![CDATA[t06_sel]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -100,8 +100,8 @@
 					</options>
 				</field>
 				<field type="textarea">
-					<label>Desc corta</label>
-					<db-field>t06_text</db-field>
+					<label><![CDATA[Desc corta]]></label>
+					<db-field><![CDATA[t06_text]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -109,8 +109,8 @@
 					</options>
 				</field>
 				<field type="richtext">
-					<label>Desc Larga</label>
-					<db-field>t06_desc_larga</db-field>
+					<label><![CDATA[Desc Larga]]></label>
+					<db-field><![CDATA[t06_desc_larga]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -118,8 +118,8 @@
 					</options>
 				</field>
 				<field type="password">
-					<label>Password</label>
-					<db-field>t06_password</db-field>
+					<label><![CDATA[Password]]></label>
+					<db-field><![CDATA[t06_password]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -127,8 +127,8 @@
 					</options>
 				</field>
 			</form>
-			<entity name="A1" title="Ent A1">
-				<table name="t108_a1" primary-key="t108_id"/>
+			<entity name="A1" title="d">
+				<table name="d" primary-key="d"/>
 				<splitpage value="1"/>
 				<search value="0"/>
 				<just-pages value="0"/>
@@ -136,8 +136,8 @@
 				<sortable value="0"/>
 				<form>
 					<field type="check">
-						<label>Nombre</label>
-						<db-field>t108_nombre</db-field>
+						<label><![CDATA[Nombre]]></label>
+						<db-field><![CDATA[t108_nombre]]></db-field>
 						<required>1</required><!-- 0|1 -->
 						<show-in-list>1</show-in-list><!-- 0|1 -->
 						<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -145,8 +145,8 @@
 						</options>
 					</field>
 					<field type="email">
-						<label>Apellido</label>
-						<db-field>t108_apellido</db-field>
+						<label><![CDATA[Apellido]]></label>
+						<db-field><![CDATA[t108_apellido]]></db-field>
 						<required>0</required><!-- 0|1 -->
 						<show-in-list>0</show-in-list><!-- 0|1 -->
 						<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -154,8 +154,8 @@
 						</options>
 					</field>
 					<field type="textfield">
-						<label>idpadre</label>
-						<db-field>t106_id</db-field>
+						<label><![CDATA[idpadre]]></label>
+						<db-field><![CDATA[t106_id]]></db-field>
 						<required>0</required><!-- 0|1 -->
 						<show-in-list>1</show-in-list><!-- 0|1 -->
 						<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -174,11 +174,20 @@
 			<sortable value="0"/>
 			<form>
 				<field type="textfield">
-					<label>s</label>
-					<db-field>d</db-field>
+					<label><![CDATA[s]]></label>
+					<db-field><![CDATA[d]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="null">
+					<label><![CDATA[prueba]]></label>
+					<db-field><![CDATA[null]]></db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>0</show-in-form><!-- 0|1 -->
 					<options>
 					</options>
 				</field>
@@ -193,8 +202,8 @@
 			<sortable value="0"/>
 			<form>
 				<field type="textfield">
-					<label>campo1</label>
-					<db-field>t100_campo1</db-field>
+					<label><![CDATA[campo1]]></label>
+					<db-field><![CDATA[t100_campo1]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -211,8 +220,8 @@
 				<sortable value="0"/>
 				<form>
 					<field type="textfield">
-						<label>campo b2</label>
-						<db-field>t102_campob2</db-field>
+						<label><![CDATA[campo b2]]></label>
+						<db-field><![CDATA[t102_campob2]]></db-field>
 						<required>0</required><!-- 0|1 -->
 						<show-in-list>1</show-in-list><!-- 0|1 -->
 						<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -229,8 +238,8 @@
 					<sortable value="0"/>
 					<form>
 						<field type="textfield">
-							<label>campo b22</label>
-							<db-field>t103_campob22</db-field>
+							<label><![CDATA[campo b22]]></label>
+							<db-field><![CDATA[t103_campob22]]></db-field>
 							<required>0</required><!-- 0|1 -->
 							<show-in-list>1</show-in-list><!-- 0|1 -->
 							<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -248,8 +257,8 @@
 					<sortable value="0"/>
 					<form>
 						<field type="textfield">
-							<label>label</label>
-							<db-field>t104_campo</db-field>
+							<label><![CDATA[label]]></label>
+							<db-field><![CDATA[t104_campo]]></db-field>
 							<required>0</required><!-- 0|1 -->
 							<show-in-list>1</show-in-list><!-- 0|1 -->
 							<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -269,7 +278,7 @@
 				<form>
 					<field type="time">
 						<label><![CDATA[&eacute;]]></label>
-						<db-field>t105_campo</db-field>
+						<db-field><![CDATA[t105_campo]]></db-field>
 						<required>0</required><!-- 0|1 -->
 						<show-in-list>1</show-in-list><!-- 0|1 -->
 						<show-in-form>1</show-in-form><!-- 0|1 -->

@@ -23,7 +23,7 @@ import genad.engine.*;
 public class Entity{
 	private Vector<Field> form;
 	private Hashtable<String, Entity> childs;
-	private Entity parent;
+	public Entity parent;
 	private String name, title, primaryKey, tableName;
 	private boolean pager, search, sortable, justSchema, justPages;
 	private boolean changed=false;
@@ -79,9 +79,10 @@ public class Entity{
 				//recurrir para cargar subentidades
 				Entity child=new Entity();
 				//child.load(aux.item(i),this);
-				childs.put(aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim(),child.load(aux.item(i),null));
+				childs.put(aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim(),child.load(aux.item(i),this));
 			}
 		}
+		
 		return this;
 	}
 	
@@ -92,7 +93,39 @@ public class Entity{
 	}
 	
 	public String getName(){ return name; }
-	public void setName(String s){ name=s; setChanged();} 
+	public boolean setName(String s){
+		boolean flag=false;
+		
+		//System.err.println(name+": "+parent);
+		if(parent==null)
+			flag=Model.getInstance().renameEntity(name,s);
+		else
+			flag=parent.renameChild(name,s);
+		
+		if(flag){
+			name=s;
+			setChanged();
+		}
+		
+		return flag;
+	} 
+	private boolean renameChild(String src, String dst){
+		if(childs.get(dst)!=null) return false;
+		childs.put(dst, childs.get(src));
+		childs.remove(src);
+		return true;
+	}
+	
+	public String getTitle(){ return title; }
+	public void setTitle(String s){ title=s; setChanged(); } 
+	
+	public String getTableName(){ return tableName;	}
+	public void setTableName(String s){ tableName=s; setChanged(); } 
+	
+	public String getPrimaryKey(){ return primaryKey;	}
+	public void setPrimaryKey(String s){ primaryKey=s; setChanged(); } 
+	
+	public Vector<Field> getFields(){ return form; }
 	
 	public Enumeration<String> getChilds(){ return childs.keys(); } 
 	public Entity getChild(String name){ return childs.get(name); }
@@ -128,6 +161,7 @@ public class Entity{
 			ret+=(childs.get(e.nextElement())).toString(deep+"\t");	
 		
 		ret+=deep+"</entity>\n";
+		changed = false;
 		return ret;
 	}
 	

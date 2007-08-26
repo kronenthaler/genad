@@ -16,11 +16,13 @@ import genad.engine.*;
 import genad.gui.misc.*;
 
 /**
- *
+ *	TODO: desplegar el JComboBox en la celda de type
  * @author  kronenthaler
  */
 public class FieldsPanel extends javax.swing.JPanel {
-	public FieldsPanel() {
+	private Entity entity;
+	public FieldsPanel(Entity _entity) {
+		entity=_entity;
 		initComponents();
 		notifyUI();
 	}
@@ -36,7 +38,7 @@ public class FieldsPanel extends javax.swing.JPanel {
         removeBtn = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Fields"));
-        fieldsTable.setModel(new FieldsTableModel());
+        fieldsTable.setModel(new FieldsTableModel(entity.getFields()));
         scrollPanel.setViewportView(fieldsTable);
 
         addBtn.setIcon(IconsManager.ADD);
@@ -107,9 +109,9 @@ public class FieldsPanel extends javax.swing.JPanel {
                 .add(moveDownBtn)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(optionsBtn)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 139, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 144, Short.MAX_VALUE)
                 .add(removeBtn))
-            .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
+            .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -138,14 +140,6 @@ public class FieldsPanel extends javax.swing.JPanel {
 		fieldsTable.updateUI();//*/
 	}
 	
-	/*@Deprecated
-	public static void main(String []a){
-		Frame f=new Frame();
-		f.add(new FieldsPanel());
-		f.setSize(500,500);
-		f.setVisible(true);
-	}*/
-	
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton addBtn;
     protected javax.swing.JTable fieldsTable;
@@ -155,78 +149,84 @@ public class FieldsPanel extends javax.swing.JPanel {
     protected javax.swing.JButton removeBtn;
     protected javax.swing.JScrollPane scrollPanel;
     // End of variables declaration//GEN-END:variables
+
+	protected static class FieldsTableModel implements TableModel{
+		private Vector<Field> fields=new Vector<Field>();
+		private String[] titles={"Label","Field Map","Type","Required","Visible","Listable"};
+		private Class[] classes={String.class, String.class, JComboBox.class, Boolean.class, Boolean.class, Boolean.class};
+
+		public FieldsTableModel(Vector<Field> f){
+			super();
+			fields=f;
+		}
+		
+		public int getRowCount() {
+			return fields.size();
+		}
+
+		public int getColumnCount() {
+			return titles.length;
+		}
+
+		public String getColumnName(int columnIndex) {
+			return titles[columnIndex];
+		}
+
+		public Class getColumnClass(int columnIndex) {
+			return classes[columnIndex];
+		}
+
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return true;
+		}
+
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			if(columnIndex==0) return fields.get(rowIndex).label;
+			if(columnIndex==1) return fields.get(rowIndex).map;
+			if(columnIndex==2) return fields.get(rowIndex).type;
+			if(columnIndex==3) return fields.get(rowIndex).required;
+			if(columnIndex==4) return fields.get(rowIndex).visible;
+			if(columnIndex==5) return fields.get(rowIndex).listable;
+			return null;
+		}
+
+		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+			if(columnIndex==0) fields.get(rowIndex).label=aValue.toString();
+			if(columnIndex==1) fields.get(rowIndex).map=aValue.toString();
+			if(columnIndex==2) fields.get(rowIndex).type=aValue.toString();
+			if(columnIndex==3) fields.get(rowIndex).required=(Boolean)aValue;
+			if(columnIndex==4) fields.get(rowIndex).visible=(Boolean)aValue;
+			if(columnIndex==5) fields.get(rowIndex).listable=(Boolean)aValue;
+		}
+
+		public void addRow(){
+			fields.add(new Field());
+		}
+
+		public void removeRow(int rowIndex){
+			if(rowIndex!=-1)
+				fields.remove(rowIndex);
+		}
+
+		public void moveUp(int rowIndex){
+			if(rowIndex!=-1 && rowIndex>0){
+				Field aux=fields.get(rowIndex);
+				fields.remove(rowIndex);
+				fields.insertElementAt(aux,rowIndex-1);
+			}
+		}
+
+		public void moveDown(int rowIndex){
+			if(rowIndex!=-1 && rowIndex+1<fields.size()){
+				Field aux=fields.get(rowIndex);
+				fields.remove(rowIndex);
+				fields.insertElementAt(aux,rowIndex+1);
+			}
+		}
+
+		/* useless for now */
+		public void addTableModelListener(TableModelListener l){}
+		public void removeTableModelListener(TableModelListener l){}
+	}
 }
 
-class FieldsTableModel implements TableModel{
-	private Vector<Field> fields=new Vector<Field>();
-	private String[] titles={"Label","Field Map","Type","Required","Visible","Listable"};
-	private Class[] classes={String.class, String.class, JComboBox.class, Boolean.class, Boolean.class, Boolean.class};
-	
-	public int getRowCount() {
-		return fields.size();
-	}
-
-	public int getColumnCount() {
-		return titles.length;
-	}
-
-	public String getColumnName(int columnIndex) {
-		return titles[columnIndex];
-	}
-
-	public Class getColumnClass(int columnIndex) {
-		return classes[columnIndex];
-	}
-
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
-	}
-
-	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(columnIndex==0) return fields.get(rowIndex).label;
-		if(columnIndex==1) return fields.get(rowIndex).map;
-		if(columnIndex==2) return fields.get(rowIndex).type;
-		if(columnIndex==3) return fields.get(rowIndex).required;
-		if(columnIndex==4) return fields.get(rowIndex).visible;
-		if(columnIndex==5) return fields.get(rowIndex).listable;
-		return null;
-	}
-
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		if(columnIndex==0) fields.get(rowIndex).label=aValue.toString();
-		if(columnIndex==1) fields.get(rowIndex).map=aValue.toString();
-		if(columnIndex==2) fields.get(rowIndex).type=aValue.toString();
-		if(columnIndex==3) fields.get(rowIndex).required=(Boolean)aValue;
-		if(columnIndex==4) fields.get(rowIndex).visible=(Boolean)aValue;
-		if(columnIndex==5) fields.get(rowIndex).listable=(Boolean)aValue;
-	}
-	
-	public void addRow(){
-		fields.add(new Field());
-	}
-	
-	public void removeRow(int rowIndex){
-		if(rowIndex!=-1)
-			fields.remove(rowIndex);
-	}
-	
-	public void moveUp(int rowIndex){
-		if(rowIndex!=-1 && rowIndex>0){
-			Field aux=fields.get(rowIndex);
-			fields.remove(rowIndex);
-			fields.insertElementAt(aux,rowIndex-1);
-		}
-	}
-	
-	public void moveDown(int rowIndex){
-		if(rowIndex!=-1 && rowIndex+1<fields.size()){
-			Field aux=fields.get(rowIndex);
-			fields.remove(rowIndex);
-			fields.insertElementAt(aux,rowIndex+1);
-		}
-	}
-	
-	/* useless for now */
-	public void addTableModelListener(TableModelListener l){}
-	public void removeTableModelListener(TableModelListener l){}
-}

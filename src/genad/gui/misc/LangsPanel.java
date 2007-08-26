@@ -22,6 +22,7 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 	public LangsPanel() {
 		initComponents();
 		progressBar.setVisible(false);
+		setVisible(true);
 	}
 
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents

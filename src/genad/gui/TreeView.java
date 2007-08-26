@@ -8,7 +8,7 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
 import javax.xml.parsers.*;
-//import org.w3c.dom.*;
+import org.netbeans.swing.tabcontrol.*;
 
 import genad.*;
 import genad.gui.*;
@@ -24,10 +24,10 @@ import genad.gui.misc.*;
 public class TreeView extends JTree implements View{
 	private JPopupMenu entityContextMenu,moduleContextMenu;
 	private JMenuItem editEntity, addEntity, deleteEntity, editModule;
-	private JTabbedPane viewer;
+	private TabbedContainer viewer;
 	private int x,y;
 		
-	public TreeView(JTabbedPane _viewer){
+	public TreeView(TabbedContainer _viewer){
 		viewer=_viewer;
 		
 		entityContextMenu=new JPopupMenu();
@@ -76,7 +76,7 @@ public class TreeView extends JTree implements View{
         });
 	}
 	
-	public void editEntity(ActionEvent evt){
+	private void editEntity(ActionEvent evt){
 		TreePath tp=getPathForLocation(x,y);
 		Object[] path=tp.getPath();
 		Model model=Model.getInstance();
@@ -85,19 +85,18 @@ public class TreeView extends JTree implements View{
 		for(int i=3;i<path.length;i++)
 			current=current.getChild(path[i].toString());
 		
-		/*for(int i=0,n=viewer.getTabCount();i<n;i++){
-			if(((TabComponent)viewer.getTabComponentAt(i)).getTitle().equals(path[path.length-1].toString())){
-				viewer.setSelectedIndex(i);
+		for(int i=0,n=viewer.getTabCount();i<n;i++){
+			if(viewer.getModel().getTab(i).getTooltip().equals(path[path.length-1].toString())){
+				viewer.getSelectionModel().setSelectedIndex(i);
 				return;
 			}
-		}*/
-		
-		viewer.addTab("",new EntityView(current));
-		//viewer.setTabComponentAt(viewer.getTabCount()-1,new TabComponent(viewer, viewer.getTabCount()-1,path[path.length-1].toString() ));//path[path.length-1].toString()
-		viewer.setSelectedIndex(viewer.getTabCount()-1);
-		viewer.getChangeListeners()[0].stateChanged(null);
-		viewer.doLayout();
-		viewer.validate();
+		}
+		//System.err.println("Entitiy: "+current.parent);
+		EntityView ent=new EntityView(current, viewer);
+		TabData td=new TabData(ent,IconsManager.ENTITY,path[path.length-1].toString(),path[path.length-1].toString());
+		viewer.getModel().addTab(viewer.getTabCount(), td);
+		viewer.getSelectionModel().setSelectedIndex(viewer.getTabCount()-1);
+		ent.attachToModel(Model.getInstance());
 	}
 	
 	private void addEntity(ActionEvent evt){
@@ -128,8 +127,15 @@ public class TreeView extends JTree implements View{
 			if(JOptionPane.showConfirmDialog(Main.getInstance(),
 											 "Are you really sure?",
 											 "Confirmation",
-											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				model.removeEntity(path[2].toString());
+				for(int i=0,n=viewer.getTabCount();i<n;i++){
+					if(viewer.getModel().getTab(i).getTooltip().equals(path[2].toString())){
+						viewer.getModel().removeTab(i);
+						break;
+					}
+				}
+			}
 		}else{
 			Entity current=model.getEntity(path[2].toString());
 			for(int i=3;i<path.length-1;i++)
@@ -138,8 +144,15 @@ public class TreeView extends JTree implements View{
 			if(JOptionPane.showConfirmDialog(Main.getInstance(),
 											 "Are you really sure?",
 											 "Confirmation",
-											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				current.removeChild(path[path.length-1].toString());
+				for(int i=0,n=viewer.getTabCount();i<n;i++){
+					if(viewer.getModel().getTab(i).getTooltip().equals(path[path.length-1].toString())){
+						viewer.getModel().removeTab(i);
+						break;
+					}
+				}
+			}
 		}
 	}
 	

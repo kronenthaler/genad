@@ -35,7 +35,7 @@ public class Model{
 	private String pDBHost, pDBLogin, pDBPassword, pDBSchema;
 	private String dDBHost, dDBLogin, dDBPassword, dDBSchema;
 
-	private Model(){
+	public Model(){
 		views=new Vector<View>();
 		entities=new Hashtable<String, Entity>();
 		modules=new Hashtable<String, Module>();
@@ -147,6 +147,13 @@ public class Model{
 	
 	public void setLoadedPath(String path) { loadedPath=path; }
 	
+	public boolean renameEntity(String src, String dst){
+		if(entities.get(dst)!=null) return false;
+		entities.put(dst,entities.get(src));
+		entities.remove(src);
+		return true;
+	}
+	
 	public boolean addEntity(String name){
 		if(entities.get(name)!=null) return false;
 		entities.put(name,new Entity(name,null));
@@ -168,10 +175,12 @@ public class Model{
 		for(View v : views)
 			v.update(this);
 	}
-	
-	//singleton pattern
 	public static Model getInstance(){
-		if(me==null) me=new Model();
+		return getInstance(false);
+	}
+	//singleton pattern
+	public static Model getInstance(boolean newInstance){
+		if(me==null || newInstance) me=new Model();
 		return me;
 	}
 	
@@ -204,6 +213,4 @@ public class Model{
 		ret+="</project>\n";
 		return ret;
 	}
-
-	
 }

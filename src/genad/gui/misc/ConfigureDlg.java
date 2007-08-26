@@ -30,49 +30,15 @@ public class ConfigureDlg extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        langsPanel = new LangsPanel();
-        fieldsConfigPanel = new FieldsConfigPanel();
-        modulesConfigPanel = new ModulesConfigPanel();
+        langsPanel = new genad.gui.misc.LangsPanel();
         okBtn = new javax.swing.JButton();
         applyBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        org.jdesktop.layout.GroupLayout langsPanelLayout = new org.jdesktop.layout.GroupLayout(langsPanel);
-        langsPanel.setLayout(langsPanelLayout);
-        langsPanelLayout.setHorizontalGroup(
-            langsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 419, Short.MAX_VALUE)
-        );
-        langsPanelLayout.setVerticalGroup(
-            langsPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 230, Short.MAX_VALUE)
-        );
         jTabbedPane1.addTab("Languages", langsPanel);
 
-        org.jdesktop.layout.GroupLayout fieldsConfigPanelLayout = new org.jdesktop.layout.GroupLayout(fieldsConfigPanel);
-        fieldsConfigPanel.setLayout(fieldsConfigPanelLayout);
-        fieldsConfigPanelLayout.setHorizontalGroup(
-            fieldsConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 419, Short.MAX_VALUE)
-        );
-        fieldsConfigPanelLayout.setVerticalGroup(
-            fieldsConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 230, Short.MAX_VALUE)
-        );
-        jTabbedPane1.addTab("Fields", fieldsConfigPanel);
-
-        org.jdesktop.layout.GroupLayout modulesConfigPanelLayout = new org.jdesktop.layout.GroupLayout(modulesConfigPanel);
-        modulesConfigPanel.setLayout(modulesConfigPanelLayout);
-        modulesConfigPanelLayout.setHorizontalGroup(
-            modulesConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 419, Short.MAX_VALUE)
-        );
-        modulesConfigPanelLayout.setVerticalGroup(
-            modulesConfigPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(0, 230, Short.MAX_VALUE)
-        );
-        jTabbedPane1.addTab("Modules", modulesConfigPanel);
+        jTabbedPane1.getAccessibleContext().setAccessibleParent(jTabbedPane1);
 
         okBtn.setIcon(IconsManager.OK);
         okBtn.setText("OK");
@@ -102,15 +68,15 @@ public class ConfigureDlg extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(175, Short.MAX_VALUE)
+            .add(layout.createSequentialGroup()
+                .addContainerGap(257, Short.MAX_VALUE)
                 .add(okBtn)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(applyBtn)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(cancelBtn)
                 .addContainerGap())
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
         );
 
         layout.linkSize(new java.awt.Component[] {applyBtn, cancelBtn, okBtn}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
@@ -118,8 +84,8 @@ public class ConfigureDlg extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 257, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(cancelBtn)
                     .add(applyBtn)
@@ -137,8 +103,8 @@ public class ConfigureDlg extends javax.swing.JDialog {
 
 	private void applyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtnActionPerformed
 		((Applicable)langsPanel).apply();
-		((Applicable)fieldsConfigPanel).apply();
-		((Applicable)modulesConfigPanel).apply();
+		//((Applicable)fieldsConfigPanel).apply();
+		//((Applicable)modulesConfigPanel).apply();
 	}//GEN-LAST:event_applyBtnActionPerformed
 
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
@@ -150,10 +116,8 @@ public class ConfigureDlg extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton applyBtn;
     protected javax.swing.JButton cancelBtn;
-    protected javax.swing.JPanel fieldsConfigPanel;
     protected javax.swing.JTabbedPane jTabbedPane1;
-    protected javax.swing.JPanel langsPanel;
-    protected javax.swing.JPanel modulesConfigPanel;
+    protected genad.gui.misc.LangsPanel langsPanel;
     protected javax.swing.JButton okBtn;
     // End of variables declaration//GEN-END:variables
 }

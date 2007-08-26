@@ -43,10 +43,10 @@
               <Component id="moveDownBtn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="optionsBtn" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="139" max="32767" attributes="0"/>
+              <EmptySpace pref="144" max="32767" attributes="0"/>
               <Component id="removeBtn" min="-2" max="-2" attributes="0"/>
           </Group>
-          <Component id="scrollPanel" alignment="0" pref="286" max="32767" attributes="0"/>
+          <Component id="scrollPanel" alignment="0" pref="287" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -58,7 +58,7 @@
         <Component class="javax.swing.JTable" name="fieldsTable">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new FieldsTableModel()" type="code"/>
+              <Connection code="new FieldsTableModel(entity.getFields())" type="code"/>
             </Property>
           </Properties>
         </Component>

@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.table.*;
 import com.jgoodies.looks.plastic.*;
+import org.netbeans.swing.tabcontrol.*;
 
 import genad.*;
 import genad.gui.*;
@@ -22,7 +23,7 @@ import genad.gui.misc.*;
 public class Main extends javax.swing.JFrame implements View{
 	private static Main me=null;
 	private Model model;
-	
+		
 	private Main() {
 		try{
 			PlasticXPLookAndFeel.setTabStyle("Metal");
@@ -30,11 +31,7 @@ public class Main extends javax.swing.JFrame implements View{
 		}catch(Exception e){}
 		
 		initComponents();
-		
-		//openActionPerformed(null);
-		//model=Model.getInstance();
-		//model.load(new File("project.xml"));
-		//attachToModel(model);
+		splitPanel.setRightComponent(tabbedPanel);
 		
 		setVisible(true);
 	}
@@ -48,9 +45,9 @@ public class Main extends javax.swing.JFrame implements View{
         jSeparator5 = new javax.swing.JSeparator();
         propertiesBtn = new javax.swing.JButton();
         generateBtn = new javax.swing.JButton();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        tabbedPanel = new javax.swing.JTabbedPane();
+        splitPanel = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
+        tabbedPanel=new TabbedContainer(new DefaultTabDataModel(), TabbedContainer.TYPE_EDITOR);
         tree = new  TreeView(tabbedPanel);
 
         jProgressBar1 = new javax.swing.JProgressBar();
@@ -152,19 +149,10 @@ public class Main extends javax.swing.JFrame implements View{
 
         jToolBar1.add(generateBtn);
 
-        jSplitPane1.setDividerLocation(200);
-        tabbedPanel.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
-        tabbedPanel.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                tabbedPanelStateChanged(evt);
-            }
-        });
-
-        jSplitPane1.setRightComponent(tabbedPanel);
-
+        splitPanel.setDividerLocation(200);
         jScrollPane1.setViewportView(tree);
 
-        jSplitPane1.setLeftComponent(jScrollPane1);
+        splitPanel.setLeftComponent(jScrollPane1);
 
         jProgressBar1.setValue(25);
 
@@ -303,15 +291,15 @@ public class Main extends javax.swing.JFrame implements View{
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 148, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .add(jSplitPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
             .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+            .add(splitPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
                 .add(jToolBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jSplitPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+                .add(splitPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -321,26 +309,9 @@ public class Main extends javax.swing.JFrame implements View{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-	private void tabbedPanelStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tabbedPanelStateChanged
-		/*try{
-			int index=tabbedPanel.getSelectedIndex();
-			if(index==-1) return;
-			Component comp=tabbedPanel.getTabComponentAt(index);
-			
-			if(comp!=null){
-				for(int i=0;i<tabbedPanel.getTabCount();i++){
-					tabbedPanel.getTabComponentAt(i)
-					.setBackground(Utils.getColor(i==index?Utils.TABBED_SELECTED:Utils.TABBED_BACKGROUND));
-				}
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}*/
-	}//GEN-LAST:event_tabbedPanelStateChanged
-/*}*/
 	private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
 		JFileChooser fc=new JFileChooser("."/*System.getProperty("user.home")*/);
-		//TODO: add filterfiles
+		fc.setFileFilter(new ProjectFileFilter());
 		if(fc.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
 			model.setLoadedPath(fc.getSelectedFile().toString());
 			saveActionPerformed(evt);
@@ -396,10 +367,25 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_saveActionPerformed
 
 	private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
+		if(model!=null && model.isChanged()){
+			int opt=JOptionPane.showConfirmDialog(this,
+												  "The project was changed. Do you want to save the changes?",
+												  "Confirmation",
+												  JOptionPane.YES_NO_CANCEL_OPTION);
+			if(opt==JOptionPane.CANCEL_OPTION) return;
+			if(opt==JOptionPane.YES_OPTION){
+				saveActionPerformed(evt);
+				if(model.isChanged()) return; //yes and cancel in the saveas dialog
+			}
+		}
+		
 		JFileChooser fc=new JFileChooser("."/*System.getProperty("user.home")*/);
-		//TODO: add filterfiles
+		fc.setFileFilter(new ProjectFileFilter());
+		
 		if(fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
-			model=Model.getInstance();
+			tabbedPanel.getModel().removeTabs(0, tabbedPanel.getTabCount());//'close' all tabs
+			
+			model=Model.getInstance(true);//create a new model, ONLY CAN BE CALL FROM HERE and newActionPerformed
 			model.load(fc.getSelectedFile());
 			
 			attachToModel(model);
@@ -427,7 +413,6 @@ public class Main extends javax.swing.JFrame implements View{
     protected javax.swing.JSeparator jSeparator7;
     protected javax.swing.JSeparator jSeparator8;
     protected javax.swing.JSeparator jSeparator9;
-    protected javax.swing.JSplitPane jSplitPane1;
     protected javax.swing.JToolBar jToolBar1;
     protected javax.swing.JButton newBtn;
     protected javax.swing.JMenuItem newItem;
@@ -441,10 +426,11 @@ public class Main extends javax.swing.JFrame implements View{
     protected javax.swing.JButton saveBtn;
     protected javax.swing.JMenuItem saveItem;
     protected javax.swing.JMenu settingsMen;
-    protected javax.swing.JTabbedPane tabbedPanel;
+    protected javax.swing.JSplitPane splitPanel;
     protected javax.swing.JTree tree;
     // End of variables declaration//GEN-END:variables
-
+	protected TabbedContainer tabbedPanel;
+		
 	public static Main getInstance(){
 		if(me==null) me=new Main();
 		return me;
@@ -464,10 +450,6 @@ public class Main extends javax.swing.JFrame implements View{
 		
 		generateBtn.setEnabled(subject.getLoadedPath()!=null);
 		generateItem.setEnabled(subject.getLoadedPath()!=null);
-		
-		//invalidate();
-		//repaint();
-		//SwingUtilities.updateComponentTreeUI(this);
 	}
 
 	public void attachToModel(Model subject) {
@@ -475,4 +457,13 @@ public class Main extends javax.swing.JFrame implements View{
 		model.attachView(this);
 		((TreeView)tree).attachToModel(model);
 	}
+	
+	private static class ProjectFileFilter extends javax.swing.filechooser.FileFilter{
+		public boolean accept(File f) {
+			return f.isDirectory() || f.getAbsolutePath().endsWith(".xml");
+		}
+		public String getDescription() {
+			return "GenAd Project Files";
+		}
+	};
 }
