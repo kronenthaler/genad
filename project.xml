@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188162634697" by="kronenthaler" language="php">
+<project lastsaved="1188226841576" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
 	</file-server-conf>
@@ -130,12 +130,12 @@
 			<entity name="A1" title="d">
 				<table name="d" primary-key="d"/>
 				<splitpage value="1"/>
-				<search value="0"/>
-				<just-pages value="0"/>
-				<just-schema value="0"/>
-				<sortable value="0"/>
+				<search value="1"/>
+				<just-pages value="1"/>
+				<just-schema value="1"/>
+				<sortable value="1"/>
 				<form>
-					<field type="check">
+					<field type="textfield">
 						<label><![CDATA[Nombre]]></label>
 						<db-field><![CDATA[t108_nombre]]></db-field>
 						<required>1</required><!-- 0|1 -->
@@ -144,7 +144,7 @@
 						<options>
 						</options>
 					</field>
-					<field type="email">
+					<field type="password">
 						<label><![CDATA[Apellido]]></label>
 						<db-field><![CDATA[t108_apellido]]></db-field>
 						<required>0</required><!-- 0|1 -->
@@ -153,7 +153,7 @@
 						<options>
 						</options>
 					</field>
-					<field type="textfield">
+					<field type="integer">
 						<label><![CDATA[idpadre]]></label>
 						<db-field><![CDATA[t106_id]]></db-field>
 						<required>0</required><!-- 0|1 -->
@@ -182,7 +182,7 @@
 					<options>
 					</options>
 				</field>
-				<field type="null">
+				<field type="datetime">
 					<label><![CDATA[prueba]]></label>
 					<db-field><![CDATA[null]]></db-field>
 					<required>0</required><!-- 0|1 -->
@@ -256,7 +256,7 @@
 					<just-schema value="0"/>
 					<sortable value="0"/>
 					<form>
-						<field type="textfield">
+						<field type="integer">
 							<label><![CDATA[label]]></label>
 							<db-field><![CDATA[t104_campo]]></db-field>
 							<required>0</required><!-- 0|1 -->

@@ -21,10 +21,44 @@ import genad.gui.misc.*;
  */
 public class FieldsPanel extends javax.swing.JPanel {
 	private Entity entity;
+	private PluginConfig cfg;
+	
 	public FieldsPanel(Entity _entity) {
 		entity=_entity;
 		initComponents();
+		
+		TableColumn column = null;
+        column = fieldsTable.getColumnModel().getColumn(3);
+        column.setResizable(false);
+        column.setMaxWidth(70);
+        column.setMinWidth(65);
+        column.setPreferredWidth(65);
+		
+		column = fieldsTable.getColumnModel().getColumn(4);
+        column.setResizable(false);
+        column.setMaxWidth(55);
+        column.setMinWidth(50);
+        column.setPreferredWidth(50);
+		
+		column = fieldsTable.getColumnModel().getColumn(5);
+        column.setResizable(false);
+        column.setMaxWidth(55);
+        column.setMinWidth(50);
+        column.setPreferredWidth(50);
+		
+		ConfigManager cfgMan=ConfigManager.getInstance();
+		cfg=cfgMan.getPluginsConfig().get(Model.getInstance().getLanguage());
+		
+		fieldsTable.setRowHeight(20);
+		fieldsTable.getTableHeader().setReorderingAllowed(false);
+		fieldsTable.setDefaultEditor(JComboBox.class,
+									 new DefaultCellEditor(new JComboBox(cfg.getValidTypes())));
+		
 		notifyUI();
+	}
+	
+	public FieldsPanel(){
+		this(new Entity("",null));
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -38,7 +72,8 @@ public class FieldsPanel extends javax.swing.JPanel {
         removeBtn = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("Fields"));
-        fieldsTable.setModel(new FieldsTableModel(entity.getFields()));
+        fieldsTable.setModel(new FieldsTableModel(entity.getFields(),entity));
+        fieldsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
         scrollPanel.setViewportView(fieldsTable);
 
         addBtn.setIcon(IconsManager.ADD);
@@ -88,11 +123,12 @@ public class FieldsPanel extends javax.swing.JPanel {
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                    .add(addBtn, 0, 0, Short.MAX_VALUE)
-                    .add(moveUpBtn, 0, 0, Short.MAX_VALUE)
-                    .add(optionsBtn, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(moveDownBtn, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(addBtn, 0, 0, Short.MAX_VALUE)
+                        .add(moveUpBtn, 0, 0, Short.MAX_VALUE)
+                        .add(optionsBtn, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(moveDownBtn, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .add(removeBtn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -109,9 +145,10 @@ public class FieldsPanel extends javax.swing.JPanel {
                 .add(moveDownBtn)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(optionsBtn)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 144, Short.MAX_VALUE)
-                .add(removeBtn))
-            .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 134, Short.MAX_VALUE)
+                .add(removeBtn)
+                .addContainerGap())
+            .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -150,14 +187,16 @@ public class FieldsPanel extends javax.swing.JPanel {
     protected javax.swing.JScrollPane scrollPanel;
     // End of variables declaration//GEN-END:variables
 
-	protected static class FieldsTableModel implements TableModel{
+	protected class FieldsTableModel implements TableModel{
 		private Vector<Field> fields=new Vector<Field>();
 		private String[] titles={"Label","Field Map","Type","Required","Visible","Listable"};
 		private Class[] classes={String.class, String.class, JComboBox.class, Boolean.class, Boolean.class, Boolean.class};
-
-		public FieldsTableModel(Vector<Field> f){
+		private Entity entity;
+		
+		public FieldsTableModel(Vector<Field> f,Entity e){
 			super();
 			fields=f;
+			entity=e;
 		}
 		
 		public int getRowCount() {
@@ -177,51 +216,52 @@ public class FieldsPanel extends javax.swing.JPanel {
 		}
 
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			//allow/deny edition by the type selected
+			String type=fields.get(rowIndex).getType();
+			FieldConfig fc=cfg.getFieldsConfig().get(type);
+			System.out.println(fc);
+			//0-label, 1-map, 2-type, 3-required, 4-visible, 5-listable
+			if(columnIndex==0 || columnIndex==3 || columnIndex==4)
+				return fc.isVisible();
+			else if(columnIndex==5)
+				return fc.isListable();
+			
 			return true;
 		}
 
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			if(columnIndex==0) return fields.get(rowIndex).label;
-			if(columnIndex==1) return fields.get(rowIndex).map;
-			if(columnIndex==2) return fields.get(rowIndex).type;
-			if(columnIndex==3) return fields.get(rowIndex).required;
-			if(columnIndex==4) return fields.get(rowIndex).visible;
-			if(columnIndex==5) return fields.get(rowIndex).listable;
+			if(columnIndex==0) return fields.get(rowIndex).getLabel();
+			if(columnIndex==1) return fields.get(rowIndex).getMap();
+			if(columnIndex==2) return fields.get(rowIndex).getType();
+			if(columnIndex==3) return fields.get(rowIndex).isRequired();
+			if(columnIndex==4) return fields.get(rowIndex).isVisible();
+			if(columnIndex==5) return fields.get(rowIndex).isListable();
 			return null;
 		}
 
 		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-			if(columnIndex==0) fields.get(rowIndex).label=aValue.toString();
-			if(columnIndex==1) fields.get(rowIndex).map=aValue.toString();
-			if(columnIndex==2) fields.get(rowIndex).type=aValue.toString();
-			if(columnIndex==3) fields.get(rowIndex).required=(Boolean)aValue;
-			if(columnIndex==4) fields.get(rowIndex).visible=(Boolean)aValue;
-			if(columnIndex==5) fields.get(rowIndex).listable=(Boolean)aValue;
+			if(columnIndex==0) fields.get(rowIndex).setLabel(aValue.toString());
+			if(columnIndex==1) fields.get(rowIndex).setMap(aValue.toString());
+			if(columnIndex==2) fields.get(rowIndex).setType(aValue.toString());
+			if(columnIndex==3) fields.get(rowIndex).setRequired((Boolean)aValue);
+			if(columnIndex==4) fields.get(rowIndex).setVisible((Boolean)aValue);
+			if(columnIndex==5) fields.get(rowIndex).setListable((Boolean)aValue);
 		}
 
 		public void addRow(){
-			fields.add(new Field());
+			entity.addField();
 		}
 
 		public void removeRow(int rowIndex){
-			if(rowIndex!=-1)
-				fields.remove(rowIndex);
+			entity.removeField(rowIndex);
 		}
 
 		public void moveUp(int rowIndex){
-			if(rowIndex!=-1 && rowIndex>0){
-				Field aux=fields.get(rowIndex);
-				fields.remove(rowIndex);
-				fields.insertElementAt(aux,rowIndex-1);
-			}
+			entity.moveUp(rowIndex);
 		}
 
 		public void moveDown(int rowIndex){
-			if(rowIndex!=-1 && rowIndex+1<fields.size()){
-				Field aux=fields.get(rowIndex);
-				fields.remove(rowIndex);
-				fields.insertElementAt(aux,rowIndex+1);
-			}
+			entity.moveDown(rowIndex);
 		}
 
 		/* useless for now */

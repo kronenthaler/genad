@@ -23,15 +23,15 @@ import genad.engine.*;
 public class Field{
 	private Entity container;
 	private Hashtable<String, String> options;
-	public String label, map, type;
-	public boolean required,visible,listable;
+	private String label, map, type;
+	private boolean required, visible, listable;
 		
-	public Field(){
+	public Field(Entity _container){
+		container=_container;
 		options=new Hashtable<String, String>();
 	}
 	
-	protected Field load(Node current,Entity _container){
-		container=_container;
+	protected Field load(Node current){
 		//recuperar la informacion asociada al campo
 		NodeList info=current.getChildNodes();
 		type=current.getAttributes().getNamedItem("type").getTextContent();
@@ -59,6 +59,43 @@ public class Field{
 		return this;
 	}
 	
+	public void setLabel(String label) {
+		this.label = label;
+		container.setChanged();
+	}
+		
+	public void setMap(String map) {
+		this.map = map;
+		container.setChanged();
+	}
+
+	public void setType(String type) {
+		this.type = type;
+		container.setChanged();
+	}
+
+	public void setRequired(boolean required) {
+		this.required = required;
+		container.setChanged();
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+		container.setChanged();
+	}
+	
+	public void setListable(boolean listable) {
+		this.listable = listable;
+		container.setChanged();
+	}
+
+	public String getLabel(){ return label;	}
+	public String getMap(){	return map; }
+	public String getType(){ return type;}
+	public boolean isRequired(){ return required; }
+	public boolean isVisible(){	return visible;	}
+	public boolean isListable(){ return listable; }
+
 	public String toString(String deep){
 		String 
 		ret=deep+"		<field type=\""+type+"\">\n"+

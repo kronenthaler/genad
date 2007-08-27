@@ -5,6 +5,11 @@ import java.util.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
+import genad.*;
+import genad.gui.*;
+import genad.model.*;
+import genad.engine.*;
+
 /**
  *	Plugin is equal to Language
  *	@author kronenthaler
@@ -21,7 +26,6 @@ public class PluginConfig{
 		modules=new Hashtable<String, ModuleConfig>();
 		
 		load(path);
-		//System.err.println(this);
 	}
 	
 	private void load(String _path){
@@ -82,8 +86,8 @@ public class PluginConfig{
 			Node current=root.item(i);
 			if(current.getNodeName().equals("field")){
 				FieldConfig fc=new FieldConfig(current.getAttributes().getNamedItem("type").getTextContent());
-				fc.setVisible(current.getAttributes().getNamedItem("visible").getTextContent().equals("1"));
-				fc.setListable(current.getAttributes().getNamedItem("listable").getTextContent().equals("1"));
+				fc.setVisible(current.getAttributes().getNamedItem("visible").getTextContent().equals("true"));
+				fc.setListable(current.getAttributes().getNamedItem("listable").getTextContent().equals("true"));
 				
 				NodeList childs=current.getChildNodes();
 				for(int j=0,m=childs.getLength();j<m;j++){
@@ -114,6 +118,8 @@ public class PluginConfig{
 	//TODO: estos metodos no deberian devolver la referencia a la tabla hash, sino una copia o algo que no sea sensible a modificaciones.
 	public Hashtable<String, FieldConfig> getFieldsConfig(){ return fields;}
 	public Hashtable<String, ModuleConfig> getModulesConfig(){ return modules;}
+	public String[] getValidTypes(){ return Utils.convert(fields.keys()); }
+	
 	
 	public String toString(){
 		String ret="<plugin>\n";

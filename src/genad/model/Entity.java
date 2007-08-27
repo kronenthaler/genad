@@ -67,10 +67,10 @@ public class Entity{
 				//recuperar todos los campos
 				NodeList fields=aux.item(i).getChildNodes();
 				for(int j=0,m=fields.getLength();j<m;j++){
-					Field field=new Field();
+					Field field=new Field(this);
 					if(fields.item(j).getNodeName().equalsIgnoreCase("field")){
 						//field.load(fields.item(j));
-						form.add(field.load(fields.item(j),this));
+						form.add(field.load(fields.item(j)));
 					}//ignore anything else
 				}
 			}else if(aux.item(i).getNodeName().equalsIgnoreCase("permissions")){
@@ -125,8 +125,28 @@ public class Entity{
 	public String getPrimaryKey(){ return primaryKey;	}
 	public void setPrimaryKey(String s){ primaryKey=s; setChanged(); } 
 	
+	public boolean hasPager(){ return pager; }
+	public void setPager(boolean v){ pager=v; setChanged();}
+	
+	public boolean hasSearch(){ return search; }
+	public void setSearch(boolean v){ search=v; setChanged();}
+	
+	public boolean isSortable(){ return sortable; }
+	public void setSortable(boolean v){ sortable=v; setChanged();}
+	
+	public boolean hasJustPages(){ return justPages; }
+	public void setJustPages(boolean v){ justPages=v; setChanged();}
+	
+	public boolean hasJustSchema(){ return justSchema; }
+	public void setJustSchema(boolean v){ justSchema=v; setChanged();}
+		
+		
+	//@TODO: shouldn't return the vector reference
 	public Vector<Field> getFields(){ return form; }
 	
+	
+	
+	//childs manipulation
 	public Enumeration<String> getChilds(){ return childs.keys(); } 
 	public Entity getChild(String name){ return childs.get(name); }
 	public boolean addChild(String name){
@@ -135,10 +155,37 @@ public class Entity{
 		setChanged();
 		return true;
 	}
-	
 	public void removeChild(String name){
 		childs.remove(name);
 		setChanged();
+	}
+	
+	//Form manipulation
+	public void addField(){
+		form.add(new Field(this));
+		setChanged();
+	}
+	public void removeField(int rowIndex){
+		if(rowIndex!=-1){
+			form.remove(rowIndex);
+			setChanged();
+		}
+	}
+	public void moveUp(int rowIndex){
+		if(rowIndex!=-1 && rowIndex>0){
+			Field aux=form.get(rowIndex);
+			form.remove(rowIndex);
+			form.insertElementAt(aux,rowIndex-1);
+			setChanged();
+		}
+	}
+	public void moveDown(int rowIndex){
+		if(rowIndex!=-1 && rowIndex+1<form.size()){
+			Field aux=form.get(rowIndex);
+			form.remove(rowIndex);
+			form.insertElementAt(aux,rowIndex+1);
+			setChanged();
+		}
 	}
 	
 	private String toString(String deep){

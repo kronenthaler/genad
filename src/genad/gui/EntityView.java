@@ -104,8 +104,14 @@ public class EntityView extends javax.swing.JPanel implements View{
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Primary Key:");
 
+        primaryKeyTxt.setText(entity.getPrimaryKey());
+
+        tableNameTxt.setText(entity.getTableName());
+
         classNameTxt.setText(entity.getName());
         classNameTxt.setVerifyInputWhenFocusTarget(false);
+
+        titleTxt.setText(entity.getTitle());
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Section Name:");
@@ -157,25 +163,55 @@ public class EntityView extends javax.swing.JPanel implements View{
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Options"));
+        pagerChk.setSelected(entity.hasPager());
         pagerChk.setText("Pager");
         pagerChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         pagerChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        pagerChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pagerChkActionPerformed(evt);
+            }
+        });
 
+        searchChk.setSelected(entity.hasSearch());
         searchChk.setText("Search");
         searchChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         searchChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        searchChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchChkActionPerformed(evt);
+            }
+        });
 
+        sortableChk.setSelected(entity.isSortable());
         sortableChk.setText("Sortable");
         sortableChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         sortableChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        sortableChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sortableChkActionPerformed(evt);
+            }
+        });
 
+        justSchemaChk.setSelected(entity.hasJustSchema());
         justSchemaChk.setText("Just Schema");
         justSchemaChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         justSchemaChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        justSchemaChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                justSchemaChkActionPerformed(evt);
+            }
+        });
 
+        justPagesChk.setSelected(entity.hasJustPages());
         justPagesChk.setText("Just Pages");
         justPagesChk.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         justPagesChk.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        justPagesChk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                justPagesChkActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -263,17 +299,19 @@ public class EntityView extends javax.swing.JPanel implements View{
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+            .add(layout.createSequentialGroup()
                 .addContainerGap()
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, fieldsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
-                    .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                         .add(propertiesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .add(12, 12, 12))
+                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(12, 12, 12))
+                    .add(layout.createSequentialGroup()
+                        .add(fieldsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -284,10 +322,30 @@ public class EntityView extends javax.swing.JPanel implements View{
                     .add(jPanel1, 0, 130, Short.MAX_VALUE)
                     .add(propertiesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(fieldsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
+                .add(fieldsPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+	private void justPagesChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_justPagesChkActionPerformed
+		entity.setJustPages(justPagesChk.isSelected());
+	}//GEN-LAST:event_justPagesChkActionPerformed
+
+	private void justSchemaChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_justSchemaChkActionPerformed
+		entity.setJustSchema(justSchemaChk.isSelected());
+	}//GEN-LAST:event_justSchemaChkActionPerformed
+
+	private void sortableChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortableChkActionPerformed
+		entity.setSortable(sortableChk.isSelected());
+	}//GEN-LAST:event_sortableChkActionPerformed
+
+	private void searchChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchChkActionPerformed
+		entity.setSearch(searchChk.isSelected());
+	}//GEN-LAST:event_searchChkActionPerformed
+
+	private void pagerChkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pagerChkActionPerformed
+		entity.setPager(pagerChk.isSelected());
+	}//GEN-LAST:event_pagerChkActionPerformed
 
 	public void update(Model subject){
 		List l=container.getModel().getTabs();

@@ -111,12 +111,12 @@
 	</modules>
 	<!-- FIELDS DEFINITION -->
 	<fields>
-		<field type="check" visible="false" listable="false"/>
-		<field type="radio" visible="false" listable="false"/>
-		<field type="time" visible="false" listable="false">
+		<field type="check" visible="true" listable="true"/>
+		<field type="radio" visible="true" listable="true"/>
+		<field type="time" visible="true" listable="true">
 			<option name="FORMAT" value="HHmmss|HHmm" />
 		</field>
-		<field type="file" visible="false" listable="false">
+		<field type="file" visible="true" listable="false">
 			<option name="CONTROL_TYPE" value="BUTTON" />
 			<option name="DEST_PATH" value="archivos/" />
 			<option name="VALID_EXTENSIONS" value="*" />
@@ -124,10 +124,10 @@
 			<option name="IMAGES_PATH" value="images/" />
 			<option name="MAX_SIZE" value="(100*MB)" />
 		</field>
-		<field type="date" visible="false" listable="false">
+		<field type="date" visible="true" listable="true">
 			<option name="FORMAT" value="YYYYMMDD|DDMMYYYY|MMDDYYYY" />
 		</field>
-		<field type="image" visible="false" listable="false">
+		<field type="image" visible="true" listable="false">
 			<option name="MAX_SIZE" value="(100*MB)" />
 			<option name="FORCE_SCALE" value="true|false" />
 			<option name="MAX_IMG_HEIGHT" value="150" />
@@ -140,24 +140,24 @@
 			<option name="CONTROL_TYPE" value="BUTTON|IMAGE" />
 			<option name="ENABLE_PREVIEW" value="true|false" />
 		</field>
-		<field type="decimal" visible="false" listable="false"/>
-		<field type="integer" visible="false" listable="false"/>
+		<field type="decimal" visible="true" listable="true"/>
+		<field type="integer" visible="true" listable="true"/>
 		<field type="hidden" visible="false" listable="false"/>
-		<field type="textfield" visible="false" listable="false"/>
-		<field type="datetime" visible="false" listable="false">
+		<field type="textfield" visible="true" listable="true"/>
+		<field type="datetime" visible="true" listable="true">
 			<option name="TIMEFORMAT" value="HHMMSS|HHMM" default="HHMM"/>
 			<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA" />
 		</field>
-		<field type="email" visible="false" listable="false"/>
-		<field type="richtext" visible="false" listable="false">
+		<field type="email" visible="true" listable="true"/>
+		<field type="richtext" visible="true" listable="false">
 			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|" />
 		</field>
-		<field type="select" visible="false" listable="false"/>
-		<field type="textarea" visible="false" listable="false">
+		<field type="select" visible="true" listable="true"/>
+		<field type="textarea" visible="true" listable="false">
 			<option name="ROWS" value="150" />
 			<option name="COLS" value="150" />
 		</field>
-		<field type="password" visible="false" listable="false">
+		<field type="password" visible="true" listable="false">
 			<option name="MINLONG" value="1" />
 		</field>
 	</fields>
