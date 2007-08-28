@@ -4,5 +4,6 @@
 	<default option="language" value="PHP(4.4.x)"/>
 	<plugins>
 		<plugin name="php" active="yes"/>
+		<plugin name="jsp" active="yes"/>
 	</plugins>
 </configuration>

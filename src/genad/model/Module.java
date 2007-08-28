@@ -28,6 +28,11 @@ public class Module{
 		options=new Hashtable<String,String>();
 	}
 	
+	public Module(String _name){
+		this();
+		name=_name;
+	}
+	
 	public Module load(Node current){
 		name=current.getAttributes().getNamedItem("name").getTextContent();
 		NodeList opts=current.getChildNodes();

@@ -150,6 +150,7 @@ public class Main extends javax.swing.JFrame implements View{
         jToolBar1.add(generateBtn);
 
         splitPanel.setDividerLocation(200);
+        splitPanel.setDividerSize(7);
         jScrollPane1.setViewportView(tree);
 
         splitPanel.setLeftComponent(jScrollPane1);
@@ -160,8 +161,9 @@ public class Main extends javax.swing.JFrame implements View{
         jLabel1.setText("jLabel1");
 
         projectMen.setText("Project");
+        newItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         newItem.setIcon(IconsManager.NEW);
-        newItem.setText("New...");
+        newItem.setText("New Project...");
         newItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newActionPerformed(evt);
@@ -172,6 +174,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(jSeparator6);
 
+        openItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         openItem.setIcon(IconsManager.OPEN);
         openItem.setText("Open...");
         openItem.addActionListener(new java.awt.event.ActionListener() {
@@ -194,6 +197,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(jSeparator7);
 
+        saveItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveItem.setIcon(IconsManager.SAVE);
         saveItem.setText("Save");
         saveItem.setEnabled(false);
@@ -205,6 +209,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(saveItem);
 
+        saveAsItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         saveAsItem.setIcon(IconsManager.SAVEAS);
         saveAsItem.setText("Save As...");
         saveAsItem.setEnabled(false);
@@ -218,6 +223,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(jSeparator8);
 
+        propertiesItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
         propertiesItem.setIcon(IconsManager.PROPERTIES);
         propertiesItem.setText("Properties...");
         propertiesItem.setEnabled(false);
@@ -229,6 +235,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(propertiesItem);
 
+        generateItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_MASK));
         generateItem.setIcon(IconsManager.GENERATE);
         generateItem.setText("Generate...");
         generateItem.setEnabled(false);
@@ -242,6 +249,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(jSeparator9);
 
+        exitItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
         exitItem.setIcon(IconsManager.EXIT);
         exitItem.setText("Exit");
         exitItem.addActionListener(new java.awt.event.ActionListener() {
@@ -351,19 +359,31 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_generateActionPerformed
 
 	private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed
-		new PropertiesDlg(this, true);
+		new PropertiesDlg(this, true, Model.getInstance());
 	}//GEN-LAST:event_propertiesActionPerformed
 
 	private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-		if(model.getLoadedPath()==null){
-			saveAsActionPerformed(evt); 
-			return;
-		}
-		if(!model.save(new File(model.getLoadedPath())))
+		try{
+			if(model.getLoadedPath()==null){
+				saveAsActionPerformed(evt); 
+				return;
+			}
+			if(!model.save(new File(model.getLoadedPath())))
+				JOptionPane.showMessageDialog(this,
+											  "An error occur saving the project. Try another path or name.",
+											  "Error",
+											  JOptionPane.ERROR_MESSAGE);
+		}catch(ArrayIndexOutOfBoundsException e){
 			JOptionPane.showMessageDialog(this,
-										  "An error occur saving the project, try another path or name",
+										  "Project has not been saved",
+										  "Warning",
+										  JOptionPane.WARNING_MESSAGE);
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(this,
+										  "Unexpected error",
 										  "Error",
 										  JOptionPane.ERROR_MESSAGE);
+		}
 	}//GEN-LAST:event_saveActionPerformed
 
 	private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
@@ -393,7 +413,8 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_openActionPerformed
 
 	private void newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newActionPerformed
-		new PropertiesDlg(this, true);
+		if(new PropertiesDlg(this, true, Model.getInstance(true)).isApproved()==JOptionPane.OK_OPTION)
+			attachToModel(Model.getInstance());
 	}//GEN-LAST:event_newActionPerformed
 		
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -452,7 +473,7 @@ public class Main extends javax.swing.JFrame implements View{
 		generateItem.setEnabled(subject.getLoadedPath()!=null);
 	}
 
-	public void attachToModel(Model subject) {
+	public void attachToModel(Model subject){
 		model=subject;
 		model.attachView(this);
 		((TreeView)tree).attachToModel(model);

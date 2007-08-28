@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188226841576" by="kronenthaler" language="php">
+<project lastsaved="1188316922352" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
 	</file-server-conf>
@@ -14,157 +14,20 @@
 		<prod-schema><![CDATA[testing]]></prod-schema>
 	</db-server-conf>
 	<modules>
-		<module name="module1">
-			<option name="adsf" value="ass"/>
+		<module name="wkobj">
+		</module>
+		<module name="wklogs">
+		</module>
+		<module name="wkusers">
+		</module>
+		<module name="wklocations">
+		</module>
+		<module name="wkupload">
+		</module>
+		<module name="wkrte">
 		</module>
 	</modules>
 	<entities>
-		<entity name="A_" title="Entidad A">
-			<table name="t106_a" primary-key="t106_id"/>
-			<splitpage value="1"/>
-			<search value="0"/>
-			<just-pages value="1"/>
-			<just-schema value="0"/>
-			<sortable value="0"/>
-			<form>
-				<field type="check">
-					<label><![CDATA[Nombre]]></label>
-					<db-field><![CDATA[t06_nombre]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="check">
-					<label><![CDATA[OK]]></label>
-					<db-field><![CDATA[t06_ok]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="radio">
-					<label><![CDATA[Publicado]]></label>
-					<db-field><![CDATA[t06_publicado]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="file">
-					<label><![CDATA[Archivo]]></label>
-					<db-field><![CDATA[t06_arc_arc1]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="image">
-					<label><![CDATA[Imagen]]></label>
-					<db-field><![CDATA[t06_arc_img1]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="hidden">
-					<label><![CDATA[]]></label>
-					<db-field><![CDATA[t06_hidden]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>0</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="email">
-					<label><![CDATA[Correo]]></label>
-					<db-field><![CDATA[t06_email]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="select">
-					<label><![CDATA[Select]]></label>
-					<db-field><![CDATA[t06_sel]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="textarea">
-					<label><![CDATA[Desc corta]]></label>
-					<db-field><![CDATA[t06_text]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="richtext">
-					<label><![CDATA[Desc Larga]]></label>
-					<db-field><![CDATA[t06_desc_larga]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="password">
-					<label><![CDATA[Password]]></label>
-					<db-field><![CDATA[t06_password]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-			</form>
-			<entity name="A1" title="d">
-				<table name="d" primary-key="d"/>
-				<splitpage value="1"/>
-				<search value="1"/>
-				<just-pages value="1"/>
-				<just-schema value="1"/>
-				<sortable value="1"/>
-				<form>
-					<field type="textfield">
-						<label><![CDATA[Nombre]]></label>
-						<db-field><![CDATA[t108_nombre]]></db-field>
-						<required>1</required><!-- 0|1 -->
-						<show-in-list>1</show-in-list><!-- 0|1 -->
-						<show-in-form>1</show-in-form><!-- 0|1 -->
-						<options>
-						</options>
-					</field>
-					<field type="password">
-						<label><![CDATA[Apellido]]></label>
-						<db-field><![CDATA[t108_apellido]]></db-field>
-						<required>0</required><!-- 0|1 -->
-						<show-in-list>0</show-in-list><!-- 0|1 -->
-						<show-in-form>1</show-in-form><!-- 0|1 -->
-						<options>
-						</options>
-					</field>
-					<field type="integer">
-						<label><![CDATA[idpadre]]></label>
-						<db-field><![CDATA[t106_id]]></db-field>
-						<required>0</required><!-- 0|1 -->
-						<show-in-list>1</show-in-list><!-- 0|1 -->
-						<show-in-form>1</show-in-form><!-- 0|1 -->
-						<options>
-						</options>
-					</field>
-				</form>
-			</entity>
-		</entity>
 		<entity name="C" title="sd">
 			<table name="sd" primary-key="sd"/>
 			<splitpage value="1"/>
@@ -175,25 +38,27 @@
 			<form>
 				<field type="textfield">
 					<label><![CDATA[s]]></label>
-					<db-field><![CDATA[d]]></db-field>
+					<db-field><![CDATA[xdf]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
 					<options>
 					</options>
 				</field>
-				<field type="datetime">
-					<label><![CDATA[prueba]]></label>
-					<db-field><![CDATA[null]]></db-field>
+				<field type="date">
+					<label><![CDATA[null]]></label>
+					<db-field><![CDATA[sdfg]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>0</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
 					<options>
 					</options>
 				</field>
 			</form>
 		</entity>
-		<entity name="B" title="Entidad B">
+		<entity name="B" title="lku">
 			<table name="t100_b" primary-key="t100_id"/>
 			<splitpage value="1"/>
 			<search value="0"/>
@@ -207,10 +72,31 @@
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
 					<options>
 					</options>
 				</field>
 			</form>
+			<entity name="B1s" title="ent B1">
+				<table name="t105_b1" primary-key="t105_id"/>
+				<splitpage value="1"/>
+				<search value="0"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="0"/>
+				<form>
+					<field type="time">
+						<label><![CDATA[&eacute;]]></label>
+						<db-field><![CDATA[jk]]></db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<searchable>0</searchable><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+			</entity>
 			<entity name="B2" title="Ent B2">
 				<table name="t102_b2" primary-key="t102_id"/>
 				<splitpage value="0"/>
@@ -225,6 +111,7 @@
 						<required>0</required><!-- 0|1 -->
 						<show-in-list>1</show-in-list><!-- 0|1 -->
 						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<searchable>0</searchable><!-- 0|1 -->
 						<options>
 						</options>
 					</field>
@@ -243,6 +130,7 @@
 							<required>0</required><!-- 0|1 -->
 							<show-in-list>1</show-in-list><!-- 0|1 -->
 							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<searchable>0</searchable><!-- 0|1 -->
 							<options>
 							</options>
 						</field>
@@ -256,36 +144,18 @@
 					<just-schema value="0"/>
 					<sortable value="0"/>
 					<form>
-						<field type="integer">
+						<field type="textfield">
 							<label><![CDATA[label]]></label>
 							<db-field><![CDATA[t104_campo]]></db-field>
 							<required>0</required><!-- 0|1 -->
 							<show-in-list>1</show-in-list><!-- 0|1 -->
 							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<searchable>0</searchable><!-- 0|1 -->
 							<options>
 							</options>
 						</field>
 					</form>
 				</entity>
-			</entity>
-			<entity name="B1" title="ent B1">
-				<table name="t105_b1" primary-key="t105_id"/>
-				<splitpage value="1"/>
-				<search value="0"/>
-				<just-pages value="0"/>
-				<just-schema value="0"/>
-				<sortable value="0"/>
-				<form>
-					<field type="time">
-						<label><![CDATA[&eacute;]]></label>
-						<db-field><![CDATA[t105_campo]]></db-field>
-						<required>0</required><!-- 0|1 -->
-						<show-in-list>1</show-in-list><!-- 0|1 -->
-						<show-in-form>1</show-in-form><!-- 0|1 -->
-						<options>
-						</options>
-					</field>
-				</form>
 			</entity>
 		</entity>
 	</entities>

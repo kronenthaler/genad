@@ -27,11 +27,10 @@ public class EntityView extends javax.swing.JPanel implements View{
 	public EntityView(Entity _entity,TabbedContainer _container) {
 		entity=_entity;
 		container=_container;
+		
 		initComponents();
+		
 		setHandlers();
-		
-		//inicialize the fieldsPanel with the info
-		
 		setVisible(true);
 	}
 	
@@ -39,6 +38,7 @@ public class EntityView extends javax.swing.JPanel implements View{
 		classNameTxt.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e){ 
 				classNameTxt.setBackground(entity.setName(classNameTxt.getText())?Color.white:new Color(255,128,128));
+				//classNameTxt.setText(classNameTxt.getText().trim());
 			}
 			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
 			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
@@ -46,7 +46,8 @@ public class EntityView extends javax.swing.JPanel implements View{
 		
 		titleTxt.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e){ 
-				entity.setTitle(titleTxt.getText());
+				titleTxt.setBackground(entity.setTitle(titleTxt.getText())?Color.white:new Color(255,128,128));
+				//titleTxt.setText(titleTxt.getText().trim());
 			}
 			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
 			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
@@ -54,7 +55,8 @@ public class EntityView extends javax.swing.JPanel implements View{
 		
 		tableNameTxt.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e){ 
-				entity.setTableName(tableNameTxt.getText());
+				tableNameTxt.setBackground(entity.setTableName(tableNameTxt.getText())?Color.white:new Color(255,128,128));
+				//tableNameTxt.setText(tableNameTxt.getText().trim());
 			}
 			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
 			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
@@ -62,7 +64,8 @@ public class EntityView extends javax.swing.JPanel implements View{
 		
 		primaryKeyTxt.getDocument().addDocumentListener(new DocumentListener(){
 			public void changedUpdate(DocumentEvent e){
-				entity.setPrimaryKey(primaryKeyTxt.getText());
+				primaryKeyTxt.setBackground(entity.setPrimaryKey(primaryKeyTxt.getText())?Color.white:new Color(255,128,128));
+				//primaryKeyTxt.setText(primaryKeyTxt.getText().trim());
 			}
 			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
 			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
@@ -386,27 +389,4 @@ public class EntityView extends javax.swing.JPanel implements View{
     protected javax.swing.JTextField tableNameTxt;
     protected javax.swing.JTextField titleTxt;
     // End of variables declaration//GEN-END:variables
-
-	/*public static void main(String a[]){
-		final JFrame f=new JFrame();
-		JSplitPane sp=new JSplitPane();
-
-		JTabbedPane tp=new JTabbedPane();
-		tp.addTab("JTextField",new JTextField("some"));
-		tp.addTab("TextField",new TextField("some"));
-		
-		JButton b = new JButton("push me");
-		sp.setRightComponent(tp);
-		sp.setLeftComponent(b);
-		b.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent evt){
-				JOptionPane.showMessageDialog(new Frame(),"");
-
-			}
-		});
-
-		f.getContentPane().add(sp);
-		f.setSize(1000,768);
-		f.setVisible(true);
-	}*/
 }

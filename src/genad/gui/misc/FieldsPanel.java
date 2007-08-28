@@ -34,6 +34,12 @@ public class FieldsPanel extends javax.swing.JPanel {
         column.setMinWidth(65);
         column.setPreferredWidth(65);
 		
+		column = fieldsTable.getColumnModel().getColumn(6);
+        column.setResizable(false);
+        column.setMaxWidth(80);
+        column.setMinWidth(75);
+        column.setPreferredWidth(75);
+		
 		column = fieldsTable.getColumnModel().getColumn(4);
         column.setResizable(false);
         column.setMaxWidth(55);
@@ -45,7 +51,7 @@ public class FieldsPanel extends javax.swing.JPanel {
         column.setMaxWidth(55);
         column.setMinWidth(50);
         column.setPreferredWidth(50);
-		
+				
 		ConfigManager cfgMan=ConfigManager.getInstance();
 		cfg=cfgMan.getPluginsConfig().get(Model.getInstance().getLanguage());
 		
@@ -53,6 +59,7 @@ public class FieldsPanel extends javax.swing.JPanel {
 		fieldsTable.getTableHeader().setReorderingAllowed(false);
 		fieldsTable.setDefaultEditor(JComboBox.class,
 									 new DefaultCellEditor(new JComboBox(cfg.getValidTypes())));
+		fieldsTable.setDefaultRenderer(String.class, new FieldsTableRenderer());
 		
 		notifyUI();
 	}
@@ -189,8 +196,8 @@ public class FieldsPanel extends javax.swing.JPanel {
 
 	protected class FieldsTableModel implements TableModel{
 		private Vector<Field> fields=new Vector<Field>();
-		private String[] titles={"Label","Field Map","Type","Required","Visible","Listable"};
-		private Class[] classes={String.class, String.class, JComboBox.class, Boolean.class, Boolean.class, Boolean.class};
+		private String[] titles={"Label","Field Map","Type","Required","Visible","Listable","Searchable"};
+		private Class[] classes={String.class, String.class, JComboBox.class, Boolean.class, Boolean.class, Boolean.class, Boolean.class};
 		private Entity entity;
 		
 		public FieldsTableModel(Vector<Field> f,Entity e){
@@ -216,16 +223,18 @@ public class FieldsPanel extends javax.swing.JPanel {
 		}
 
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
-			//allow/deny edition by the type selected
 			String type=fields.get(rowIndex).getType();
+			if(type==null) return true;
+			
 			FieldConfig fc=cfg.getFieldsConfig().get(type);
-			System.out.println(fc);
+			
 			//0-label, 1-map, 2-type, 3-required, 4-visible, 5-listable
 			if(columnIndex==0 || columnIndex==3 || columnIndex==4)
 				return fc.isVisible();
 			else if(columnIndex==5)
 				return fc.isListable();
-			
+			else if(columnIndex==6)
+				return fc.isSearchable();
 			return true;
 		}
 
@@ -236,6 +245,7 @@ public class FieldsPanel extends javax.swing.JPanel {
 			if(columnIndex==3) return fields.get(rowIndex).isRequired();
 			if(columnIndex==4) return fields.get(rowIndex).isVisible();
 			if(columnIndex==5) return fields.get(rowIndex).isListable();
+			if(columnIndex==6) return fields.get(rowIndex).isSearchable();
 			return null;
 		}
 
@@ -246,6 +256,7 @@ public class FieldsPanel extends javax.swing.JPanel {
 			if(columnIndex==3) fields.get(rowIndex).setRequired((Boolean)aValue);
 			if(columnIndex==4) fields.get(rowIndex).setVisible((Boolean)aValue);
 			if(columnIndex==5) fields.get(rowIndex).setListable((Boolean)aValue);
+			if(columnIndex==6) fields.get(rowIndex).setSearchable((Boolean)aValue);
 		}
 
 		public void addRow(){
@@ -267,6 +278,24 @@ public class FieldsPanel extends javax.swing.JPanel {
 		/* useless for now */
 		public void addTableModelListener(TableModelListener l){}
 		public void removeTableModelListener(TableModelListener l){}
+	}
+	
+	protected class FieldsTableRenderer extends DefaultTableCellRenderer{
+		public Component getTableCellRendererComponent( JTable table, 
+													    Object value, 
+														boolean isSelected, 
+														boolean hasFocus, 
+														int row, 
+														int column) {
+			Component comp=super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			
+			if(column == 1 && (value==null || "".equals(value.toString()))){
+				comp.setBackground(new Color(255,128,128));
+			}else
+				comp.setBackground(Color.white);
+			
+			return comp;
+		}
 	}
 }
 

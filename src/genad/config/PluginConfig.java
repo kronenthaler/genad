@@ -88,6 +88,7 @@ public class PluginConfig{
 				FieldConfig fc=new FieldConfig(current.getAttributes().getNamedItem("type").getTextContent());
 				fc.setVisible(current.getAttributes().getNamedItem("visible").getTextContent().equals("true"));
 				fc.setListable(current.getAttributes().getNamedItem("listable").getTextContent().equals("true"));
+				fc.setSearchable(current.getAttributes().getNamedItem("searchable").getTextContent().equals("true"));
 				
 				NodeList childs=current.getChildNodes();
 				for(int j=0,m=childs.getLength();j<m;j++){

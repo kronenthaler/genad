@@ -3,6 +3,7 @@ package genad.gui;
 import java.io.*;
 import java.awt.*;
 import java.util.*;
+import javax.crypto.NullCipher;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
@@ -19,10 +20,20 @@ import genad.gui.misc.*;
  * @author  kronenthaler
  */
 public class PropertiesDlg extends javax.swing.JDialog {
+	private Model model;
+	private int flag=JOptionPane.CANCEL_OPTION;
+	private Hashtable<String,Boolean> mandatories;
 	
-	public PropertiesDlg(java.awt.Frame parent, boolean modal) {
+	public PropertiesDlg(java.awt.Frame parent, boolean modal, Model _model) {
 		super(parent, modal);
+		model=_model;
+		mandatories=new Hashtable<String, Boolean>();
+		
 		initComponents();
+		
+		setHandlers();
+		
+		setTitle("".equals(model.getDestinationPath())?"New Project":"Project Properties");
 		Utils.centerComponent(this);
 		setVisible(true);
 	}
@@ -32,31 +43,28 @@ public class PropertiesDlg extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
+        destPathTxt = new javax.swing.JTextField();
+        browseBtn = new javax.swing.JButton();
+        ConfigManager cfgMan=ConfigManager.getInstance();
+        String[] langs=Utils.convert(cfgMan.getPluginsActive().keys());
+        langsCombo = new JComboBox(langs);
+        if("".equals(model.getLanguage()))
+        langsCombo.setSelectedIndex(0);
+        else
+        langsCombo.setSelectedItem(model.getLanguage());
         jPanel2 = new javax.swing.JPanel();
-        jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        dDBHostTxt = new javax.swing.JTextField();
+        dDBLoginTxt = new javax.swing.JTextField();
+        dDBPasswordTxt = new javax.swing.JTextField();
+        dDBSchemaTxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        modulesTable = new javax.swing.JTable();
         cancelBtn = new javax.swing.JButton();
         okBtn = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Properties");
@@ -67,11 +75,20 @@ public class PropertiesDlg extends javax.swing.JDialog {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel2.setText("Language:");
 
-        jTextField1.setText("jTextField1");
+        destPathTxt.setText("path");
 
-        jButton3.setText("...");
+        browseBtn.setText("...");
+        browseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseBtnActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        langsCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                langsComboItemStateChanged(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -83,14 +100,14 @@ public class PropertiesDlg extends javax.swing.JDialog {
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                        .add(destPathTxt, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                         .add(7, 7, 7)
-                        .add(jButton3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(browseBtn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel2)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jComboBox1, 0, 292, Short.MAX_VALUE)))
+                        .add(langsCombo, 0, 292, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -101,18 +118,16 @@ public class PropertiesDlg extends javax.swing.JDialog {
             .add(jPanel1Layout.createSequentialGroup()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel1)
-                    .add(jTextField1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jButton3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(destPathTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(browseBtn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jComboBox1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(langsCombo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel2))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Development Database"));
-        jTextField2.setText("jTextField1");
-
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Host:");
 
@@ -125,11 +140,13 @@ public class PropertiesDlg extends javax.swing.JDialog {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel6.setText("Schema:");
 
-        jTextField3.setText("jTextField1");
+        dDBHostTxt.setText("host");
 
-        jTextField4.setText("jTextField1");
+        dDBLoginTxt.setText("login");
 
-        jTextField5.setText("jTextField1");
+        dDBPasswordTxt.setText("password");
+
+        dDBSchemaTxt.setText("schema");
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,10 +161,10 @@ public class PropertiesDlg extends javax.swing.JDialog {
                     .add(jLabel6))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jTextField5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .add(jTextField4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .add(jTextField3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                    .add(dDBSchemaTxt, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .add(dDBPasswordTxt, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .add(dDBLoginTxt, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
+                    .add(dDBHostTxt, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -158,126 +175,49 @@ public class PropertiesDlg extends javax.swing.JDialog {
             .add(jPanel2Layout.createSequentialGroup()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel3)
-                    .add(jTextField2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(dDBHostTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel4)
-                    .add(jTextField3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(dDBLoginTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel5)
-                    .add(jTextField4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(dDBPasswordTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel6)
-                    .add(jTextField5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(dDBSchemaTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Modules"));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        modulesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Active", "Module"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                true, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jScrollPane1.setViewportView(jTable1);
+        ));
+        fillTable();
+        jScrollPane1.setViewportView(modulesTable);
 
         cancelBtn.setIcon(IconsManager.CANCEL);
         cancelBtn.setText("Cancel");
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelBtnActionPerformed(evt);
+            }
+        });
 
         okBtn.setIcon(IconsManager.OK);
         okBtn.setText("OK");
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Production Database"));
-        jTextField6.setText("jTextField1");
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("Host:");
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel8.setText("Login:");
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Password:");
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel10.setText("Schema:");
-
-        jTextField7.setText("jTextField1");
-
-        jTextField8.setText("jTextField1");
-
-        jTextField9.setText("jTextField1");
-
-        org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel3Layout.createSequentialGroup()
-                        .add(jLabel9)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField8, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
-                    .add(jPanel3Layout.createSequentialGroup()
-                        .add(jLabel10)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jTextField9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel8)
-                            .add(jLabel7))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jTextField7, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
-                            .add(jTextField6, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))))
-                .add(12, 12, 12))
-        );
-
-        jPanel3Layout.linkSize(new java.awt.Component[] {jLabel10, jLabel7, jLabel8, jLabel9}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
-
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel3Layout.createSequentialGroup()
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel7)
-                    .add(jTextField6, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel8)
-                    .add(jTextField7, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel9)
-                    .add(jTextField8, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel10)
-                    .add(jTextField9, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        okBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okBtnActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -292,8 +232,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
                     .add(layout.createSequentialGroup()
                         .add(okBtn)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(cancelBtn))
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(cancelBtn)))
                 .addContainerGap())
         );
 
@@ -307,9 +246,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(cancelBtn)
@@ -318,36 +255,190 @@ public class PropertiesDlg extends javax.swing.JDialog {
         );
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+	private void setHandlers(){
+		destPathTxt.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e){ 
+				destPathTxt.setBackground(!"".equals(destPathTxt.getText())?Color.white:new Color(255,128,128));
+			}
+			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
+			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
+		});
+		
+		dDBHostTxt.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e){ 
+				dDBHostTxt.setBackground(!"".equals(dDBHostTxt.getText())?Color.white:new Color(255,128,128));
+			}
+			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
+			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
+		});
+				
+		dDBLoginTxt.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e){ 
+				dDBLoginTxt.setBackground(!"".equals(dDBLoginTxt.getText())?Color.white:new Color(255,128,128));
+			}
+			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
+			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
+		});
+		
+		dDBSchemaTxt.getDocument().addDocumentListener(new DocumentListener(){
+			public void changedUpdate(DocumentEvent e){ 
+				dDBSchemaTxt.setBackground(!"".equals(dDBSchemaTxt.getText())?Color.white:new Color(255,128,128));
+			}
+			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
+			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
+		});
+		
+		destPathTxt.setText(model.getDestinationPath());
+		dDBHostTxt.setText(model.getDBHost(model.DEVELOPMENT));
+        dDBLoginTxt.setText(model.getDBLogin(model.DEVELOPMENT));
+        dDBPasswordTxt.setText(model.getDBPassword(model.DEVELOPMENT));
+        dDBSchemaTxt.setText(model.getDBSchema(model.DEVELOPMENT));
+	}
+	
+	private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
+		JFileChooser fc=new JFileChooser();
+		fc.setFileSelectionMode(fc.DIRECTORIES_ONLY);
+		if(fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+			destPathTxt.setText(fc.getSelectedFile().toString());
+	}//GEN-LAST:event_browseBtnActionPerformed
+
+	private void langsComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_langsComboItemStateChanged
+		fillTable();
+	}//GEN-LAST:event_langsComboItemStateChanged
+
+	private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
+		flag=JOptionPane.CANCEL_OPTION;
+		dispose();
+		setVisible(false);
+	}//GEN-LAST:event_cancelBtnActionPerformed
+
+	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
+		//TODO: add colors for the fields, null or empties except password.
+		model.setDestinationPath(destPathTxt.getText());
+		model.setLanguage(langsCombo.getSelectedItem().toString());
+		
+		model.setDBHost(dDBHostTxt.getText(),Model.DEVELOPMENT);
+		model.setDBLogin(dDBLoginTxt.getText(),Model.DEVELOPMENT);
+		model.setDBPassword(dDBPasswordTxt.getText(),Model.DEVELOPMENT);
+		model.setDBSchema(dDBSchemaTxt.getText(),Model.DEVELOPMENT);
+		
+		//model.setDBHost(pDBHostTxt.getText(),Model.PRODUCTION);
+		//model.setDBLogin(pDBLoginTxt.getText(),Model.PRODUCTION);
+		//model.setDBPassword(pDBPasswordTxt.getText(),Model.PRODUCTION);
+		//model.setDBSchema(pDBSchemaTxt.getText(),Model.PRODUCTION);
+		
+		model.clearModules();
+		TableModel tm=modulesTable.getModel();
+		for(int i=0;i<tm.getRowCount();i++)
+			if((Boolean)tm.getValueAt(i,0))
+				model.addModule(tm.getValueAt(i,1).toString());
+		
+		flag=JOptionPane.OK_OPTION;
+		dispose();
+		setVisible(false);
+	}//GEN-LAST:event_okBtnActionPerformed
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    protected javax.swing.JButton browseBtn;
     protected javax.swing.JButton cancelBtn;
-    protected javax.swing.JButton jButton3;
-    protected javax.swing.JComboBox jComboBox1;
+    protected javax.swing.JTextField dDBHostTxt;
+    protected javax.swing.JTextField dDBLoginTxt;
+    protected javax.swing.JTextField dDBPasswordTxt;
+    protected javax.swing.JTextField dDBSchemaTxt;
+    protected javax.swing.JTextField destPathTxt;
     protected javax.swing.JLabel jLabel1;
-    protected javax.swing.JLabel jLabel10;
     protected javax.swing.JLabel jLabel2;
     protected javax.swing.JLabel jLabel3;
     protected javax.swing.JLabel jLabel4;
     protected javax.swing.JLabel jLabel5;
     protected javax.swing.JLabel jLabel6;
-    protected javax.swing.JLabel jLabel7;
-    protected javax.swing.JLabel jLabel8;
-    protected javax.swing.JLabel jLabel9;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanel2;
-    protected javax.swing.JPanel jPanel3;
     protected javax.swing.JScrollPane jScrollPane1;
-    protected javax.swing.JTable jTable1;
-    protected javax.swing.JTextField jTextField1;
-    protected javax.swing.JTextField jTextField2;
-    protected javax.swing.JTextField jTextField3;
-    protected javax.swing.JTextField jTextField4;
-    protected javax.swing.JTextField jTextField5;
-    protected javax.swing.JTextField jTextField6;
-    protected javax.swing.JTextField jTextField7;
-    protected javax.swing.JTextField jTextField8;
-    protected javax.swing.JTextField jTextField9;
+    protected javax.swing.JComboBox langsCombo;
+    protected javax.swing.JTable modulesTable;
     protected javax.swing.JButton okBtn;
     // End of variables declaration//GEN-END:variables
+	
+	public int isApproved(){
+		return flag;
+	}
+	
+	private void fillTable(){
+		ConfigManager cfgMan=ConfigManager.getInstance();
+		PluginConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
+		Hashtable<String, ModuleConfig> mcfg=pcfg.getModulesConfig();
+		Object[][] data=new Object[mcfg.size()][2];
+		String[] keys=Utils.convert(mcfg.keys());
+		
+		mandatories.clear();
+		for(int i=0;i<data.length;i++){
+			data[i]=new Object[]{mcfg.get(keys[i]).isMandatory() || model.getModule(keys[i])!=null,keys[i]};
+			mandatories.put(keys[i],mcfg.get(keys[i]).isMandatory());
+		}
+		
+		String[] titles=new String[]{"Active","Name"};
+		modulesTable.setModel(new ModulesTableModel(data, titles));
+		
+		TableColumn column = null;
+        column = modulesTable.getColumnModel().getColumn(0);
+        column.setResizable(false);
+        column.setMaxWidth(55);
+        column.setMinWidth(50);
+        column.setPreferredWidth(50);
+	}
+	
+	private class ModulesTableModel extends DefaultTableModel{
+		Class[] types = new Class []{ Boolean.class, String.class };
+		boolean[] canEdit = new boolean []{true,false};
+		public Class getColumnClass(int columnIndex) { return types[columnIndex]; }
+		
+		ModulesTableModel(Object[][] data, String[] titles){
+			super(data,titles);
+		}
+		
+		public boolean isCellEditable(int rowIndex, int columnIndex){ 
+			return canEdit[columnIndex] && !mandatories.get(((Vector)dataVector.get(rowIndex)).get(1));
+		}
+
+		public void setValueAt(Object value, int row, int column){
+			if(column == 0){
+				Boolean b=(Boolean)value;
+				
+				ConfigManager cfgMan=ConfigManager.getInstance();
+				PluginConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
+				
+				
+				if(b){
+					ModuleConfig mcfg = pcfg.getModulesConfig().get(((Vector)dataVector.get(row)).get(1));
+					for(String s : mcfg.getDependencies())
+						for(int i=0,n=dataVector.size();i<n;i++)
+							if(((Vector)dataVector.get(i)).get(1).equals(s))
+								setValueAt(b, i, 0);
+				}else{
+					//if any selected module has me as dependency alert and abort
+					String msg="";
+					for(int i=0,n=dataVector.size();i<n;i++){
+						ModuleConfig mcfg = pcfg.getModulesConfig().get(((Vector)dataVector.get(i)).get(1));
+						Vector<String> deps=mcfg.getDependencies();
+						if((Boolean)((Vector)dataVector.get(i)).get(0) && deps.contains(((Vector)dataVector.get(row)).get(1))){
+							msg+="- "+((Vector)dataVector.get(i)).get(1)+"\n";
+						}
+					}
+					
+					if(!"".equals(msg)){
+						JOptionPane.showMessageDialog(Main.getInstance(),
+													  "The following modules depends of this module to work properly:\n" +
+													  msg,
+													  "Warning",
+													  JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+			}
+			super.setValueAt(value, row, column);
+		}
+	}
 	
 }

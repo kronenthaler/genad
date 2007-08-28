@@ -166,7 +166,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="Section Name:"/>
+            <Property name="text" type="java.lang.String" value="Title:"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -30,12 +30,12 @@ public class Model{
 	private Hashtable<String, Module> modules;
 	private Vector<View> views;
 	private boolean changed = false;
-	private String destPath, loadedPath;
-	private String language;
-	private String pDBHost, pDBLogin, pDBPassword, pDBSchema;
-	private String dDBHost, dDBLogin, dDBPassword, dDBSchema;
+	private String destPath="", loadedPath;
+	private String language="";
+	private String pDBHost, pDBLogin, pDBPassword="", pDBSchema;
+	private String dDBHost="", dDBLogin="", dDBPassword="", dDBSchema="";
 
-	public Model(){
+	private Model(){
 		views=new Vector<View>();
 		entities=new Hashtable<String, Entity>();
 		modules=new Hashtable<String, Module>();
@@ -101,7 +101,7 @@ public class Model{
 			for(int i=0,n=aux.getLength();i<n;i++){
 				if(aux.item(i).getNodeName().equalsIgnoreCase("module")){
 					Module temp=new Module();
-					modules.put(Utils.capitalize(aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim()), temp.load(aux.item(i)));
+					modules.put(aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim(), temp.load(aux.item(i)));
 				}		
 			}
 		}catch(Exception e){
@@ -114,15 +114,17 @@ public class Model{
 	
 	public boolean save(File path){
 		try{
+			String content=toString();
+			
 			PrintStream out=new PrintStream(path);
-			out.println(toString());
+			out.println(content);
 			out.close();
 			
 			changed = false;
 			notifyViews();
 			
 			return true;
-		}catch(Exception e){
+		}catch(IOException e){
 			return false;
 		}
 	}
@@ -146,6 +148,12 @@ public class Model{
 	public String getDBSchema(int mode){ return mode==PRODUCTION?pDBSchema:dDBSchema; }
 	
 	public void setLoadedPath(String path) { loadedPath=path; }
+	public void setDestinationPath(String path){ destPath=path; setChanged(); }
+	public void setLanguage(String lang){ language=lang; setChanged(); }
+	public void setDBHost(String v,int mode){ if(mode==PRODUCTION) pDBHost=v; else dDBHost=v; setChanged(); }
+	public void setDBLogin(String v,int mode){ if(mode==PRODUCTION) pDBLogin=v; else dDBLogin=v; setChanged(); }
+	public void setDBPassword(String v,int mode){ if(mode==PRODUCTION) pDBPassword=v; else dDBPassword=v; setChanged(); }
+	public void setDBSchema(String v,int mode){ if(mode==PRODUCTION) pDBSchema=v; else dDBSchema=v; setChanged(); }
 	
 	public boolean renameEntity(String src, String dst){
 		if(entities.get(dst)!=null) return false;
@@ -162,6 +170,14 @@ public class Model{
 	}
 	public void removeEntity(String name){
 		entities.remove(name);
+		setChanged();
+	}
+	
+	public void clearModules(){
+		modules.clear();
+	}
+	public void addModule(String name){
+		modules.put(name,new Module(name));
 		setChanged();
 	}
 	

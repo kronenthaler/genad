@@ -60,7 +60,8 @@ public class ConfigManager{
 		mainConfig.getPluginsActive().put(name, status);
 	}
 	
-	public Hashtable<String,PluginConfig> getPluginsConfig(){ return pluginsConfig;}
+	public Hashtable<String,PluginConfig> getPluginsConfig(){ return pluginsConfig; }
+	public PluginConfig getPluginConfig(String name){ return pluginsConfig.get(name); }
 	public Hashtable<String, Boolean> getPluginsActive(){ return mainConfig.getPluginsActive();}
 	public Vector<String> getPluginsInstalled(){ return mainConfig.getPluginsInstalled();}
 	public String getDefaultValue(String option){ return mainConfig.getDefaultValue(option);}

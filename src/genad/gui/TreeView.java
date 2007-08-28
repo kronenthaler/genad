@@ -91,7 +91,7 @@ public class TreeView extends JTree implements View{
 				return;
 			}
 		}
-		//System.err.println("Entitiy: "+current.parent);
+		
 		EntityView ent=new EntityView(current, viewer);
 		TabData td=new TabData(ent,IconsManager.ENTITY,path[path.length-1].toString(),path[path.length-1].toString());
 		viewer.getModel().addTab(viewer.getTabCount(), td);
@@ -159,7 +159,21 @@ public class TreeView extends JTree implements View{
 	private void editModule(ActionEvent evt){
 		TreePath tp=getPathForLocation(x,y);
 		Object[] path=tp.getPath();
-		JOptionPane.showMessageDialog(Main.getInstance(),path[path.length-1]);//add or focus the tab in the tabbedpane
+		
+		Module current=Model.getInstance().getModule(path[path.length-1].toString());
+		
+		for(int i=0,n=viewer.getTabCount();i<n;i++){
+			if(viewer.getModel().getTab(i).getTooltip().equals(path[path.length-1].toString())){
+				viewer.getSelectionModel().setSelectedIndex(i);
+				return;
+			}
+		}
+		
+		ModuleView ent=new ModuleView(current);
+		TabData td=new TabData(ent,IconsManager.MODULE,path[path.length-1].toString(),path[path.length-1].toString());
+		viewer.getModel().addTab(viewer.getTabCount(), td);
+		viewer.getSelectionModel().setSelectedIndex(viewer.getTabCount()-1);
+		ent.attachToModel(Model.getInstance());
 	}
 	
 	private void treeMouseClicked(MouseEvent evt){
@@ -206,6 +220,7 @@ public class TreeView extends JTree implements View{
 		
 		DefaultMutableTreeNode ents=new DefaultMutableTreeNode("Entities");
 		root.add(ents);
+		
 		for(String s : Utils.convert(subject.getEntities()))
 			makeTree(ents, subject.getEntity(s));
 		
@@ -219,34 +234,34 @@ public class TreeView extends JTree implements View{
 	public void attachToModel(Model model){
 		model.attachView(this);
 	}
-}
+	
+	private class TreeViewRenderer extends DefaultTreeCellRenderer{
+		public Component getTreeCellRendererComponent(JTree tree, Object value,
+														  boolean sel, boolean expanded, boolean leaf, int row,
+														  boolean hasFocus) {
+			super.getTreeCellRendererComponent(tree,value,selected,expanded,leaf,row,hasFocus);
 
-class TreeViewRenderer extends DefaultTreeCellRenderer{
-	public Component getTreeCellRendererComponent(JTree tree, Object value,
-													  boolean sel, boolean expanded, boolean leaf, int row,
-													  boolean hasFocus) {
-		super.getTreeCellRendererComponent(tree,value,selected,expanded,leaf,row,hasFocus);
-		
-		if(value instanceof DefaultMutableTreeNode){
-			DefaultMutableTreeNode node=(DefaultMutableTreeNode)value;
-			TreeNode path[]=node.getPath();
-			if(node.getParent()==null)//root node
-				setIcon(IconsManager.PROJECT);
-			else if(path.length==2){
-				if(path[1].toString().equalsIgnoreCase("Entities"))
-					setIcon(IconsManager.ENTITIES);
-				else if(path[1].toString().equalsIgnoreCase("Modules"))
-					setIcon(IconsManager.MODULES);
-				else
-					setIcon(IconsManager.FOLDER);
-			}else{
-				if(path[1].toString().equalsIgnoreCase("Entities"))
-					setIcon(IconsManager.ENTITY);
-				else if(path[1].toString().equalsIgnoreCase("Modules"))
-					setIcon(IconsManager.MODULE);
+			if(value instanceof DefaultMutableTreeNode){
+				DefaultMutableTreeNode node=(DefaultMutableTreeNode)value;
+				TreeNode path[]=node.getPath();
+				if(node.getParent()==null)//root node
+					setIcon(IconsManager.PROJECT);
+				else if(path.length==2){
+					if(path[1].toString().equalsIgnoreCase("Entities"))
+						setIcon(IconsManager.ENTITIES);
+					else if(path[1].toString().equalsIgnoreCase("Modules"))
+						setIcon(IconsManager.MODULES);
+					else
+						setIcon(IconsManager.FOLDER);
+				}else{
+					if(path[1].toString().equalsIgnoreCase("Entities"))
+						setIcon(IconsManager.ENTITY);
+					else if(path[1].toString().equalsIgnoreCase("Modules"))
+						setIcon(IconsManager.MODULE);
+				}
 			}
+
+			return this;
 		}
-		
-		return this;
 	}
 }

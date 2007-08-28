@@ -7,7 +7,7 @@ import java.util.*;
  */
 public class FieldConfig{
 	private String type;
-	private boolean visible=false,listable=false;
+	private boolean visible=false,listable=false, searchable=false;
 	private Hashtable<String, String> options;
 	private Hashtable<String, String> defaults;//only for the option with fixed values separated by |
 		 
@@ -19,12 +19,14 @@ public class FieldConfig{
 	
 	public void setVisible(boolean v){ visible=v; }
 	public void setListable(boolean v){ listable=v; }
+	public void setSearchable(boolean v){ searchable=v; }
 	public void setOption(String key,String value){ options.put(key,value); }
 	public void setDefault(String option, String value){ defaults.put(option,value); }
 	
 	public String getType(){ return type; }
 	public boolean isVisible(){ return visible; }
 	public boolean isListable(){ return listable; }
+	public boolean isSearchable(){ return searchable; }
 	public String getOption(String key){ return options.get(key); } 
 	public String getDefault(String option){ return defaults.get(option); } 
 	public Enumeration<String> getOptions(){ return options.keys();}

@@ -4,6 +4,8 @@ import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
+import genad.gui.Main;
+
 /**
  *
  *	@author kronenthaler
@@ -102,5 +104,10 @@ public class Utils{
 			text=text.replaceAll("[^a-zA-Z0-9_]","_");
 		}catch(Exception e){}
 		return text;
+	}
+	
+	public static boolean showError(String msg){
+		JOptionPane.showMessageDialog(Main.getInstance(),msg,"Error", JOptionPane.ERROR_MESSAGE);
+		return false;
 	}
 }

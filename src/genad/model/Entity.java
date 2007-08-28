@@ -96,18 +96,15 @@ public class Entity{
 	public boolean setName(String s){
 		boolean flag=false;
 		
-		//System.err.println(name+": "+parent);
-		if(parent==null)
-			flag=Model.getInstance().renameEntity(name,s);
-		else
-			flag=parent.renameChild(name,s);
+		if(parent==null) flag=Model.getInstance().renameEntity(name,s);
+		else flag=parent.renameChild(name,s);
 		
 		if(flag){
-			name=s;
+			name=s.trim();//must be a valid ID in almost every language
 			setChanged();
 		}
 		
-		return flag;
+		return flag && !(s==null || "".equals(s.trim()));
 	} 
 	private boolean renameChild(String src, String dst){
 		if(childs.get(dst)!=null) return false;
@@ -117,13 +114,25 @@ public class Entity{
 	}
 	
 	public String getTitle(){ return title; }
-	public void setTitle(String s){ title=s; setChanged(); } 
+	public boolean setTitle(String s){
+		title=s.trim();
+		setChanged();
+		return !(s==null || "".equals(s.trim()));
+	} 
 	
 	public String getTableName(){ return tableName;	}
-	public void setTableName(String s){ tableName=s; setChanged(); } 
+	public boolean setTableName(String s){
+		tableName=s.trim();
+		setChanged();
+		return !(s==null || "".equals(s.trim()));
+	} 
 	
 	public String getPrimaryKey(){ return primaryKey;	}
-	public void setPrimaryKey(String s){ primaryKey=s; setChanged(); } 
+	public boolean setPrimaryKey(String s){
+		primaryKey=s.trim();
+		setChanged();
+		return !(s==null || "".equals(s.trim()));
+	} 
 	
 	public boolean hasPager(){ return pager; }
 	public void setPager(boolean v){ pager=v; setChanged();}
@@ -140,11 +149,8 @@ public class Entity{
 	public boolean hasJustSchema(){ return justSchema; }
 	public void setJustSchema(boolean v){ justSchema=v; setChanged();}
 		
-		
-	//@TODO: shouldn't return the vector reference
+	//@unsafe: shouldn't return the vector reference
 	public Vector<Field> getFields(){ return form; }
-	
-	
 	
 	//childs manipulation
 	public Enumeration<String> getChilds(){ return childs.keys(); } 
@@ -188,7 +194,43 @@ public class Entity{
 		}
 	}
 	
+	private boolean isValid(){
+		//validate the entity
+		if("".equals(title))		return Utils.showError("Title cannot be empty in entity: "+name);
+		if("".equals(name))			return Utils.showError("Name cannot be empty in entity: "+name);
+		if("".equals(tableName))	return Utils.showError("Table Name cannot be empty in entity: "+name);
+		if("".equals(primaryKey))	return Utils.showError("Primary Key cannot be empty in entity: "+name);
+		
+		if(!justPages && form.size()==0)
+			return Utils.showError("The entity: "+name+" must has at least one field");
+		
+		boolean visible=false,listable=false,repited=false,empty=false;
+		Hashtable<String, Boolean> buffer=new Hashtable<String, Boolean>();
+		for(Field f : form){
+			visible |= f.isVisible();
+			listable |= f.isListable();
+			if(f.getMap()!=null && "".equals(f.getMap())){ empty=true; break; }
+			if(buffer.get(f.getMap())!=null){ repited=true;break; }
+		}
+		
+		if(!justPages && !listable)
+			return Utils.showError("At least one field must be listed in entity: "+name);
+		
+		if(!justPages && !visible)
+			return Utils.showError("At least one field must be visible in entity: "+name);
+		
+		if(empty)
+			return Utils.showError("The fields cannot has a empty map in entity: "+name);
+		
+		if(repited)
+			return Utils.showError("The entity: "+name+" cannot contain repited map fields");
+		
+		return true;
+	}
+	
 	private String toString(String deep){
+		if(!isValid()) throw new ArrayIndexOutOfBoundsException("Invalid Entity: "+name);
+		
 		Enumeration<String> e;
 		String key,
 		ret=deep+"<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n";

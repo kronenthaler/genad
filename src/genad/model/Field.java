@@ -24,7 +24,7 @@ public class Field{
 	private Entity container;
 	private Hashtable<String, String> options;
 	private String label, map, type;
-	private boolean required, visible, listable;
+	private boolean required, visible, listable, searchable;
 		
 	public Field(Entity _container){
 		container=_container;
@@ -47,6 +47,8 @@ public class Field{
 				listable=(info.item(k).getTextContent().equals("0")?false:true);	
 			else if(info.item(k).getNodeName().equalsIgnoreCase("show-in-form"))
 				visible=(info.item(k).getTextContent().equals("0")?false:true);
+			else if(info.item(k).getNodeName().equalsIgnoreCase("searchable"))
+				searchable=(info.item(k).getTextContent().equals("0")?false:true);
 			else if(info.item(k).getNodeName().equalsIgnoreCase("options")){
 				//cargar todas las opciones particulares para control.
 				NodeList opts=info.item(k).getChildNodes();
@@ -88,6 +90,11 @@ public class Field{
 		this.listable = listable;
 		container.setChanged();
 	}
+	
+	public void setSearchable(boolean v){
+		this.searchable=v;
+		container.setChanged();
+	}
 
 	public String getLabel(){ return label;	}
 	public String getMap(){	return map; }
@@ -95,6 +102,7 @@ public class Field{
 	public boolean isRequired(){ return required; }
 	public boolean isVisible(){	return visible;	}
 	public boolean isListable(){ return listable; }
+	public boolean isSearchable(){ return searchable; }
 
 	public String toString(String deep){
 		String 
@@ -104,6 +112,7 @@ public class Field{
 			deep+"			<required>"+(required?1:0)+"</required><!-- 0|1 -->\n"+
 			deep+"			<show-in-list>"+(listable?1:0)+"</show-in-list><!-- 0|1 -->\n"+
 			deep+"			<show-in-form>"+(visible?1:0)+"</show-in-form><!-- 0|1 -->\n"+
+			deep+"			<searchable>"+(searchable?1:0)+"</searchable><!-- 0|1 -->\n"+
 			deep+"			<options>\n";
 
 			for(Enumeration<String> e=options.keys();e.hasMoreElements();){
