@@ -73,7 +73,7 @@
 		</module>
 		<module name="wkupload" mandatory="1">
 			<options>
-				<option name="MAX_SIZE" value="(100*MB)" />
+				<option name="MAX_SIZE" value="(100*MB)" default="500"/>
 				<option name="MAX_THUMB_HEIGHT" value="50" />
 				<option name="FORCE_SCALE" value="true|false" />
 				<option name="MAX_IMG_HEIGHT" value="150" />

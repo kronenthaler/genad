@@ -32,6 +32,9 @@ public class OptionTable extends JTable{
 	}
 	
 	/**
+	 *	_d[0] label of the option
+	 *	_d[1] value or values
+	 *	_d[2] selected value if has more than one option
 	 *	@param _d Must be a bidimensional array of strings, if a value string contains a | this method will convert to
 	 *				JComboBox, otherwise remains as a string editable value.
 	 */

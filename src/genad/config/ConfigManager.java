@@ -59,10 +59,11 @@ public class ConfigManager{
 	public void activePlugin(String name, boolean status){
 		mainConfig.getPluginsActive().put(name, status);
 	}
-	
-	public Hashtable<String,PluginConfig> getPluginsConfig(){ return pluginsConfig; }
+		
+	public Enumeration<String> getPluginsName(){ return pluginsConfig.keys(); }
 	public PluginConfig getPluginConfig(String name){ return pluginsConfig.get(name); }
-	public Hashtable<String, Boolean> getPluginsActive(){ return mainConfig.getPluginsActive();}
+	public Enumeration<String> getPluginsActive(){ return mainConfig.getPluginsActive().keys(); }
+	public boolean isPluginActive(String name){ return mainConfig.getPluginsActive().get(name); }
 	public Vector<String> getPluginsInstalled(){ return mainConfig.getPluginsInstalled();}
 	public String getDefaultValue(String option){ return mainConfig.getDefaultValue(option);}
 }

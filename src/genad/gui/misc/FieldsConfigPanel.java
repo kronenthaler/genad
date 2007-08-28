@@ -108,8 +108,8 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
 	private void fieldBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldBoxActionPerformed
 		//sacar las opciones para el tipo de campo seleccionado y agregarlo en el modelo de la tabla
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
-		FieldConfig fc=pc.getFieldsConfig().get((String)fieldBox.getSelectedItem()); 
+		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		FieldConfig fc=pc.getFieldConfig((String)fieldBox.getSelectedItem()); 
 		
 		//sacar lista de opciones
 		String[] k=Utils.convert(fc.getOptions());
@@ -125,13 +125,13 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
 
 	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
-		Hashtable<String,FieldConfig> fc=pc.getFieldsConfig();
+		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		//Hashtable<String,FieldConfig> fc=pc.getFieldsConfig();
 		//TODO: eliminar los fields que no tengan opciones de configuracion
 		Vector<String> options=new Vector<String>();
-		String[] key=Utils.convert(fc.keys());
+		String[] key=pc.getValidTypes();//Utils.convert(fc.keys());
 		for(int i=0;i<key.length;i++)
-			if(fc.get(key[i]).getOptionSize()!=0)
+			if(pc.getFieldConfig(key[i]).getOptionSize()!=0)
 				options.add(key[i]);
 		
 		fieldBox.setModel(new DefaultComboBoxModel(options));

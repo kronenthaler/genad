@@ -134,15 +134,14 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 		Object[][] data=null;
 		try{
 			ConfigManager cfgMan=ConfigManager.getInstance();
-			Hashtable<String, PluginConfig> configs=cfgMan.getPluginsConfig();
-
-			data=new Object [configs.size()][3];
-			String[] e=Utils.convert(configs.keys());
+			String[] e=Utils.convert(cfgMan.getPluginsName());
+			data=new Object [e.length][3];
+			
 			for(int i=0;i < e.length;i++){
 				String pluginName=e[i];
-				data[i]=new Object[]{cfgMan.getPluginsActive().get(pluginName),
-									 configs.get(pluginName).getName(), 
-									 configs.get(pluginName).getDescription()};
+				data[i]=new Object[]{cfgMan.isPluginActive(pluginName),
+									 cfgMan.getPluginConfig(pluginName).getName(), 
+									 cfgMan.getPluginConfig(pluginName).getDescription()};
 			}
 		}catch(Exception e){
 			data=new Object[][]{{true,"Name","description"}};

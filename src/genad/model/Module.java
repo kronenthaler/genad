@@ -23,17 +23,29 @@ import genad.engine.*;
 public class Module{
 	private Hashtable<String,String> options;
 	private String name;
+	private ModuleConfig cfg;
 	
 	public Module(){
 		options=new Hashtable<String,String>();
 	}
 	
-	public Module(String _name){
+	public Module(String _name,ModuleConfig _cfg){
 		this();
 		name=_name;
+		cfg=_cfg;
+		
+		String[] keys=Utils.convert(cfg.getOptions());
+		for(String k : keys)
+			options.put(k,cfg.getOption(k));//this is the default value, at least if isn't a selection
 	}
 	
-	public Module load(Node current){
+	public Module load(Node current,ModuleConfig _cfg){
+		cfg=_cfg;
+		
+		String[] keys=Utils.convert(cfg.getOptions());
+		for(String k : keys)
+			options.put(k,cfg.getOption(k));//this is the default value, at least if isn't a selection
+		
 		name=current.getAttributes().getNamedItem("name").getTextContent();
 		NodeList opts=current.getChildNodes();
 		for(int i=0,n=opts.getLength();i<n;i++){
@@ -45,6 +57,9 @@ public class Module{
 		return this;
 	}
 	
+	public ModuleConfig getModuleConfig(){ return cfg; }
+	public String getOption(String key){ return options.get(key); }
+		
 	public String toString(){
 		String ret="		<module name=\""+name+"\">\n";
 		for(Enumeration<String> e=options.keys();e.hasMoreElements();){

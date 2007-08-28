@@ -31,6 +31,7 @@
     + autoseleccionar las dependencias de los modulos
     + bloquear los modulos mandatorios
 
+- arreglar la accesabilidad de las configuraciones
 - vista para los modulos
     - editar los options
     - inicializar los options en los valores por defecto especificados para este 'plugin'

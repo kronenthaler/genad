@@ -22,7 +22,7 @@ public class ModuleConfig{
 
 	public boolean isMandatory(){ return mandatory;	}
 	public String getOption(String key){ return options.get(key);}
-	public String getDefault(String option){ return defaults.get(option); } 
+	public String getDefault(String option){ return defaults.get(option)!=null?defaults.get(option):""; } 
 	public Vector<String> getDependencies(){ return depends; }
 	public String getName(){ return name;}
 	public int getOptionSize(){ return options.size();}

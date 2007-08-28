@@ -46,7 +46,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
         destPathTxt = new javax.swing.JTextField();
         browseBtn = new javax.swing.JButton();
         ConfigManager cfgMan=ConfigManager.getInstance();
-        String[] langs=Utils.convert(cfgMan.getPluginsActive().keys());
+        String[] langs=Utils.convert(cfgMan.getPluginsActive());
         langsCombo = new JComboBox(langs);
         if("".equals(model.getLanguage()))
         langsCombo.setSelectedIndex(0);
@@ -246,7 +246,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(cancelBtn)
@@ -368,14 +368,13 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	private void fillTable(){
 		ConfigManager cfgMan=ConfigManager.getInstance();
 		PluginConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
-		Hashtable<String, ModuleConfig> mcfg=pcfg.getModulesConfig();
-		Object[][] data=new Object[mcfg.size()][2];
-		String[] keys=Utils.convert(mcfg.keys());
-		
+		String[] keys=pcfg.getModulesName();
+		Object[][] data=new Object[keys.length][2];
+				
 		mandatories.clear();
 		for(int i=0;i<data.length;i++){
-			data[i]=new Object[]{mcfg.get(keys[i]).isMandatory() || model.getModule(keys[i])!=null,keys[i]};
-			mandatories.put(keys[i],mcfg.get(keys[i]).isMandatory());
+			data[i]=new Object[]{pcfg.getModuleConfig(keys[i]).isMandatory() || model.getModule(keys[i])!=null,keys[i]};
+			mandatories.put(keys[i],pcfg.getModuleConfig(keys[i]).isMandatory());
 		}
 		
 		String[] titles=new String[]{"Active","Name"};
@@ -411,7 +410,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 				
 				
 				if(b){
-					ModuleConfig mcfg = pcfg.getModulesConfig().get(((Vector)dataVector.get(row)).get(1));
+					ModuleConfig mcfg = pcfg.getModuleConfig(((Vector)dataVector.get(row)).get(1).toString());
 					for(String s : mcfg.getDependencies())
 						for(int i=0,n=dataVector.size();i<n;i++)
 							if(((Vector)dataVector.get(i)).get(1).equals(s))
@@ -420,7 +419,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 					//if any selected module has me as dependency alert and abort
 					String msg="";
 					for(int i=0,n=dataVector.size();i<n;i++){
-						ModuleConfig mcfg = pcfg.getModulesConfig().get(((Vector)dataVector.get(i)).get(1));
+						ModuleConfig mcfg = pcfg.getModuleConfig(((Vector)dataVector.get(i)).get(1).toString());
 						Vector<String> deps=mcfg.getDependencies();
 						if((Boolean)((Vector)dataVector.get(i)).get(0) && deps.contains(((Vector)dataVector.get(row)).get(1))){
 							msg+="- "+((Vector)dataVector.get(i)).get(1)+"\n";

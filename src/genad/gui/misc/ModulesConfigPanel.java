@@ -112,8 +112,8 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 	private void moduleBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleBoxActionPerformed
 		//sacar las opciones para el tipo de campo seleccionado y agregarlo en el modelo de la tabla
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
-		ModuleConfig mc=pc.getModulesConfig().get((String)moduleBox.getSelectedItem()); 
+		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		ModuleConfig mc=pc.getModuleConfig((String)moduleBox.getSelectedItem()); 
 		
 		//sacar lista de opciones
 		String[] k=Utils.convert(mc.getOptions());
@@ -129,13 +129,12 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 
 	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pc=cfgMan.getPluginsConfig().get((String)langBox.getSelectedItem());
-		Hashtable<String,ModuleConfig> mc=pc.getModulesConfig();
+		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
 		
 		Vector<String> options=new Vector<String>();
-		String[] key=Utils.convert(mc.keys());
+		String[] key=pc.getModulesName();
 		for(int i=0;i<key.length;i++)
-			if(mc.get(key[i]).getOptionSize()!=0)
+			if(pc.getModuleConfig(key[i]).getOptionSize()!=0)
 				options.add(key[i]);
 		
 		moduleBox.setModel(new DefaultComboBoxModel(options));

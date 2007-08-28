@@ -101,7 +101,8 @@ public class Model{
 			for(int i=0,n=aux.getLength();i<n;i++){
 				if(aux.item(i).getNodeName().equalsIgnoreCase("module")){
 					Module temp=new Module();
-					modules.put(aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim(), temp.load(aux.item(i)));
+					String name=aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim();
+					modules.put(name, temp.load(aux.item(i),ConfigManager.getInstance().getPluginConfig(language).getModuleConfig(name)));
 				}		
 			}
 		}catch(Exception e){
@@ -177,7 +178,7 @@ public class Model{
 		modules.clear();
 	}
 	public void addModule(String name){
-		modules.put(name,new Module(name));
+		modules.put(name,new Module(name,ConfigManager.getInstance().getPluginConfig(language).getModuleConfig(name)));
 		setChanged();
 	}
 	

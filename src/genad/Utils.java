@@ -31,6 +31,8 @@ public class Utils{
 	}
 	
 	public static String[] convert(Enumeration<String> e){
+		if(e==null) return new String[0];
+		
 		Vector<String> aux=new Vector<String>();
 		
 		while(e.hasMoreElements()) aux.add(e.nextElement());

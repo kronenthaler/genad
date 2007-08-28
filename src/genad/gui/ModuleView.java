@@ -28,6 +28,8 @@ public class ModuleView extends javax.swing.JPanel implements View{
 	public ModuleView(Module _module) {
 		module=_module;
 		initComponents();
+		
+		fillTable();
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -56,10 +58,27 @@ public class ModuleView extends javax.swing.JPanel implements View{
         );
     }// </editor-fold>//GEN-END:initComponents
 
-	public void update(Model subject) {
+	private void fillTable(){
+		Object[][] data=null;
+		ModuleConfig cfg=module.getModuleConfig();
+		
+		String[] keys=Utils.convert(cfg.getOptions());
+		data=new Object[keys.length][];
+		for(int i=0;i<data.length;i++){
+			data[i]=new Object[]{keys[i], module.getOption(keys[i]), ""};
+			//si la opcion es un valor que tiene multiples valores en el cfg, entonces usar como tercer parametro el valor del modulo, 
+			//sino usar directamente el valor del modulo en la segunda celda
+		}
+		
+		optionTable.setData(data);
+	}
+	
+	public void update(Model subject){
+		
 	}
 
 	public void attachToModel(Model subject) {
+		subject.attachView(this);
 	}
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables

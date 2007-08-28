@@ -117,11 +117,11 @@ public class PluginConfig{
 	public String getName(){return name;}
 	public String getDescription(){return description;}
 	//TODO: estos metodos no deberian devolver la referencia a la tabla hash, sino una copia o algo que no sea sensible a modificaciones.
-	public Hashtable<String, FieldConfig> getFieldsConfig(){ return fields;}
-	public Hashtable<String, ModuleConfig> getModulesConfig(){ return modules;}
+	public FieldConfig getFieldConfig(String name){ return fields.get(name); }
+	public String[] getModulesName(){ return Utils.convert(modules.keys()); }
+	public ModuleConfig getModuleConfig(String name){ return modules.get(name); }
 	public String[] getValidTypes(){ return Utils.convert(fields.keys()); }
-	
-	
+		
 	public String toString(){
 		String ret="<plugin>\n";
 		ret+="\t<name>"+name+"</name>\n";

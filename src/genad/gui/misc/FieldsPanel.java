@@ -53,7 +53,7 @@ public class FieldsPanel extends javax.swing.JPanel {
         column.setPreferredWidth(50);
 				
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		cfg=cfgMan.getPluginsConfig().get(Model.getInstance().getLanguage());
+		cfg=cfgMan.getPluginConfig(Model.getInstance().getLanguage());
 		
 		fieldsTable.setRowHeight(20);
 		fieldsTable.getTableHeader().setReorderingAllowed(false);
@@ -226,7 +226,7 @@ public class FieldsPanel extends javax.swing.JPanel {
 			String type=fields.get(rowIndex).getType();
 			if(type==null) return true;
 			
-			FieldConfig fc=cfg.getFieldsConfig().get(type);
+			FieldConfig fc=cfg.getFieldConfig(type);
 			
 			//0-label, 1-map, 2-type, 3-required, 4-visible, 5-listable
 			if(columnIndex==0 || columnIndex==3 || columnIndex==4)
