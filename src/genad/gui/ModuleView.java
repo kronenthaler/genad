@@ -1,13 +1,14 @@
 package genad.gui;
 
 import java.io.*;
-import java.awt.*;
+//import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
 import javax.swing.tree.*;
 import javax.xml.parsers.*;
+import org.netbeans.swing.tabcontrol.*;
 
 import genad.*;
 import genad.gui.*;
@@ -22,11 +23,13 @@ import genad.gui.misc.*;
  */
 public class ModuleView extends javax.swing.JPanel implements View{
 	private Module module;
+	private TabbedContainer container;
 	
 	public ModuleView(){}
 	
-	public ModuleView(Module _module) {
+	public ModuleView(Module _module, TabbedContainer _container) {
 		module=_module;
+		container=_container;
 		initComponents();
 		
 		fillTable();
@@ -65,16 +68,28 @@ public class ModuleView extends javax.swing.JPanel implements View{
 		String[] keys=Utils.convert(cfg.getOptions());
 		data=new Object[keys.length][];
 		for(int i=0;i<data.length;i++){
-			data[i]=new Object[]{keys[i], module.getOption(keys[i]), ""};
-			//si la opcion es un valor que tiene multiples valores en el cfg, entonces usar como tercer parametro el valor del modulo, 
-			//sino usar directamente el valor del modulo en la segunda celda
+			String str=cfg.getOption(keys[i]);
+			if(str.indexOf('|')!=-1)
+				data[i]=new Object[]{keys[i], cfg.getOption(keys[i]), module.getOption(keys[i])};	
+			else
+				data[i]=new Object[]{keys[i], module.getOption(keys[i])};	
 		}
 		
 		optionTable.setData(data);
+		optionTable.getModel().addTableModelListener(new TableModelListener() {
+			public void tableChanged(TableModelEvent evt) {
+				module.setOption((String)optionTable.getValueAt(evt.getFirstRow(),0),optionTable.getValueAt(evt.getFirstRow(),evt.getColumn()).toString());
+			}
+		});
 	}
 	
 	public void update(Model subject){
-		
+		List l=container.getModel().getTabs();
+		for(int i=0,n=l.size();i<n;i++){
+			TabData t=(TabData)l.get(i);
+			if(t.getComponent()==this)
+				container.setTitleAt(i,module.getName()+(module.isChanged()?" *":""));
+		}
 	}
 
 	public void attachToModel(Model subject) {

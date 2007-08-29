@@ -27,6 +27,7 @@ public class OptionTable extends JTable{
 	public OptionTable(){
 		super();
 		editor=new OptionTableCellEditor(this);
+		setRowHeight(20);
 		setTitles(new Object[]{"0","1"});
 		setData(new Object[0][0]);
 	}
@@ -38,7 +39,7 @@ public class OptionTable extends JTable{
 	 *	@param _d Must be a bidimensional array of strings, if a value string contains a | this method will convert to
 	 *				JComboBox, otherwise remains as a string editable value.
 	 */
-	public void setData(Object[][] _d){
+	public void setData(final Object[][] _d){
 		try{
 			data=_d;
 			editor.clearEditors();
@@ -78,13 +79,13 @@ public class OptionTable extends JTable{
 	public void setTitles(Object[] _t){titles=_t;}
 	public void setEditor(OptionTableCellEditor editor){this.editor = editor;}
 	
-	public Object[][] getData(){return data;}
-	public Object[] getTitles(){return titles;}
+	//public Object[][] getData(){return data;}
+	//public Object[] getTitles(){return titles;}
 	public OptionTableCellEditor getEditor(){return editor;}
 
 	
 	/** Editor for each cell */
-	protected class OptionTableCellEditor implements TableCellEditor {
+	protected static class OptionTableCellEditor implements TableCellEditor {
 		protected Hashtable<Integer,TableCellEditor> editors;
 		protected TableCellEditor editor, defaultEditor;
 		protected JTable table;
@@ -160,7 +161,7 @@ public class OptionTable extends JTable{
 		}
 	}
 	
-	protected class OptionTableCellRenderer implements TableCellRenderer{
+	protected static class OptionTableCellRenderer implements TableCellRenderer{
 		TableCellRenderer defaultRenderer;
 		public OptionTableCellRenderer(TableCellRenderer dr){
 			defaultRenderer=dr;

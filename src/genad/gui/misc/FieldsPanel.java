@@ -280,7 +280,7 @@ public class FieldsPanel extends javax.swing.JPanel {
 		public void removeTableModelListener(TableModelListener l){}
 	}
 	
-	protected class FieldsTableRenderer extends DefaultTableCellRenderer{
+	protected static class FieldsTableRenderer extends DefaultTableCellRenderer{
 		public Component getTableCellRendererComponent( JTable table, 
 													    Object value, 
 														boolean isSelected, 

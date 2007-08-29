@@ -34,7 +34,7 @@ public class ConfigManager{
 	public void saveConfiguration() throws IOException {
 		mainConfig.save();
 		
-		Vector<String> installed=mainConfig.getPluginsInstalled();
+		//Vector<String> installed=mainConfig.getPluginsInstalled();
 		for(Enumeration<String> e=pluginsConfig.keys();e.hasMoreElements(); )
 			pluginsConfig.get(e.nextElement()).save();
 	}

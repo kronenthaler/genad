@@ -24,19 +24,20 @@ public class Module{
 	private Hashtable<String,String> options;
 	private String name;
 	private ModuleConfig cfg;
+	private boolean changed=false;
 	
 	public Module(){
 		options=new Hashtable<String,String>();
 	}
 	
-	public Module(String _name,ModuleConfig _cfg){
+	public Module(String _name, ModuleConfig _cfg){
 		this();
 		name=_name;
 		cfg=_cfg;
 		
 		String[] keys=Utils.convert(cfg.getOptions());
 		for(String k : keys)
-			options.put(k,cfg.getOption(k));//this is the default value, at least if isn't a selection
+			options.put(k,cfg.getOption(k).indexOf('|')!=-1?cfg.getDefault(k):cfg.getOption(k));//this is the default value, at least if isn't a selection
 	}
 	
 	public Module load(Node current,ModuleConfig _cfg){
@@ -44,7 +45,7 @@ public class Module{
 		
 		String[] keys=Utils.convert(cfg.getOptions());
 		for(String k : keys)
-			options.put(k,cfg.getOption(k));//this is the default value, at least if isn't a selection
+			options.put(k,cfg.getOption(k).indexOf('|')!=-1?cfg.getDefault(k):cfg.getOption(k));//this is the default value, at least if isn't a selection
 		
 		name=current.getAttributes().getNamedItem("name").getTextContent();
 		NodeList opts=current.getChildNodes();
@@ -56,10 +57,16 @@ public class Module{
 		
 		return this;
 	}
-	
+	public boolean isChanged(){ return changed; }
+	public String getName(){ return name; } 
 	public ModuleConfig getModuleConfig(){ return cfg; }
 	public String getOption(String key){ return options.get(key); }
-		
+	public void setOption(String key, String value){ options.put(key,value); setChanged(); }
+	protected void setChanged(){
+		changed=true;
+		Model.getInstance().setChanged();
+	}
+	
 	public String toString(){
 		String ret="		<module name=\""+name+"\">\n";
 		for(Enumeration<String> e=options.keys();e.hasMoreElements();){
@@ -67,6 +74,7 @@ public class Module{
 			ret+="			<option name=\""+key+"\" value=\""+options.get(key)+"\"/>\n";
 		}
 		ret+="		</module>\n";
+		changed=false;
 		return ret;
 	}
 }

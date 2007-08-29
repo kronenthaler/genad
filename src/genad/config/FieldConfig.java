@@ -33,7 +33,7 @@ public class FieldConfig{
 	public int getOptionSize(){ return options.size(); }
 		
 	public String toString(){
-		String ret="\t\t<field type=\""+type+"\" visible=\""+visible+"\" listable=\""+listable+"\""+(options.size()>0?"":"/")+">\n";
+		String ret="\t\t<field type=\""+type+"\" visible=\""+visible+"\" listable=\""+listable+"\" searchable=\""+searchable+"\""+(options.size()>0?"":"/")+">\n";
 		if(options.size()>0){
 			for(Enumeration<String> e=options.keys();e.hasMoreElements();){
 				String key=e.nextElement();

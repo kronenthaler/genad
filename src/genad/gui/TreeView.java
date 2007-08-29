@@ -41,8 +41,7 @@ public class TreeView extends JTree implements View{
 		add(moduleContextMenu);
 		
 		setCellRenderer(new TreeViewRenderer());
-		
-		setModel(new DefaultTreeModel(new DefaultMutableTreeNode("No project loaded")));
+		update((Model)null);
 		setHandlers();
 	}
 	
@@ -169,7 +168,7 @@ public class TreeView extends JTree implements View{
 			}
 		}
 		
-		ModuleView ent=new ModuleView(current);
+		ModuleView ent=new ModuleView(current,viewer);
 		TabData td=new TabData(ent,IconsManager.MODULE,path[path.length-1].toString(),path[path.length-1].toString());
 		viewer.getModel().addTab(viewer.getTabCount(), td);
 		viewer.getSelectionModel().setSelectedIndex(viewer.getTabCount()-1);
@@ -210,24 +209,27 @@ public class TreeView extends JTree implements View{
 	}		
 			
 	public void update(Model subject) {
+		if(subject==null){
+			setModel(new DefaultTreeModel(new DefaultMutableTreeNode("No project loaded")));
+		}else{
 		//build a DefaultTreeNode and set in the model of tree
-		DefaultMutableTreeNode root=new DefaultMutableTreeNode(subject.getLoadedPath());
-		
-		DefaultMutableTreeNode mods=new DefaultMutableTreeNode("Modules");
-		root.add(mods);
-		for(String s : Utils.convert(subject.getModules()))
-			mods.add(new DefaultMutableTreeNode(s));
-		
-		DefaultMutableTreeNode ents=new DefaultMutableTreeNode("Entities");
-		root.add(ents);
-		
-		for(String s : Utils.convert(subject.getEntities()))
-			makeTree(ents, subject.getEntity(s));
-		
-		setModel(new DefaultTreeModel(root));
-		for(int i=0;i<getRowCount();i++)
-			expandRow(i);
-			
+			DefaultMutableTreeNode root=new DefaultMutableTreeNode(subject.getLoadedPath());
+
+			DefaultMutableTreeNode mods=new DefaultMutableTreeNode("Modules");
+			root.add(mods);
+			for(String s : Utils.convert(subject.getModules()))
+				mods.add(new DefaultMutableTreeNode(s));
+
+			DefaultMutableTreeNode ents=new DefaultMutableTreeNode("Entities");
+			root.add(ents);
+
+			for(String s : Utils.convert(subject.getEntities()))
+				makeTree(ents, subject.getEntity(s));
+
+			setModel(new DefaultTreeModel(root));
+			for(int i=0;i<getRowCount();i++)
+				expandRow(i);
+		}	
 		updateUI();
 	}
 	
@@ -235,7 +237,7 @@ public class TreeView extends JTree implements View{
 		model.attachView(this);
 	}
 	
-	private class TreeViewRenderer extends DefaultTreeCellRenderer{
+	private static class TreeViewRenderer extends DefaultTreeCellRenderer{
 		public Component getTreeCellRendererComponent(JTree tree, Object value,
 														  boolean sel, boolean expanded, boolean leaf, int row,
 														  boolean hasFocus) {

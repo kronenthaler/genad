@@ -102,7 +102,7 @@ public class Model{
 				if(aux.item(i).getNodeName().equalsIgnoreCase("module")){
 					Module temp=new Module();
 					String name=aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim();
-					modules.put(name, temp.load(aux.item(i),ConfigManager.getInstance().getPluginConfig(language).getModuleConfig(name)));
+					modules.put(name, temp.load(aux.item(i),cfgMan.getPluginConfig(language).getModuleConfig(name)));
 				}		
 			}
 		}catch(Exception e){
@@ -143,18 +143,18 @@ public class Model{
 	public Entity getEntity(String name){ return entities.get(name); }
 	public Enumeration<String> getModules(){ return modules.keys(); }
 	public Module getModule(String name){ return modules.get(name); }
-	public String getDBHost(int mode){ return mode==PRODUCTION?pDBHost:dDBHost; }
-	public String getDBLogin(int mode){	return mode==PRODUCTION?pDBLogin:dDBLogin; }
-	public String getDBPassword(int mode){ return mode==PRODUCTION?pDBPassword:dDBPassword; }
-	public String getDBSchema(int mode){ return mode==PRODUCTION?pDBSchema:dDBSchema; }
+	public String getDBHost(){ return dDBHost; }
+	public String getDBLogin(){	return dDBLogin; }
+	public String getDBPassword(){ return dDBPassword; }
+	public String getDBSchema(){ return dDBSchema; }
 	
 	public void setLoadedPath(String path) { loadedPath=path; }
 	public void setDestinationPath(String path){ destPath=path; setChanged(); }
 	public void setLanguage(String lang){ language=lang; setChanged(); }
-	public void setDBHost(String v,int mode){ if(mode==PRODUCTION) pDBHost=v; else dDBHost=v; setChanged(); }
-	public void setDBLogin(String v,int mode){ if(mode==PRODUCTION) pDBLogin=v; else dDBLogin=v; setChanged(); }
-	public void setDBPassword(String v,int mode){ if(mode==PRODUCTION) pDBPassword=v; else dDBPassword=v; setChanged(); }
-	public void setDBSchema(String v,int mode){ if(mode==PRODUCTION) pDBSchema=v; else dDBSchema=v; setChanged(); }
+	public void setDBHost(String v){ dDBHost=v; setChanged(); }
+	public void setDBLogin(String v){ dDBLogin=v; setChanged(); }
+	public void setDBPassword(String v){ dDBPassword=v; setChanged(); }
+	public void setDBSchema(String v){ dDBSchema=v; setChanged(); }
 	
 	public boolean renameEntity(String src, String dst){
 		if(entities.get(dst)!=null) return false;
@@ -178,14 +178,28 @@ public class Model{
 		modules.clear();
 	}
 	public void addModule(String name){
-		modules.put(name,new Module(name,ConfigManager.getInstance().getPluginConfig(language).getModuleConfig(name)));
-		setChanged();
+		if(modules.get(name)==null){
+			ModuleConfig cfg=cfgMan.getPluginConfig(language).getModuleConfig(name);
+			modules.put(name,new Module(name,cfg));
+			setChanged();
+		}
+	}
+	public void removeModule(String name){
+		if(modules.get(name)!=null){
+			modules.remove(name);
+			setChanged();
+		}
 	}
 	
 	// Model/View pattern
 	public void attachView(View v){
 		views.add(v);
 		v.update(this);
+	}
+	
+	public void dettachView(View v){
+		views.remove(v);
+		v.update(null);
 	}
 	
 	public void notifyViews(){

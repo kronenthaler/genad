@@ -20,7 +20,7 @@ import genad.engine.*;
  */
 public class Splash extends JDialog{
 	private int componentsLoaded=0;
-	private final int totalComponents=10;
+	private static final int totalComponents=10;
 	private static Splash me=null;
 	private SplashCanvas canvas;
 	private Toolkit tk=getToolkit();
@@ -31,14 +31,21 @@ public class Splash extends JDialog{
 		ImageIcon background=new ImageIcon(getClass().getResource("/images/splash.png"));
 		final int width=background.getIconWidth();
 		final int height=background.getIconHeight();
-				
 		
+		setAlwaysOnTop(true);
+		setResizable(false);
+		setUndecorated(true); //remove frame decoration
+		setTitle("GenAd loading...");
+		
+		//the next instructions can be nasty, but provides a double bufered canvas without
+		//flickering painting.
+		canvas=new SplashCanvas(background);
 		
 		//fire the thread initializing the environment
 		new Thread(new Runnable(){
 			public void run(){
 				setText("Loading Configuration");
-				ConfigManager cf=ConfigManager.getInstance();
+				ConfigManager.getInstance();
 				
 				for(componentsLoaded=0;componentsLoaded<totalComponents;){
 					try{Thread.sleep(100);}catch(Exception e){}
@@ -53,14 +60,6 @@ public class Splash extends JDialog{
 			}
 		}).start();//*/
 		
-		setAlwaysOnTop(true);
-		setResizable(false);
-		setUndecorated(true); //remove frame decoration
-		setTitle("GenAd loading...");
-		
-		//the next instructions can be nasty, but provides a double bufered canvas without
-		//flickering painting.
-		canvas=new SplashCanvas(background);
 		canvas.setSize(width,height);
 		canvas.setBackground(Color.white);
 		getContentPane().add(canvas);

@@ -1,7 +1,139 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="test.xsl" ?>
-<page>
-	<header title="pagina 1"/>
-	<body/><!-- body may content another info to render better pages-->	  
-	<footer/>
-</page>
+<project lastsaved="1187973151295" by="kronenthaler" language="php">
+	<file-server-conf>
+		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
+	</file-server-conf>
+	<db-server-conf>
+		<dev-host><![CDATA[prado]]></dev-host>
+		<dev-user><![CDATA[root]]></dev-user>
+		<dev-password><![CDATA[root]]></dev-password>
+		<dev-schema><![CDATA[testing]]></dev-schema>
+		<prod-host><![CDATA[prado]]></prod-host>
+		<prod-user><![CDATA[root]]></prod-user>
+		<prod-password><![CDATA[root]]></prod-password>
+		<prod-schema><![CDATA[testing]]></prod-schema>
+	</db-server-conf>
+	<modules>
+		<module name="module1">
+			<option name="adsf" value="ass"/>
+		</module>
+	</modules>
+	<entities>
+		<entity name="C" title="sd">
+			<table name="sd" primary-key="sd"/>
+			<splitpage value="1"/>
+			<search value="0"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
+			<sortable value="0"/>
+			<form>
+				<field type="textfield">
+					<label><![CDATA[s]]></label>
+					<db-field><![CDATA[d]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+		</entity>
+		<entity name="B" title="Entidad B">
+			<table name="t100_b" primary-key="t100_id"/>
+			<splitpage value="1"/>
+			<search value="0"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
+			<sortable value="0"/>
+			<form>
+				<field type="textfield">
+					<label><![CDATA[campo1]]></label>
+					<db-field><![CDATA[t100_campo1]]></db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+			<entity name="B2" title="Ent B2">
+				<table name="t102_b2" primary-key="t102_id"/>
+				<splitpage value="0"/>
+				<search value="0"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="0"/>
+				<form>
+					<field type="textfield">
+						<label><![CDATA[campo b2]]></label>
+						<db-field><![CDATA[t102_campob2]]></db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+				<entity name="B22" title="ent b22">
+					<table name="t103_b22" primary-key="t103_id"/>
+					<splitpage value="1"/>
+					<search value="0"/>
+					<just-pages value="0"/>
+					<just-schema value="0"/>
+					<sortable value="0"/>
+					<form>
+						<field type="textfield">
+							<label><![CDATA[campo b22]]></label>
+							<db-field><![CDATA[t103_campob22]]></db-field>
+							<required>0</required><!-- 0|1 -->
+							<show-in-list>1</show-in-list><!-- 0|1 -->
+							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<options>
+							</options>
+						</field>
+					</form>
+				</entity>
+				<entity name="B21" title="ent B21">
+					<table name="t104_b21" primary-key="t104_id"/>
+					<splitpage value="1"/>
+					<search value="0"/>
+					<just-pages value="0"/>
+					<just-schema value="0"/>
+					<sortable value="0"/>
+					<form>
+						<field type="textfield">
+							<label><![CDATA[label]]></label>
+							<db-field><![CDATA[t104_campo]]></db-field>
+							<required>0</required><!-- 0|1 -->
+							<show-in-list>1</show-in-list><!-- 0|1 -->
+							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<options>
+							</options>
+						</field>
+					</form>
+				</entity>
+			</entity>
+			<entity name="B1" title="ent B1">
+				<table name="t105_b1" primary-key="t105_id"/>
+				<splitpage value="1"/>
+				<search value="0"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="0"/>
+				<form>
+					<field type="time">
+						<label><![CDATA[&eacute;]]></label>
+						<db-field><![CDATA[t105_campo]]></db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+			</entity>
+		</entity>
+	</entities>
+</project>
+

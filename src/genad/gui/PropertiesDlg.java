@@ -290,10 +290,10 @@ public class PropertiesDlg extends javax.swing.JDialog {
 		});
 		
 		destPathTxt.setText(model.getDestinationPath());
-		dDBHostTxt.setText(model.getDBHost(model.DEVELOPMENT));
-        dDBLoginTxt.setText(model.getDBLogin(model.DEVELOPMENT));
-        dDBPasswordTxt.setText(model.getDBPassword(model.DEVELOPMENT));
-        dDBSchemaTxt.setText(model.getDBSchema(model.DEVELOPMENT));
+		dDBHostTxt.setText(model.getDBHost());
+        dDBLoginTxt.setText(model.getDBLogin());
+        dDBPasswordTxt.setText(model.getDBPassword());
+        dDBSchemaTxt.setText(model.getDBSchema());
 	}
 	
 	private void browseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseBtnActionPerformed
@@ -314,25 +314,24 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	}//GEN-LAST:event_cancelBtnActionPerformed
 
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-		//TODO: add colors for the fields, null or empties except password.
-		model.setDestinationPath(destPathTxt.getText());
+		if(!model.getLanguage().equals(langsCombo.getSelectedItem().toString()))
+			model.clearModules();
+		
 		model.setLanguage(langsCombo.getSelectedItem().toString());
+		model.setDestinationPath(destPathTxt.getText());
 		
-		model.setDBHost(dDBHostTxt.getText(),Model.DEVELOPMENT);
-		model.setDBLogin(dDBLoginTxt.getText(),Model.DEVELOPMENT);
-		model.setDBPassword(dDBPasswordTxt.getText(),Model.DEVELOPMENT);
-		model.setDBSchema(dDBSchemaTxt.getText(),Model.DEVELOPMENT);
-		
-		//model.setDBHost(pDBHostTxt.getText(),Model.PRODUCTION);
-		//model.setDBLogin(pDBLoginTxt.getText(),Model.PRODUCTION);
-		//model.setDBPassword(pDBPasswordTxt.getText(),Model.PRODUCTION);
-		//model.setDBSchema(pDBSchemaTxt.getText(),Model.PRODUCTION);
-		
-		model.clearModules();
+		model.setDBHost(dDBHostTxt.getText());
+		model.setDBLogin(dDBLoginTxt.getText());
+		model.setDBPassword(dDBPasswordTxt.getText());
+		model.setDBSchema(dDBSchemaTxt.getText());
+				
 		TableModel tm=modulesTable.getModel();
-		for(int i=0;i<tm.getRowCount();i++)
+		for(int i=0;i<tm.getRowCount();i++){
 			if((Boolean)tm.getValueAt(i,0))
 				model.addModule(tm.getValueAt(i,1).toString());
+			else
+				model.removeModule(tm.getValueAt(i,1).toString());
+		}
 		
 		flag=JOptionPane.OK_OPTION;
 		dispose();

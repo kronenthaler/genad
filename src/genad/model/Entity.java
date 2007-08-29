@@ -104,7 +104,7 @@ public class Entity{
 			setChanged();
 		}
 		
-		return flag && !(s==null || "".equals(s.trim()));
+		return flag && !"".equals(s.trim());
 	} 
 	private boolean renameChild(String src, String dst){
 		if(childs.get(dst)!=null) return false;
@@ -117,21 +117,21 @@ public class Entity{
 	public boolean setTitle(String s){
 		title=s.trim();
 		setChanged();
-		return !(s==null || "".equals(s.trim()));
+		return !"".equals(s.trim());
 	} 
 	
 	public String getTableName(){ return tableName;	}
 	public boolean setTableName(String s){
 		tableName=s.trim();
 		setChanged();
-		return !(s==null || "".equals(s.trim()));
+		return !"".equals(s.trim());
 	} 
 	
 	public String getPrimaryKey(){ return primaryKey;	}
 	public boolean setPrimaryKey(String s){
 		primaryKey=s.trim();
 		setChanged();
-		return !(s==null || "".equals(s.trim()));
+		return !"".equals(s.trim());
 	} 
 	
 	public boolean hasPager(){ return pager; }

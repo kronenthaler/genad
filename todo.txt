@@ -31,9 +31,17 @@
     + autoseleccionar las dependencias de los modulos
     + bloquear los modulos mandatorios
 
-- arreglar la accesabilidad de las configuraciones
-- vista para los modulos
-    - editar los options
-    - inicializar los options en los valores por defecto especificados para este 'plugin'
++ arreglar la accesabilidad de las configuraciones
++ vista para los modulos
+    + editar los options
+    + inicializar los options en los valores por defecto especificados para este 'plugin'
 
+- modificar opciones para los fields
+- cambiar los toString de + por StringBuffer.append
+
+- Generacion de codigo
+    - xsl para generar el schema de la BD y js.
+    - ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
+    - copia/extraccion de los archivos de los modulos y archivos base.
+    - ejecucion de las plantillas xsl para: mod_, exec_, list_ y obj.
 

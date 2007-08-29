@@ -3,7 +3,7 @@
 	<default option="dbmanager" value="MySQL 4.0"/>
 	<default option="language" value="PHP(4.4.x)"/>
 	<plugins>
-		<plugin name="php" active="yes"/>
 		<plugin name="jsp" active="yes"/>
+		<plugin name="php" active="yes"/>
 	</plugins>
 </configuration>

@@ -6,7 +6,9 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.table.*;
+import javax.swing.tree.*;
 import com.jgoodies.looks.plastic.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import org.netbeans.swing.tabcontrol.*;
 
 import genad.*;
@@ -23,6 +25,7 @@ import genad.gui.misc.*;
 public class Main extends javax.swing.JFrame implements View{
 	private static Main me=null;
 	private Model model;
+	private PriorityQueue<FileRecent> recents;
 		
 	private Main() {
 		try{
@@ -30,9 +33,8 @@ public class Main extends javax.swing.JFrame implements View{
 			UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
 		}catch(Exception e){}
 		
+		loadRecents();
 		initComponents();
-		splitPanel.setRightComponent(tabbedPanel);
-		
 		setVisible(true);
 	}
 	
@@ -57,7 +59,7 @@ public class Main extends javax.swing.JFrame implements View{
         newItem = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JSeparator();
         openItem = new javax.swing.JMenuItem();
-        openRecentMen1 = new javax.swing.JMenu();
+        openRecentMen = new javax.swing.JMenu();
         closeItem = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JSeparator();
         saveItem = new javax.swing.JMenuItem();
@@ -151,6 +153,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         splitPanel.setDividerLocation(200);
         splitPanel.setDividerSize(7);
+        splitPanel.setRightComponent(tabbedPanel);
         jScrollPane1.setViewportView(tree);
 
         splitPanel.setLeftComponent(jScrollPane1);
@@ -185,14 +188,49 @@ public class Main extends javax.swing.JFrame implements View{
 
         projectMen.add(openItem);
 
-        openRecentMen1.setIcon(IconsManager.OPEN);
-        openRecentMen1.setText("Open Recent");
-        openRecentMen1.setEnabled(false);
-        projectMen.add(openRecentMen1);
+        openRecentMen.setEnabled(recents.size()>0);
+        Iterator<FileRecent> it=recents.iterator();
+        for(int i=0,n=recents.size();i<4 && i<n;i++){
+            final JMenuItem mi=new JMenuItem(it.next().path);
+            mi.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent evt){
+                    if(model!=null && model.isChanged()){
+                        int opt=JOptionPane.showConfirmDialog(Main.getInstance(),
+                            "The project was changed. Do you want to save the changes?",
+                            "Confirmation",
+                            JOptionPane.YES_NO_CANCEL_OPTION);
+                        if(opt==JOptionPane.CANCEL_OPTION) return;
+                        if(opt==JOptionPane.YES_OPTION){
+                            saveActionPerformed(evt);
+                            if(model.isChanged()) return; //yes and cancel in the saveas dialog
+                        }
+                    }
+
+                    tabbedPanel.getModel().removeTabs(0, tabbedPanel.getTabCount());//'close' all tabs
+
+                    model=Model.getInstance(true);//create a new model, ONLY CAN BE CALL FROM HERE and newActionPerformed
+                    model.load(new File(mi.getText()));
+
+                    recents.add(new FileRecent(System.currentTimeMillis(),mi.getText()));
+
+                    attachToModel(model);
+                }
+            });
+            openRecentMen.add(mi);
+        }
+        openRecentMen.setIcon(IconsManager.OPEN);
+        openRecentMen.setText("Open Recent");
+        projectMen.add(openRecentMen);
 
         closeItem.setIcon(IconsManager.CLOSE);
         closeItem.setText("Close");
         closeItem.setEnabled(false);
+        closeItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeItemActionPerformed(evt);
+            }
+        });
+
         projectMen.add(closeItem);
 
         projectMen.add(jSeparator7);
@@ -241,7 +279,7 @@ public class Main extends javax.swing.JFrame implements View{
         generateItem.setEnabled(false);
         generateItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                generateItemgenerateActionPerformed(evt);
+                generateActionPerformed(evt);
             }
         });
 
@@ -317,6 +355,15 @@ public class Main extends javax.swing.JFrame implements View{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private void closeItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeItemActionPerformed
+		if(!checkOpen()) return;
+		
+		tabbedPanel.getModel().removeTabs(0,tabbedPanel.getTabCount());
+		model.dettachView(this);
+		model.dettachView((TreeView)tree);
+		//dettachFromModel, eliminarme de la lista de viewers de ese model.
+	}//GEN-LAST:event_closeItemActionPerformed
+
 	private void saveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveAsActionPerformed
 		JFileChooser fc=new JFileChooser("."/*System.getProperty("user.home")*/);
 		fc.setFileFilter(new ProjectFileFilter());
@@ -335,6 +382,7 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_configureItemActionPerformed
 
 	private void exitItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitItemActionPerformed
+		saveRecents();
 		if(model!=null && model.isChanged()){
 			int opt=JOptionPane.showConfirmDialog(this,"The project was changed. Do you want to save the changes?","Confirmation",JOptionPane.YES_NO_CANCEL_OPTION);
 			if(opt==JOptionPane.NO_OPTION) System.exit(0);
@@ -345,10 +393,6 @@ public class Main extends javax.swing.JFrame implements View{
 		}else
 			System.exit(0);
 	}//GEN-LAST:event_exitItemActionPerformed
-
-	private void generateItemgenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateItemgenerateActionPerformed
-		// TODO add your handling code here:
-	}//GEN-LAST:event_generateItemgenerateActionPerformed
 
 	private void windowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosing
 		exitItemActionPerformed(null);
@@ -387,17 +431,7 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_saveActionPerformed
 
 	private void openActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openActionPerformed
-		if(model!=null && model.isChanged()){
-			int opt=JOptionPane.showConfirmDialog(this,
-												  "The project was changed. Do you want to save the changes?",
-												  "Confirmation",
-												  JOptionPane.YES_NO_CANCEL_OPTION);
-			if(opt==JOptionPane.CANCEL_OPTION) return;
-			if(opt==JOptionPane.YES_OPTION){
-				saveActionPerformed(evt);
-				if(model.isChanged()) return; //yes and cancel in the saveas dialog
-			}
-		}
+		if(!checkOpen()) return;
 		
 		JFileChooser fc=new JFileChooser("."/*System.getProperty("user.home")*/);
 		fc.setFileFilter(new ProjectFileFilter());
@@ -408,11 +442,15 @@ public class Main extends javax.swing.JFrame implements View{
 			model=Model.getInstance(true);//create a new model, ONLY CAN BE CALL FROM HERE and newActionPerformed
 			model.load(fc.getSelectedFile());
 			
+			recents.add(new FileRecent(System.currentTimeMillis(),fc.getSelectedFile().toString()));
+			
 			attachToModel(model);
 		}
 	}//GEN-LAST:event_openActionPerformed
 
 	private void newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newActionPerformed
+		if(!checkOpen()) return;
+		
 		if(new PropertiesDlg(this, true, Model.getInstance(true)).isApproved()==JOptionPane.OK_OPTION)
 			attachToModel(Model.getInstance());
 	}//GEN-LAST:event_newActionPerformed
@@ -439,7 +477,7 @@ public class Main extends javax.swing.JFrame implements View{
     protected javax.swing.JMenuItem newItem;
     protected javax.swing.JButton openBtn;
     protected javax.swing.JMenuItem openItem;
-    protected javax.swing.JMenu openRecentMen1;
+    protected javax.swing.JMenu openRecentMen;
     protected javax.swing.JMenu projectMen;
     protected javax.swing.JButton propertiesBtn;
     protected javax.swing.JMenuItem propertiesItem;
@@ -456,27 +494,92 @@ public class Main extends javax.swing.JFrame implements View{
 		if(me==null) me=new Main();
 		return me;
 	}
+	
+	private void loadRecents(){
+		recents=new PriorityQueue<FileRecent>();
+		try{
+			File f=new File(System.getProperty("user.home")+"/.genad/");
+			if(!f.exists())
+				f.mkdirs();
+				
+			Scanner in=new Scanner(new File(System.getProperty("user.home")+"/.genad/recents"));
+			int i=0;
+			while(in.hasNextLong() && i++<4)
+				recents.add(new FileRecent(in.nextLong(), in.nextLine().trim()));
+			
+			in.close();
+		}catch(Exception e){}
+	}
+	
+	private void saveRecents(){
+		try{
+			PrintStream out=new PrintStream(new FileOutputStream(System.getProperty("user.home")+"/.genad/recents"),true);
+			Hashtable<String, Boolean> exists=new Hashtable<String, Boolean>();
+			for(int i=0;i<4 && recents.size()>0;i++){
+				FileRecent fr=recents.poll();
+				if(exists.get(fr.path)==null){
+					out.println(fr);
+					exists.put(fr.path,true);
+				}
+			}
+			
+			out.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 	public void update(Model subject) {
-		setTitle("GenAd - "+subject.getLoadedPath()+(subject.isChanged()?" *":""));
-		
-		saveBtn.setEnabled(subject.isChanged());
-		saveItem.setEnabled(subject.isChanged());
-		saveAsItem.setEnabled(true);
-		
-		closeItem.setEnabled(subject.getLoadedPath()!=null);
-		
-		propertiesBtn.setEnabled(subject.getLoadedPath()!=null);
-		propertiesItem.setEnabled(subject.getLoadedPath()!=null);
-		
-		generateBtn.setEnabled(subject.getLoadedPath()!=null);
-		generateItem.setEnabled(subject.getLoadedPath()!=null);
+		if(subject==null){
+			setTitle("GenAd v1.0");
+			
+			saveBtn.setEnabled(false);
+			saveItem.setEnabled(false);
+			saveAsItem.setEnabled(false);
+
+			closeItem.setEnabled(false);
+
+			propertiesBtn.setEnabled(false);
+			propertiesItem.setEnabled(false);
+
+			generateBtn.setEnabled(false);
+			generateItem.setEnabled(false);
+		}else{
+			setTitle("GenAd - "+subject.getLoadedPath()+(subject.isChanged()?" *":""));
+
+			saveBtn.setEnabled(subject.isChanged());
+			saveItem.setEnabled(subject.isChanged());
+			saveAsItem.setEnabled(true);
+
+			closeItem.setEnabled(subject.getLoadedPath()!=null);
+
+			propertiesBtn.setEnabled(subject.getLoadedPath()!=null);
+			propertiesItem.setEnabled(subject.getLoadedPath()!=null);
+
+			generateBtn.setEnabled(subject.getLoadedPath()!=null);
+			generateItem.setEnabled(subject.getLoadedPath()!=null);
+		}
 	}
 
 	public void attachToModel(Model subject){
 		model=subject;
 		model.attachView(this);
 		((TreeView)tree).attachToModel(model);
+	}
+
+	private boolean checkOpen() {
+		if(model!=null && model.isChanged()){
+			int opt=JOptionPane.showConfirmDialog(this,
+												  "The project was changed. Do you want to save the changes?",
+												  "Confirmation",
+												  JOptionPane.YES_NO_CANCEL_OPTION);
+			if(opt==JOptionPane.CANCEL_OPTION) return false;
+			if(opt==JOptionPane.YES_OPTION){
+				saveActionPerformed(null);
+				if(model.isChanged()) return false; //yes and cancel in the saveas dialog
+			}
+		}
+		return true;
 	}
 	
 	private static class ProjectFileFilter extends javax.swing.filechooser.FileFilter{
@@ -486,5 +589,23 @@ public class Main extends javax.swing.JFrame implements View{
 		public String getDescription() {
 			return "GenAd Project Files";
 		}
-	};
+	}
+	
+	private static class FileRecent implements Comparable{
+		protected long date;
+		protected String path; 
+		public FileRecent(long d,String p){
+			date=d;
+			path=p;
+		}
+		
+		public String toString(){
+			return date+" "+path;
+		}
+
+		public int compareTo(Object o) {
+			if(path.equals(((FileRecent)o).path)) return 0;
+			return (int)(((FileRecent)o).date - date);
+		}
+	}
 }

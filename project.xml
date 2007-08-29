@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188340195141" by="kronenthaler" language="php">
+<project lastsaved="1188423293084" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
 	</file-server-conf>
@@ -14,15 +14,34 @@
 		<prod-schema><![CDATA[testing]]></prod-schema>
 	</db-server-conf>
 	<modules>
-		<module name="wklocations">
-		</module>
 		<module name="wkrte">
+			<option name="TOOL_BAR" value=""/>
 		</module>
 		<module name="wklogs">
+		</module>
+		<module name="wknews">
+			<option name="NEWS_MAX_WIDTH" value="200"/>
+			<option name="NEWS_MAX_THMB_HEIGHT" value="100"/>
+			<option name="NEWS_MAX_THMB_WIDTH" value="100"/>
+			<option name="NEWS_MAX_HEIGHT" value="200"/>
 		</module>
 		<module name="wkobj">
 		</module>
 		<module name="wkupload">
+			<option name="MAX_SIZE" value="(100*MB)"/>
+			<option name="MAX_THUMB_HEIGHT" value="50"/>
+			<option name="FORCE_SCALE" value="true"/>
+			<option name="MAX_IMG_HEIGHT" value="150"/>
+			<option name="VALID_EXTENSIONS" value="jpg,png,gif"/>
+			<option name="IMAGES_PATH" value="images.new/"/>
+			<option name="PREFIX" value="arc_"/>
+			<option name="DEST_PATH" value="uploaded"/>
+			<option name="CREATE_THUMB" value=""/>
+			<option name="ASPECT_RATIO" value=""/>
+			<option name="MAX_IMG_WIDTH" value="150"/>
+			<option name="MAX_THUMB_WIDTH" value="50"/>
+			<option name="CONTROL_TYPE" value="BUTTON"/>
+			<option name="ENABLE_PREVIEW" value="false"/>
 		</module>
 		<module name="wkusers">
 		</module>
@@ -137,7 +156,7 @@
 					</form>
 				</entity>
 			</entity>
-			<entity name="B1s" title="ent B1">
+			<entity name="B1" title="ent B1">
 				<table name="t105_b1" primary-key="t105_id"/>
 				<splitpage value="1"/>
 				<search value="0"/>
