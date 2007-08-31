@@ -15,21 +15,21 @@
 			`<xsl:value-of select="table/@primary-key"/>` BIGINT (30) UNSIGNED NOT NULL AUTO_INCREMENT ,</xsl:if>
 		<xsl:for-each select="form/field">
 			<xsl:apply-templates select="."/>
-			<xsl:if test="../../table/@primary-key = db-field"> NOT NULL </xsl:if>
-			<xsl:if test="position() != last()">,</xsl:if>
+			<xsl:if test="../../table/@primary-key = db-field"> NOT NULL</xsl:if>
+			<xsl:if test="position() != last()"> ,</xsl:if>
 		</xsl:for-each> ,
 		<xsl:if test="../table/@name != ./table/@name">
-			<xsl:choose><xsl:when test="../table/@primary-key != ../form/field/db-field">
+			<xsl:choose>
+			<xsl:when test="../table/@primary-key != ../form/field/db-field">
 			`<xsl:value-of select="../table/@primary-key"/>` BIGINT (30) UNSIGNED NOT NULL ,</xsl:when>
 			<xsl:otherwise>
-				<xsl:variable name="pk"><xsl:value-of select="../table/@primary-key"/></xsl:variable>
-				<xsl:apply-templates select="../form/field[db-field = $pk]"/> , 
+			<xsl:variable name="pk"><xsl:value-of select="../table/@primary-key"/></xsl:variable>
+			<xsl:apply-templates select="../form/field[db-field = $pk]"/> , 
 			</xsl:otherwise>	
 			</xsl:choose>
-		  	KEY `parent` (`<xsl:value-of select="../table/@primary-key"/>`),</xsl:if>
+			KEY `parent` (`<xsl:value-of select="../table/@primary-key"/>`) ,</xsl:if>
 			PRIMARY KEY (`<xsl:value-of select="table/@primary-key"/>`)
 		);
-		
 		<xsl:apply-templates select="entity"/>
 	</xsl:template>
 	

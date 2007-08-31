@@ -36,12 +36,33 @@
     + editar los options
     + inicializar los options en los valores por defecto especificados para este 'plugin'
 
-- modificar opciones para los fields
+- modificar opciones para los field
+    -dialogo con un OptionTable
+
+- validar los fields soportados
 - cambiar los toString de + por StringBuffer.append
+- revisar el open recents -> los tabs se vuelven ineditables??
 
 - Generacion de codigo
-    - xsl para generar el schema de la BD y js.
+    + xsl para generar el schema de la BD.
+    + xsl para generar el js.
+    + list.xsl
+    + obj.xsl
+    + exec.xsl
+    + includes.xsl
+    + connection.xsl
+    - mod.xsl
+    - configModule.xsl
+
+    - calcular archivos a copiar
+    - crear estructura de directorios base
+    - crear BD
+    - copiar archivos base
     - ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
-    - copia/extraccion de los archivos de los modulos y archivos base.
-    - ejecucion de las plantillas xsl para: mod_, exec_, list_ y obj.
+    - copiar modulos
+    - crear tablas de los modulos
+    - configurar modulos
+    - generar paginas de las entidades 
+	- paginas generadas siguen la nomenclaturac camel listXxxx modXxxx execXxxx Xxxx
+	- revisar si existen 
 

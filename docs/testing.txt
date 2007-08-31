@@ -47,6 +47,7 @@ Cronograma:
 	+ definir el xsl para el mod xml.
 	+ pagina que construya el xml. 
 	- usar los validadores de dojo para hacer validacion en realtime?
+		- invocar en cada evento a la function validate? muy caiman
 	- problema con la creacion del rte fckeditor desde la respuesta ajax. quizas utilizar el de dojo :S
 
 index:

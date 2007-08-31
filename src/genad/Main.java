@@ -10,9 +10,11 @@ import java.io.*;
  */
 public class Main {
 	public static void main(String[] args) {
-		//genad.engine.Engine engine=new genad.engine.Engine();
-		//engine.transformXML("docs/tests/testing/mod.xml","docs/tests/testing/mod.xsl");
-			
+		/*try{
+			genad.engine.Engine engine=new genad.engine.Engine();
+			engine.transformXML("project1.xml","js.xsl",new PrintStream(new File("db.js")));
+		}catch(Exception e){}//*/
+		
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				Splash.getInstance();

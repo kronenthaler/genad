@@ -102,7 +102,10 @@ public class Model{
 				if(aux.item(i).getNodeName().equalsIgnoreCase("module")){
 					Module temp=new Module();
 					String name=aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim();
-					modules.put(name, temp.load(aux.item(i),cfgMan.getPluginConfig(language).getModuleConfig(name)));
+					if(cfgMan.getPluginConfig(language).getModuleConfig(name)!=null) //drop unknown modules
+						modules.put(name, temp.load(aux.item(i),cfgMan.getPluginConfig(language).getModuleConfig(name)));
+					else
+						System.err.println("Warning: Unsuported module '"+name+"' for the language '"+language+"'");
 				}		
 			}
 		}catch(Exception e){
@@ -158,6 +161,7 @@ public class Model{
 	
 	public boolean renameEntity(String src, String dst){
 		if(entities.get(dst)!=null) return false;
+		if("".equals(dst.trim())) return false;
 		entities.put(dst,entities.get(src));
 		entities.remove(src);
 		return true;

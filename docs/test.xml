@@ -28,7 +28,7 @@
 			<just-schema value="0"/>
 			<sortable value="0"/>
 			<form>
-				<field type="textfield">
+				<field type="radio">
 					<label><![CDATA[s]]></label>
 					<db-field><![CDATA[d]]></db-field>
 					<required>1</required><!-- 0|1 -->
@@ -49,7 +49,7 @@
 			<form>
 				<field type="textfield">
 					<label><![CDATA[campo1]]></label>
-					<db-field><![CDATA[t100_campo1]]></db-field>
+					<db-field><![CDATA[t100_id]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -115,14 +115,23 @@
 				</entity>
 			</entity>
 			<entity name="B1" title="ent B1">
-				<table name="t105_b1" primary-key="t105_id"/>
+				<table name="t105_b1" primary-key="t105_campo"/>
 				<splitpage value="1"/>
 				<search value="0"/>
 				<just-pages value="0"/>
 				<just-schema value="0"/>
 				<sortable value="0"/>
 				<form>
-					<field type="time">
+					<field type="textfield">
+						<label><![CDATA[&eacute;]]></label>
+						<db-field><![CDATA[t105_campo]]></db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+					<field type="textfield">
 						<label><![CDATA[&eacute;]]></label>
 						<db-field><![CDATA[t105_campo]]></db-field>
 						<required>0</required><!-- 0|1 -->

@@ -108,6 +108,7 @@ public class Entity{
 	} 
 	private boolean renameChild(String src, String dst){
 		if(childs.get(dst)!=null) return false;
+		if("".equals(dst.trim())) return false;
 		childs.put(dst, childs.get(src));
 		childs.remove(src);
 		return true;
@@ -233,7 +234,7 @@ public class Entity{
 		
 		Enumeration<String> e;
 		String key,
-		ret=deep+"<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
+		ret=deep+"<entity name=\""+Utils.sanitize(name)+"\" name-lower=\""+Utils.sanitize(name.toLowerCase())+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
 		ret+=deep+"	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n";
 		//ret+=deep+"	<permissions value=\""+permissions+"\"/>\n";
 		ret+=deep+"	<splitpage value=\""+(pager?1:0)+"\"/>\n";

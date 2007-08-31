@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188423293084" by="kronenthaler" language="php">
+<project lastsaved="1188572263984" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
 	</file-server-conf>
@@ -18,12 +18,6 @@
 			<option name="TOOL_BAR" value=""/>
 		</module>
 		<module name="wklogs">
-		</module>
-		<module name="wknews">
-			<option name="NEWS_MAX_WIDTH" value="200"/>
-			<option name="NEWS_MAX_THMB_HEIGHT" value="100"/>
-			<option name="NEWS_MAX_THMB_WIDTH" value="100"/>
-			<option name="NEWS_MAX_HEIGHT" value="200"/>
 		</module>
 		<module name="wkobj">
 		</module>
@@ -47,7 +41,7 @@
 		</module>
 	</modules>
 	<entities>
-		<entity name="C" title="sd">
+		<entity name="C" name-lower="c" title="sd">
 			<table name="sd" primary-key="sd"/>
 			<splitpage value="1"/>
 			<search value="0"/>
@@ -68,7 +62,7 @@
 				<field type="date">
 					<label><![CDATA[null]]></label>
 					<db-field><![CDATA[sdfg]]></db-field>
-					<required>0</required><!-- 0|1 -->
+					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>0</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
@@ -77,7 +71,7 @@
 				</field>
 			</form>
 		</entity>
-		<entity name="B" title="lku">
+		<entity name="B" name-lower="b" title="lku">
 			<table name="t100_b" primary-key="t100_id"/>
 			<splitpage value="1"/>
 			<search value="0"/>
@@ -96,7 +90,7 @@
 					</options>
 				</field>
 			</form>
-			<entity name="B2" title="Ent B2">
+			<entity name="B2" name-lower="b2" title="Ent B2">
 				<table name="t102_b2" primary-key="t102_id"/>
 				<splitpage value="0"/>
 				<search value="0"/>
@@ -115,7 +109,7 @@
 						</options>
 					</field>
 				</form>
-				<entity name="B22" title="ent b22">
+				<entity name="B22" name-lower="b22" title="ent b22">
 					<table name="t103_b22" primary-key="t103_id"/>
 					<splitpage value="1"/>
 					<search value="0"/>
@@ -135,7 +129,7 @@
 						</field>
 					</form>
 				</entity>
-				<entity name="B21" title="ent B21">
+				<entity name="B21" name-lower="b21" title="ent B21">
 					<table name="t104_b21" primary-key="t104_id"/>
 					<splitpage value="1"/>
 					<search value="0"/>
@@ -156,7 +150,7 @@
 					</form>
 				</entity>
 			</entity>
-			<entity name="B1" title="ent B1">
+			<entity name="B1" name-lower="b1" title="ent B1">
 				<table name="t105_b1" primary-key="t105_id"/>
 				<splitpage value="1"/>
 				<search value="0"/>
