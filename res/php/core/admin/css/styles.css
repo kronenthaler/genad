@@ -1,0 +1,263 @@
+/** Clases por nombre */
+*,body {margin:0; padding:0; border:0; font-family:Arial, Helvetica, sans-serif;}
+
+body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
+
+ul{
+	list-style-type:none;
+	width: 142px;
+}
+
+ul li{
+	border-bottom: 1px dotted #999;
+	height:20px;
+	width: 142px;
+	vertical-align: middle;
+}
+
+ul li a:link, 
+ul li a:visited{
+	padding:0px 0px 0px 5px;
+	width: 137px;
+	color:#999;
+	text-decoration:none;
+	float:left;
+	vertical-align: middle;
+}
+
+ul li a:hover {
+	padding:0px 0px 0px 5px;
+	background-color:#FFF;
+	width: 137px;
+	color:#333;
+	text-decoration:none;
+	float:left;
+	vertical-align: middle;
+}
+
+a {
+	text-decoration:none;
+}
+
+#content-header h2{
+	color: #999;
+}
+
+/** containers y clases globales */
+#container{ 
+	width: 100%;
+	height: 600px; 
+	/*margin: 0 auto; /* esto hace que se centre */
+	font-size:inherit;
+}
+
+#container input{
+	border: 1px solid #999; 
+}
+
+#container textarea{
+	border: 1px solid #999; 
+	font-size:11px;
+	width: 100%;
+	height:200px;
+}
+
+#menu input{ 
+	width: 70px;
+}
+
+#container button {
+	background-color: #eee; 
+	margin: 0px;
+	border: 1px solid #999;
+	width: 70px;
+	cursor:pointer;
+}
+
+#container button img{
+	vertical-align: top;
+	padding-top: 1px;
+}
+
+#container table {
+	font-size:inherit;
+	text-align: right;
+	/*border: 1px dotted #000;/**/
+	width:90%;
+}
+
+#content table{
+	text-align: left;
+	font-size: inherit;
+	width: 90%;
+	border-left: 1px solid #ccc;
+}
+
+#content table th{
+	background: #ccc;
+	color: #333;
+}
+
+#content table tr{
+	height: 20px;
+}
+
+#content-header {
+	margin-left:0px;
+	padding:0px;
+	width:75%;/* cambiar por static sizes*/
+	min-height: 50px;
+	float:left;
+	background-color: #FFF;
+	text-align: right;
+}
+
+#content-header table td{
+	background: #fff;
+}
+
+#content-header table td button {
+	background-color: #eee; 
+	margin: 0px; 
+	padding: 0px;
+	border: 1px solid #999;
+	text-align: center;
+	width: 24px;
+	cursor:pointer;
+}
+
+#content table td{
+	background: #fff;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px dotted #999;
+	vertical-align: middle;
+	padding: 1px;
+	height: 20px;
+}
+
+#content table td.part1{
+	border-bottom: 1px solid #ccc;
+}
+#content table td.part2{
+	border: 1px solid #ccc;
+}
+
+/*#content table tr.part1{
+	display: none;
+}*/
+#content table td button img {
+	border: 0px;
+	width: 16px;
+	height: 16px;
+	text-align: left;
+}
+
+#content table td img {
+	background-color: #eee; 
+	margin: 1px; 
+	padding: 0px;
+	border: 1px solid #999;
+	/*width: 10px;
+	height: 10px;*/
+	text-align: center;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+#content table td a:link,
+#content table td a:visited{
+	text-decoration: none;
+}
+
+#content table.plain,
+#content table td.plain{
+	border:0px;
+}
+
+#header {
+	margin-top:0px;
+	margin-right:0px;
+	margin-left:0px;
+	border:0;
+	background-color:#eee;
+	background-repeat:no-repeat;
+	background-image: url(images/header.gif);
+	background-position: top;
+	color:#FFF;
+	width:100%;
+	height:30px;
+} 
+
+#menu{
+	border:0;
+	margin:0;
+	padding:0;
+	width: 142px;
+	min-height: 100%;
+	float:left;
+	background-color:#EEE;
+}
+
+#content{
+	margin-left:0px;
+	padding:0px;
+	width:75%;/* cambiar por static sizes*/
+	min-height: 50px;
+	float:left;
+	color:#999;
+	background-color: #FFF;
+	text-align: right;
+	vertical-align: top;
+}
+
+.submenulabel{
+	background: #ccc;
+	height: 20px;
+	width: 127px;
+	cursor: pointer;
+	border-bottom: 1px dotted #999 ;
+	background-image: url('images/close.gif');
+	background-repeat: no-repeat;
+	background-position: left;
+	padding-left: 15px;
+}
+
+.menucontent{
+	width: 142px;
+}
+
+.menucontent ul{
+	list-style-type:none;
+	width: 142px;
+}
+
+.menucontent ul li{
+	border-bottom: 1px dotted #999;
+	height:20px;
+	width: 142px;
+}
+
+.menucontent ul li a:link, 
+.menucontent ul li a:visited{
+	padding:0px 0px 0px 15px;
+	width: 132px;
+	color:#999;
+	text-decoration:none;
+	float:left;
+}
+
+.menucontent ul li a:hover {
+	padding:0px 0px 0px 15px;
+	background-color:#FFF;
+	width: 132px;
+	color:#333;
+	text-decoration:none;
+	float:left;
+}
+
+.border{
+	border: 1px solid #999;
+	width: 10px;
+	height: 10px;
+}
+
