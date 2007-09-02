@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188572263984" by="kronenthaler" language="php">
+<project lastsaved="1188769277403" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
 	</file-server-conf>
@@ -14,12 +14,45 @@
 		<prod-schema><![CDATA[testing]]></prod-schema>
 	</db-server-conf>
 	<modules>
-		<module name="wkrte">
-			<option name="TOOL_BAR" value=""/>
+		<module name="wknews">
+			<option name="NEWS_MAX_WIDTH" value="200"/>
+			<option name="NEWS_MAX_THMB_HEIGHT" value="100"/>
+			<option name="NEWS_MAX_THMB_WIDTH" value="100"/>
+			<option name="NEWS_MAX_HEIGHT" value="200"/>
+		</module>
+		<module name="wkobj">
+		</module>
+		<module name="wkcategory">
+			<option name="CAT_ENTITY_NAME" value="t01_name"/>
+			<option name="CAT_ENTITY_CLASS" value="Product"/>
+			<option name="CAT_ENTITY_TITLE" value="Productos"/>
+			<option name="CAT_ENTITY_ID" value="t01_id"/>
 		</module>
 		<module name="wklogs">
 		</module>
-		<module name="wkobj">
+		<module name="wkgallery">
+			<option name="GAL_BACKGROUND_MODAL" value="#000000"/>
+			<option name="GAL_MAX_BIG_WIDTH" value="500"/>
+			<option name="GAL_FORCE_SCALE" value="true"/>
+			<option name="GAL_ROWS" value="5"/>
+			<option name="GAL_MAX_THUMB_WIDTH" value="150"/>
+			<option name="GAL_PREFIX" value="gal_"/>
+			<option name="GAL_DELAY" value="5000"/>
+			<option name="GAL_ASPECT_RATIO" value="true"/>
+			<option name="GAL_WINDOW" value="1"/>
+			<option name="GAL_OPACTITY_MODAL" value="0.5"/>
+			<option name="GAL_MAX_BIG_HEIGHT" value="500"/>
+			<option name="GAL_DEST_PATH" value="archivos/"/>
+			<option name="GAL_COLUMNS" value="3"/>
+			<option name="GAL_TRANSITIONAL_INTERVAL" value="1000"/>
+			<option name="GAL_MAX_THUMB_HEIGHT" value="150"/>
+			<option name="GAL_ENABLE_PREVIEW" value="false"/>
+		</module>
+		<module name="wkusers">
+		</module>
+		<module name="wklocations">
+		</module>
+		<module name="wkcombo">
 		</module>
 		<module name="wkupload">
 			<option name="MAX_SIZE" value="(100*MB)"/>
@@ -37,7 +70,12 @@
 			<option name="CONTROL_TYPE" value="BUTTON"/>
 			<option name="ENABLE_PREVIEW" value="false"/>
 		</module>
-		<module name="wkusers">
+		<module name="wkrte">
+			<option name="TOOL_BAR" value=""/>
+		</module>
+		<module name="wkpurchases">
+		</module>
+		<module name="wkcatalogue">
 		</module>
 	</modules>
 	<entities>

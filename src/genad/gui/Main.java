@@ -399,7 +399,7 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_windowClosing
 
 	private void generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateActionPerformed
-		// TODO add your handling code here:
+		new Engine().generate(model);
 	}//GEN-LAST:event_generateActionPerformed
 
 	private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed

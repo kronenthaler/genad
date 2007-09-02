@@ -1,9 +1,12 @@
 package genad;
 
+import java.io.*;
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
 
+import genad.model.*;
+import genad.config.*;
 import genad.gui.Main;
 
 /**
@@ -38,6 +41,17 @@ public class Utils{
 		while(e.hasMoreElements()) aux.add(e.nextElement());
 		String[] ret=aux.toArray(new String[0]);
 		Arrays.sort(ret);
+		return ret;
+	}
+	
+	public static String[] invert(Stack<String> s){
+		String[] ret=new String[s.size()];
+		s.copyInto(ret);
+		for(int i=0,n=ret.length;i<n>>1; i++){
+			String aux=ret[i];
+			ret[i] = ret[n-i-1];
+			ret[n-i-1]=aux;
+		}
 		return ret;
 	}
 	
@@ -111,5 +125,59 @@ public class Utils{
 	public static boolean showError(String msg){
 		JOptionPane.showMessageDialog(Main.getInstance(),msg,"Error", JOptionPane.ERROR_MESSAGE);
 		return false;
+	}
+	
+	//generation related
+	
+	public static long countFiles(File root){
+		long ret=0;
+		if(!root.exists()) return 0;
+		for(File current : root.listFiles()){
+			if(current.isFile()){ 
+				if(!current.isHidden()) 
+					ret++;
+			}else{
+				if(!current.isHidden())
+					ret+=countFiles(current);
+			}
+		}
+		
+		return ret;
+	}
+	
+	//return the topological sort of a graph of modules linked by their dependencies
+	public static String[] topologicalSort(String[] modNames, PluginConfig pCfg){
+		Hashtable<String, Vector<String>> M=new Hashtable<String, Vector<String>>();
+		Hashtable<String, Boolean> visited=new Hashtable<String, Boolean>();
+		Stack<String> result=new Stack<String>();
+		
+		for(String current:modNames){
+			if(M.get(current)==null) M.put(current,new Vector<String>());
+			
+			ModuleConfig mCfg=pCfg.getModuleConfig(current);
+			Vector<String> links=mCfg.getDependencies();
+			for(String src:links){
+				if(M.get(src)==null) M.put(src,new Vector<String>());
+				M.get(src).add(current);
+			}
+		}
+		
+		
+		for(String current:modNames)
+			if(visited.get(current)==null || !visited.get(current))
+				tsort(current, M, result, visited);
+		
+		return invert(result);
+	}
+	
+	private static void tsort(String v, Hashtable<String, Vector<String>> M, Stack<String> result, Hashtable<String, Boolean> visited){
+		visited.put(v,true);
+		for(int i=0;i<M.get(v).size();i++){
+			String w=M.get(v).get(i);
+			if(visited.get(w)==null || !visited.get(w))
+				tsort(w,M,result, visited);
+		}
+		
+		result.push(v);//stack it
 	}
 }

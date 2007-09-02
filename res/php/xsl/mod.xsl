@@ -25,12 +25,11 @@
 		  		  action="'.$_REQUEST['action'].'" 
 		  		  id="'.$_REQUEST['id'].'">';
 		echo $obj->getXMLTitle();
-		echo $obj->getXMLAncestors();
-		
-		//has an array for each field with options, if this options has many values, then the entry is an array of arrays]]>
+		echo $obj->getXMLAncestors(); 
+		//begin field options]]>
 		<xsl:apply-templates select="/entity/form/field"/>
-		
-<![CDATA[				 
+<![CDATA[		
+		//end field options
 		echo $obj->getXMLForm($options);
 	echo "</entity>";
 ?>
@@ -41,7 +40,36 @@
 		<!-- hacer el choose por los types para determinar cuales
 			atributos especificos son necesarios por tipo y 
 			adicionalmente los de configuracion -->
-		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','time' => format($obj->t01_model,TIME,'H:m:s'));
+		<xsl:choose>
+		<!-- ignore: textfield, integer, decimal, textarea -->	
+		<xsl:when test="@type = 'hidden'">
+		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_');</xsl:when>
+		<xsl:when test="@type = 'time'">
+		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','time' => format($obj-><xsl:value-of select="db-field"/>,TIME,'H:m:s'));</xsl:when>
+		<xsl:when test="@type = 'date'">
+		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'M/D/Y'));</xsl:when>
+		<xsl:when test="@type = 'datetime'">
+		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'M/D/Y'), 'time' => format($obj-><xsl:value-of select="db-field"/>,TIME,'H:m:s'));</xsl:when>
+		<xsl:when test="@type = 'password'">
+		$options["<xsl:value-of select="db-field"/>"]=array('confirm'=>'Confirm');</xsl:when>
+		<xsl:when test="@type = 'radio' or @type='checkbox'">
+		$options["<xsl:value-of select="db-field"/>"]=array(
+			//one array per option with the label, the value associated with, if is selected for this object or not and the javascript 'onclick' code.
+			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'','onclick'=>'')<xsl:if test="position() != last()">,
+			</xsl:if></xsl:for-each>
+		);</xsl:when>
+		<xsl:when test="@type='select'">
+		$options["<xsl:value-of select="db-field"/>"]=array('onclick'=>'',
+			//one array per option with the label, the value associated with and if is selected for this object or not.
+			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'')<xsl:if test="position() != last()">,
+			</xsl:if></xsl:for-each>
+		);</xsl:when>
+		<xsl:when test="@type='file' or @type='image'">
+		$options["<xsl:value-of select="db-field"/>"]=array('path' => $obj-><xsl:value-of select="db-field"/>,
+			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>')<xsl:if test="position() != last()">,
+			</xsl:if></xsl:for-each>
+		);</xsl:when>
+		</xsl:choose>
 	</xsl:template>
 	
 	

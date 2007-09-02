@@ -51,14 +51,14 @@
     + exec.xsl
     + includes.xsl
     + connection.xsl
-    - mod.xsl
+    + mod.xsl
     - configModule.xsl
 
-    - calcular archivos a copiar
+    + calcular archivos a copiar
     - crear estructura de directorios base
     - crear BD
     - copiar archivos base
-    - ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
+    + ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
     - copiar modulos
     - crear tablas de los modulos
     - configurar modulos

@@ -9,6 +9,7 @@
 	</xsl:template>
 	
 	<xsl:template match="entity">
+		<xsl:if test="just-pages = 1">
 		DROP TABLE IF EXISTS `<xsl:value-of select="table/@name"/>`;
 		CREATE TABLE `<xsl:value-of select="table/@name"/>` (
 		<xsl:if test="form/field/db-field != table/@primary-key">
@@ -30,6 +31,7 @@
 			KEY `parent` (`<xsl:value-of select="../table/@primary-key"/>`) ,</xsl:if>
 			PRIMARY KEY (`<xsl:value-of select="table/@primary-key"/>`)
 		);
+		</xsl:if>
 		<xsl:apply-templates select="entity"/>
 	</xsl:template>
 	
@@ -37,7 +39,7 @@
 		<xsl:choose>
 			<xsl:when test="@type = 'textfield' or @type = 'password' or @type = 'email' or @type = 'select' or @type = 'hidden'">
 			`<xsl:value-of select="db-field"/>` VARCHAR (50) DEFAULT '' </xsl:when>
-			<xsl:when test="@type = 'integer' or @type = 'radio' or @type = 'check'">
+			<xsl:when test="@type = 'integer' or @type = 'radio' or @type = 'checkbox'">
 			`<xsl:value-of select="db-field"/>` INTEGER (10) DEFAULT 0 </xsl:when>
 			<xsl:when test="@type = 'decimal'">
 			`<xsl:value-of select="db-field"/>` FLOAT (10.5) DEFAULT '0.0' </xsl:when>
