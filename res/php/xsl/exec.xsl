@@ -8,11 +8,6 @@
 	$id = $_REQUEST['id'];
 	$obj = new <xsl:value-of select="//@name"/>();
 	
-	//move to insert/update function
-	//$obj->encodePasswords($_REQUEST);
-	//$obj->formatTimes($_REQUEST);
-	$obj->formatDatetimes($_REQUEST);
-	
 	if($action=='add'){
 		if(!$obj->insert())
 			$error=$obj->getError();

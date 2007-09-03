@@ -44,7 +44,6 @@ class AbstractObject{
 	 */
 	function insert($DATA=NULL){
 		$DATA=$DATA==NULL?$_REQUEST:$DATA;
-		$schema=$_SESSION['schema'];
 		$query="INSERT INTO ".$this->tablename." (";		
 		$values=" VALUES (";
 		
@@ -55,6 +54,7 @@ class AbstractObject{
 					$this->fields[$str=substr($keys[$i],strlen($this->prefixes[$j]))]!=NULL){
 					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
 					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
+					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
 					
 					//repeat preprocessing for other types like upload
 					$query.=($k>0?',':'').$str;
@@ -80,7 +80,6 @@ class AbstractObject{
 	 */
 	function update($id, $DATA=NULL){
 		$DATA=$DATA==NULL?$_REQUEST:$DATA;
-		$schema=$_SESSION['schema'];
 		$query="UPDATE ".$this->tablename." SET ";		
 		$values=" WHERE ".$this->primarykey."='".$id."'";
 		
@@ -91,6 +90,7 @@ class AbstractObject{
 					$this->fields[$str=substr($keys[$i],strlen($this->prefixes[$j]))]!=NULL){
 					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
 					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
+					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
 					
 					$query.=($k>0?',':'').$str."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
@@ -120,19 +120,20 @@ class AbstractObject{
 			for($i=0,$n=count($this->childs);$i<$n;$i++){
 				eval("\$objs[\$i]=new ".$this->childs[$i]."();");
 				$allids[$i]=array();
-				if(is_array($ids))
-					$rs=mysql_query(" SELECT ".$objs[$i]->primarykey.
-									" FROM ".$objs[$i]->tablename.
-									" WHERE ".$this->primarykey." in ('".implode("','",$ids)."')");
-				else								
-					$rs=mysql_query(" SELECT ".$objs[$i]->primarykey.
-									" FROM ".$objs[$i]->tablename.
-									" WHERE ".$this->primarykey." = '".$ids."'");
+				
+				$query=" SELECT ".$objs[$i]->primarykey." FROM ".$objs[$i]->tablename." WHERE ".$this->primarykey;
+				if(is_array($ids)) $query.=" in ('".implode("','",$ids)."')";
+				else $query.=" = '".$ids."'";
+				
+				$rs=mysql_query($query);
+				
 				if(!$rs) continue;
 				for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
 					array_push($allids[$i],mysql_result($rs,$j));
 			}
 		}
+		//delete the files pointed by the type fields file or image	
+		$this->deleteFiles($ids);
 		
 		$query="DELETE FROM ".$this->tablename." WHERE ".$this->primarykey;	
 		if(is_array($ids)) $query.=" IN ('".implode("','",$ids)."')";
@@ -142,13 +143,28 @@ class AbstractObject{
 		for($i=0,$n=count($objs);$i<$n && $flag;$i++)
 			$flag &= $objs[$i]->delete($allids[$i]);
 			
-		//delete the files pointed by the type fields file or image	
 		//echo $query;
 		if(!(mysql_query($query) && $flag)){
 			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
 			return false;
 		}
 		return true;
+	}
+	
+	function deleteFiles($ids){
+		$files=$this->getFieldsByType(TYPE,'file');
+		array_push($files, $this->getFieldsByType(TYPE,'image'));
+		
+		if(count($files)>0){
+			$query="SELECT ".implode(",", $files)." FROM ".$this->tablename." WHERE ".$this->primarykey;
+			if(is_array($ids)) $query.=" IN ('".implode("','",$ids)."')";
+			else $query.=" = '".$ids."'";
+			
+			$rs=mysql_query($query);
+			for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
+				for($i=0,$n=count($files);$i<$n;$i++)
+					unlink(mysql_result($rs, $j, $files[$i]));
+		}
 	}
 	
 	/**
@@ -267,7 +283,7 @@ class AbstractObject{
 	}
 	
 	/**
-	 *	Format each time to remove : from the string.
+	 *	Format each time to remove ':' from the string.
 	 */
 	function formatTimes(&$array){
 		$time=$this->getFieldsByType(TYPE,'time');
@@ -285,7 +301,7 @@ class AbstractObject{
 	}
 	
 	/**
-	 *	Format each datetime to remove : from the string.
+	 *	Format each datetime to remove ':' from the string.
 	 */
 	function formatDatetimes(&$array){
 		$time=$this->getFieldsByType(TYPE,'datetime');

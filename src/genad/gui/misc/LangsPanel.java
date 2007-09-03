@@ -122,6 +122,8 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 						//actualizar la tabla de los plugins instalados.
 						fillTable();
 						progressBar.setVisible(false);
+					}catch(RuntimeException e){
+						Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());	
 					}catch(Exception e){
 						e.printStackTrace();
 					}

@@ -20,7 +20,7 @@ import genad.engine.*;
  *
  *	@author kronenthaler
  */
-public class Field{
+public class Field implements Serializable{
 	private Entity container;
 	private Hashtable<String, String> options;
 	private String label, map, type;
@@ -105,23 +105,23 @@ public class Field{
 	public boolean isSearchable(){ return searchable; }
 
 	public String toString(String deep){
-		String 
-		ret=deep+"		<field type=\""+type+"\">\n"+
-			deep+"			<label><![CDATA["+label+"]]></label>\n"+
-			deep+"			<db-field><![CDATA["+Utils.sanitize(map)+"]]></db-field>\n"+
-			deep+"			<required>"+(required?1:0)+"</required><!-- 0|1 -->\n"+
-			deep+"			<show-in-list>"+(listable?1:0)+"</show-in-list><!-- 0|1 -->\n"+
-			deep+"			<show-in-form>"+(visible?1:0)+"</show-in-form><!-- 0|1 -->\n"+
-			deep+"			<searchable>"+(searchable?1:0)+"</searchable><!-- 0|1 -->\n"+
-			deep+"			<options>\n";
+		StringBuffer ret=new StringBuffer(); 
+		ret.append(deep+"		<field type=\""+type+"\">\n")
+			.append(deep+"			<label><![CDATA["+label+"]]></label>\n")
+			.append(deep+"			<db-field><![CDATA["+Utils.sanitize(map)+"]]></db-field>\n")
+			.append(deep+"			<required>"+(required?1:0)+"</required><!-- 0|1 -->\n")
+			.append(deep+"			<show-in-list>"+(listable?1:0)+"</show-in-list><!-- 0|1 -->\n")
+			.append(deep+"			<show-in-form>"+(visible?1:0)+"</show-in-form><!-- 0|1 -->\n")
+			.append(deep+"			<searchable>"+(searchable?1:0)+"</searchable><!-- 0|1 -->\n")
+			.append(deep+"			<options>\n");
 
 			for(Enumeration<String> e=options.keys();e.hasMoreElements();){
 				String key=e.nextElement();
-				ret+=deep+"				<option name=\""+key+"\" value=\""+Utils.xmlSafe(options.get(key))+"\"/>\n";
+				ret.append(deep+"				<option name=\""+key+"\" value=\""+Utils.xmlSafe(options.get(key))+"\"/>\n");
 			}
 				 
-		ret+=deep+"			</options>\n"+
-			 deep+"		</field>\n";
-		return ret;	
+		ret.append(deep+"			</options>\n")
+			 .append(deep+"		</field>\n");
+		return ret.toString();	
 	}
 }

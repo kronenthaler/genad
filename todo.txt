@@ -2,12 +2,13 @@
     - se debe avisar al cambiar la seleccion en alguno de los combos del mismo panel que se perdera si no se aplica.
 
 - validar los fields soportados
-- cambiar los toString de + por StringBuffer.append
-- revisar el open recents -> los tabs se vuelven ineditables??
++ cambiar los toString de + por StringBuffer.append
+- revisar el open recents -> los tabs se vuelven ineditables??, problema de foco
 
 - modificar opciones para los field
     - dialogo con un OptionTable
-
+- instalar modulos al estilo install plugin.
+	
 - Generacion de codigo
     + xsl para generar el schema de la BD.
     + xsl para generar el js.
@@ -18,18 +19,19 @@
     + connection.xsl
     + mod.xsl
     - configModule.xsl
-
+	- crear tablas de los modulos
+    - configurar modulos
+	
     + calcular archivos a copiar
     + crear estructura de directorios base
     + crear BD
     + copiar archivos base
     + ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
     + copiar modulos
-    - crear tablas de los modulos
-    - configurar modulos
     + generar paginas de las entidades 
 	+ paginas generadas siguen la nomenclaturac camel listXxxx modXxxx execXxxx Xxxx
 	+ revisar si existen 
 
+- como importar los menues de los modulos y sus respectivos js para el index.xhtml
 - 
 

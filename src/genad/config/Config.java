@@ -11,7 +11,7 @@ import genad.*;
  *	DTA to manipulate and consult the configuration of the plugins and genad itself
  *	@author kronenthaler
  */
-public class Config{
+public class Config implements Serializable{
 	private String path;
 	private Hashtable<String, String> defaults;
 	private Hashtable<String, Boolean> actives;
@@ -47,6 +47,8 @@ public class Config{
 					}
 				}
 			}
+		}catch(RuntimeException e){
+			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());	
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -67,18 +69,18 @@ public class Config{
 	String getDefaultValue(String option){ return defaults.get(option);	}
 	
 	public String toString(){
-		String ret="<configuration>\n";
+		StringBuffer ret=new StringBuffer();
+		ret.append("<configuration>\n");
 		for(Enumeration<String> e=defaults.keys();e.hasMoreElements();){
 			String s=e.nextElement();
-			ret+="\t<default option=\""+s+"\" value=\""+defaults.get(s)+"\"/>\n";
+			ret.append("\t<default option=\""+s+"\" value=\""+defaults.get(s)+"\"/>\n");
 		}
-		ret+="\t<plugins>\n";
+		ret.append("\t<plugins>\n");
 		for(int i=0;i<installed.size();i++){
-			ret+="\t\t<plugin name=\""+installed.get(i)+"\" active=\""+(actives.get(installed.get(i))?"yes":"no")+"\"/>\n";
+			ret.append("\t\t<plugin name=\""+installed.get(i)+"\" active=\""+(actives.get(installed.get(i))?"yes":"no")+"\"/>\n");
 		}
-		ret+="\t</plugins>\n";
-		
-		ret+="</configuration>";
-		return ret;
+		ret.append("\t</plugins>\n")
+			.append("</configuration>");
+		return ret.toString();
 	}
 }

@@ -1,11 +1,12 @@
 package genad.config;
 
+import java.io.*;
 import java.util.*;
 /**
  *
  *	@author kronenthaler
  */
-public class FieldConfig{
+public class FieldConfig implements Serializable{
 	private String type;
 	private boolean visible=false,listable=false, searchable=false;
 	private Hashtable<String, String> options;
@@ -33,14 +34,15 @@ public class FieldConfig{
 	public int getOptionSize(){ return options.size(); }
 		
 	public String toString(){
-		String ret="\t\t<field type=\""+type+"\" visible=\""+visible+"\" listable=\""+listable+"\" searchable=\""+searchable+"\""+(options.size()>0?"":"/")+">\n";
+		StringBuffer ret=new StringBuffer();
+		ret.append("\t\t<field type=\""+type+"\" visible=\""+visible+"\" listable=\""+listable+"\" searchable=\""+searchable+"\""+(options.size()>0?"":"/")+">\n");
 		if(options.size()>0){
 			for(Enumeration<String> e=options.keys();e.hasMoreElements();){
 				String key=e.nextElement();
-				ret+="\t\t\t<option name=\""+key+"\" value=\""+options.get(key)+"\" "+(defaults.get(key)!=null?"default=\""+defaults.get(key)+"\"":"")+"/>\n";
+				ret.append("\t\t\t<option name=\""+key+"\" value=\""+options.get(key)+"\" "+(defaults.get(key)!=null?"default=\""+defaults.get(key)+"\"":"")+"/>\n");
 			}
-			ret+="\t\t</field>\n";
+			ret.append("\t\t</field>\n");
 		}
-		return ret;
+		return ret.toString();
 	}
 }

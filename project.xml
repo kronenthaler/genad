@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188849774653" by="kronenthaler" language="php">
+<project lastsaved="1188860925190" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/usr/share/resin/webapps/temp]]></base-directory>
 	</file-server-conf>
@@ -73,13 +73,13 @@
 		<module name="wkrte">
 			<option name="TOOL_BAR" value=""/>
 		</module>
-		<module name="wkcatalogue">
-		</module>
 		<module name="wkpurchases">
+		</module>
+		<module name="wkcatalogue">
 		</module>
 	</modules>
 	<entities>
-		<entity name="C" title="Pruebas">
+		<entity name="Adsfh" title="Pruebas">
 			<table name="sd" primary-key="sd"/>
 			<splitpage value="1"/>
 			<search value="1"/>
@@ -87,7 +87,7 @@
 			<just-schema value="0"/>
 			<sortable value="0"/>
 			<form>
-				<field type="password">
+				<field type="email">
 					<label><![CDATA[password]]></label>
 					<db-field><![CDATA[pass]]></db-field>
 					<required>1</required><!-- 0|1 -->
@@ -97,7 +97,7 @@
 					<options>
 					</options>
 				</field>
-				<field type="time">
+				<field type="datetime">
 					<label><![CDATA[Hora]]></label>
 					<db-field><![CDATA[hora]]></db-field>
 					<required>1</required><!-- 0|1 -->

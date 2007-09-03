@@ -20,7 +20,7 @@ import genad.engine.*;
  *
  *	@author kronenthaler
  */
-public class Module{
+public class Module implements Serializable{
 	private Hashtable<String,String> options;
 	private String name;
 	private ModuleConfig cfg;
@@ -68,13 +68,14 @@ public class Module{
 	}
 	
 	public String toString(){
-		String ret="		<module name=\""+name+"\">\n";
+		StringBuffer ret=new StringBuffer();
+		ret.append("		<module name=\""+name+"\">\n");
 		for(Enumeration<String> e=options.keys();e.hasMoreElements();){
 			String key=e.nextElement();
-			ret+="			<option name=\""+key+"\" value=\""+options.get(key)+"\"/>\n";
+			ret.append("			<option name=\""+key+"\" value=\""+options.get(key)+"\"/>\n");
 		}
-		ret+="		</module>\n";
+		ret.append("		</module>\n");
 		changed=false;
-		return ret;
+		return ret.toString();
 	}
 }

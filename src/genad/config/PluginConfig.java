@@ -14,7 +14,7 @@ import genad.engine.*;
  *	Plugin is equal to Language
  *	@author kronenthaler
  */
-public class PluginConfig{
+public class PluginConfig implements Serializable{
 	private String name;
 	private String description;
 	private String path;
@@ -116,27 +116,27 @@ public class PluginConfig{
 	
 	public String getName(){return name;}
 	public String getDescription(){return description;}
-	//TODO: estos metodos no deberian devolver la referencia a la tabla hash, sino una copia o algo que no sea sensible a modificaciones.
 	public FieldConfig getFieldConfig(String name){ return fields.get(name); }
 	public String[] getModulesName(){ return Utils.convert(modules.keys()); }
 	public ModuleConfig getModuleConfig(String name){ return modules.get(name); }
 	public String[] getValidTypes(){ return Utils.convert(fields.keys()); }
 		
 	public String toString(){
-		String ret="<plugin>\n";
-		ret+="\t<name>"+name+"</name>\n";
-		ret+="\t<description>"+description+"</description>\n";
-		ret+="\t<!-- MODULES DEFINITION -->\n";
-		ret+="\t<modules>\n";
+		StringBuffer ret=new StringBuffer();
+		ret.append("<plugin>\n")
+			.append("\t<name>"+name+"</name>\n")
+			.append("\t<description>"+description+"</description>\n")
+			.append("\t<!-- MODULES DEFINITION -->\n")
+			.append("\t<modules>\n");
 			for(Enumeration<String> e=modules.keys();e.hasMoreElements();)
-				ret+=modules.get(e.nextElement()).toString();
-		ret+="\t</modules>\n";
-		ret+="\t<!-- FIELDS DEFINITION -->\n";
-		ret+="\t<fields>\n";
+				ret.append(modules.get(e.nextElement()).toString());
+		ret.append("\t</modules>\n")
+			.append("\t<!-- FIELDS DEFINITION -->\n")
+			.append("\t<fields>\n");
 			for(Enumeration<String> e=fields.keys();e.hasMoreElements();)
-				ret+=fields.get(e.nextElement()).toString();
-		ret+="\t</fields>\n";
-		ret+="</plugin>";
-		return ret;
+				ret.append(fields.get(e.nextElement()).toString());
+		ret.append("\t</fields>\n")
+			.append("</plugin>");
+		return ret.toString();
 	}
 }

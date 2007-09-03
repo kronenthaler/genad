@@ -417,13 +417,15 @@ public class PropertiesDlg extends javax.swing.JDialog {
 				}else{
 					//if any selected module has me as dependency alert and abort
 					String msg="";
+					StringBuffer aux=new StringBuffer();
 					for(int i=0,n=dataVector.size();i<n;i++){
 						ModuleConfig mcfg = pcfg.getModuleConfig(((Vector)dataVector.get(i)).get(1).toString());
 						Vector<String> deps=mcfg.getDependencies();
 						if((Boolean)((Vector)dataVector.get(i)).get(0) && deps.contains(((Vector)dataVector.get(row)).get(1))){
-							msg+="- "+((Vector)dataVector.get(i)).get(1)+"\n";
+							aux.append("- "+((Vector)dataVector.get(i)).get(1)+"\n");
 						}
 					}
+					msg=aux.toString();
 					
 					if(!"".equals(msg)){
 						JOptionPane.showMessageDialog(Main.getInstance(),

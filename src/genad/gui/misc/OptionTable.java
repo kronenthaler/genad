@@ -39,9 +39,11 @@ public class OptionTable extends JTable{
 	 *	@param _d Must be a bidimensional array of strings, if a value string contains a | this method will convert to
 	 *				JComboBox, otherwise remains as a string editable value.
 	 */
-	public void setData(final Object[][] _d){
+	public void setData(Object[][] _d){
 		try{
-			data=_d;
+			data=new Object[_d.length][];
+			System.arraycopy(_d,0,data,0,_d.length);
+			
 			editor.clearEditors();
 			//parsear la data para poder construir el modelo que se necesita.
 			for(int i=0,n=data.length;i<n;i++){
@@ -76,7 +78,7 @@ public class OptionTable extends JTable{
 		}
 	}
 	
-	public void setTitles(Object[] _t){titles=_t;}
+	public void setTitles(Object[] _t){ titles=new String[_t.length]; System.arraycopy(_t,0,titles, 0, _t.length); }
 	public void setEditor(OptionTableCellEditor editor){this.editor = editor;}
 	
 	//public Object[][] getData(){return data;}
@@ -85,7 +87,7 @@ public class OptionTable extends JTable{
 
 	
 	/** Editor for each cell */
-	protected static class OptionTableCellEditor implements TableCellEditor {
+	protected static class OptionTableCellEditor implements TableCellEditor, Serializable{
 		protected Hashtable<Integer,TableCellEditor> editors;
 		protected TableCellEditor editor, defaultEditor;
 		protected JTable table;
@@ -130,7 +132,8 @@ public class OptionTable extends JTable{
 		}
 
 		public boolean isCellEditable(EventObject anEvent) {
-			selectEditor((MouseEvent) anEvent);
+			if(anEvent instanceof MouseEvent)
+				selectEditor((MouseEvent) anEvent);
 			return editor.isCellEditable(anEvent);
 		}
 
@@ -143,7 +146,8 @@ public class OptionTable extends JTable{
 		}
 
 		public boolean shouldSelectCell(EventObject anEvent) {
-			selectEditor((MouseEvent) anEvent);
+			if(anEvent instanceof MouseEvent)
+				selectEditor((MouseEvent) anEvent);
 			return editor.shouldSelectCell(anEvent);
 		}
 

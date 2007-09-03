@@ -17,7 +17,26 @@
     </Method>
     <SourceLine classname="genad.config.Config" start="50" end="50" startBytecode="346" endBytecode="346" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
   </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE" last="0" removedByChange="true">
+    <Class classname="genad.config.Config">
+      <SourceLine classname="genad.config.Config" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
+    </Class>
+    <Method classname="genad.config.Config" name="load" signature="(Ljava/lang/String;)V" isStatic="false">
+      <SourceLine classname="genad.config.Config" start="28" end="55" startBytecode="0" endBytecode="598" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
+    </Method>
+    <SourceLine classname="genad.config.Config" start="50" end="50" startBytecode="346" endBytecode="346" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
+  </BugInstance>
   <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
+    <Class classname="genad.config.Config">
+      <SourceLine classname="genad.config.Config" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
+    </Class>
+    <Method classname="genad.config.Config" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.config.Config" start="70" end="82" startBytecode="0" endBytecode="383" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
+    </Method>
+    <SourceLine classname="genad.config.Config" start="73" end="73" startBytecode="30" endBytecode="30" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
+  </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <UserAnnotation/>
     <Class classname="genad.config.Config">
       <SourceLine classname="genad.config.Config" sourcefile="Config.java" sourcepath="genad/config/Config.java"/>
     </Class>
@@ -35,6 +54,16 @@
     </Method>
     <SourceLine classname="genad.config.ModuleConfig" start="43" end="43" startBytecode="157" endBytecode="157" sourcefile="ModuleConfig.java" sourcepath="genad/config/ModuleConfig.java"/>
   </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.config.ModuleConfig">
+      <SourceLine classname="genad.config.ModuleConfig" sourcefile="ModuleConfig.java" sourcepath="genad/config/ModuleConfig.java"/>
+    </Class>
+    <Method classname="genad.config.ModuleConfig" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.config.ModuleConfig" start="38" end="57" startBytecode="0" endBytecode="586" sourcefile="ModuleConfig.java" sourcepath="genad/config/ModuleConfig.java"/>
+    </Method>
+    <SourceLine classname="genad.config.ModuleConfig" start="43" end="43" startBytecode="157" endBytecode="157" sourcefile="ModuleConfig.java" sourcepath="genad/config/ModuleConfig.java"/>
+  </BugInstance>
   <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
     <Class classname="genad.config.PluginConfig">
       <SourceLine classname="genad.config.PluginConfig" sourcefile="PluginConfig.java" sourcepath="genad/config/PluginConfig.java"/>
@@ -44,6 +73,198 @@
     </Method>
     <SourceLine classname="genad.config.PluginConfig" start="132" end="132" startBytecode="124" endBytecode="124" sourcefile="PluginConfig.java" sourcepath="genad/config/PluginConfig.java"/>
   </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.config.PluginConfig">
+      <SourceLine classname="genad.config.PluginConfig" sourcefile="PluginConfig.java" sourcepath="genad/config/PluginConfig.java"/>
+    </Class>
+    <Method classname="genad.config.PluginConfig" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.config.PluginConfig" start="126" end="140" startBytecode="0" endBytecode="478" sourcefile="PluginConfig.java" sourcepath="genad/config/PluginConfig.java"/>
+    </Method>
+    <SourceLine classname="genad.config.PluginConfig" start="132" end="132" startBytecode="124" endBytecode="124" sourcefile="PluginConfig.java" sourcepath="genad/config/PluginConfig.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" introducedByChange="true">
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="executeScript" signature="(Ljava/lang/String;Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="233" end="247" startBytecode="0" endBytecode="371" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="245" end="245" startBytecode="85" endBytecode="85" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="executeScript" signature="(Ljava/lang/String;Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="233" end="247" startBytecode="0" endBytecode="371" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="245" end="245" startBytecode="85" endBytecode="85" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" introducedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="executeScript" signature="(Ljava/lang/String;Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="235" end="249" startBytecode="0" endBytecode="371" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="247" end="247" startBytecode="85" endBytecode="85" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="executeScript" signature="(Ljava/lang/String;Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="235" end="249" startBytecode="0" endBytecode="371" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="247" end="247" startBytecode="85" endBytecode="85" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" introducedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="executeScript" signature="(Ljava/lang/String;Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="237" end="251" startBytecode="0" endBytecode="371" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="249" end="249" startBytecode="85" endBytecode="85" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="executeScript" signature="(Ljava/lang/String;Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="237" end="251" startBytecode="0" endBytecode="371" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="249" end="249" startBytecode="85" endBytecode="85" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" introducedByChange="true">
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="190" startBytecode="0" endBytecode="1545" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="188" end="188" startBytecode="939" endBytecode="939" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="190" startBytecode="0" endBytecode="1545" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="188" end="188" startBytecode="939" endBytecode="939" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" introducedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="192" startBytecode="0" endBytecode="1667" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="190" end="190" startBytecode="939" endBytecode="939" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="192" startBytecode="0" endBytecode="1667" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="190" end="190" startBytecode="939" endBytecode="939" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" introducedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="194" startBytecode="0" endBytecode="1721" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="192" end="192" startBytecode="939" endBytecode="939" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="194" startBytecode="0" endBytecode="1721" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.engine.Engine" start="192" end="192" startBytecode="939" endBytecode="939" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="DLS_DEAD_LOCAL_STORE" priority="2" abbrev="DLS" category="STYLE" introducedByChange="true">
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="190" startBytecode="0" endBytecode="432" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <LocalVariable name="coreFiles" register="3" pc="88" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.engine.Engine" start="113" end="113" startBytecode="87" endBytecode="87" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE" introducedByChange="true">
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="190" startBytecode="0" endBytecode="1545" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <SourceLine classname="genad.engine.Engine" start="184" end="184" startBytecode="943" endBytecode="943" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.engine.Engine">
+      <SourceLine classname="genad.engine.Engine" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Class>
+    <Method classname="genad.engine.Engine" name="generate" signature="(Lgenad/model/Model;)V" isStatic="false">
+      <SourceLine classname="genad.engine.Engine" start="106" end="190" startBytecode="0" endBytecode="1545" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+    </Method>
+    <SourceLine classname="genad.engine.Engine" start="184" end="184" startBytecode="943" endBytecode="943" sourcefile="Engine.java" sourcepath="genad/engine/Engine.java"/>
+  </BugInstance>
   <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE">
     <Class classname="genad.gui.EntityView">
       <SourceLine classname="genad.gui.EntityView" sourcefile="EntityView.java" sourcepath="genad/gui/EntityView.java"/>
@@ -52,7 +273,23 @@
       <SourceLine classname="genad.gui.EntityView" sourcefile="EntityView.java" sourcepath="genad/gui/EntityView.java"/>
     </Field>
   </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <Class classname="genad.gui.EntityView">
+      <SourceLine classname="genad.gui.EntityView" sourcefile="EntityView.java" sourcepath="genad/gui/EntityView.java"/>
+    </Class>
+    <Field classname="genad.gui.EntityView" name="entity" signature="Lgenad/model/Entity;" isStatic="false">
+      <SourceLine classname="genad.gui.EntityView" sourcefile="EntityView.java" sourcepath="genad/gui/EntityView.java"/>
+    </Field>
+  </BugInstance>
   <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE">
+    <Class classname="genad.gui.Main">
+      <SourceLine classname="genad.gui.Main" sourcefile="Main.java" sourcepath="genad/gui/Main.java"/>
+    </Class>
+    <Field classname="genad.gui.Main" name="model" signature="Lgenad/model/Model;" isStatic="false">
+      <SourceLine classname="genad.gui.Main" sourcefile="Main.java" sourcepath="genad/gui/Main.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
     <Class classname="genad.gui.Main">
       <SourceLine classname="genad.gui.Main" sourcefile="Main.java" sourcepath="genad/gui/Main.java"/>
     </Class>
@@ -76,6 +313,14 @@
       <SourceLine classname="genad.gui.ModuleView" sourcefile="ModuleView.java" sourcepath="genad/gui/ModuleView.java"/>
     </Field>
   </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <Class classname="genad.gui.ModuleView">
+      <SourceLine classname="genad.gui.ModuleView" sourcefile="ModuleView.java" sourcepath="genad/gui/ModuleView.java"/>
+    </Class>
+    <Field classname="genad.gui.ModuleView" name="module" signature="Lgenad/model/Module;" isStatic="false">
+      <SourceLine classname="genad.gui.ModuleView" sourcefile="ModuleView.java" sourcepath="genad/gui/ModuleView.java"/>
+    </Field>
+  </BugInstance>
   <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE">
     <Class classname="genad.gui.PropertiesDlg">
       <SourceLine classname="genad.gui.PropertiesDlg" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
@@ -84,7 +329,24 @@
       <SourceLine classname="genad.gui.PropertiesDlg" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
     </Field>
   </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <Class classname="genad.gui.PropertiesDlg">
+      <SourceLine classname="genad.gui.PropertiesDlg" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
+    </Class>
+    <Field classname="genad.gui.PropertiesDlg" name="model" signature="Lgenad/model/Model;" isStatic="false">
+      <SourceLine classname="genad.gui.PropertiesDlg" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
+    </Field>
+  </BugInstance>
   <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
+    <Class classname="genad.gui.PropertiesDlg$ModulesTableModel">
+      <SourceLine classname="genad.gui.PropertiesDlg$ModulesTableModel" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
+    </Class>
+    <Method classname="genad.gui.PropertiesDlg$ModulesTableModel" name="setValueAt" signature="(Ljava/lang/Object;II)V" isStatic="false">
+      <SourceLine classname="genad.gui.PropertiesDlg$ModulesTableModel" start="404" end="439" startBytecode="0" endBytecode="679" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
+    </Method>
+    <SourceLine classname="genad.gui.PropertiesDlg$ModulesTableModel" start="424" end="424" startBytecode="268" endBytecode="268" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
+  </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
     <Class classname="genad.gui.PropertiesDlg$ModulesTableModel">
       <SourceLine classname="genad.gui.PropertiesDlg$ModulesTableModel" sourcefile="PropertiesDlg.java" sourcepath="genad/gui/PropertiesDlg.java"/>
     </Class>
@@ -106,6 +368,19 @@
     </Class>
     <SourceLine classname="genad.gui.misc.AboutDlg$AboutPanel$1" start="98" end="98" startBytecode="9" endBytecode="9" sourcefile="AboutDlg.java" sourcepath="genad/gui/misc/AboutDlg.java"/>
   </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.AboutDlg$AboutPanel$1">
+      <SourceLine classname="genad.gui.misc.AboutDlg$AboutPanel$1" sourcefile="AboutDlg.java" sourcepath="genad/gui/misc/AboutDlg.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.AboutDlg$AboutPanel$1" name="run" signature="()V" isStatic="false">
+      <SourceLine classname="genad.gui.misc.AboutDlg$AboutPanel$1" start="98" end="116" startBytecode="0" endBytecode="278" sourcefile="AboutDlg.java" sourcepath="genad/gui/misc/AboutDlg.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.gui.misc.AboutDlg$AboutPanel$1" start="98" end="98" startBytecode="9" endBytecode="9" sourcefile="AboutDlg.java" sourcepath="genad/gui/misc/AboutDlg.java"/>
+  </BugInstance>
   <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE">
     <Class classname="genad.gui.misc.FieldsPanel">
       <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
@@ -114,7 +389,24 @@
       <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
     </Field>
   </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.FieldsPanel">
+      <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.FieldsPanel" name="cfg" signature="Lgenad/config/PluginConfig;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
+    </Field>
+  </BugInstance>
   <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE">
+    <Class classname="genad.gui.misc.FieldsPanel">
+      <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.FieldsPanel" name="entity" signature="Lgenad/model/Entity;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
     <Class classname="genad.gui.misc.FieldsPanel">
       <SourceLine classname="genad.gui.misc.FieldsPanel" sourcefile="FieldsPanel.java" sourcepath="genad/gui/misc/FieldsPanel.java"/>
     </Class>
@@ -131,7 +423,29 @@
     </Method>
     <SourceLine classname="genad.gui.misc.LangsPanel$2" start="125" end="125" startBytecode="379" endBytecode="379" sourcefile="LangsPanel.java" sourcepath="genad/gui/misc/LangsPanel.java"/>
   </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE" last="0" removedByChange="true">
+    <Class classname="genad.gui.misc.LangsPanel$2">
+      <SourceLine classname="genad.gui.misc.LangsPanel$2" sourcefile="LangsPanel.java" sourcepath="genad/gui/misc/LangsPanel.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.LangsPanel$2" name="run" signature="()V" isStatic="false">
+      <SourceLine classname="genad.gui.misc.LangsPanel$2" start="84" end="128" startBytecode="0" endBytecode="708" sourcefile="LangsPanel.java" sourcepath="genad/gui/misc/LangsPanel.java"/>
+    </Method>
+    <SourceLine classname="genad.gui.misc.LangsPanel$2" start="125" end="125" startBytecode="379" endBytecode="379" sourcefile="LangsPanel.java" sourcepath="genad/gui/misc/LangsPanel.java"/>
+  </BugInstance>
   <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable" name="getData" signature="()[[Ljava/lang/Object;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" start="82" end="82" startBytecode="0" endBytecode="46" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Field classname="genad.gui.misc.OptionTable" name="data" signature="[[Ljava/lang/Object;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+    <SourceLine classname="genad.gui.misc.OptionTable" start="82" end="82" startBytecode="4" endBytecode="4" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE" last="0" removedByChange="true">
     <UserAnnotation/>
     <Class classname="genad.gui.misc.OptionTable">
       <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
@@ -157,7 +471,32 @@
     </Field>
     <SourceLine classname="genad.gui.misc.OptionTable" start="83" end="83" startBytecode="4" endBytecode="4" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
   </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP" priority="2" abbrev="EI" category="MALICIOUS_CODE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable" name="getTitles" signature="()[Ljava/lang/Object;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" start="83" end="83" startBytecode="0" endBytecode="46" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Field classname="genad.gui.misc.OptionTable" name="titles" signature="[Ljava/lang/Object;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+    <SourceLine classname="genad.gui.misc.OptionTable" start="83" end="83" startBytecode="4" endBytecode="4" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
   <BugInstance type="EI_EXPOSE_REP2" priority="2" abbrev="EI2" category="MALICIOUS_CODE">
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable" name="setData" signature="([[Ljava/lang/Object;)V" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" start="44" end="77" startBytecode="0" endBytecode="448" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Field classname="genad.gui.misc.OptionTable" name="data" signature="[[Ljava/lang/Object;" isStatic="true">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+    <SourceLine classname="genad.gui.misc.OptionTable" start="44" end="44" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP2" priority="2" abbrev="EI2" category="MALICIOUS_CODE" last="0" removedByChange="true">
     <Class classname="genad.gui.misc.OptionTable">
       <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
     </Class>
@@ -181,7 +520,46 @@
     </Field>
     <SourceLine classname="genad.gui.misc.OptionTable" start="79" end="79" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
   </BugInstance>
+  <BugInstance type="EI_EXPOSE_REP2" priority="2" abbrev="EI2" category="MALICIOUS_CODE" last="0" removedByChange="true">
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable" name="setTitles" signature="([Ljava/lang/Object;)V" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" start="79" end="79" startBytecode="0" endBytecode="57" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Field classname="genad.gui.misc.OptionTable" name="titles" signature="[Ljava/lang/Object;" isStatic="true">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+    <SourceLine classname="genad.gui.misc.OptionTable" start="79" end="79" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
   <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE">
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.OptionTable" name="editor" signature="Lgenad/gui/misc/OptionTable$OptionTableCellEditor;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.OptionTable" name="editor" signature="Lgenad/gui/misc/OptionTable$OptionTableCellEditor;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_TRANSIENT_FIELD_NOT_RESTORED" priority="2" abbrev="Se" category="BAD_PRACTICE">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.OptionTable" name="editor" signature="Lgenad/gui/misc/OptionTable$OptionTableCellEditor;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_TRANSIENT_FIELD_NOT_RESTORED" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <UserAnnotation/>
     <Class classname="genad.gui.misc.OptionTable">
       <SourceLine classname="genad.gui.misc.OptionTable" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
     </Class>
@@ -202,6 +580,45 @@
     <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
     <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="133" end="133" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
   </BugInstance>
+  <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable$OptionTableCellEditor" name="isCellEditable" signature="(Ljava/util/EventObject;)Z" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="133" end="134" startBytecode="0" endBytecode="8" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Type descriptor="Ljava/util/EventObject;" role="TYPE_FOUND"/>
+    <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
+    <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="133" end="133" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable$OptionTableCellEditor" name="isCellEditable" signature="(Ljava/util/EventObject;)Z" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="135" end="136" startBytecode="0" endBytecode="8" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Type descriptor="Ljava/util/EventObject;" role="TYPE_FOUND"/>
+    <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
+    <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="135" end="135" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable$OptionTableCellEditor" name="isCellEditable" signature="(Ljava/util/EventObject;)Z" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="135" end="136" startBytecode="0" endBytecode="8" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Type descriptor="Ljava/util/EventObject;" role="TYPE_FOUND"/>
+    <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
+    <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="135" end="135" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
   <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE">
     <UserAnnotation/>
     <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
@@ -214,6 +631,45 @@
     <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
     <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
     <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="146" end="146" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable$OptionTableCellEditor" name="shouldSelectCell" signature="(Ljava/util/EventObject;)Z" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="146" end="147" startBytecode="0" endBytecode="8" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Type descriptor="Ljava/util/EventObject;" role="TYPE_FOUND"/>
+    <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
+    <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="146" end="146" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable$OptionTableCellEditor" name="shouldSelectCell" signature="(Ljava/util/EventObject;)Z" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="148" end="149" startBytecode="0" endBytecode="8" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Type descriptor="Ljava/util/EventObject;" role="TYPE_FOUND"/>
+    <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
+    <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="148" end="148" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+  </BugInstance>
+  <BugInstance type="BC_UNCONFIRMED_CAST" priority="2" abbrev="BC" category="STYLE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.OptionTable$OptionTableCellEditor">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.OptionTable$OptionTableCellEditor" name="shouldSelectCell" signature="(Ljava/util/EventObject;)Z" isStatic="false">
+      <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="148" end="149" startBytecode="0" endBytecode="8" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
+    </Method>
+    <Type descriptor="Ljava/util/EventObject;" role="TYPE_FOUND"/>
+    <Type descriptor="Ljava/awt/event/MouseEvent;" role="TYPE_EXPECTED"/>
+    <LocalVariable name="anEvent" register="1" pc="1" role="LOCAL_VARIABLE_NAMED"/>
+    <SourceLine classname="genad.gui.misc.OptionTable$OptionTableCellEditor" start="148" end="148" startBytecode="2" endBytecode="2" sourcefile="OptionTable.java" sourcepath="genad/gui/misc/OptionTable.java"/>
   </BugInstance>
   <BugInstance type="SC_START_IN_CTOR" priority="2" abbrev="SC" category="MT_CORRECTNESS">
     <Class classname="genad.gui.misc.Splash">
@@ -235,7 +691,46 @@
       <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
     </Field>
   </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <Class classname="genad.gui.misc.Splash">
+      <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.Splash" name="tk" signature="Ljava/awt/Toolkit;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_TRANSIENT_FIELD_NOT_RESTORED" priority="2" abbrev="Se" category="BAD_PRACTICE">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.Splash">
+      <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.Splash" name="tk" signature="Ljava/awt/Toolkit;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_TRANSIENT_FIELD_NOT_RESTORED" priority="2" abbrev="Se" category="BAD_PRACTICE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.Splash">
+      <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Class>
+    <Field classname="genad.gui.misc.Splash" name="tk" signature="Ljava/awt/Toolkit;" isStatic="false">
+      <SourceLine classname="genad.gui.misc.Splash" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Field>
+  </BugInstance>
   <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE">
+    <UserAnnotation/>
+    <Class classname="genad.gui.misc.Splash$1">
+      <SourceLine classname="genad.gui.misc.Splash$1" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Class>
+    <Method classname="genad.gui.misc.Splash$1" name="run" signature="()V" isStatic="false">
+      <SourceLine classname="genad.gui.misc.Splash$1" start="47" end="60" startBytecode="0" endBytecode="197" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+    </Method>
+    <Class classname="java.lang.Exception" role="CLASS_EXCEPTION">
+      <SourceLine classname="java.lang.Exception" sourcefile="Exception.java" sourcepath="java/lang/Exception.java"/>
+    </Class>
+    <SourceLine classname="genad.gui.misc.Splash$1" start="51" end="51" startBytecode="43" endBytecode="43" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
+  </BugInstance>
+  <BugInstance type="DE_MIGHT_IGNORE" priority="1" abbrev="DE" category="BAD_PRACTICE" last="0" removedByChange="true">
     <UserAnnotation/>
     <Class classname="genad.gui.misc.Splash$1">
       <SourceLine classname="genad.gui.misc.Splash$1" sourcefile="Splash.java" sourcepath="genad/gui/misc/Splash.java"/>
@@ -257,7 +752,26 @@
     </Method>
     <SourceLine classname="genad.model.Entity" start="246" end="246" startBytecode="431" endBytecode="431" sourcefile="Entity.java" sourcepath="genad/model/Entity.java"/>
   </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.model.Entity">
+      <SourceLine classname="genad.model.Entity" sourcefile="Entity.java" sourcepath="genad/model/Entity.java"/>
+    </Class>
+    <Method classname="genad.model.Entity" name="toString" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.model.Entity" start="232" end="254" startBytecode="0" endBytecode="771" sourcefile="Entity.java" sourcepath="genad/model/Entity.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Entity" start="246" end="246" startBytecode="431" endBytecode="431" sourcefile="Entity.java" sourcepath="genad/model/Entity.java"/>
+  </BugInstance>
   <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
+    <Class classname="genad.model.Field">
+      <SourceLine classname="genad.model.Field" sourcefile="Field.java" sourcepath="genad/model/Field.java"/>
+    </Class>
+    <Method classname="genad.model.Field" name="toString" signature="(Ljava/lang/String;)Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.model.Field" start="109" end="125" startBytecode="0" endBytecode="448" sourcefile="Field.java" sourcepath="genad/model/Field.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Field" start="120" end="120" startBytecode="230" endBytecode="230" sourcefile="Field.java" sourcepath="genad/model/Field.java"/>
+  </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
     <Class classname="genad.model.Field">
       <SourceLine classname="genad.model.Field" sourcefile="Field.java" sourcepath="genad/model/Field.java"/>
     </Class>
@@ -275,6 +789,33 @@
     </Method>
     <SourceLine classname="genad.model.Model" start="108" end="108" startBytecode="825" endBytecode="825" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
   </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE" last="0" removedByChange="true">
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Method classname="genad.model.Model" name="load" signature="(Ljava/io/File;)Z" isStatic="false">
+      <SourceLine classname="genad.model.Model" start="48" end="113" startBytecode="0" endBytecode="1301" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Model" start="108" end="108" startBytecode="825" endBytecode="825" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE">
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Method classname="genad.model.Model" name="load" signature="(Ljava/io/File;)Z" isStatic="false">
+      <SourceLine classname="genad.model.Model" start="48" end="116" startBytecode="0" endBytecode="1374" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Model" start="111" end="111" startBytecode="890" endBytecode="890" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
+  <BugInstance type="REC_CATCH_EXCEPTION" priority="2" abbrev="REC" category="STYLE" last="0" removedByChange="true">
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Method classname="genad.model.Model" name="load" signature="(Ljava/io/File;)Z" isStatic="false">
+      <SourceLine classname="genad.model.Model" start="48" end="116" startBytecode="0" endBytecode="1374" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Model" start="111" end="111" startBytecode="890" endBytecode="890" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
   <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
     <Class classname="genad.model.Model">
       <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
@@ -283,6 +824,53 @@
       <SourceLine classname="genad.model.Model" start="220" end="245" startBytecode="0" endBytecode="862" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
     </Method>
     <SourceLine classname="genad.model.Model" start="238" end="238" startBytecode="484" endBytecode="484" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Method classname="genad.model.Model" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.model.Model" start="220" end="245" startBytecode="0" endBytecode="862" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Model" start="238" end="238" startBytecode="484" endBytecode="484" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
+    <UserAnnotation/>
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Method classname="genad.model.Model" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.model.Model" start="224" end="249" startBytecode="0" endBytecode="862" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Model" start="242" end="242" startBytecode="484" endBytecode="484" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Method classname="genad.model.Model" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.model.Model" start="224" end="249" startBytecode="0" endBytecode="862" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Model" start="242" end="242" startBytecode="484" endBytecode="484" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="1" abbrev="Se" category="BAD_PRACTICE" introducedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Field classname="genad.model.Model" name="cfgMan" signature="Lgenad/config/ConfigManager;" isStatic="false">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="1" abbrev="Se" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.model.Model">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Class>
+    <Field classname="genad.model.Model" name="cfgMan" signature="Lgenad/config/ConfigManager;" isStatic="false">
+      <SourceLine classname="genad.model.Model" sourcefile="Model.java" sourcepath="genad/model/Model.java"/>
+    </Field>
   </BugInstance>
   <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE">
     <Class classname="genad.model.Module">
@@ -293,8 +881,35 @@
     </Method>
     <SourceLine classname="genad.model.Module" start="74" end="74" startBytecode="55" endBytecode="55" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
   </BugInstance>
+  <BugInstance type="SBSC_USE_STRINGBUFFER_CONCATENATION" priority="2" abbrev="SBSC" category="PERFORMANCE" last="0" removedByChange="true">
+    <Class classname="genad.model.Module">
+      <SourceLine classname="genad.model.Module" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+    </Class>
+    <Method classname="genad.model.Module" name="toString" signature="()Ljava/lang/String;" isStatic="false">
+      <SourceLine classname="genad.model.Module" start="71" end="78" startBytecode="0" endBytecode="250" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+    </Method>
+    <SourceLine classname="genad.model.Module" start="74" end="74" startBytecode="55" endBytecode="55" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="1" abbrev="Se" category="BAD_PRACTICE" introducedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.model.Module">
+      <SourceLine classname="genad.model.Module" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+    </Class>
+    <Field classname="genad.model.Module" name="cfg" signature="Lgenad/config/ModuleConfig;" isStatic="false">
+      <SourceLine classname="genad.model.Module" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+    </Field>
+  </BugInstance>
+  <BugInstance type="SE_BAD_FIELD" priority="1" abbrev="Se" category="BAD_PRACTICE" last="0" introducedByChange="true" removedByChange="true">
+    <UserAnnotation/>
+    <Class classname="genad.model.Module">
+      <SourceLine classname="genad.model.Module" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+    </Class>
+    <Field classname="genad.model.Module" name="cfg" signature="Lgenad/config/ModuleConfig;" isStatic="false">
+      <SourceLine classname="genad.model.Module" sourcefile="Module.java" sourcepath="genad/model/Module.java"/>
+    </Field>
+  </BugInstance>
   <Errors></Errors>
-  <FindBugsSummary timestamp="Wed, 29 Aug 2007 18:07:08 -0400" total_classes="97" total_bugs="29" total_size="3228" num_packages="6" cpu_seconds="23.86" clock_seconds="273.22" peak_mbytes="171.54" gc_seconds="3.58" priority_2="27" priority_1="2">
+  <FindBugsSummary timestamp="Wed, 29 Aug 2007 18:07:08 -0400" total_classes="97" total_bugs="29" total_size="3228" num_packages="6" cpu_seconds="271.77" clock_seconds="5919.87" peak_mbytes="231.81" gc_seconds="34.09" priority_2="27" priority_1="2">
     <PackageStats package="genad" total_bugs="0" total_types="3" total_size="83">
       <ClassStats class="genad.Main" sourceFile="Main.java" interface="false" size="6" bugs="0"/>
       <ClassStats class="genad.Main$1" sourceFile="Main.java" interface="false" size="6" bugs="0"/>

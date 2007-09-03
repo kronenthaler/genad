@@ -1,12 +1,13 @@
 package genad.config;
 
+import java.io.*;
 import java.util.*;
 
 /**
  *	Is a component in a Language
  *	@author kronenthaler
  */
-public class ModuleConfig{
+public class ModuleConfig implements Serializable{
 	private String name;
 	private boolean mandatory=false;
 	private Vector<String> depends;
@@ -35,25 +36,26 @@ public class ModuleConfig{
 	public void setDependency(String depend){ depends.add(depend); }
 		
 	public String toString(){
-		String ret="\t\t<module name=\""+name+"\" "+(mandatory?"mandatory=\"1\"":"")+(options.size()==0 && depends.size()==0?"/":"")+">\n";
+		StringBuffer ret=new StringBuffer();
+		ret.append("\t\t<module name=\""+name+"\" "+(mandatory?"mandatory=\"1\"":"")+(options.size()==0 && depends.size()==0?"/":"")+">\n");
 		if(options.size()!=0 || depends.size()!=0){
 			if(depends.size()!=0){
-				ret+="\t\t\t<depends>\n";
+				ret.append("\t\t\t<depends>\n");
 				for(String str : depends)
-					ret+="\t\t\t\t<depend name=\""+str+"\"/>\n";
-				ret+="\t\t\t</depends>\n";
+					ret.append("\t\t\t\t<depend name=\""+str+"\"/>\n");
+				ret.append("\t\t\t</depends>\n");
 			}
 			
 			if(options.size()!=0){
-				ret+="\t\t\t<options>\n";
+				ret.append("\t\t\t<options>\n");
 				for(Enumeration<String> e=options.keys();e.hasMoreElements();){
 					String key=e.nextElement();
-					ret+="\t\t\t\t<option name=\""+key+"\" value=\""+options.get(key)+"\" "+(defaults.get(key)!=null?"default=\""+defaults.get(key)+"\"":"")+"/>\n";
+					ret.append("\t\t\t\t<option name=\""+key+"\" value=\""+options.get(key)+"\" "+(defaults.get(key)!=null?"default=\""+defaults.get(key)+"\"":"")+"/>\n");
 				}
-				ret+="\t\t\t</options>\n";
+				ret.append("\t\t\t</options>\n");
 			}
-			ret+="\t\t</module>\n";
+			ret.append("\t\t</module>\n");
 		}
-		return ret;
+		return ret.toString();
 	}
 }

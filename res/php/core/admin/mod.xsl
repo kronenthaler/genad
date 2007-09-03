@@ -68,7 +68,7 @@
 		</div>
  	</xsl:template>
  	
- 	<xsl:template match="textfield | integer | decimal">
+ 	<xsl:template match="textfield | integer | decimal | email">
  		<tr class="part1">
 			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left"><input type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
@@ -238,6 +238,7 @@
 							document.getElementById('div_<xsl:value-of select="@map"/>_time'))
 					});
 				</script>
+				<input type="hidden" name="{@prefix}{@map}" id="{@prefix}{@map}" value="."/>
 			</td>
 		</tr>
  	</xsl:template>

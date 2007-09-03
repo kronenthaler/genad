@@ -5,13 +5,12 @@ import java.util.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
 
-//@TODO: encapsular los metodos de la clase mainConfig para que sean accedidos solamente desde esta clase.
 /**
  *	Loads the configuration files for GenAd itself and the modules installed, leaving the 
  *	information in the class Config
  *	@author kronenthaler
  */
-public class ConfigManager{
+public class ConfigManager implements Serializable{
 	public static final String PATH="conf/";
 	public static final String MAIN_CONF="/conf.xml";
 	private static ConfigManager me=null;

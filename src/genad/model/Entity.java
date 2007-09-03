@@ -20,7 +20,7 @@ import genad.engine.*;
  *
  *	@author kronenthaler
  */
-public class Entity{
+public class Entity implements Serializable{
 	private Vector<Field> form;
 	private Hashtable<String, Entity> childs;
 	public Entity parent;
@@ -95,20 +95,22 @@ public class Entity{
 	public String getName(){ return name; }
 	public boolean setName(String s){
 		boolean flag=false;
+		s=Utils.capitalize(s.trim());
 		
 		if(parent==null) flag=Model.getInstance().renameEntity(name,s);
 		else flag=parent.renameChild(name,s);
 		
+		//TODO:must be a valid ID in almost every language
 		if(flag){
-			name=s.trim();//must be a valid ID in almost every language
+			name=s;
 			setChanged();
 		}
 		
-		return flag && !"".equals(s.trim());
+		return flag && !"".equals(s);
 	} 
 	private boolean renameChild(String src, String dst){
 		if(childs.get(dst)!=null) return false;
-		if("".equals(dst.trim())) return false;
+		if("".equals(dst.trim()) || childs.get(src)==null) return false;
 		childs.put(dst, childs.get(src));
 		childs.remove(src);
 		return true;
@@ -237,55 +239,57 @@ public class Entity{
 		if(!isValid()) throw new ArrayIndexOutOfBoundsException("Invalid Entity: "+name);
 		
 		Enumeration<String> e;
-		String key,
-		ret=deep+"<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
-		ret+=deep+"	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n";
-		//ret+=deep+"	<permissions value=\""+permissions+"\"/>\n";
-		ret+=deep+"	<splitpage value=\""+(pager?1:0)+"\"/>\n";
-		ret+=deep+"	<search value=\""+(search?1:0)+"\"/>\n";
-		ret+=deep+"	<just-pages value=\""+(justPages?1:0)+"\"/>\n";
-		ret+=deep+"	<just-schema value=\""+(justSchema?1:0)+"\"/>\n";
-		ret+=deep+"	<sortable value=\""+(sortable?1:0)+"\"/>\n";
-		ret+=deep+"	<form>\n";
+		String key;
+		StringBuffer ret =new StringBuffer();
+		ret.append(deep+"<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n")
+			.append(deep+"	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n")
+		//ret.append(deep+"	<permissions value=\""+permissions+"\"/>\n")
+			.append(deep+"	<splitpage value=\""+(pager?1:0)+"\"/>\n")
+			.append(deep+"	<search value=\""+(search?1:0)+"\"/>\n")
+			.append(deep+"	<just-pages value=\""+(justPages?1:0)+"\"/>\n")
+			.append(deep+"	<just-schema value=\""+(justSchema?1:0)+"\"/>\n")
+			.append(deep+"	<sortable value=\""+(sortable?1:0)+"\"/>\n")
+			.append(deep+"	<form>\n");
 		for(Field f:form)
-			ret+=f.toString(deep);
-		ret+=deep+"	</form>\n";
+			ret.append(f.toString(deep));
+		ret.append(deep+"	</form>\n");
 		
 		for(e=childs.keys();e.hasMoreElements();)
-			ret+=(childs.get(e.nextElement())).toString(deep+"\t");	
+			ret.append((childs.get(e.nextElement())).toString(deep+"\t"));	
 		
-		ret+=deep+"</entity>\n";
+		ret.append(deep+"</entity>\n");
 		changed = false;
-		return ret;
+		return ret.toString();
 	}
 	
 	public String genXML(){
 		Enumeration<String> e;
-		String key,
-		ret="<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
+		String key;
+		StringBuffer ret =new StringBuffer();
+		ret.append("<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n");		
 		if(parent!=null)
-			ret+="	<parent id=\""+parent.primaryKey+"\" class=\""+parent.name+"\"/>\n";
+			ret.append("	<parent id=\""+parent.primaryKey+"\" class=\""+parent.name+"\"/>\n");
 		
 		for(e=childs.keys();e.hasMoreElements();){
 			key=e.nextElement();
-			ret+="	<entity name=\""+Utils.sanitize(key)+"\"/>\n";			
+			ret.append("	<entity name=\""+Utils.sanitize(key)+"\"/>\n");			
 		}
 		
-		ret+="	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n";
-		//ret+=deep+"	<permissions value=\""+permissions+"\"/>\n";
-		ret+="	<splitpage value=\""+(pager?1:0)+"\"/>\n";
-		ret+="	<search value=\""+(search?1:0)+"\"/>\n";
-		ret+="	<just-pages value=\""+(justPages?1:0)+"\"/>\n";
-		ret+="	<just-schema value=\""+(justSchema?1:0)+"\"/>\n";
-		ret+="	<sortable value=\""+(sortable?1:0)+"\"/>\n";
-		ret+="	<form>\n";
+		ret.append("	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n")
+		//ret.append("	<permissions value=\""+permissions+"\"/>\n")
+			.append("	<splitpage value=\""+(pager?1:0)+"\"/>\n")
+			.append("	<search value=\""+(search?1:0)+"\"/>\n")
+			.append("	<just-pages value=\""+(justPages?1:0)+"\"/>\n")
+			.append("	<just-schema value=\""+(justSchema?1:0)+"\"/>\n")
+			.append("	<sortable value=\""+(sortable?1:0)+"\"/>\n")
+			.append("	<form>\n");
 		for(Field f:form)
-			ret+=f.toString("\t\t");
-		ret+="	</form>\n";
+			ret.append(f.toString(""));
+		ret.append("	</form>\n");
 			
-		ret+="</entity>\n";
+		ret.append("</entity>\n");
 		
-		return ret;
+		return ret.toString();
 	}
 	
 	public String toString(){

@@ -126,7 +126,6 @@ public class FieldsConfigPanel extends javax.swing.JPanel implements Applicable{
 	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
 		ConfigManager cfgMan=ConfigManager.getInstance();
 		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
-		//Hashtable<String,FieldConfig> fc=pc.getFieldsConfig();
 		//TODO: eliminar los fields que no tengan opciones de configuracion
 		Vector<String> options=new Vector<String>();
 		String[] key=pc.getValidTypes();//Utils.convert(fc.keys());

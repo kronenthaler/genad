@@ -181,11 +181,13 @@ public class Engine{
 			for(Enumeration<String> e=model.getEntities();e.hasMoreElements();)
 				transformEntities(model.getEntity(e.nextElement()), model);
 			
+		}catch(RuntimeException e){
+			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally{
 			if(conn!=null)
-				try{conn.close();}catch(Exception e){}
+				try{conn.close();}catch(Exception e){e.printStackTrace();}
 		}
 	}
 	
@@ -242,7 +244,7 @@ public class Engine{
 			e.printStackTrace();
 		}finally{
 			if(stmt!=null)
-				try{stmt.close();}catch(Exception e){}
+				try{stmt.close();}catch(Exception e){e.printStackTrace();}
 		}
 	}
 	

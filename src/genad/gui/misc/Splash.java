@@ -20,10 +20,9 @@ import genad.engine.*;
  */
 public class Splash extends JDialog{
 	private int componentsLoaded=0;
-	private static final int totalComponents=10;
+	private static final int totalComponents=3;
 	private static Splash me=null;
 	private SplashCanvas canvas;
-	private Toolkit tk=getToolkit();
 	
 	private Splash(){
 		super(new Frame("GenAd"),true);
@@ -31,6 +30,7 @@ public class Splash extends JDialog{
 		ImageIcon background=new ImageIcon(getClass().getResource("/images/splash.png"));
 		final int width=background.getIconWidth();
 		final int height=background.getIconHeight();
+		final Toolkit tk=getToolkit();
 		
 		setAlwaysOnTop(true);
 		setResizable(false);
@@ -46,14 +46,12 @@ public class Splash extends JDialog{
 			public void run(){
 				setText("Loading Configuration");
 				ConfigManager.getInstance();
+				nextStep();
 				
-				for(componentsLoaded=0;componentsLoaded<totalComponents;){
-					try{Thread.sleep(100);}catch(Exception e){}
-					nextStep();
-				}
-				
+				setText("Loading Main Window");
 				JFrame frame=genad.gui.Main.getInstance();
 				frame.setSize(tk.getScreenSize());
+				nextStep();
 				
 				setVisible(false);
 				dispose();

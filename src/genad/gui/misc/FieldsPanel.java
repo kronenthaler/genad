@@ -16,8 +16,8 @@ import genad.engine.*;
 import genad.gui.misc.*;
 
 /**
- *	TODO: desplegar el JComboBox en la celda de type
- * @author  kronenthaler
+ *	
+ *	@author  kronenthaler
  */
 public class FieldsPanel extends javax.swing.JPanel {
 	private Entity entity;

@@ -95,10 +95,10 @@ public class AboutDlg extends javax.swing.JDialog {
 			y=background.getHeight(this);
 			new Thread(new Runnable(){
 				public void run(){
-					try{Thread.sleep(5000);}catch(Exception e){}
+					try{Thread.sleep(5000);}catch(Exception e){e.printStackTrace();}
 					intro=false;
 					while(!kill){
-						try{Thread.sleep(20);}catch(Exception e){}
+						try{Thread.sleep(20);}catch(Exception e){e.printStackTrace();}
 						y--;
 						
 						repaint();
@@ -106,7 +106,7 @@ public class AboutDlg extends javax.swing.JDialog {
 						if(loop){
 							intro=true;
 							repaint();
-							try{Thread.sleep(5000);}catch(Exception e){}
+							try{Thread.sleep(5000);}catch(Exception e){e.printStackTrace();}
 							intro=false;
 							
 							y=getHeight();

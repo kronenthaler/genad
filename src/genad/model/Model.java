@@ -20,7 +20,7 @@ import genad.engine.*;
  *
  *	@author kronenthaler
  */
-public class Model{
+public class Model implements Serializable{
 	public static final int PRODUCTION = 0;
 	public static final int DEVELOPMENT = 1;
 	
@@ -108,6 +108,9 @@ public class Model{
 						System.err.println("Warning: Unsuported module '"+name+"' for the language '"+language+"'");
 				}		
 			}
+		}catch(RuntimeException e){
+			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());	
+			return false;
 		}catch(Exception e){
 			e.printStackTrace();
 			return false;
@@ -161,7 +164,7 @@ public class Model{
 	
 	public boolean renameEntity(String src, String dst){
 		if(entities.get(dst)!=null) return false;
-		if("".equals(dst.trim())) return false;
+		if("".equals(dst.trim()) || entities.get(src)==null) return false;
 		entities.put(dst,entities.get(src));
 		entities.remove(src);
 		return true;
@@ -221,31 +224,31 @@ public class Model{
 	
 	//misc
 	public String toString(){
-		String ret="";
-		ret+="<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		ret+="<project lastsaved=\""+System.currentTimeMillis()+"\" by=\""+System.getProperty("user.name")+"\" language=\""+language+"\">\n";
-		ret+="	<file-server-conf>\n";
-		ret+="		<base-directory><![CDATA["+destPath+"]]></base-directory>\n";
-		ret+="	</file-server-conf>\n";
-		ret+="	<db-server-conf>\n";
-		ret+="		<dev-host><![CDATA["+dDBHost+"]]></dev-host>\n";
-		ret+="		<dev-user><![CDATA["+dDBLogin+"]]></dev-user>\n";
-		ret+="		<dev-password><![CDATA["+dDBPassword+"]]></dev-password>\n";
-		ret+="		<dev-schema><![CDATA["+dDBSchema+"]]></dev-schema>\n";
-		ret+="		<prod-host><![CDATA["+pDBHost+"]]></prod-host>\n";
-		ret+="		<prod-user><![CDATA["+pDBLogin+"]]></prod-user>\n";
-		ret+="		<prod-password><![CDATA["+pDBPassword+"]]></prod-password>\n";
-		ret+="		<prod-schema><![CDATA["+pDBSchema+"]]></prod-schema>\n";
-		ret+="	</db-server-conf>\n";
-		ret+="	<modules>\n";
+		StringBuffer ret=new StringBuffer();
+		ret.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n")
+			.append("<project lastsaved=\""+System.currentTimeMillis()+"\" by=\""+System.getProperty("user.name")+"\" language=\""+language+"\">\n")
+			.append("	<file-server-conf>\n")
+			.append("		<base-directory><![CDATA["+destPath+"]]></base-directory>\n")
+			.append("	</file-server-conf>\n")
+			.append("	<db-server-conf>\n")
+			.append("		<dev-host><![CDATA["+dDBHost+"]]></dev-host>\n")
+			.append("		<dev-user><![CDATA["+dDBLogin+"]]></dev-user>\n")
+			.append("		<dev-password><![CDATA["+dDBPassword+"]]></dev-password>\n")
+			.append("		<dev-schema><![CDATA["+dDBSchema+"]]></dev-schema>\n")
+			.append("		<prod-host><![CDATA["+pDBHost+"]]></prod-host>\n")
+			.append("		<prod-user><![CDATA["+pDBLogin+"]]></prod-user>\n")
+			.append("		<prod-password><![CDATA["+pDBPassword+"]]></prod-password>\n")
+			.append("		<prod-schema><![CDATA["+pDBSchema+"]]></prod-schema>\n")
+			.append("	</db-server-conf>\n")
+			.append("	<modules>\n");
 		for(Enumeration<String> e=modules.keys();e.hasMoreElements();)	
-			ret+=modules.get(e.nextElement()).toString();
-		ret+="	</modules>\n";
-		ret+="	<entities>\n";
+			ret.append(modules.get(e.nextElement()).toString());
+		ret.append("	</modules>\n")
+			.append("	<entities>\n");
 		for(Enumeration<String> e=entities.keys();e.hasMoreElements();)	
-			ret+=entities.get(e.nextElement()).toString();
-		ret+="	</entities>\n";
-		ret+="</project>\n";
-		return ret;
+			ret.append(entities.get(e.nextElement()).toString());
+		ret.append("	</entities>\n")
+			.append("</project>\n");
+		return ret.toString();
 	}
 }
