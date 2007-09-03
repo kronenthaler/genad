@@ -4,9 +4,7 @@
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/parent">.'<![CDATA[&]]><xsl:value-of select="@id"/>='.$_REQUEST['<xsl:value-of select="@id"/>']</xsl:for-each>
 	</xsl:variable>
-	<xsl:template match="/">
-<![CDATA[
-<?
+	<xsl:template match="/"><![CDATA[<?
 	include_once('../includes.php');
 	
 	header("Content-Type: text/xml");
@@ -32,9 +30,7 @@
 		//end field options
 		echo $obj->getXMLForm($options);
 	echo "</entity>";
-?>
-]]>
-	</xsl:template>
+?>]]></xsl:template>
 	
 	<xsl:template match="field">
 		<!-- hacer el choose por los types para determinar cuales

@@ -53,6 +53,10 @@ class AbstractObject{
 			for($j=0,$m=count($this->prefixes);$j<$m;$j++){
 				if(substr($keys[$i],0,strlen($this->prefixes[$j]))==$this->prefixes[$j] && 
 					$this->fields[$str=substr($keys[$i],strlen($this->prefixes[$j]))]!=NULL){
+					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
+					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
+					
+					//repeat preprocessing for other types like upload
 					$query.=($k>0?',':'').$str;
 					$values.=($k>0?',':'').$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
@@ -85,6 +89,9 @@ class AbstractObject{
 			for($j=0,$m=count($this->prefixes);$j<$m;$j++){
 				if(substr($keys[$i],0,strlen($this->prefixes[$j]))==$this->prefixes[$j] && 
 					$this->fields[$str=substr($keys[$i],strlen($this->prefixes[$j]))]!=NULL){
+					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
+					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
+					
 					$query.=($k>0?',':'').$str."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
 				}
@@ -209,7 +216,7 @@ class AbstractObject{
 	 *	(name like '%tok1%' AND name like '%tok2%' ... ) ...
 	 *	The fields used for the search are the ones with the property SEARCHABLE in not-false
 	 */
-	function search($tokens,$criteria=NULL,$ini=0,$cant=-1,$orderby=''){
+	function search($tokens,&$criteria=NULL,$ini=0,$cant=-1,$orderby=''){
 		if($criteria==NULL) $criteria=array();
 		$toks=explode(' ',$tokens);
 		$str = array();
@@ -343,7 +350,7 @@ class AbstractObject{
 		if($this->ancestor!='')
 			eval("\$parent=new ".$this->ancestor."();");
 			
-		$ret='<back entity="'.strtolower($this->ancestor).'" title="'.($parent!=NULL?$parent->title:'').'">';
+		$ret='<back entity="'.$this->ancestor.'" title="'.($parent!=NULL?$parent->title:'').'">';
 		$keys=array_keys($params);
 		for($i=0,$n=count($keys);$i<$n && $parent!=NULL;$i++){
 			if(!(strpos($keys[$i],'_')===false) && $parent->primarykey!=$keys[$i])

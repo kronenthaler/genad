@@ -41,4 +41,9 @@ function format($date, $type, $format){
 //startWith
 //endsWith
 
+/** include once the file in $path iif exists */
+function secureInclude($path){
+	if(file_exists($path))
+		include_once($path);
+}
 ?>

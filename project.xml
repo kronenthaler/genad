@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1188769277403" by="kronenthaler" language="php">
+<project lastsaved="1188849774653" by="kronenthaler" language="php">
 	<file-server-conf>
-		<base-directory><![CDATA[\\prado\webdevelop\testing\]]></base-directory>
+		<base-directory><![CDATA[/usr/share/resin/webapps/temp]]></base-directory>
 	</file-server-conf>
 	<db-server-conf>
-		<dev-host><![CDATA[prado]]></dev-host>
+		<dev-host><![CDATA[localhost]]></dev-host>
 		<dev-user><![CDATA[root]]></dev-user>
-		<dev-password><![CDATA[root]]></dev-password>
-		<dev-schema><![CDATA[testing]]></dev-schema>
+		<dev-password><![CDATA[]]></dev-password>
+		<dev-schema><![CDATA[test]]></dev-schema>
 		<prod-host><![CDATA[prado]]></prod-host>
 		<prod-user><![CDATA[root]]></prod-user>
 		<prod-password><![CDATA[root]]></prod-password>
@@ -50,9 +50,9 @@
 		</module>
 		<module name="wkusers">
 		</module>
-		<module name="wklocations">
-		</module>
 		<module name="wkcombo">
+		</module>
+		<module name="wklocations">
 		</module>
 		<module name="wkupload">
 			<option name="MAX_SIZE" value="(100*MB)"/>
@@ -73,23 +73,23 @@
 		<module name="wkrte">
 			<option name="TOOL_BAR" value=""/>
 		</module>
-		<module name="wkpurchases">
-		</module>
 		<module name="wkcatalogue">
+		</module>
+		<module name="wkpurchases">
 		</module>
 	</modules>
 	<entities>
-		<entity name="C" name-lower="c" title="sd">
+		<entity name="C" title="Pruebas">
 			<table name="sd" primary-key="sd"/>
 			<splitpage value="1"/>
-			<search value="0"/>
+			<search value="1"/>
 			<just-pages value="0"/>
 			<just-schema value="0"/>
 			<sortable value="0"/>
 			<form>
-				<field type="textfield">
-					<label><![CDATA[s]]></label>
-					<db-field><![CDATA[xdf]]></db-field>
+				<field type="password">
+					<label><![CDATA[password]]></label>
+					<db-field><![CDATA[pass]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -97,22 +97,22 @@
 					<options>
 					</options>
 				</field>
-				<field type="date">
-					<label><![CDATA[null]]></label>
-					<db-field><![CDATA[sdfg]]></db-field>
+				<field type="time">
+					<label><![CDATA[Hora]]></label>
+					<db-field><![CDATA[hora]]></db-field>
 					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>0</show-in-form><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
 					<options>
 					</options>
 				</field>
 			</form>
 		</entity>
-		<entity name="B" name-lower="b" title="lku">
+		<entity name="B" title="lku">
 			<table name="t100_b" primary-key="t100_id"/>
 			<splitpage value="1"/>
-			<search value="0"/>
+			<search value="1"/>
 			<just-pages value="0"/>
 			<just-schema value="0"/>
 			<sortable value="0"/>
@@ -123,12 +123,22 @@
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="radio">
+					<label><![CDATA[campo2]]></label>
+					<db-field><![CDATA[t100_campo2]]></db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
 					<options>
 					</options>
 				</field>
 			</form>
-			<entity name="B2" name-lower="b2" title="Ent B2">
+			<entity name="B2" title="Ent B2">
 				<table name="t102_b2" primary-key="t102_id"/>
 				<splitpage value="0"/>
 				<search value="0"/>
@@ -147,7 +157,7 @@
 						</options>
 					</field>
 				</form>
-				<entity name="B22" name-lower="b22" title="ent b22">
+				<entity name="B22" title="ent b22">
 					<table name="t103_b22" primary-key="t103_id"/>
 					<splitpage value="1"/>
 					<search value="0"/>
@@ -167,7 +177,7 @@
 						</field>
 					</form>
 				</entity>
-				<entity name="B21" name-lower="b21" title="ent B21">
+				<entity name="B21" title="ent B21">
 					<table name="t104_b21" primary-key="t104_id"/>
 					<splitpage value="1"/>
 					<search value="0"/>
@@ -188,7 +198,7 @@
 					</form>
 				</entity>
 			</entity>
-			<entity name="B1" name-lower="b1" title="ent B1">
+			<entity name="B1" title="ent B1">
 				<table name="t105_b1" primary-key="t105_id"/>
 				<splitpage value="1"/>
 				<search value="0"/>
@@ -197,7 +207,7 @@
 				<sortable value="0"/>
 				<form>
 					<field type="time">
-						<label><![CDATA[&eacute;]]></label>
+						<label><![CDATA[&amp;eacute;]]></label>
 						<db-field><![CDATA[jk]]></db-field>
 						<required>0</required><!-- 0|1 -->
 						<show-in-list>1</show-in-list><!-- 0|1 -->

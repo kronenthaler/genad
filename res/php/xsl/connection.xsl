@@ -5,9 +5,7 @@
 	<xsl:template match="/">
 		<xsl:apply-templates select="/project/db-server-conf"/>
 	</xsl:template>
-	<xsl:template match="db-server-conf">
-<![CDATA[
-<?
+	<xsl:template match="db-server-conf"><![CDATA[<?
 /**
  *	This class make the connection with the database, and guarantees that no more that one connection
  *	has made if one connection already existing in the same object. The connection object MUST be instatiated
@@ -44,7 +42,5 @@ class Connection{
 		mysql_close($this->conn);
 	}
 }
-?>
-]]>
-	</xsl:template>
+?>]]></xsl:template>
 </xsl:stylesheet>

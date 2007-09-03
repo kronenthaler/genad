@@ -4,6 +4,7 @@ import java.io.*;
 import java.awt.*;
 import java.util.*;
 import javax.swing.*;
+import java.nio.channels.*;
 
 import genad.model.*;
 import genad.config.*;
@@ -144,6 +145,32 @@ public class Utils{
 		
 		return ret;
 	}
+	
+	public static void copyDirectory(File srcDir, File dstDir) throws IOException {
+        if(srcDir.isHidden() || !srcDir.exists()) return;
+		if(srcDir.isDirectory()){
+            if(!dstDir.exists())
+                dstDir.mkdirs();
+            
+            for(String children :srcDir.list())
+				copyDirectory(new File(srcDir, children),new File(dstDir, children));
+        }else
+            copyFile(srcDir, dstDir);
+    }
+    
+    public static void copyFile(File src,File dest) throws IOException{
+        //System.out.println("Copiando archivo: "+src.toString()+"...");
+        FileChannel in = null, out = null;
+		try{          
+			in = new FileInputStream(src).getChannel();
+			out = new FileOutputStream(dest).getChannel();
+			
+			in.transferTo(0,in.size(),out);
+		}finally{
+			if(in != null) in.close();
+			if(out != null) out.close();
+		}
+    }
 	
 	//return the topological sort of a graph of modules linked by their dependencies
 	public static String[] topologicalSort(String[] modNames, PluginConfig pCfg){

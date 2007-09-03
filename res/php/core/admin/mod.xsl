@@ -38,7 +38,7 @@
 				  >
 				<center>
 					<table cellpadding="0" cellspacing="0" border="0">
-						<tr><th width="15%"><xsl:value-of select="/entity/title"/></th><th>&nbsp;</th></tr>
+						<tr><th width="15%" colspan="2"><xsl:value-of select="/entity/title"/></th></tr>
 						<xsl:apply-templates/>
 					</table>
 					<table class="plain" border="1">

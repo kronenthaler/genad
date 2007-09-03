@@ -9,7 +9,7 @@
 	</xsl:template>
 	
 	<xsl:template match="entity">
-		<xsl:if test="just-pages = 1">
+		<xsl:if test="(just-pages/@value = 0 and just-schema/@value = 0) or (just-pages/@value = 1)">
 		DROP TABLE IF EXISTS `<xsl:value-of select="table/@name"/>`;
 		CREATE TABLE `<xsl:value-of select="table/@name"/>` (
 		<xsl:if test="form/field/db-field != table/@primary-key">

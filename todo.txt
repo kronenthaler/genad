@@ -1,47 +1,12 @@
 - guardar las configuraciones de los Fields y los Modules.
     - se debe avisar al cambiar la seleccion en alguno de los combos del mismo panel que se perdera si no se aplica.
 
-+ reducir los niveles de acceso a los metodos de configuracion
-+ separar los paneles de configureDlg
-    + implementar una interfaz Applicable
-+ agregar a los archivos de configuracion los valores por defecto. attribute default, para tags option. solo si contiene un | el value
-+ configManager metodo para salvar las configuraciones.
-
-+ cambiar el panel de los campos de la entidad por un JTable.
-- las paginas plantillas para php son las de la entidad engine.
-- los modulos de los lenguajes y la base deberia ser un zip para que extraiga facilmente igual que el 'install plugin'.
-- dialogo de creacion/propiedades simplificado.
-
-+ implementar parser del proyecto.
-+ seguir el esquema document/view.
-+ cargar el arbol con el document
-    + manejar la addicion/remocion de entidades.
-+ save/saveAs
-+ open
-+ exit 
-    + vincular con el exit de la ventana
-
-+ cargar la data de un entidad desde el modelo
-    + manejar los eventos de edicion/validacion.
-    + validacion 'real-time'
-    - ideal seria que se pudieran definir formattedtextfields.
-
-+ cargar el dialogo de propiedades/new
-    + cargar los modulos disponibles segun el lenguaje
-    + autoseleccionar las dependencias de los modulos
-    + bloquear los modulos mandatorios
-
-+ arreglar la accesabilidad de las configuraciones
-+ vista para los modulos
-    + editar los options
-    + inicializar los options en los valores por defecto especificados para este 'plugin'
-
-- modificar opciones para los field
-    -dialogo con un OptionTable
-
 - validar los fields soportados
 - cambiar los toString de + por StringBuffer.append
 - revisar el open recents -> los tabs se vuelven ineditables??
+
+- modificar opciones para los field
+    - dialogo con un OptionTable
 
 - Generacion de codigo
     + xsl para generar el schema de la BD.
@@ -55,14 +20,16 @@
     - configModule.xsl
 
     + calcular archivos a copiar
-    - crear estructura de directorios base
-    - crear BD
-    - copiar archivos base
+    + crear estructura de directorios base
+    + crear BD
+    + copiar archivos base
     + ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
-    - copiar modulos
+    + copiar modulos
     - crear tablas de los modulos
     - configurar modulos
-    - generar paginas de las entidades 
-	- paginas generadas siguen la nomenclaturac camel listXxxx modXxxx execXxxx Xxxx
-	- revisar si existen 
+    + generar paginas de las entidades 
+	+ paginas generadas siguen la nomenclaturac camel listXxxx modXxxx execXxxx Xxxx
+	+ revisar si existen 
+
+- 
 

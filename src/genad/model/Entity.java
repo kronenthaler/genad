@@ -205,15 +205,19 @@ public class Entity{
 		if(!justPages && form.size()==0)
 			return Utils.showError("The entity: "+name+" must has at least one field");
 		
-		boolean visible=false,listable=false,repited=false,empty=false;
+		boolean visible=false,listable=false,searchable=false,repited=false,empty=false;
 		Hashtable<String, Boolean> buffer=new Hashtable<String, Boolean>();
 		for(Field f : form){
 			visible |= f.isVisible();
 			listable |= f.isListable();
+			searchable |= f.isSearchable();
 			if(f.getMap()!=null && "".equals(f.getMap())){ empty=true; break; }
 			if(buffer.get(f.getMap())!=null){ repited=true;break; }
 		}
 		
+		if(searchable && !searchable)
+			return Utils.showError("At least one field must be searchable in entity: "+name);
+			
 		if(!justPages && !listable)
 			return Utils.showError("At least one field must be listed in entity: "+name);
 		
@@ -234,7 +238,7 @@ public class Entity{
 		
 		Enumeration<String> e;
 		String key,
-		ret=deep+"<entity name=\""+Utils.sanitize(name)+"\" name-lower=\""+Utils.sanitize(name.toLowerCase())+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
+		ret=deep+"<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
 		ret+=deep+"	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n";
 		//ret+=deep+"	<permissions value=\""+permissions+"\"/>\n";
 		ret+=deep+"	<splitpage value=\""+(pager?1:0)+"\"/>\n";
@@ -252,6 +256,35 @@ public class Entity{
 		
 		ret+=deep+"</entity>\n";
 		changed = false;
+		return ret;
+	}
+	
+	public String genXML(){
+		Enumeration<String> e;
+		String key,
+		ret="<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n";
+		if(parent!=null)
+			ret+="	<parent id=\""+parent.primaryKey+"\" class=\""+parent.name+"\"/>\n";
+		
+		for(e=childs.keys();e.hasMoreElements();){
+			key=e.nextElement();
+			ret+="	<entity name=\""+Utils.sanitize(key)+"\"/>\n";			
+		}
+		
+		ret+="	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n";
+		//ret+=deep+"	<permissions value=\""+permissions+"\"/>\n";
+		ret+="	<splitpage value=\""+(pager?1:0)+"\"/>\n";
+		ret+="	<search value=\""+(search?1:0)+"\"/>\n";
+		ret+="	<just-pages value=\""+(justPages?1:0)+"\"/>\n";
+		ret+="	<just-schema value=\""+(justSchema?1:0)+"\"/>\n";
+		ret+="	<sortable value=\""+(sortable?1:0)+"\"/>\n";
+		ret+="	<form>\n";
+		for(Field f:form)
+			ret+=f.toString("\t\t");
+		ret+="	</form>\n";
+			
+		ret+="</entity>\n";
+		
 		return ret;
 	}
 	

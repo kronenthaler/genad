@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >
  	<xsl:output method="text" encoding="utf-8" indent="no"/>
-	<xsl:template match="/">
-<![CDATA[<?]]>
-class<xsl:value-of select="//@name"/> extends AbstractObject{
+	<xsl:template match="/"><![CDATA[<?]]>
+class <xsl:value-of select="//@name"/> extends AbstractObject{
 	function <xsl:value-of select="//@name"/>(){
 		$this->tablename='<xsl:value-of select="entity/table/@name"/>';
 		$this->primarykey='<xsl:value-of select="entity/table/@primary-key"/>';
@@ -22,6 +21,5 @@ class<xsl:value-of select="//@name"/> extends AbstractObject{
 		$this->ancestor = '<xsl:value-of select="entity/parent/@class"/>'; //ancestor class
 	}
 }
-?>
-	</xsl:template>
+?></xsl:template>
 </xsl:stylesheet>

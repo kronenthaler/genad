@@ -2,8 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >
  	<xsl:output method="text" encoding="utf-8" indent="no"/>
 	
-	<xsl:template match="/">
-<![CDATA[<?]]>
+	<xsl:template match="/"><![CDATA[<?]]>
 	include_once('../includes.php');
 	
 	header("Content-Type: text/xml");
@@ -39,6 +38,5 @@
 		echo $obj->getXMLListPager($obj->totalRows($criteria),$pageSize,$ini);
 		echo $obj->getXMLList($list);
 	echo "</entity>";
-?>]]>
-	</xsl:template>
+?>]]></xsl:template>
 </xsl:stylesheet>
