@@ -15,7 +15,8 @@
  				<script>
  					dojo.require('dojo.widget.*');
  				</script></head><body-->
- 		<div id="content-header">
+		<script>var queue=Array();</script>
+		<div id="content-header">
 			<center>
 				<table width="100%" border="1">
 					<tr>
@@ -44,7 +45,7 @@
 					<table class="plain" border="1">
 						<tr>
 							<td align="left" class="plain" id="id"><button type="button" onclick="getAndTransform('list{//@name}.{//@ext}?{$ids}','list.xsl','center')"><img src="images/cancel.png" align="left"/><span>Cancel</span></button></td>
-							<td width="50%" align="right" class="plain"><button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name});"><img src="images/accept.png" align="left"/><span>Apply</span></button></td>
+							<td width="50%" align="right" class="plain"><button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; clean(queue);"><img src="images/accept.png" align="left"/><span>Apply</span></button></td>
 						</tr>
 					</table>
 				</center>
@@ -155,23 +156,21 @@
 		</tr>
  	</xsl:template>
  	
- 	<xsl:template match="rte">
- 		<!--tr class="part1">
+ 	<xsl:template match="richtext">
+ 		<tr class="part1">
 			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left" id="{@map}_td">
+			<td class="part1" align="left">
+				<input type="hidden" name="str_{@map}" id="str_{@map}" />
+				<div id="rte_{@map}"><xsl:value-of select="."/></div>
 				<script type="text/javascript">
 					dojo.addOnLoad(function(){
-						var oFCKeditor = new FCKeditor ('str_<xsl:value-of select="@map"/>',
-													'100%',
-													'200',
-													'<xsl:value-of select="@toolbar"/>',
-													'<xsl:value-of select="."/>');
-						oFCKeditor.BasePath	= 'js/fckeditor/';
-						oFCKeditor.Create('<xsl:value-of select="@map"/>_td');
+						queue['rte_<xsl:value-of select="@map"/>']=1;
+						tinyMCE.execCommand('mceAddControl', true, 'rte_<xsl:value-of select="@map"/>');
+						tinyMCE.setContent(tinyMCE.entityDecode(tinyMCE.getContent('rte_<xsl:value-of select="@map"/>')));
 					});
 				</script>
 			</td>
-		</tr-->
+		</tr>
 	</xsl:template>
  	
  	<xsl:template match="date">

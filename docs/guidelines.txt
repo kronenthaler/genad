@@ -7,11 +7,24 @@ programming guidelines:
 	import java.awt.events.*;
 	import javax.swing.*;
 	  ...
-    b. the imports related to this project must be the last, separated by one blank line and sorted in
-	the same way described in (a)
-    c. if (b) is tie, the packages belong to java go first, org and com come seconds, javax come third.
-    d. if (c) doesn't break the tie, use length of the final package name, 
-    e. if (d) still tie, use lexicographical order.
+    b. if (a) is tie, the packages belong to java go first, org and com come seconds, javax come third.
+    c. if (b) doesn't break the tie, use length of the final package name, 
+    d. if (c) still tie, use lexicographical order.
+	e. the imports related to this project must be the last, separated by one blank line and sorted in
+	the same way described in (a) to (d)
+
+2. Names
+	a. The name of the classes and methods follow the java standars or camel uppercase.
+		- Classes begin with an upper case letter and for each new word this begins with an upper case letter too.
+		- Methods begin with an lower case letter and for each new word this begins with an upper case letter.
+		Examples: 
+		class TableCellRenderer -> ok
+		class Tablecellrenderer -> wrong
+		class Table_Cell_Renderer -> wrong
+		int methodForCalculateSomething() -> ok
+		int methodforcalculateSomething() -> wrong
+		int method_for_calculate_something() -> wrong
+	b. This guideline includes any other code different than XSL, XML or CSS.
 	
 
 

@@ -3,6 +3,8 @@
  	<xsl:output method="text" encoding="utf-8"/>
 	
 	<xsl:template match="/">
+		#comentario 1  
+		# comentario 2
 		CREATE DATABASE IF NOT EXISTS `<xsl:value-of select="project/db-server-conf/dev-schema" />` CHARACTER SET utf8;
 		USE `<xsl:value-of select="project/db-server-conf/dev-schema" />`;
 		<xsl:apply-templates select="/project/entities/entity"/> 

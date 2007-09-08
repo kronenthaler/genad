@@ -153,7 +153,7 @@ class AbstractObject{
 	
 	function deleteFiles($ids){
 		$files=$this->getFieldsByType(TYPE,'file');
-		array_push($files, $this->getFieldsByType(TYPE,'image'));
+		$files=array_merge($files, $this->getFieldsByType(TYPE,'image'));
 		
 		if(count($files)>0){
 			$query="SELECT ".implode(",", $files)." FROM ".$this->tablename." WHERE ".$this->primarykey;
@@ -161,6 +161,7 @@ class AbstractObject{
 			else $query.=" = '".$ids."'";
 			
 			$rs=mysql_query($query);
+			if(!$rs) return;
 			for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
 				for($i=0,$n=count($files);$i<$n;$i++)
 					unlink(mysql_result($rs, $j, $files[$i]));
@@ -193,8 +194,7 @@ class AbstractObject{
 			eval("\$obj=new ".get_class($this)."();");
 			for($j=0;$j<mysql_num_fields($resultSet);$j++){
 				$value = mysql_result($resultSet,$i,mysql_field_name($resultSet,$j));
-				$value = addslashes($value);
-				eval("\$obj->".mysql_field_name($resultSet,$j)." = '".htmlspecialchars_decode($value)."';");
+				eval("\$obj->".mysql_field_name($resultSet,$j)." = '".htmlspecialchars_decode(addslashes($value))."';");
 			}
 			$array[$i]=$obj;
 		}
@@ -208,8 +208,8 @@ class AbstractObject{
 		if($resultSet!=NULL && mysql_num_rows($resultSet)>0){
 			for($j=0;$j<mysql_num_fields($resultSet);$j++){
 				$value = mysql_result($resultSet,0,mysql_field_name($resultSet,$j));
-				$value = addslashes($value);
-				eval($target."->".mysql_field_name($resultSet,$j)." = '".htmlspecialchars_decode($value)."';");
+				//$value = addslashes($value);
+				eval($target."->".mysql_field_name($resultSet,$j)." = '".htmlspecialchars_decode(addslashes($value))."';");
 			}
 			return $target;
 		}else 
@@ -260,11 +260,24 @@ class AbstractObject{
 		return $search;
 	}
 	
+	function getAncestorsIds($array=NULL){
+		if($array==NULL) $array=$_REQUEST;
+		
+		$ancestor=$this->ancestor;
+		while($ancestor!=''){
+			eval("\$parent=new ".$ancestor."();");
+			$str .= '&'.$parent->primarykey.'='.$array[$parent->primarykey];
+			$ancestor = $parent->ancestor;
+		}
+		return $str;
+	}
+
 	function getError(){
 		return $this->error->description;
 	}
 	
 	/**
+	 *  @deprecated
 	 *	Encode each password field contained in $array using base64 encode algorithm
 	 */
 	function encodePasswords(&$array){
@@ -283,6 +296,7 @@ class AbstractObject{
 	}
 	
 	/**
+	 *  @deprecated
 	 *	Format each time to remove ':' from the string.
 	 */
 	function formatTimes(&$array){
@@ -301,6 +315,7 @@ class AbstractObject{
 	}
 	
 	/**
+	 *  @deprecated 
 	 *	Format each datetime to remove ':' from the string.
 	 */
 	function formatDatetimes(&$array){
@@ -316,18 +331,6 @@ class AbstractObject{
 				}
 			}
 		}
-	}
-	
-	function getAncestorsIds($array=NULL){
-		if($array==NULL) $array=$_REQUEST;
-		
-		$ancestor=$this->ancestor;
-		while($ancestor!=''){
-			eval("\$parent=new ".$ancestor."();");
-			$str .= '&'.$parent->primarykey.'='.$array[$parent->primarykey];
-			$ancestor = $parent->ancestor;
-		}
-		return $str;
 	}
 	
 	//<!--------------------------------- METHODS FOR XML GENERATION ---------------------------------------------->
@@ -452,7 +455,7 @@ class AbstractObject{
 								   selected="'.$option[$j]['selected'].'" 
 								   onclick="'.$option[$j]['onclick'].'"/>';	
 			}else
-				$ret.="<![CDATA[".$value."]]>";
+				$ret.="<![CDATA[".htmlspecialchars_decode(stripslashes($value))."]]>";
 			
 			$ret.= '</'.$current[TYPE].'>';
 		}

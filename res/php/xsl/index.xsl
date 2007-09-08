@@ -4,15 +4,15 @@
 	
 	<xsl:template match="/">
 <![CDATA[<!-- one page to rule them all, changing the ajax calls-->
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<meta http-equiv="Expires" content="Tue, 01 Jan 2000 12:12:12 GMT"/>
 		<meta http-equiv="Pragma" content="no-cache"/>
 		
 		<link href="css/styles.css" rel="stylesheet" type="text/css"/>
 		<script src="../js/dojo/dojo.js"></script>
+		<script src="../js/tinymce/tiny_mce.js"></script>
 		<script src="../js/jquery.js"></script>
-		<script src="../js/fckeditor/fckeditor.js"></script>
 		<script src="../js/utils.js"></script>
 		<script src="../js/validators.js"></script>
 		<script>
@@ -32,6 +32,8 @@
 					mimetype: "text/html"
 				});
 			});
+			
+			tinyMCE.init({mode: 'none', theme:'simple'});
 		</script>
 	</head>
 	<body>

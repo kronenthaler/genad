@@ -77,10 +77,10 @@
 									<xsl:for-each select="listable/field">
 										<xsl:choose>
 											<xsl:when test="@type ='checkbox' or @type = 'radio'">
-												<th align="center" width="30px"><xsl:value-of select="@name"/></th>
+												<th align="center" width="30px">&nbsp;<xsl:value-of select="@name"/></th>
 											</xsl:when>
 											<xsl:otherwise>
-												<th><xsl:value-of select="@name"/></th>
+												<th>&nbsp;<xsl:value-of select="@name"/></th>
 											</xsl:otherwise>
 										</xsl:choose>
 									</xsl:for-each>
@@ -109,7 +109,7 @@
 															</xsl:when>							
 															<xsl:otherwise>
 																<a href="javascript:getAndTransform('mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}','mod.xsl','center')">
-																	<xsl:value-of select="$value" disable-output-escaping="yes"/>
+																	&nbsp;<xsl:value-of select="$value" disable-output-escaping="yes"/>
 																</a>
 															</xsl:otherwise>
 														</xsl:choose>

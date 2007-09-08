@@ -110,7 +110,10 @@
 	<!-- FIELDS DEFINITION -->
 	<fields>
 		<field type="check" visible="true" listable="true"  searchable="false"/>
-		<field type="radio" visible="true" listable="true"  searchable="false"/>
+		<field type="radio" visible="true" listable="true"  searchable="false">
+			<option name="Yes" value="1"/>
+			<option name="No" value="0"/>
+		</field>
 		<field type="time" visible="true" listable="true" searchable="true">
 			<option name="FORMAT" value="HHmmss|HHmm" />
 		</field>

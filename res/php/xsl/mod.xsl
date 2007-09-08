@@ -51,13 +51,13 @@
 		<xsl:when test="@type = 'radio' or @type='checkbox'">
 		$options["<xsl:value-of select="db-field"/>"]=array(
 			//one array per option with the label, the value associated with, if is selected for this object or not and the javascript 'onclick' code.
-			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'','onclick'=>'')<xsl:if test="position() != last()">,
+			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=>$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'','onclick'=>'')<xsl:if test="position() != last()">,
 			</xsl:if></xsl:for-each>
 		);</xsl:when>
 		<xsl:when test="@type='select'">
 		$options["<xsl:value-of select="db-field"/>"]=array('onclick'=>'',
 			//one array per option with the label, the value associated with and if is selected for this object or not.
-			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'')<xsl:if test="position() != last()">,
+			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=>$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'')<xsl:if test="position() != last()">,
 			</xsl:if></xsl:for-each>
 		);</xsl:when>
 		<xsl:when test="@type='file' or @type='image'">

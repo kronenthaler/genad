@@ -1,8 +1,8 @@
 package genad.engine;
 
-import com.sun.corba.se.impl.logging.UtilSystemException;
 import genad.config.ConfigManager;
 import java.io.*;
+import java.nio.*;
 import java.sql.*;
 import java.util.*; 
 
@@ -164,13 +164,36 @@ public class Engine{
 			
 			//8) copy, configure, and dump database for each module following the T.S. calculated in (2)
 			for(String s:order){
-				Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+s), new File(model.getDestinationPath()+"/"+s));
-				//transformXML();
-				//execute script (read if exists the file <module>/<module>.sql)
+				File base=new File(model.getDestinationPath()+"/"+s);
+				Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+s), base);
+				
+				if(base.exists()){
+					StringReader in=new StringReader(model.getModule(s).toString());
+					File config=new File(model.getDestinationPath()+"/"+s+"/"+s+"Conf."+model.getLanguage());
+					replaceIfExists(config);
+
+					out=new PrintStream(config);
+					transformXML(in, "res/"+model.getLanguage()+"/xsl/configModule.xsl",out);
+					out.close();
+
+					//execute script (read if exists the file <module>/<module>.sql)
+					File sql=new File(model.getDestinationPath()+"/"+s+"/"+s+".sql");
+					if(sql.exists()){
+						StringBuffer query=new StringBuffer();
+						BufferedReader tmp=new BufferedReader(new FileReader(sql));
+						char[] buffer = new char[1024];
+						int aux=0;
+						while((aux=tmp.read(buffer))!=-1) 
+							query.append(buffer,0,aux);
+						
+						executeScript(query.toString(), model);
+						tmp.close();
+					}
+				}
 			}
 			
 			//9) index.xhtml (index.xsl). ask for overwrite if exists
-			File index=new File(model.getDestinationPath()+"/admin/index.xhtml");
+			File index=new File(model.getDestinationPath()+"/admin/index.html");
 			replaceIfExists(index);
 			
 			out=new PrintStream(index);
@@ -187,7 +210,7 @@ public class Engine{
 			e.printStackTrace();
 		}finally{
 			if(conn!=null)
-				try{conn.close();}catch(Exception e){e.printStackTrace();}
+				try{conn.close();}catch(Exception e){Utils.showError("Warning: The connection cannot be closed. The database server is running?");}
 		}
 	}
 	
@@ -234,7 +257,11 @@ public class Engine{
 		try{
 			stmt=conn.createStatement();
 			
-			script=script.replaceAll("\n|\t", "");
+			script=script.replaceAll("\\s*#.*(\n|\r\n)","");//remove comments
+			script=script.replaceAll("\n|\t|(\r\n)", "");	 //remove enters and tabs 
+			
+			System.err.println(script);
+			
 			StringTokenizer strT=new StringTokenizer(script,";");
 			while(strT.hasMoreTokens())
 				stmt.addBatch(strT.nextToken());
@@ -244,7 +271,7 @@ public class Engine{
 			e.printStackTrace();
 		}finally{
 			if(stmt!=null)
-				try{stmt.close();}catch(Exception e){e.printStackTrace();}
+				try{stmt.close();}catch(Exception e){Utils.showError("Warning: The statement cannot be closed.");}
 		}
 	}
 	

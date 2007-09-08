@@ -85,7 +85,7 @@ function showNextRow(comp){
  *	@param	targetStyle	The name of the xsl file to use in the transformation
  *	@param	targetDiv	The ID of the container component to render the output.
  */
- function transform(XMLdoc,targetStyle,targetDiv){
+function transform(XMLdoc,targetStyle,targetDiv){
  	if(window.XMLHttpRequest) {
 		var xsltProcessor = new XSLTProcessor();
 		var request = new XMLHttpRequest();
@@ -110,7 +110,8 @@ function showNextRow(comp){
 		targetDiv.removeChild(targetDiv.childNodes[0]);
 
 	targetDiv.appendChild(fragment);
- }
+}
+
  
 /** 
  *	Validation functions, is neccessary add function to validate numbers (integers and decimals), 
@@ -119,7 +120,7 @@ function showNextRow(comp){
  *	@param	text	The label text for this input in the form.
  *	@return	true iif the input is not empty, false otherwise. 
  */
- function isRequired(input, text){
+function isRequired(input, text){
  	if(input.value == ''){
  		alert('The "'+text+'" field is required. Cannot be left in blank.');
  		input.focus();
@@ -129,9 +130,9 @@ function showNextRow(comp){
 		input.style.background='#ffffff';
  	
  	return input.value != '';
- }
+}
  
- function isValidPassword(input, confirm, label,required){
+function isValidPassword(input, confirm, label,required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(!isRequired(confirm, label)) return false;
@@ -140,9 +141,9 @@ function showNextRow(comp){
 		return false;
 	}
 	return true;
- }
+}
  
- function isValidEmail(input, label, required){
+function isValidEmail(input, label, required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(input.value.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1) {
@@ -150,9 +151,9 @@ function showNextRow(comp){
 		return false;
 	}
  	return true;
- }
+}
  
- function isValidInteger(input, label,required){
+function isValidInteger(input, label,required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(input.value.search(/^[-]?[0-9]+$/)==-1){
@@ -160,9 +161,9 @@ function showNextRow(comp){
 		return false;
 	}
  	return true;
- }
+}
  
- function isValidDecimal(input, label,required){
+function isValidDecimal(input, label,required){
  	if(required && !isRequired(input,label)) return false;
  	
  	input.value=input.value.replace(/,/,'.');	
@@ -171,9 +172,17 @@ function showNextRow(comp){
 		return false;
 	}
 	return true;
- }
- 
- /** TODO: remove this function */
- function validate_car(f){
- 	return isRequired(f.str_t01_name,'Nombre');
- }
+}
+
+function isValidRTE(input, name, label, required){
+	input.value=tinyMCE.getContent(name);
+//	tinyMCE.removeMCEControl(name);
+	if(required && !isRequired(input, label)) return false;
+	return true;
+}
+
+function clean(q){
+	for(var x in q)
+		tinyMCE.removeMCEControl(x);
+	return true;
+}

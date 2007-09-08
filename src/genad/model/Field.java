@@ -73,6 +73,18 @@ public class Field implements Serializable{
 
 	public void setType(String type) {
 		this.type = type;
+		//de acuerdo al tipo actual inicializar las opciones con las opciones en el fieldConfig asociado
+		options.clear();
+		
+		FieldConfig f=ConfigManager.getInstance()
+						.getPluginConfig(Model.getInstance().getLanguage())
+						.getFieldConfig(type);
+		
+		for(Enumeration<String> e=f.getOptions();e.hasMoreElements();){
+			String key=e.nextElement();
+			options.put(key, f.getOption(key));
+		}
+		
 		container.setChanged();
 	}
 
