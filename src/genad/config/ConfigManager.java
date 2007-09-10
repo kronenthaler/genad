@@ -15,7 +15,7 @@ public class ConfigManager implements Serializable{
 	public static final String MAIN_CONF="/conf.xml";
 	private static ConfigManager me=null;
 	
-	private Hashtable<String, PluginConfig> pluginsConfig;
+	private Hashtable<String, LangConfig> pluginsConfig;
 	private Config mainConfig;
 		
 	private ConfigManager(){
@@ -25,9 +25,9 @@ public class ConfigManager implements Serializable{
 	private void loadConfiguration(){
 		mainConfig.load(PATH+MAIN_CONF);
 		//foreach module installed in the mainConfig load its configuration.
-		Vector<String> installed=mainConfig.getPluginsInstalled();
+		Vector<String> installed=mainConfig.getLangsInstalled();
 		for(String id : installed)
-			pluginsConfig.put(id,new PluginConfig(PATH + id + MAIN_CONF));
+			pluginsConfig.put(id,new LangConfig(PATH + id + MAIN_CONF));
 	}
 	
 	public void saveConfiguration() throws IOException {
@@ -40,7 +40,7 @@ public class ConfigManager implements Serializable{
 	
 	public void refreshConfiguration(){
 		mainConfig=new Config();
-		pluginsConfig=new Hashtable<String, PluginConfig>();
+		pluginsConfig=new Hashtable<String, LangConfig>();
 		
 		loadConfiguration();
 	}
@@ -51,18 +51,21 @@ public class ConfigManager implements Serializable{
 	}
 	
 	public void installPlugin(String name){
-		mainConfig.getPluginsInstalled().add(name);
-		mainConfig.getPluginsActive().put(name,false);
+		mainConfig.getLangsInstalled().add(name);
+		mainConfig.getLangsActive().put(name,false);
 	}
 	
 	public void activePlugin(String name, boolean status){
-		mainConfig.getPluginsActive().put(name, status);
+		if(status)
+			mainConfig.getLangsActive().put(name, status);
+		else
+			mainConfig.getLangsActive().remove(name);
 	}
 		
 	public Enumeration<String> getPluginsName(){ return pluginsConfig.keys(); }
-	public PluginConfig getPluginConfig(String name){ return pluginsConfig.get(name); }
-	public Enumeration<String> getPluginsActive(){ return mainConfig.getPluginsActive().keys(); }
-	public boolean isPluginActive(String name){ return mainConfig.getPluginsActive().get(name); }
-	public Vector<String> getPluginsInstalled(){ return mainConfig.getPluginsInstalled();}
+	public LangConfig getPluginConfig(String name){ return pluginsConfig.get(name); }
+	public Enumeration<String> getPluginsActive(){ return mainConfig.getLangsActive().keys(); }
+	public boolean isPluginActive(String name){ return mainConfig.getLangsActive().get(name); }
+	public Vector<String> getPluginsInstalled(){ return mainConfig.getLangsInstalled();}
 	public String getDefaultValue(String option){ return mainConfig.getDefaultValue(option);}
 }

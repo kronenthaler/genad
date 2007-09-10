@@ -8,20 +8,19 @@ import javax.xml.parsers.*;
 import genad.*;
 import genad.gui.*;
 import genad.model.*;
-import genad.engine.*;
 
 /**
  *	Plugin is equal to Language
  *	@author kronenthaler
  */
-public class PluginConfig implements Serializable{
+public class LangConfig implements Serializable{
 	private String name;
 	private String description;
 	private String path;
 	private Hashtable<String, FieldConfig> fields;
 	private Hashtable<String, ModuleConfig> modules;
 			
-	public PluginConfig(String path){
+	public LangConfig(String path){
 		fields=new Hashtable<String, FieldConfig>();
 		modules=new Hashtable<String, ModuleConfig>();
 		
@@ -89,6 +88,7 @@ public class PluginConfig implements Serializable{
 				fc.setVisible(current.getAttributes().getNamedItem("visible").getTextContent().equals("true"));
 				fc.setListable(current.getAttributes().getNamedItem("listable").getTextContent().equals("true"));
 				fc.setSearchable(current.getAttributes().getNamedItem("searchable").getTextContent().equals("true"));
+				fc.setEditable("true".equals(current.getAttributes().getNamedItem("editable").getTextContent()));
 				
 				NodeList childs=current.getChildNodes();
 				for(int j=0,m=childs.getLength();j<m;j++){

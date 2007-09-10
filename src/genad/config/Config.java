@@ -36,13 +36,13 @@ public class Config implements Serializable{
 				if(root.item(i).getNodeName().equals("default")){
 					defaults.put(root.item(i).getAttributes().getNamedItem("option").getTextContent(),
 								 root.item(i).getAttributes().getNamedItem("value").getTextContent());
-				}else if(root.item(i).getNodeName().equals("plugins")){
-					NodeList plugins=root.item(i).getChildNodes();
-					for(int j=0,m=plugins.getLength();j<m;j++){
-						if(plugins.item(j).getNodeName().equals("plugin")){
-							installed.add(plugins.item(j).getAttributes().getNamedItem("name").getTextContent());
-							actives.put(plugins.item(j).getAttributes().getNamedItem("name").getTextContent(),
-									    plugins.item(j).getAttributes().getNamedItem("active").getTextContent().equals("yes"));
+				}else if(root.item(i).getNodeName().equals("langs")){
+					NodeList langs=root.item(i).getChildNodes();
+					for(int j=0,m=langs.getLength();j<m;j++){
+						if(langs.item(j).getNodeName().equals("lang")){
+							installed.add(langs.item(j).getAttributes().getNamedItem("name").getTextContent());
+							actives.put(langs.item(j).getAttributes().getNamedItem("name").getTextContent(),
+									    langs.item(j).getAttributes().getNamedItem("active").getTextContent().equals("yes"));
 						}
 					}
 				}
@@ -64,8 +64,8 @@ public class Config implements Serializable{
 		out.close();
 	}
 	
-	Hashtable<String, Boolean> getPluginsActive(){ return actives;}
-	Vector<String> getPluginsInstalled(){ return installed;	}
+	Hashtable<String, Boolean> getLangsActive(){ return actives;}
+	Vector<String> getLangsInstalled(){ return installed;	}
 	String getDefaultValue(String option){ return defaults.get(option);	}
 	
 	public String toString(){
@@ -75,11 +75,11 @@ public class Config implements Serializable{
 			String s=e.nextElement();
 			ret.append("\t<default option=\""+s+"\" value=\""+defaults.get(s)+"\"/>\n");
 		}
-		ret.append("\t<plugins>\n");
+		ret.append("\t<langs>\n");
 		for(int i=0;i<installed.size();i++){
-			ret.append("\t\t<plugin name=\""+installed.get(i)+"\" active=\""+(actives.get(installed.get(i))?"yes":"no")+"\"/>\n");
+			ret.append("\t\t<lang name=\""+installed.get(i)+"\" active=\""+(actives.get(installed.get(i))?"yes":"no")+"\"/>\n");
 		}
-		ret.append("\t</plugins>\n")
+		ret.append("\t</langs>\n")
 			.append("</configuration>");
 		return ret.toString();
 	}
