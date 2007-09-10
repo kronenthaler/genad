@@ -47,13 +47,13 @@
 				<option name="GAL_PREFIX" value="gal_" />
 				<option name="GAL_ASPECT_RATIO" value="true|false" default="true"/>
 				<option name="GAL_WINDOW" value="1" />
-				<option name="GAL_MAX_BIG_HEIGHT" value="500" />
 				<option name="GAL_OPACTITY_MODAL" value="0.5" />
+				<option name="GAL_MAX_BIG_HEIGHT" value="500" />
 				<option name="GAL_DEST_PATH" value="archivos/" />
 				<option name="GAL_COLUMNS" value="3" />
-				<option name="GAL_MAX_THUMB_HEIGHT" value="150" />
-				<option name="GAL_ENABLE_PREVIEW" value="true|false" default="false"/>
 				<option name="GAL_TRANSITIONAL_INTERVAL" value="1000" />
+				<option name="GAL_ENABLE_PREVIEW" value="true|false" default="false"/>
+				<option name="GAL_MAX_THUMB_HEIGHT" value="150" />
 			</options>
 		</module>
 		<module name="wkusers" mandatory="1">
@@ -81,11 +81,11 @@
 				<option name="VALID_EXTENSIONS" value="*" />
 				<option name="PREFIX" value="arc_" />
 				<option name="DEST_PATH" value="archivos/" />
-				<option name="ASPECT_RATIO" value="true|false" />
 				<option name="CREATE_THUMB" value="false|true" />
+				<option name="ASPECT_RATIO" value="true|false" />
 				<option name="MAX_IMG_WIDTH" value="150" />
-				<option name="CONTROL_TYPE" value="BUTTON|IMAGE" default="IMAGE"/>
 				<option name="MAX_THUMB_WIDTH" value="50" />
+				<option name="CONTROL_TYPE" value="BUTTON|IMAGE" default="IMAGE"/>
 				<option name="ENABLE_PREVIEW" value="true|false" />
 			</options>
 		</module>
@@ -94,6 +94,11 @@
 				<option name="TOOL_BAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons" />
 			</options>
 		</module>
+		<module name="wkcatalogue" >
+			<depends>
+				<depend name="wkcategory"/>
+			</depends>
+		</module>
 		<module name="wkpurchases" >
 			<depends>
 				<depend name="wkcatalogue"/>
@@ -101,64 +106,52 @@
 				<depend name="wkusers"/>
 			</depends>
 		</module>
-		<module name="wkcatalogue" >
-			<depends>
-				<depend name="wkcategory"/>
-			</depends>
-		</module>
 	</modules>
 	<!-- FIELDS DEFINITION -->
 	<fields>
-		<field type="check" visible="true" listable="true"  searchable="false"/>
-		<field type="radio" visible="true" listable="true"  searchable="false">
-			<option name="Yes" value="1"/>
-			<option name="No" value="0"/>
+		<field type="check" visible="true" listable="true" searchable="false" editable="true" />
+		<field type="radio" visible="true" listable="true" searchable="false" editable="true" >
+			<option name="No" value="0" />
+			<option name="Yes" value="1" />
 		</field>
-		<field type="time" visible="true" listable="true" searchable="true">
-			<option name="FORMAT" value="HHmmss|HHmm" />
-		</field>
-		<field type="file" visible="true" listable="false" searchable="false">
+		<field type="time" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="file" visible="true" listable="false" searchable="false" editable="false" >
 			<option name="CONTROL_TYPE" value="BUTTON" />
 			<option name="DEST_PATH" value="archivos/" />
-			<option name="PREFIX" value="arc_" />
 			<option name="VALID_EXTENSIONS" value="*" />
+			<option name="PREFIX" value="arc_" />
 			<option name="IMAGES_PATH" value="images/" />
 			<option name="MAX_SIZE" value="(100*MB)" />
 		</field>
-		<field type="date" visible="true" listable="true" searchable="true">
-			<option name="FORMAT" value="YYYYMMDD|DDMMYYYY|MMDDYYYY" />
-		</field>
-		<field type="image" visible="true" listable="false" searchable="false">
+		<field type="date" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="image" visible="true" listable="false" searchable="false" editable="false" >
 			<option name="MAX_SIZE" value="(100*MB)" />
-			<option name="FORCE_SCALE" value="true|false" />
+			<option name="FORCE_SCALE" value="true|false" default="true"/>
 			<option name="MAX_IMG_HEIGHT" value="150" />
 			<option name="IMAGES_PATH" value="images/" />
 			<option name="VALID_EXTENSIONS" value="*" />
 			<option name="PREFIX" value="arc_" />
 			<option name="DEST_PATH" value="archivos/" />
-			<option name="ASPECT_RATIO" value="true|false" />
+			<option name="ASPECT_RATIO" value="true|false" default="true"/>
 			<option name="MAX_IMG_WIDTH" value="150" />
-			<option name="CONTROL_TYPE" value="BUTTON|IMAGE" />
-			<option name="ENABLE_PREVIEW" value="true|false" />
+			<option name="CONTROL_TYPE" value="BUTTON|IMAGE" default="IMAGE"/>
+			<option name="ENABLE_PREVIEW" value="true|false" default="true"/>
 		</field>
-		<field type="decimal" visible="true" listable="true" searchable="true"/>
-		<field type="integer" visible="true" listable="true" searchable="true"/>
-		<field type="hidden" visible="false" listable="false" searchable="true"/>
-		<field type="textfield" visible="true" listable="true" searchable="true"/>
-		<field type="datetime" visible="true" listable="true" searchable="true">
-			<option name="TIMEFORMAT" value="HHMMSS|HHMM" default="HHMM"/>
-			<option name="DATEFORMAT" value="AAAAMMDD|DDMMAAAA|MMDDAAAA" />
+		<field type="decimal" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="integer" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="textfield" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="hidden" visible="false" listable="false" searchable="true" editable="false" />
+		<field type="email" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="datetime" visible="true" listable="true" searchable="true" editable="false" />
+		<field type="select" visible="true" listable="true" searchable="true" editable="true" />
+		<field type="richtext" visible="true" listable="false" searchable="true" editable="false" >
+			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|" default="Default"/>
 		</field>
-		<field type="email" visible="true" listable="true" searchable="true"/>
-		<field type="richtext" visible="true" listable="false" searchable="true">
-			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|" />
-		</field>
-		<field type="select" visible="true" listable="true" searchable="true"/>
-		<field type="textarea" visible="true" listable="false" searchable="true">
+		<field type="textarea" visible="true" listable="false" searchable="true" editable="false" >
 			<option name="ROWS" value="150" />
 			<option name="COLS" value="150" />
 		</field>
-		<field type="password" visible="true" listable="false" searchable="false">
+		<field type="password" visible="true" listable="false" searchable="false" editable="false" >
 			<option name="MINLONG" value="1" />
 		</field>
 	</fields>
