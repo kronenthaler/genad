@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1189027530212" by="kronenthaler" language="php">
+<project lastsaved="1189364922089" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/usr/share/resin/webapps/temp]]></base-directory>
 	</file-server-conf>
@@ -14,10 +14,10 @@
 		<prod-schema><![CDATA[testing]]></prod-schema>
 	</db-server-conf>
 	<modules>
-		<module name="wklogs">
-		</module>
 		<module name="wkrte">
 			<option name="TOOL_BAR" value=""/>
+		</module>
+		<module name="wklogs">
 		</module>
 		<module name="wkobj">
 		</module>
@@ -50,13 +50,14 @@
 			<sortable value="0"/>
 			<form>
 				<field type="radio">
-					<label><![CDATA[password]]></label>
+					<label><![CDATA[Password]]></label>
 					<db-field><![CDATA[pass]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>1</searchable><!-- 0|1 -->
 					<options>
+						<option name="May be" value="-1"/>
 						<option name="No" value="0"/>
 						<option name="Yes" value="1"/>
 					</options>
@@ -69,7 +70,7 @@
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>1</searchable><!-- 0|1 -->
 					<options>
-						<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|"/>
+						<option name="TOOLBAR" value="Default"/>
 					</options>
 				</field>
 				<field type="textfield">

@@ -1,37 +1,30 @@
 - guardar las configuraciones de los Fields y los Modules.
     - se debe avisar al cambiar la seleccion en alguno de los combos del mismo panel que se perdera si no se aplica.
 
-- validar los fields soportados
 + cambiar los toString de + por StringBuffer.append
 - revisar el open recents -> los tabs se vuelven ineditables??, problema de foco
 
+- validar los fields soportados
+	- en el dialogo de propiedades/new
+
 - modificar opciones para los field
     - dialogo con un OptionTable
-- instalar modulos al estilo install plugin.
-	
-- Generacion de codigo
-    + xsl para generar el schema de la BD.
-    + xsl para generar el js.
-    + list.xsl
-    + obj.xsl
-    + exec.xsl
-    + includes.xsl
-    + connection.xsl
-    + mod.xsl
-    - configModule.xsl
-	- crear tablas de los modulos
-    - configurar modulos
-	
-    + calcular archivos a copiar
-    + crear estructura de directorios base
-    + crear BD
-    + copiar archivos base
-    + ordenamiento topologico sobre los modulos para la ejecucion de sus respectivos scripts sql.
-    + copiar modulos
-    + generar paginas de las entidades 
-	+ paginas generadas siguen la nomenclaturac camel listXxxx modXxxx execXxxx Xxxx
-	+ revisar si existen 
 
-- como importar los menues de los modulos y sus respectivos js para el index.xhtml
-- 
+- instalar modulos al estilo install language.
 
+- como importar los menues de los modulos y sus respectivos js para el index.html
+	- puede ser language-dependent
+
+- feedback de la generacion:
+	+ WARNING DE GENERACION si existen archivos en el directorio destino, y las tablas de BD.
+	+ cancelacion de la generacion de codigo.
+
+- acomodar los estilos:
+	- calendario 
+	- timepicker
+	- rte
+
+- archivo de licencias
+- DTD o schemas para los archivos de configuracion general, plugin, y del projecto, van dentro del .jar para evitar que se modifiquen o eliminen facilmente.
+- modulo para instalar plugins de funcionalidades.
+	- modulo para hacer updates?
