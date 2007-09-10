@@ -14,7 +14,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -22,6 +21,7 @@ import genad.engine.*;
  */
 public class Field implements Serializable{
 	private Entity container;
+	private FieldConfig fCfg;
 	private Hashtable<String, String> options;
 	private String label, map, type;
 	private boolean required, visible, listable, searchable;
@@ -35,7 +35,21 @@ public class Field implements Serializable{
 		//recuperar la informacion asociada al campo
 		NodeList info=current.getChildNodes();
 		type=current.getAttributes().getNamedItem("type").getTextContent();
+		
+		fCfg=ConfigManager.getInstance()
+						.getPluginConfig(Model.getInstance().getLanguage())
+						.getFieldConfig(type);
 
+		if(fCfg==null){
+			System.err.println("Warning: Unsuported field type '"+type+"' for the language '"+Model.getInstance().getLanguage()+"'");
+			return null;
+		}
+		
+		for(Enumeration<String> e=fCfg.getOptions();e.hasMoreElements();){
+			String key=e.nextElement();
+			options.put(key,fCfg.getOption(key).indexOf('|')!=-1?fCfg.getDefault(key):fCfg.getOption(key));//this is the default value, at least if isn't a selection
+		}
+				
 		for(int k=0,p=info.getLength();k<p;k++){
 			if(info.item(k).getNodeName().equalsIgnoreCase("label"))
 				label=(info.item(k).getTextContent());
@@ -76,18 +90,32 @@ public class Field implements Serializable{
 		//de acuerdo al tipo actual inicializar las opciones con las opciones en el fieldConfig asociado
 		options.clear();
 		
-		FieldConfig f=ConfigManager.getInstance()
+		fCfg=ConfigManager.getInstance()
 						.getPluginConfig(Model.getInstance().getLanguage())
 						.getFieldConfig(type);
 		
-		for(Enumeration<String> e=f.getOptions();e.hasMoreElements();){
+		if(fCfg==null){
+			System.err.println("Warning: Unsuported field type '"+type+"' for the language '"+Model.getInstance().getLanguage()+"'");
+			container.removeField(this);
+		}
+		
+		for(Enumeration<String> e=fCfg.getOptions();e.hasMoreElements();){
 			String key=e.nextElement();
-			options.put(key, f.getOption(key));
+			options.put(key,fCfg.getOption(key).indexOf('|')!=-1?fCfg.getDefault(key):fCfg.getOption(key));//this is the default value, at least if isn't a selection
 		}
 		
 		container.setChanged();
 	}
 
+	public Enumeration<String> getOptions(){ return options.keys(); }
+	public String getOption(String name){ return options.get(name); }
+	public FieldConfig getFieldConfig(){ return fCfg; }
+	
+	public void setOption(String name,String value){ 
+		options.put(name, value); 
+		container.setChanged();
+	}
+	
 	public void setRequired(boolean required) {
 		this.required = required;
 		container.setChanged();

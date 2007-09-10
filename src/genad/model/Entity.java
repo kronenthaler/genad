@@ -14,7 +14,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -69,8 +68,8 @@ public class Entity implements Serializable{
 				for(int j=0,m=fields.getLength();j<m;j++){
 					Field field=new Field(this);
 					if(fields.item(j).getNodeName().equalsIgnoreCase("field")){
-						//field.load(fields.item(j));
-						form.add(field.load(fields.item(j)));
+						if((field=field.load(fields.item(j)))!=null)
+							form.add(field);
 					}//ignore anything else
 				}
 			}else if(aux.item(i).getNodeName().equalsIgnoreCase("permissions")){
@@ -180,6 +179,11 @@ public class Entity implements Serializable{
 			setChanged();
 		}
 	}
+	public void removeField(Field f){
+		form.remove(f);
+		setChanged();
+	}
+	
 	public void moveUp(int rowIndex){
 		if(rowIndex!=-1 && rowIndex>0){
 			Field aux=form.get(rowIndex);

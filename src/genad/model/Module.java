@@ -14,13 +14,12 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
  *	@author kronenthaler
  */
-public class Module implements Serializable{
+public class Module implements Serializable {
 	private Hashtable<String,String> options;
 	private String name;
 	private ModuleConfig cfg;

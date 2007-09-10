@@ -14,7 +14,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -35,7 +34,7 @@ public class Model implements Serializable{
 	private String pDBHost, pDBLogin, pDBPassword="", pDBSchema;
 	private String dDBHost="", dDBLogin="", dDBPassword="", dDBSchema="";
 
-	private Model(){
+	protected Model(){
 		views=new Vector<View>();
 		entities=new Hashtable<String, Entity>();
 		modules=new Hashtable<String, Module>();
@@ -109,7 +108,8 @@ public class Model implements Serializable{
 				}		
 			}
 		}catch(RuntimeException e){
-			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());	
+			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
+			e.printStackTrace();
 			return false;
 		}catch(Exception e){
 			e.printStackTrace();
