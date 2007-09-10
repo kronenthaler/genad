@@ -128,6 +128,10 @@ public class Utils{
 		return false;
 	}
 	
+	public static boolean showConfirm(String msg){
+		return JOptionPane.showConfirmDialog(Main.getInstance(),msg, "Confirmation", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
+	}
+	
 	//generation related
 	
 	public static long countFiles(File root){
@@ -146,19 +150,20 @@ public class Utils{
 		return ret;
 	}
 	
-	public static void copyDirectory(File srcDir, File dstDir) throws IOException {
-        if(srcDir.isHidden() || !srcDir.exists()) return;
+	public static int copyDirectory(File srcDir, File dstDir) throws IOException {
+        if(srcDir.isHidden() || !srcDir.exists()) return 0;
 		if(srcDir.isDirectory()){
             if(!dstDir.exists())
                 dstDir.mkdirs();
-            
+            int ret=0;
             for(String children :srcDir.list())
-				copyDirectory(new File(srcDir, children),new File(dstDir, children));
+				ret+=copyDirectory(new File(srcDir, children),new File(dstDir, children));
+			return ret;
         }else
-            copyFile(srcDir, dstDir);
+            return copyFile(srcDir, dstDir);
     }
     
-    public static void copyFile(File src,File dest) throws IOException{
+    public static int copyFile(File src,File dest) throws IOException{
         //System.out.println("Copiando archivo: "+src.toString()+"...");
         FileChannel in = null, out = null;
 		try{          
@@ -170,10 +175,11 @@ public class Utils{
 			if(in != null) in.close();
 			if(out != null) out.close();
 		}
+		return 1;
     }
 	
 	//return the topological sort of a graph of modules linked by their dependencies
-	public static String[] topologicalSort(String[] modNames, PluginConfig pCfg){
+	public static String[] topologicalSort(String[] modNames, LangConfig pCfg){
 		Hashtable<String, Vector<String>> M=new Hashtable<String, Vector<String>>();
 		Hashtable<String, Boolean> visited=new Hashtable<String, Boolean>();
 		Stack<String> result=new Stack<String>();
