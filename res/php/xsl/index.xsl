@@ -14,7 +14,7 @@
 		<script src="../js/tinymce/tiny_mce.js"></script>
 		<script src="../js/jquery.js"></script>
 		<script src="../js/utils.js"></script>
-		<script src="../js/validators.js"></script>
+		<script src="js/validators.js"></script>
 		<script>
 			dojo.require("dojo.widget.*");
 			dojo.require("dojo.lang.*");
