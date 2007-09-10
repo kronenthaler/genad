@@ -12,7 +12,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -102,15 +101,21 @@ public class ConfigureDlg extends javax.swing.JDialog {
 	}//GEN-LAST:event_cancelBtnActionPerformed
 
 	private void applyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_applyBtnActionPerformed
-		((Applicable)langsPanel).apply();
+		if(!((Applicable)langsPanel).apply())
+			throw new ArithmeticException("No-active language");
+		
 		//((Applicable)fieldsConfigPanel).apply();
 		//((Applicable)modulesConfigPanel).apply();
 	}//GEN-LAST:event_applyBtnActionPerformed
 
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-		applyBtnActionPerformed(evt);
-		dispose();
-		setVisible(false);
+		try{
+			applyBtnActionPerformed(evt);
+			dispose();
+			setVisible(false);
+		}catch(ArithmeticException e){
+			//nothing
+		}	
 	}//GEN-LAST:event_okBtnActionPerformed
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables

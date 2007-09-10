@@ -11,7 +11,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -30,6 +29,7 @@ public class AboutDlg extends javax.swing.JDialog {
         panel = new AboutPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 aboutClosed(evt);
@@ -79,13 +79,14 @@ public class AboutDlg extends javax.swing.JDialog {
 							"tan abajo queda el texto\n" +
 							"difuminado";
 		private String intromsg="Distributed under\n" +
-									"GNU General Public License\n" +
-									"(GPL) terms\n \n" +
-									"<b>Technologies involved </b>\n"+
-									"Java 6\n"+					
-									"XML & XSL\n\n"+					
+									"GNU General Public License (GPL)\n" +
+									"terms. Read the license file for\n" +
+									"details\n \n" +
+									"<b>Other software involved</b>\n"+
+									"Java 5\n"+					
 									"Dojo Toolkit\n"+
-									"Ajax";
+									"TinyMCE\n"+
+									"jQuery";
 		private Image background;
 		private Font font=new Font("Courier New",Font.PLAIN,14);
 		private RenderingHints rh = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -130,7 +131,7 @@ public class AboutDlg extends javax.swing.JDialog {
 			if(!intro)
 				drawMultlineText(g,msg,y);
 			else
-				drawMultlineText(g,intromsg,100);
+				drawMultlineText(g,intromsg,80);
 			//System.out.println(msg+" @ "+x);
 			g.drawImage(background, 0,0, this);
 		}

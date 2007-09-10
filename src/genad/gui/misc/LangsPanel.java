@@ -12,7 +12,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -175,9 +174,18 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 	public boolean apply(){
 		try{
 			TableModel model=pluginTable.getModel();
+			boolean active=false;
+			for(int i=0,n=model.getRowCount();i<n  && !active;i++)
+				active|=(Boolean)model.getValueAt(i,0);
+			
+			if(!active){
+				JOptionPane.showMessageDialog(this, "At least one language must be active","Error",JOptionPane.ERROR_MESSAGE);
+				return false;
+			}
+			
 			ConfigManager cfgMan=ConfigManager.getInstance();
 			for(int i=0,n=model.getRowCount();i<n;i++){
-				boolean active=(Boolean)model.getValueAt(i,0);
+				active=(Boolean)model.getValueAt(i,0);
 				String idname=(String)model.getValueAt(i,1);
 				cfgMan.activePlugin(idname,active);
 			}

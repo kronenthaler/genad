@@ -12,8 +12,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
-
 
 /**
  *
@@ -23,6 +21,7 @@ public class OptionTable extends JTable{
 	private Object data[][];
 	private Object titles[];
 	private OptionTableCellEditor editor;
+	private boolean editable=false;
 	
 	public OptionTable(){
 		super();
@@ -30,6 +29,11 @@ public class OptionTable extends JTable{
 		setRowHeight(20);
 		setTitles(new Object[]{"0","1"});
 		setData(new Object[0][0]);
+	}
+	
+	public OptionTable(boolean edit){
+		this();
+		editable=edit;
 	}
 	
 	/**
@@ -66,7 +70,7 @@ public class OptionTable extends JTable{
 
 			setModel(new DefaultTableModel(data,titles){
 				Class[] types = new Class[]{String.class, Component.class};
-				boolean[] canEdit = new boolean [] {false,true};
+				boolean[] canEdit = new boolean [] {editable,true};
 				public Class getColumnClass(int columnIndex){ return types[columnIndex]; }
 				public boolean isCellEditable(int rowIndex, int columnIndex) {return canEdit [columnIndex];	}
 			});

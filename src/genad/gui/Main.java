@@ -1,5 +1,6 @@
 package genad.gui;
 
+import genad.model.Engine;
 import java.io.*;
 import java.awt.*;
 import java.util.*;
@@ -15,7 +16,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 import genad.gui.misc.*;
 
 /**
@@ -399,7 +399,21 @@ public class Main extends javax.swing.JFrame implements View{
 	}//GEN-LAST:event_windowClosing
 
 	private void generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateActionPerformed
-		new Engine().generate(model);
+		saveActionPerformed(evt);
+		
+		if(new File(model.getDestinationPath()).exists() && 
+		   JOptionPane.showConfirmDialog(this,
+										 "WARNING: The destination path exists and maybe isn't empty, some files will be replaced without confirmation.\nDo you want to continue?",
+										 "Confirmation", 
+										 JOptionPane.YES_NO_OPTION)==JOptionPane.NO_OPTION)
+			return;
+		
+		ProgressDlg pDlg=new ProgressDlg(this, true);
+		Engine e=new Engine(pDlg);
+		e.setModel(model);
+		pDlg.attachToModel(e);
+		pDlg.setVisible(true);
+		
 	}//GEN-LAST:event_generateActionPerformed
 
 	private void propertiesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_propertiesActionPerformed

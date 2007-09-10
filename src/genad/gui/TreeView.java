@@ -14,7 +14,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 import genad.gui.misc.*;
 
 /**

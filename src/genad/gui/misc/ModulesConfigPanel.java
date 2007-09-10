@@ -11,7 +11,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 
 /**
  *
@@ -112,7 +111,7 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 	private void moduleBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleBoxActionPerformed
 		//sacar las opciones para el tipo de campo seleccionado y agregarlo en el modelo de la tabla
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		LangConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
 		ModuleConfig mc=pc.getModuleConfig((String)moduleBox.getSelectedItem()); 
 		
 		//sacar lista de opciones
@@ -129,7 +128,7 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 
 	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		LangConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
 		
 		Vector<String> options=new Vector<String>();
 		String[] key=pc.getModulesName();

@@ -12,7 +12,6 @@ import genad.*;
 import genad.gui.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 import genad.gui.misc.*;
 
 /**
@@ -21,7 +20,7 @@ import genad.gui.misc.*;
  */
 public class FieldsPanel extends javax.swing.JPanel {
 	private Entity entity;
-	private PluginConfig cfg;
+	private LangConfig cfg;
 	
 	public FieldsPanel(Entity _entity) {
 		entity=_entity;
@@ -113,6 +112,11 @@ public class FieldsPanel extends javax.swing.JPanel {
         optionsBtn.setIcon(IconsManager.OPTIONS);
         optionsBtn.setText("Options");
         optionsBtn.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        optionsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionsBtnActionPerformed(evt);
+            }
+        });
 
         removeBtn.setIcon(IconsManager.DELETE);
         removeBtn.setText("Remove");
@@ -152,12 +156,16 @@ public class FieldsPanel extends javax.swing.JPanel {
                 .add(moveDownBtn)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(optionsBtn)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 134, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 138, Short.MAX_VALUE)
                 .add(removeBtn)
                 .addContainerGap())
-            .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+            .add(scrollPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+	private void optionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsBtnActionPerformed
+		new FieldOptionsDlg(genad.gui.Main.getInstance(), true, entity.getFields().get(fieldsTable.getSelectedRow()));
+	}//GEN-LAST:event_optionsBtnActionPerformed
 
 	private void moveDownBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownBtnActionPerformed
 		((FieldsTableModel)fieldsTable.getModel()).moveDown(fieldsTable.getSelectedRow());

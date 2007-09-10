@@ -12,7 +12,6 @@ import javax.swing.table.*;
 import genad.*;
 import genad.model.*;
 import genad.config.*;
-import genad.engine.*;
 import genad.gui.misc.*;
 
 /**
@@ -314,8 +313,10 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	}//GEN-LAST:event_cancelBtnActionPerformed
 
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-		if(!model.getLanguage().equals(langsCombo.getSelectedItem().toString()))
+		if(!model.getLanguage().equals(langsCombo.getSelectedItem().toString())){
 			model.clearModules();
+			//TODO: validate the fields type in each entity against the fields definition in the plugin, unknown types must be alert and dropped
+		}
 		
 		model.setLanguage(langsCombo.getSelectedItem().toString());
 		model.setDestinationPath(destPathTxt.getText());
@@ -332,6 +333,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 			else
 				model.removeModule(tm.getValueAt(i,1).toString());
 		}
+		
 		
 		flag=JOptionPane.OK_OPTION;
 		dispose();
@@ -366,7 +368,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	
 	private void fillTable(){
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		PluginConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
+		LangConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
 		String[] keys=pcfg.getModulesName();
 		Object[][] data=new Object[keys.length][2];
 				
@@ -405,7 +407,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 				Boolean b=(Boolean)value;
 				
 				ConfigManager cfgMan=ConfigManager.getInstance();
-				PluginConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
+				LangConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
 				
 				
 				if(b){
