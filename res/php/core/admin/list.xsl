@@ -77,14 +77,16 @@
 									<xsl:for-each select="listable/field">
 										<xsl:choose>
 											<xsl:when test="@type ='checkbox' or @type = 'radio'">
-												<th align="center" width="30px">&nbsp;<xsl:value-of select="@name"/></th>
+												<th align="center" width="30px">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
 											</xsl:when>
 											<xsl:otherwise>
-												<th>&nbsp;<xsl:value-of select="@name"/></th>
+												<th>&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
 											</xsl:otherwise>
 										</xsl:choose>
 									</xsl:for-each>
-									
+									<xsl:for-each select="instance/child">
+										<th align="center" width="50px">&nbsp;<img src="images/relations.png" alt="Has many {@name}" title="Has many {@name}"/><xsl:value-of select="@name"/>&nbsp;</th>
+									</xsl:for-each>
 								</tr>
 							</thead>
 							<tbody>
@@ -100,9 +102,9 @@
 											<xsl:for-each select="../../listable/field">	
 												<xsl:if test="@map = $mapping">
 													<td class="part1">
-														<xsl:if test="position()=1 and $childs &gt; 0">
+														<!--xsl:if test="position()=1 and $childs &gt; 0">
 															<img onclick="showNextRow(this)" src="images/close.gif" alt="+" title="Show relations"/>&nbsp;
-														</xsl:if>
+														</xsl:if-->
 														<xsl:choose>
 															<xsl:when test="@type = 'radio' or @type = 'checkbox'">
 																<center><a href="javascript:getAndTransform('exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}','list.xsl','center');"><img src="images/{$value}.gif"/></a></center>
@@ -117,8 +119,11 @@
 												</xsl:if>	
 											</xsl:for-each>
 										</xsl:for-each>
+										<xsl:for-each select="child">
+											<td align="center"><a href="javascript: getAndTransform('list{@name}.{//@ext}?{$primarykey}={$key}{$ids}','list.xsl','center')">(<xsl:value-of select="@count"/>)</a></td>
+										</xsl:for-each>
 									</tr>
-									<!-- the row with the subentities related to this -->
+									<!-- the row with the subentities related to this 
 									<tr class="part1" style="display:none">
 										<td class="part1">&nbsp;</td>
 										<td class="part1" colspan="10">
@@ -126,7 +131,7 @@
 												&nbsp;<a href="javascript: getAndTransform('list{@name}.{//@ext}?{$primarykey}={$key}{$ids}','list.xsl','center')"><xsl:value-of select="@name"/>(<xsl:value-of select="@count"/>)</a>
 											</xsl:for-each>
 										</td>
-									</tr>
+									</tr>-->
 								</xsl:for-each>	
 							</tbody>
 						</xsl:when>

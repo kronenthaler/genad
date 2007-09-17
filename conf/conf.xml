@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
 	<langs>
-		<lang name="php" active="yes"/>
 		<lang name="jsp" active="yes"/>
+		<lang name="php" active="yes"/>
 	</langs>
 </configuration>

@@ -130,7 +130,7 @@ public class Engine extends Model{
 			progress.setProgress(0);
 			
 			//2) topological sort, which module must be first that other one
-			String[] order=Utils.topologicalSort(Utils.convert(model.getModules()), ConfigManager.getInstance().getPluginConfig(model.getLanguage()));
+			String[] order=Utils.topologicalSort(Utils.convert(model.getModules()), ConfigManager.getInstance().getLangConfig(model.getLanguage()));
 			
 			if(stop){ allStop=true; notifyAll(); return; }
 			//3) copy base files (basic structure and core inmutable files)

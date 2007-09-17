@@ -132,6 +132,16 @@ public class Utils{
 		return JOptionPane.showConfirmDialog(Main.getInstance(),msg, "Confirmation", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION;
 	}
 	
+	public static boolean showInformation(String msg){
+		JOptionPane.showMessageDialog(genad.gui.Main.getInstance(), msg,"Information", JOptionPane.INFORMATION_MESSAGE);
+		return true;
+	}
+	
+	public static boolean showWarning(String msg){
+		JOptionPane.showMessageDialog(genad.gui.Main.getInstance(), msg,"Warning", JOptionPane.WARNING_MESSAGE);
+		return true;
+	}
+	
 	//generation related
 	
 	public static long countFiles(File root){

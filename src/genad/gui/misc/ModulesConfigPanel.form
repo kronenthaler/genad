@@ -56,7 +56,7 @@
   <SubComponents>
     <Component class="javax.swing.JComboBox" name="langBox">
       <Properties>
-        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="ConfigManager cfgMan=ConfigManager.getInstance();&#xa;        Vector&lt;String&gt; installed=cfgMan.getPluginsInstalled();">
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" preCode="ConfigManager cfgMan=ConfigManager.getInstance();&#xa;        Vector&lt;String&gt; installed=cfgMan.getLangsInstalled();">
           <Connection code="new DefaultComboBoxModel(installed.toArray(new String[0]))" type="code"/>
         </Property>
       </Properties>

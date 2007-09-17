@@ -1,6 +1,7 @@
 package genad.gui.misc;
 
 import java.awt.*;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -68,6 +69,11 @@ public class FieldOptionsDlg extends javax.swing.JDialog {
         removeBtn.setIcon(IconsManager.DELETE);
         removeBtn.setText("Remove");
         removeBtn.setEnabled(field.getFieldConfig().isEditable());
+        removeBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBtnActionPerformed(evt);
+            }
+        });
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,6 +114,15 @@ public class FieldOptionsDlg extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private void removeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBtnActionPerformed
+		int index=table.getSelectedRow();
+		if(index!=-1){
+			DefaultTableModel tb=(DefaultTableModel)table.getModel();
+			tb.removeRow(index);
+			table.updateUI();
+		}
+	}//GEN-LAST:event_removeBtnActionPerformed
+
 	private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
 		TableModel tb=table.getModel();
 		//get all the fields and insert one more
@@ -121,9 +136,29 @@ public class FieldOptionsDlg extends javax.swing.JDialog {
 	}//GEN-LAST:event_addBtnActionPerformed
 
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
-		//hacer el commit de las opciones y cerrar el dialogo
 		TableModel tb=table.getModel();
-		//revisar si hay opciones repetidas
+		
+		if(tb.getRowCount()==0){
+			Utils.showError("At least one option must be defined.");
+			return;
+		}
+		
+		Hashtable<String, Boolean> repeated=new Hashtable<String, Boolean>();
+		for(int i=0,n=tb.getRowCount();i<n;i++){
+			if("".equals(tb.getValueAt(i,0).toString())){
+				Utils.showError("The option's name cannot be empty.");
+				return;
+			}
+			
+			if(repeated.get(tb.getValueAt(i,0).toString())!=null){
+				Utils.showError("The option's name must be unique.");
+				return;
+			}
+			repeated.put(tb.getValueAt(i,0).toString(), true);
+		}
+			
+		//eliminar las opciones que no se marquen
+		field.cleanOptions();
 		for(int i=0,n=tb.getRowCount();i<n;i++)
 			field.setOption(tb.getValueAt(i,0).toString(), tb.getValueAt(i,1).toString());
 		

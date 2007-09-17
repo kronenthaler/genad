@@ -37,11 +37,11 @@ public class Field implements Serializable{
 		type=current.getAttributes().getNamedItem("type").getTextContent();
 		
 		fCfg=ConfigManager.getInstance()
-						.getPluginConfig(Model.getInstance().getLanguage())
+						.getLangConfig(Model.getInstance().getLanguage())
 						.getFieldConfig(type);
 
 		if(fCfg==null){
-			System.err.println("Warning: Unsuported field type '"+type+"' for the language '"+Model.getInstance().getLanguage()+"'");
+			System.err.println("Warning: Unsupported field type '"+type+"' for the language '"+Model.getInstance().getLanguage()+"'");
 			return null;
 		}
 		
@@ -91,11 +91,11 @@ public class Field implements Serializable{
 		options.clear();
 		
 		fCfg=ConfigManager.getInstance()
-						.getPluginConfig(Model.getInstance().getLanguage())
+						.getLangConfig(Model.getInstance().getLanguage())
 						.getFieldConfig(type);
 		
 		if(fCfg==null){
-			System.err.println("Warning: Unsuported field type '"+type+"' for the language '"+Model.getInstance().getLanguage()+"'");
+			System.err.println("Warning: Unsupported field type '"+type+"' for the language '"+Model.getInstance().getLanguage()+"'");
 			container.removeField(this);
 		}
 		
@@ -163,5 +163,9 @@ public class Field implements Serializable{
 		ret.append(deep+"			</options>\n")
 			 .append(deep+"		</field>\n");
 		return ret.toString();	
+	}
+
+	public void cleanOptions() {
+		options.clear();
 	}
 }

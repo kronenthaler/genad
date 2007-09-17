@@ -38,10 +38,6 @@ public class IconsManager{
 	public static final ImageIcon APPLY=new ImageIcon(IconsManager.class.getResource("/images/icons/apply.png"));
 	public static final ImageIcon CANCEL=new ImageIcon(IconsManager.class.getResource("/images/icons/cancel.png"));
 	
-	//TAB
-	public static final ImageIcon TABCLOSE=new ImageIcon(IconsManager.class.getResource("/images/icons/tabclose.png"));
-	public static final ImageIcon TABCLOSEOVER=new ImageIcon(IconsManager.class.getResource("/images/icons/tabclose_over.png"));
-
 	//ABOUT
 	public static final ImageIcon ABOUT=new ImageIcon(IconsManager.class.getResource("/images/about.png"));
 	
@@ -56,6 +52,7 @@ public class IconsManager{
 	public static final ImageIcon ADDENTITY=new ImageIcon(IconsManager.class.getResource("/images/icons/page_add.png"));
 	public static final ImageIcon DELENTITY=new ImageIcon(IconsManager.class.getResource("/images/icons/page_delete.png"));
 	public static final ImageIcon EDITMODULE=new ImageIcon(IconsManager.class.getResource("/images/icons/plugin_edit.png"));
+	public static final ImageIcon ADDMODULE=new ImageIcon(IconsManager.class.getResource("/images/icons/plugin_add.png"));
 	
 	//ACTIONS
 	public static final ImageIcon ADD=new ImageIcon(IconsManager.class.getResource("/images/icons/add.png"));
@@ -65,7 +62,8 @@ public class IconsManager{
 	public static final ImageIcon OPTIONS=new ImageIcon(IconsManager.class.getResource("/images/icons/options.png"));
 	
 	//CONFIGURE
-	public static final ImageIcon LANGS=new ImageIcon(IconsManager.class.getResource("/images/icons/plugins.png"));
+	public static final ImageIcon LANGS=new ImageIcon(IconsManager.class.getResource("/images/icons/report.png"));
+	public static final ImageIcon ADDLANG=new ImageIcon(IconsManager.class.getResource("/images/icons/report_add.png"));
 	public static final ImageIcon FIELDS=new ImageIcon(IconsManager.class.getResource("/images/icons/fields.png"));
 	public static final ImageIcon MODS=new ImageIcon(IconsManager.class.getResource("/images/icons/module.png"));
 }

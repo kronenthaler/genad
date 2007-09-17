@@ -106,6 +106,19 @@ public class LangConfig implements Serializable{
 		}
 	}
 	
+	protected void addModule(String path){
+		try{
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			//dbf.setValidating(true); //si se define un dtd para este archivo
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(path);
+		
+			loadModules(doc);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
 	void save()throws IOException{
 		PrintStream out=new PrintStream(new FileOutputStream(path));
 		out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");

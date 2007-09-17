@@ -45,7 +45,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
         destPathTxt = new javax.swing.JTextField();
         browseBtn = new javax.swing.JButton();
         ConfigManager cfgMan=ConfigManager.getInstance();
-        String[] langs=Utils.convert(cfgMan.getPluginsActive());
+        String[] langs=Utils.convert(cfgMan.getLangsActive());
         langsCombo = new JComboBox(langs);
         if("".equals(model.getLanguage()))
         langsCombo.setSelectedIndex(0);
@@ -245,7 +245,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(cancelBtn)
@@ -315,6 +315,12 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed
 		if(!model.getLanguage().equals(langsCombo.getSelectedItem().toString())){
 			model.clearModules();
+			try{
+				model.validateTypes(langsCombo.getSelectedItem().toString());
+			}catch(Exception e){
+				Utils.showError(e.getMessage());
+				return;
+			}
 			//TODO: validate the fields type in each entity against the fields definition in the plugin, unknown types must be alert and dropped
 		}
 		
@@ -368,7 +374,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 	
 	private void fillTable(){
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		LangConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
+		LangConfig pcfg = cfgMan.getLangConfig(langsCombo.getSelectedItem().toString());
 		String[] keys=pcfg.getModulesName();
 		Object[][] data=new Object[keys.length][2];
 				
@@ -407,7 +413,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 				Boolean b=(Boolean)value;
 				
 				ConfigManager cfgMan=ConfigManager.getInstance();
-				LangConfig pcfg = cfgMan.getPluginConfig(langsCombo.getSelectedItem().toString());
+				LangConfig pcfg = cfgMan.getLangConfig(langsCombo.getSelectedItem().toString());
 				
 				
 				if(b){
@@ -430,11 +436,7 @@ public class PropertiesDlg extends javax.swing.JDialog {
 					msg=aux.toString();
 					
 					if(!"".equals(msg)){
-						JOptionPane.showMessageDialog(Main.getInstance(),
-													  "The following modules depends of this module to work properly:\n" +
-													  msg,
-													  "Warning",
-													  JOptionPane.WARNING_MESSAGE);
+						Utils.showWarning("The following modules depends of this module to work properly:\n"+msg);
 						return;
 					}
 				}

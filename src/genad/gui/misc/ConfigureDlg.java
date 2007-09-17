@@ -18,10 +18,16 @@ import genad.config.*;
  * @author  kronenthaler
  */
 public class ConfigureDlg extends javax.swing.JDialog {
+	protected FieldsConfigPanel fieldsPanel;
+	protected ModulesConfigPanel modulesPanel;
 	
 	public ConfigureDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
 		initComponents();
+		
+		jTabbedPane1.addTab("Modules", IconsManager.MODULES, modulesPanel);
+		jTabbedPane1.addTab("Fields", IconsManager.FIELDS, fieldsPanel);
+		
 		Utils.centerComponent(this);
 		setVisible(true);
 	}
@@ -30,12 +36,14 @@ public class ConfigureDlg extends javax.swing.JDialog {
     private void initComponents() {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         langsPanel = new genad.gui.misc.LangsPanel();
+        fieldsPanel = new FieldsConfigPanel();
+        modulesPanel = new ModulesConfigPanel();
         okBtn = new javax.swing.JButton();
         applyBtn = new javax.swing.JButton();
         cancelBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        jTabbedPane1.addTab("Languages", langsPanel);
+        jTabbedPane1.addTab("Languages", IconsManager.LANGS, langsPanel);
 
         jTabbedPane1.getAccessibleContext().setAccessibleParent(jTabbedPane1);
 
@@ -104,8 +112,14 @@ public class ConfigureDlg extends javax.swing.JDialog {
 		if(!((Applicable)langsPanel).apply())
 			throw new ArithmeticException("No-active language");
 		
-		//((Applicable)fieldsConfigPanel).apply();
-		//((Applicable)modulesConfigPanel).apply();
+		((Applicable)fieldsPanel).apply();
+		((Applicable)modulesPanel).apply();
+		
+		try{
+			ConfigManager.getInstance().saveConfiguration();	
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}//GEN-LAST:event_applyBtnActionPerformed
 
 	private void okBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okBtnActionPerformed

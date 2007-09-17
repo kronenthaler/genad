@@ -26,15 +26,17 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
     private void initComponents() {
-        installBtn = new javax.swing.JButton();
+        installLangBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         pluginTable = new javax.swing.JTable();
         progressBar = new javax.swing.JProgressBar();
+        installModBtn = new javax.swing.JButton();
 
-        installBtn.setText("Install Language");
-        installBtn.addActionListener(new java.awt.event.ActionListener() {
+        installLangBtn.setIcon(IconsManager.ADDLANG);
+        installLangBtn.setText("Install Language");
+        installLangBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                installBtnActionPerformed(evt);
+                installLangBtnActionPerformed(evt);
             }
         });
 
@@ -45,6 +47,14 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 
         progressBar.setStringPainted(true);
 
+        installModBtn.setIcon(IconsManager.ADDMODULE);
+        installModBtn.setText("Install Module");
+        installModBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                installModBtnActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -52,11 +62,13 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
-                        .add(progressBar, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                        .add(progressBar, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(installBtn)))
+                        .add(installModBtn)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(installLangBtn)))
                 .add(12, 12, 12))
         );
         layout.setVerticalGroup(
@@ -66,13 +78,103 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(installBtn)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(installLangBtn)
+                        .add(installModBtn))
                     .add(progressBar, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-	private void installBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_installBtnActionPerformed
+	private void installModBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_installModBtnActionPerformed
+		final JFileChooser fc=new JFileChooser(System.getProperty("user.home"));
+		
+		//TODO: agregar un filefilter para archivos .zip o alguna extension modificada
+		if(fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
+			new Thread(new Runnable(){
+				public void run(){
+					try{
+						ZipFile zf=new ZipFile(fc.getSelectedFile());
+						progressBar.setVisible(true);
+						progressBar.setMaximum(zf.size()+1); //+ registrar el componente en la configuracion
+						progressBar.setString("Detecting Language...");
+						
+						String idname="";
+						File tempFile=null;
+						Enumeration e=zf.entries();
+						for(int i=1;e.hasMoreElements();i++){
+							ZipEntry ze=(ZipEntry)e.nextElement();
+							
+							if(ze.getName().endsWith("conf.xml")){
+								idname=ze.getName().substring("conf/".length(),ze.getName().indexOf("/conf.xml"));
+								//instalar la configuracion en el archivo si existe
+								if(!new File("conf/"+idname).exists() || 
+								   !new File("res/"+idname).exists()){
+									Utils.showError("The language for this module isn't installed yet");
+									progressBar.setVisible(false);
+									return;
+								}else{
+									tempFile=File.createTempFile("conf",".xml");
+									
+									DataOutputStream out=new DataOutputStream(new FileOutputStream(tempFile));
+									InputStream in=zf.getInputStream(ze);
+									byte []buffer =new byte[2048];
+									while(in.available()>0){
+										int count=in.read(buffer);
+										out.write(buffer,0,count);
+									}
+									out.close();//*/
+									
+									break;
+								}
+							}
+						}
+						
+						e=zf.entries();
+						for(int i=1;e.hasMoreElements();i++){
+							ZipEntry ze=(ZipEntry)e.nextElement();
+							
+							if(!ze.getName().endsWith("conf.xml")){
+								Thread.sleep(2000);
+
+								progressBar.setValue(i);
+								progressBar.setString("Extracting... "+(int)(progressBar.getPercentComplete()*100)+"%");
+
+								File f=new File(ze.getName());
+								if(!f.getParentFile().exists())
+									f.getParentFile().mkdirs();
+
+								DataOutputStream out=new DataOutputStream(new FileOutputStream(f));
+								InputStream in=zf.getInputStream(ze);
+								byte []buffer =new byte[2048];
+								while(in.available()>0){
+									int count=in.read(buffer);
+									out.write(buffer,0,count);
+								}
+								out.close();//*/
+							}
+						}
+						
+						//insert in the configuration Manager
+						ConfigManager cfgMan=ConfigManager.getInstance();
+						cfgMan.installModule(idname,tempFile.toString());
+						cfgMan.saveConfiguration();
+						
+						//refresh the configuration
+						cfgMan.refreshConfiguration();
+						
+						progressBar.setVisible(false);
+					}catch(RuntimeException e){
+						Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());	
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}).start();
+		}
+	}//GEN-LAST:event_installModBtnActionPerformed
+
+	private void installLangBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_installLangBtnActionPerformed
 		//open a zip file an extract the code files into the res/ folder and configuration files in conf/
 		final JFileChooser fc=new JFileChooser(System.getProperty("user.home"));
 		
@@ -106,7 +208,6 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 								out.write(buffer,0,count);
 							}
 							out.close();//*/
-							try{Thread.sleep(1000);}catch(Exception ex){}
 						}
 						
 						progressBar.setString("Adding... "+(int)(progressBar.getPercentComplete()*100)+"%");
@@ -129,7 +230,7 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 				}
 			}).start();
 		}
-	}//GEN-LAST:event_installBtnActionPerformed
+	}//GEN-LAST:event_installLangBtnActionPerformed
 
 	private void fillTable(){
 		Object[][] data=null;
@@ -140,9 +241,9 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 			
 			for(int i=0;i < e.length;i++){
 				String pluginName=e[i];
-				data[i]=new Object[]{cfgMan.isPluginActive(pluginName),
-									 cfgMan.getPluginConfig(pluginName).getName(), 
-									 cfgMan.getPluginConfig(pluginName).getDescription()};
+				data[i]=new Object[]{cfgMan.isLangActive(pluginName),
+									 cfgMan.getLangConfig(pluginName).getName(), 
+									 cfgMan.getLangConfig(pluginName).getDescription()};
 			}
 		}catch(Exception e){
 			data=new Object[][]{{true,"Name","description"}};
@@ -179,7 +280,7 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 				active|=(Boolean)model.getValueAt(i,0);
 			
 			if(!active){
-				JOptionPane.showMessageDialog(this, "At least one language must be active","Error",JOptionPane.ERROR_MESSAGE);
+				Utils.showError("At least one language must be active");
 				return false;
 			}
 			
@@ -190,7 +291,6 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 				cfgMan.activePlugin(idname,active);
 			}
 
-			cfgMan.saveConfiguration();
 			return true;
 		}catch(Exception e){
 			return false;
@@ -198,7 +298,8 @@ public class LangsPanel extends javax.swing.JPanel implements Applicable{
 	}	
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    protected javax.swing.JButton installBtn;
+    protected javax.swing.JButton installLangBtn;
+    protected javax.swing.JButton installModBtn;
     protected javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JTable pluginTable;
     protected javax.swing.JProgressBar progressBar;

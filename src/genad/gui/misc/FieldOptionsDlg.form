@@ -123,6 +123,9 @@
           <Connection code="field.getFieldConfig().isEditable()" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeBtnActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

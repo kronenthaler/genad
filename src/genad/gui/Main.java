@@ -427,20 +427,11 @@ public class Main extends javax.swing.JFrame implements View{
 				return;
 			}
 			if(!model.save(new File(model.getLoadedPath())))
-				JOptionPane.showMessageDialog(this,
-											  "An error occur saving the project. Try another path or name.",
-											  "Error",
-											  JOptionPane.ERROR_MESSAGE);
+				Utils.showError("An error occur saving the project. Try another path or name.");
 		}catch(ArrayIndexOutOfBoundsException e){
-			JOptionPane.showMessageDialog(this,
-										  "Project has not been saved",
-										  "Warning",
-										  JOptionPane.WARNING_MESSAGE);
+			Utils.showWarning("Project has not been saved");
 		}catch(Exception e){
-			JOptionPane.showMessageDialog(this,
-										  "Unexpected error",
-										  "Error",
-										  JOptionPane.ERROR_MESSAGE);
+			Utils.showError("Unexpected error");
 		}
 	}//GEN-LAST:event_saveActionPerformed
 

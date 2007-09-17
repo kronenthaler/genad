@@ -34,7 +34,7 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
         optionTable = new genad.gui.misc.OptionTable();
 
         ConfigManager cfgMan=ConfigManager.getInstance();
-        Vector<String> installed=cfgMan.getPluginsInstalled();
+        Vector<String> installed=cfgMan.getLangsInstalled();
         langBox.setModel(new DefaultComboBoxModel(installed.toArray(new String[0])));
         langBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,9 +109,10 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
     }// </editor-fold>//GEN-END:initComponents
 
 	private void moduleBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moduleBoxActionPerformed
+		save();
 		//sacar las opciones para el tipo de campo seleccionado y agregarlo en el modelo de la tabla
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		LangConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		LangConfig pc=cfgMan.getLangConfig((String)langBox.getSelectedItem());
 		ModuleConfig mc=pc.getModuleConfig((String)moduleBox.getSelectedItem()); 
 		
 		//sacar lista de opciones
@@ -127,8 +128,10 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 	}//GEN-LAST:event_moduleBoxActionPerformed
 
 	private void langBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langBoxActionPerformed
+		save();
+		
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		LangConfig pc=cfgMan.getPluginConfig((String)langBox.getSelectedItem());
+		LangConfig pc=cfgMan.getLangConfig((String)langBox.getSelectedItem());
 		
 		Vector<String> options=new Vector<String>();
 		String[] key=pc.getModulesName();
@@ -140,7 +143,29 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 	}//GEN-LAST:event_langBoxActionPerformed
 
 	public boolean apply() {
+		save();
 		return true;
+	}
+	
+	private void save(){
+		try{
+			ConfigManager cfgMan=ConfigManager.getInstance();
+			LangConfig pc=cfgMan.getLangConfig((String)langBox.getSelectedItem());
+			ModuleConfig mc=pc.getModuleConfig((String)moduleBox.getSelectedItem()); 
+			
+			if(pc!=null && mc!=null){
+				TableModel tb=optionTable.getModel();
+				for(int i=0;i<tb.getRowCount();i++){
+					String key=tb.getValueAt(i,0).toString();
+					String value=tb.getValueAt(i,1).toString();
+
+					if(mc.getOption(key).indexOf('|')!=-1)
+						mc.setDefault(key,value);
+					else
+						mc.setOption(key,value);
+				}
+			}
+		}catch(Exception e){}
 	}
 	
     // Variables declaration - do not modify//GEN-BEGIN:variables

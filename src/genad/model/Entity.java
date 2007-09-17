@@ -299,4 +299,15 @@ public class Entity implements Serializable{
 	public String toString(){
 		return toString("\t\t");
 	}
+
+	void validateType(LangConfig lc) throws Exception {
+		for(Enumeration<String> e=childs.keys();e.hasMoreElements();){
+			Entity ent=childs.get(e.nextElement());
+			for(Field f:ent.getFields()){
+				if(lc.getFieldConfig(f.getType())==null)
+					throw new Exception("Warning: Unsupported field type '"+f.getType()+"' for the language '"+lc.getName()+"'");
+			}
+			ent.validateType(lc);
+		}
+	}
 }

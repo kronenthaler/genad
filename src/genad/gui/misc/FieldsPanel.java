@@ -52,7 +52,7 @@ public class FieldsPanel extends javax.swing.JPanel {
         column.setPreferredWidth(50);
 				
 		ConfigManager cfgMan=ConfigManager.getInstance();
-		cfg=cfgMan.getPluginConfig(Model.getInstance().getLanguage());
+		cfg=cfgMan.getLangConfig(Model.getInstance().getLanguage());
 		
 		fieldsTable.setRowHeight(20);
 		fieldsTable.getTableHeader().setReorderingAllowed(false);
@@ -164,7 +164,15 @@ public class FieldsPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
 	private void optionsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionsBtnActionPerformed
-		new FieldOptionsDlg(genad.gui.Main.getInstance(), true, entity.getFields().get(fieldsTable.getSelectedRow()));
+		if(fieldsTable.getSelectedRow()==-1) return;
+		Field field=entity.getFields().get(fieldsTable.getSelectedRow());
+		
+		if(field.getFieldConfig().getOptionSize()==0 && !field.getFieldConfig().isEditable()){
+			Utils.showInformation("This field hasn't options and cannot be added");
+			return;
+		}
+		
+		new FieldOptionsDlg(genad.gui.Main.getInstance(), true, field);
 	}//GEN-LAST:event_optionsBtnActionPerformed
 
 	private void moveDownBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownBtnActionPerformed

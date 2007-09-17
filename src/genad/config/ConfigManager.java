@@ -55,6 +55,10 @@ public class ConfigManager implements Serializable{
 		mainConfig.getLangsActive().put(name,false);
 	}
 	
+	public void installModule(String lang,String path){
+		pluginsConfig.get(lang).addModule(path);
+	}
+	
 	public void activePlugin(String name, boolean status){
 		if(status)
 			mainConfig.getLangsActive().put(name, status);
@@ -63,9 +67,9 @@ public class ConfigManager implements Serializable{
 	}
 		
 	public Enumeration<String> getPluginsName(){ return pluginsConfig.keys(); }
-	public LangConfig getPluginConfig(String name){ return pluginsConfig.get(name); }
-	public Enumeration<String> getPluginsActive(){ return mainConfig.getLangsActive().keys(); }
-	public boolean isPluginActive(String name){ return mainConfig.getLangsActive().get(name); }
-	public Vector<String> getPluginsInstalled(){ return mainConfig.getLangsInstalled();}
+	public LangConfig getLangConfig(String name){ return pluginsConfig.get(name); }
+	public Enumeration<String> getLangsActive(){ return mainConfig.getLangsActive().keys(); }
+	public boolean isLangActive(String name){ return mainConfig.getLangsActive().get(name); }
+	public Vector<String> getLangsInstalled(){ return mainConfig.getLangsInstalled();}
 	public String getDefaultValue(String option){ return mainConfig.getDefaultValue(option);}
 }

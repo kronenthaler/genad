@@ -106,14 +106,14 @@ public class TreeView extends JTree implements View{
 		Model model=Model.getInstance();
 		if(path.length==2){
 			if(!model.addEntity(Utils.sanitize(name)))
-				JOptionPane.showMessageDialog(Main.getInstance(),"An entity with this name already exists");
+				Utils.showError("An entity with this name already exists");
 		}else{ //subentidad
 			Entity current=model.getEntity(path[2].toString());
 			for(int i=3;i<path.length;i++)
 				current=current.getChild(path[i].toString());
 			
 			if(!current.addChild(Utils.sanitize(name)))
-				JOptionPane.showMessageDialog(Main.getInstance(),"An entity with this name already exists");
+				Utils.showError("An entity with this name already exists");
 		}
 	}
 	

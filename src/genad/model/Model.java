@@ -101,8 +101,8 @@ public class Model implements Serializable{
 				if(aux.item(i).getNodeName().equalsIgnoreCase("module")){
 					Module temp=new Module();
 					String name=aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim();
-					if(cfgMan.getPluginConfig(language).getModuleConfig(name)!=null) //drop unknown modules
-						modules.put(name, temp.load(aux.item(i),cfgMan.getPluginConfig(language).getModuleConfig(name)));
+					if(cfgMan.getLangConfig(language).getModuleConfig(name)!=null) //drop unknown modules
+						modules.put(name, temp.load(aux.item(i),cfgMan.getLangConfig(language).getModuleConfig(name)));
 					else
 						System.err.println("Warning: Unsuported module '"+name+"' for the language '"+language+"'");
 				}		
@@ -186,7 +186,7 @@ public class Model implements Serializable{
 	}
 	public void addModule(String name){
 		if(modules.get(name)==null){
-			ModuleConfig cfg=cfgMan.getPluginConfig(language).getModuleConfig(name);
+			ModuleConfig cfg=cfgMan.getLangConfig(language).getModuleConfig(name);
 			modules.put(name,new Module(name,cfg));
 			setChanged();
 		}
@@ -250,5 +250,19 @@ public class Model implements Serializable{
 		ret.append("	</entities>\n")
 			.append("</project>\n");
 		return ret.toString();
+	}
+
+	public void validateTypes(String lang) throws Exception {
+		//recorrer recursivamente las entidades revisando los tipos de los fields y si existen para el lenguage pasado en lang
+		LangConfig lc=cfgMan.getLangConfig(lang);
+		
+		for(Enumeration<String> e=entities.keys();e.hasMoreElements();){
+			Entity ent=entities.get(e.nextElement());
+			for(Field f:ent.getFields()){
+				if(lc.getFieldConfig(f.getType())==null)
+					throw new Exception("Warning: Unsupported field type '"+f.getType()+"' for the language '"+lang+"'");
+			}
+			ent.validateType(lc);
+		}
 	}
 }
