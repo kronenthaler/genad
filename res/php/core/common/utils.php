@@ -43,7 +43,7 @@ function format($date, $type, $format){
 
 /** include once the file in $path iif exists */
 function secureInclude($path){
-	if(file_exists($path))
-		include_once($path);
+	if(file_exists(ROOT.'/'.$path))
+		include_once(ROOT.'/'.$path);
 }
 ?>

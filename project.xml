@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1189976550542" by="kronenthaler" language="php">
+<project lastsaved="1192213605305" by="kronenthaler" language="php">
 	<file-server-conf>
-		<base-directory><![CDATA[/usr/share/resin/webapps/temp]]></base-directory>
+		<base-directory><![CDATA[/usr/share/resin/webapps/temp/]]></base-directory>
 	</file-server-conf>
 	<db-server-conf>
 		<dev-host><![CDATA[localhost]]></dev-host>
 		<dev-user><![CDATA[root]]></dev-user>
 		<dev-password><![CDATA[]]></dev-password>
-		<dev-schema><![CDATA[test]]></dev-schema>
-		<prod-host><![CDATA[prado]]></prod-host>
-		<prod-user><![CDATA[root]]></prod-user>
-		<prod-password><![CDATA[root]]></prod-password>
-		<prod-schema><![CDATA[testing]]></prod-schema>
+		<dev-schema><![CDATA[temp]]></dev-schema>
+		<prod-host><![CDATA[null]]></prod-host>
+		<prod-user><![CDATA[null]]></prod-user>
+		<prod-password><![CDATA[]]></prod-password>
+		<prod-schema><![CDATA[null]]></prod-schema>
 	</db-server-conf>
 	<modules>
 		<module name="wkrte">
@@ -19,9 +19,7 @@
 		</module>
 		<module name="wklogs">
 		</module>
-		<module name="wkobj">
-		</module>
-		<module name="wkupload">
+		<module name="upload">
 			<option name="MAX_SIZE" value="(100*MB)"/>
 			<option name="MAX_THUMB_HEIGHT" value="50"/>
 			<option name="FORCE_SCALE" value=""/>
@@ -37,49 +35,60 @@
 			<option name="CONTROL_TYPE" value="IMAGE"/>
 			<option name="ENABLE_PREVIEW" value=""/>
 		</module>
+		<module name="wkobj">
+		</module>
 		<module name="wkusers">
 		</module>
 	</modules>
 	<entities>
-		<entity name="Adsfh" title="Pruebas">
-			<table name="sd" primary-key="sd"/>
-			<splitpage value="1"/>
-			<search value="1"/>
+		<entity name="Prueba" title="Prueba">
+			<table name="t01_test" primary-key="t01_id"/>
+			<splitpage value="0"/>
+			<search value="0"/>
 			<just-pages value="0"/>
 			<just-schema value="0"/>
 			<sortable value="0"/>
 			<form>
-				<field type="radio">
-					<label><![CDATA[Password]]></label>
-					<db-field><![CDATA[pass]]></db-field>
+				<field type="textfield">
+					<label><![CDATA[Name]]></label>
+					<db-field><![CDATA[t01_name]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>1</searchable><!-- 0|1 -->
 					<options>
-						<option name="No" value="0"/>
-						<option name="Yes" value="1"/>
 					</options>
 				</field>
-				<field type="richtext">
-					<label><![CDATA[texto]]></label>
-					<db-field><![CDATA[text]]></db-field>
+				<field type="file">
+					<label><![CDATA[File1]]></label>
+					<db-field><![CDATA[t01_file1]]></db-field>
 					<required>0</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>1</searchable><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
 					<options>
-						<option name="TOOLBAR" value="richtext"/>
+						<option name="CONTROL_TYPE" value="BUTTON"/>
+						<option name="DEST_PATH" value="archivos/"/>
+						<option name="PREFIX" value="arc_"/>
+						<option name="VALID_EXTENSIONS" value="*"/>
+						<option name="IMAGES_PATH" value="images/"/>
+						<option name="MAX_SIZE" value="(100*MB)"/>
 					</options>
 				</field>
-				<field type="textfield">
-					<label><![CDATA[Crap]]></label>
-					<db-field><![CDATA[crap]]></db-field>
+				<field type="file">
+					<label><![CDATA[File2]]></label>
+					<db-field><![CDATA[t01_file2]]></db-field>
 					<required>0</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
 					<options>
+						<option name="CONTROL_TYPE" value="BUTTON"/>
+						<option name="DEST_PATH" value="archivos/"/>
+						<option name="PREFIX" value="arc_"/>
+						<option name="VALID_EXTENSIONS" value="*"/>
+						<option name="IMAGES_PATH" value="images/"/>
+						<option name="MAX_SIZE" value="(100*MB)"/>
 					</options>
 				</field>
 			</form>

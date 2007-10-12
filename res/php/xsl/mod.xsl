@@ -61,10 +61,11 @@
 			</xsl:if></xsl:for-each>
 		);</xsl:when>
 		<xsl:when test="@type='file' or @type='image'">
-		$options["<xsl:value-of select="db-field"/>"]=array('path' => $obj-><xsl:value-of select="db-field"/>,
-			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>')<xsl:if test="position() != last()">,
-			</xsl:if></xsl:for-each>
-		);</xsl:when>
+			<!-- crear una instancia del objeto upload y escribir las opciones utilizando el metodo -->
+			$upload=new Upload("<xsl:value-of select="db-field"/>",$obj-><xsl:value-of select="db-field"/>);
+			<xsl:comment>Use the function setProperty to change some parameter of the upload</xsl:comment>
+			$options["<xsl:value-of select="db-field"/>"]=$upload->getOptions();
+		</xsl:when>
 		</xsl:choose>
 	</xsl:template>
 	

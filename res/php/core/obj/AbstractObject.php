@@ -163,8 +163,10 @@ class AbstractObject{
 			$rs=mysql_query($query);
 			if(!$rs) return;
 			for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
-				for($i=0,$n=count($files);$i<$n;$i++)
-					unlink(mysql_result($rs, $j, $files[$i]));
+				for($i=0,$n=count($files);$i<$n;$i++){
+					if(mysql_result($rs, $j, $files[$i])!='')
+						unlink(ROOT.'/'.mysql_result($rs, $j, $files[$i]));
+				}
 		}
 	}
 	

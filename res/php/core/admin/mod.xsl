@@ -10,11 +10,13 @@
 	</xsl:variable>
 	
  	<xsl:template match="/">
- 		<!--html><head><script src="js/dojo/dojo.js"></script>
- 				<script src="js/utils.js"></script>
- 				<script>
- 					dojo.require('dojo.widget.*');
- 				</script></head><body-->
+ 		<!--html><head><link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
+				<script src="../js/dojo/dojo.js"></script>
+				<script src="../js/tinymce/tiny_mce.js"></script>
+ 				<script src="../js/utils.js"></script>
+ 				<script src="../upload/js/upload.js"></script>
+ 				<script>dojo.require('dojo.widget.*');</script>
+ 				</head><body><div id="container"><div id="center"-->
 		<script>var queue=Array();</script>
 		<div id="content-header">
 			<center>
@@ -26,10 +28,13 @@
 			</center>
 		</div>
 		<xsl:apply-templates select="entity/fields"/>
-		<!--/body></html-->
+		<!--/div></div></body></html-->
 	</xsl:template>
  	
  	<xsl:template match="fields">
+ 		<script>
+			var upload=new Upload('frm_<xsl:value-of select="//@name"/>');
+ 		</script>
 		<div id="content">
 			<form name="frm_{//@name}"
 				  id="frm_{//@name}" 
@@ -45,7 +50,7 @@
 					<table class="plain" border="1">
 						<tr>
 							<td align="left" class="plain" id="id"><button type="button" onclick="getAndTransform('list{//@name}.{//@ext}?{$ids}','list.xsl','center')"><img src="images/cancel.png" align="left"/><span>Cancel</span></button></td>
-							<td width="50%" align="right" class="plain"><button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; clean(queue);"><img src="images/accept.png" align="left"/><span>Apply</span></button></td>
+							<td width="50%" align="right" class="plain"><button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();"><img src="images/accept.png" align="left"/><span>Apply</span></button></td>
 						</tr>
 					</table>
 				</center>
@@ -58,13 +63,15 @@
 			</form>
 			<script>
 				dojo.addOnLoad(function (){
-					new dojo.io.FormBind({
+					var x = new dojo.io.FormBind({
 						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
-						handle: function(type, data, evt) {  },
-						load: function(load, data,evt){ transform(evt.responseXML, 'list.xsl','center');},
+						error: function(type,error){ prompt("",type+" : "+error.message);},
+						handle: function(type, data, evt){ alert(type+"/"+data+"/"+evt); },
+						load: function(load, data, evt){ transform(evt.responseXML, 'list.xsl','center'); },
 						mimetype: "text/html"
 					});
-				});
+					upload.formComp = x;
+				});//*/
 			</script>
 		</div>
  	</xsl:template>
@@ -243,6 +250,31 @@
  	</xsl:template>
  	
  	<xsl:template match="file">
+ 		<xsl:variable name="params">
+ 		<xsl:for-each select="option">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="@value"/></xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="prev">
+			<xsl:for-each select="option">
+				<xsl:if test="@name = 'prev'"><xsl:value-of select="@value"/></xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<script>
+			dojo.addOnLoad(function(){
+				upload.addFile('<xsl:value-of select="@map"/>');
+			});
+		</script>
+ 		<tr class="part1">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part1" align="left">
+				<img src="../upload/images/spacer.gif" id="loading_{@map}" align="absmiddle" style="display:none"/>
+				<xsl:if test="$prev != ''">
+				<a href="../{$prev}" target="_blank">View File</a>
+				</xsl:if>
+				<iframe id="if_{@map}" name="if_{@map}" src="../upload/component.php?name={@map}{$params}" scrolling="no" frameborder="0" width="100%" height="25px"/>
+				<!--input type="file" name="file_{@map}" id="file_{@map}" onclick="dojo.byId('str_{@map}').value='changed';"/-->
+				<input type="hidden" name="str_{@map}" id="str_{@map}"/>
+			</td>
+		</tr>
  	</xsl:template>
  	
  	<xsl:template match="image">

@@ -17,7 +17,7 @@
 		</module>
 		<module name="wkobj" mandatory="1">
 			<depends>
-				<depend name="wkupload"/>
+				<depend name="upload"/>
 				<depend name="wklogs"/>
 			</depends>
 		</module>
@@ -71,7 +71,7 @@
 				<depend name="wkobj"/>
 			</depends>
 		</module>
-		<module name="wkupload" mandatory="1">
+		<module name="upload" mandatory="1">
 			<options>
 				<option name="MAX_SIZE" value="(100*MB)" default="500"/>
 				<option name="MAX_THUMB_HEIGHT" value="50" />

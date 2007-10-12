@@ -8,8 +8,10 @@ include_once('obj/Connection.php');
 include_once('obj/Error.php');
 include_once('common/utils.php');
 
+define('ROOT',']]><xsl:value-of select="/project/file-server-conf/base-directory"/><![CDATA[');
+
 //module's includes
-/*]]><xsl:apply-templates select="/project/modules/module"/>
+]]><xsl:apply-templates select="/project/modules/module"/>
 
 //*/
 //project's classes

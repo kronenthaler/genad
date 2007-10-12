@@ -24,14 +24,26 @@
 	- rte
 
 - hacer controles file e image
-	- usar el stylish que esta en docs
+	+ Cambiar el esquema de direccionamiento por iframes? 
+		+ usar un esquema como el de uploadFE, un iframe que sube ese archivo especificamente, => esperar que se resuelvan los
+		  uploads antes de enviar el form
+		- revisar bugs 
+	* usar el stylish que esta en docs
+	- IMPORTANTE: buscar forma de hacer submit del form sin que sea por el form tradicional. (upload.js)
+		- forma mas factible es crear un dojo.io.bind() sincrono, porq para ese punto ya se garantizo que se puede enviar.
+	- tabla de mimes para verificacion de tipos validas
+		- opcion usar una tabla en BD que se cargue en el momento de la conexion, o cuando se cargue el primer
+		  objeto upload.
+	+ hacer que muestre el link en el caso que la accion sea MOD y el archivo ya exista
+
+- modulo para el manejo de usuarios y permisologia en la generacion
 
 - archivo de licencias
-- DTD o schemas para los archivos de configuracion general, plugin, y del projecto, van dentro del .jar para evitar que se modifiquen o eliminen facilmente.
+- DTD o schemas para los archivos de configuracion general, plugin, y del proyecto, van dentro del .jar para evitar que se modifiquen o eliminen facilmente.
 - modulo para instalar plugins de funcionalidades.
 	- modulo para hacer updates?
 
 - revisar los options de los fields cuando se hace un cambio de lenguaje.
 	- guardar los que estaban?
 	- copiar los del nuevo?
-	- hacer merge? (conservar los anteriores y agregar los nuevos, eliminar los que no existen)
+	- hacer merge? (conservar los anteriores, agregar los nuevos y eliminar los que no existen)
