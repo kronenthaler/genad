@@ -21,7 +21,8 @@
 		  <entity name="'.get_class($obj).'" 
 		  		  ext="php" 
 		  		  action="'.$_REQUEST['action'].'" 
-		  		  id="'.$_REQUEST['id'].'">';
+		  		  id="'.$_REQUEST['id'].'">
+			<prefix></prefix>';
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLAncestors(); 
 		//begin field options]]>

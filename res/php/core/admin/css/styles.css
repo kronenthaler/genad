@@ -53,7 +53,8 @@ a {
 	font-size:inherit;
 }
 
-#container input{
+#container input,
+#container select{
 	border: 1px solid #999; 
 }
 

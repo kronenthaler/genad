@@ -5,7 +5,7 @@
 <xsl:stylesheet version="1.0" 
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  	<xsl:output method="html" encoding="utf-8"/>
- 	
+	
  	<!-- define the ids of the ancestors required for each link that modifies the entity -->
  	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
@@ -24,49 +24,74 @@
  				<script src="../upload/js/upload.js"></script>
  				<script>dojo.require('dojo.widget.*');</script>
  				</head><body><div id="container"><div id="center"-->
-		<div id="content-header">
+		<xsl:choose>
+			<xsl:when test="error != ''">
+				<xsl:apply-templates select="error"/>
+			</xsl:when>
+			<xsl:otherwise>
+				<div id="content-header">
+					<center>
+						<table width="100%" border="1">
+							<tr>
+								<td colspan="4" valign="middle" align="left">
+									<h2><xsl:value-of select="/entity/title"/></h2>
+								</td>
+							</tr>
+							<tr>
+								<td align="left">
+									<xsl:if test="/entity/back/@entity != ''">
+										<a href="javascript:getAndTransform('{/entity/prefix}list{/entity/back/@entity}.{//@ext}?{$backids}','list.xsl','center')">&lt; <xsl:value-of select="/entity/back/@title"/></a>
+									</xsl:if>
+								</td>
+								<td width="50%" align="left" style="color:#f66">
+									<xsl:if test="/entity/error != ''">
+										<img src="images/error.png"/>&nbsp;<xsl:value-of select="/entity/error"/>
+									</xsl:if>
+								</td>
+								<td valign="middle" align="right">
+									<label for="search">Search:</label>
+									<input type="text" id="search" name="search"/>
+								</td>
+								<td width="1%">
+									<button type="button" onclick="getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?search='+document.getElementById('search').value+'{$ids}','list.xsl','center');">
+										<img src="images/search.png" border="0"/>
+									</button>
+								</td>
+							</tr>
+							<tr>
+								<xsl:apply-templates select="entity/pager"/>
+							</tr>
+						</table>
+					</center>
+				</div>
+				<xsl:apply-templates select="entity/list"/>
+			</xsl:otherwise>
+		</xsl:choose>
+
+		<!--/div></div></body></html-->
+	</xsl:template>
+	
+	<xsl:template match="error">
+		<div id="content">
 			<center>
-				<table width="100%" border="1">
-					<tr>
-						<td colspan="4" valign="middle" align="left">
-							<h2><xsl:value-of select="/entity/title"/></h2>
+				<table height="50%">
+					<tr height="100%" valign="top">
+						<td width="100"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
+						<td>
+							<h1>Forbidden</h1>
+							<xsl:value-of select="/error"/><br/>
+							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
 						</td>
-					</tr>
-					<tr>
-						<td align="left">
-							<xsl:if test="/entity/back/@entity != ''">
-								<a href="javascript:getAndTransform('list{/entity/back/@entity}.{//@ext}?{$backids}','list.xsl','center')">&lt; <xsl:value-of select="/entity/back/@title"/></a>
-							</xsl:if>
-						</td>
-						<td width="50%" align="left" style="color:#f66">
-							<xsl:if test="/entity/error != ''">
-								<img src="images/error.png"/>&nbsp;<xsl:value-of select="/entity/error"/>
-							</xsl:if>
-						</td>
-						<td valign="middle" align="right">
-							<label for="search">Search:</label>
-							<input type="text" id="search" name="search"/>
-						</td>
-						<td width="1%">
-							<button type="button" onclick="getAndTransform('list{//@name}.{//@ext}?search='+document.getElementById('search').value+'{$ids}','list.xsl','center');">
-								<img src="images/search.png" border="0"/>
-							</button>
-						</td>
-					</tr>
-					<tr>
-						<xsl:apply-templates select="entity/pager"/>
 					</tr>
 				</table>
 			</center>
 		</div>
-		<xsl:apply-templates select="entity/list"/>
-		<!--/div></div></body></html-->
 	</xsl:template>
-	
+
 	<xsl:template match="list">
 		<div id="content">
 			<center>
-				<form action="exec{//@name}.{//@ext}"  
+				<form action="{/entity/prefix}exec{//@name}.{//@ext}"  
 					  name="frm_{//@name}" 
 					  id="frm_{//@name}" 
 					  method="post" 
@@ -88,8 +113,9 @@
 											</xsl:otherwise>
 										</xsl:choose>
 									</xsl:for-each>
-									<xsl:for-each select="instance/child">
-										<th align="center" width="50px">&nbsp;<img src="images/relations.png" alt="Has many {@name}" title="Has many {@name}"/><xsl:value-of select="@name"/>&nbsp;</th>
+									<!-- problema aqui se esta trayendo TODOS los instance/child, deberia traerse solo los de name diferentes -->
+									<xsl:for-each select="listable/child">
+										<th align="center" width="50px"><xsl:value-of select="@name"/>&nbsp;</th>
 									</xsl:for-each>
 								</tr>
 							</thead>
@@ -111,10 +137,10 @@
 														</xsl:if-->
 														<xsl:choose>
 															<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																<center><a href="javascript:getAndTransform('exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}','list.xsl','center');"><img src="images/{$value}.gif"/></a></center>
+																<center><a href="javascript:getAndTransform('{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}','list.xsl','center');"><img src="images/{$value}.gif"/></a></center>
 															</xsl:when>							
 															<xsl:otherwise>
-																<a href="javascript:getAndTransform('mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}','mod.xsl','center')">
+																<a href="javascript:getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}','mod.xsl','center')">
 																	&nbsp;<xsl:value-of select="$value" disable-output-escaping="yes"/>
 																</a>
 															</xsl:otherwise>
@@ -124,7 +150,7 @@
 											</xsl:for-each>
 										</xsl:for-each>
 										<xsl:for-each select="child">
-											<td align="center"><a href="javascript: getAndTransform('list{@name}.{//@ext}?{$primarykey}={$key}{$ids}','list.xsl','center')">(<xsl:value-of select="@count"/>)</a></td>
+											<td align="center" class="part1"><a href="javascript: getAndTransform('{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}','list.xsl','center')">(<xsl:value-of select="@count"/>)</a></td>
 										</xsl:for-each>
 									</tr>
 									<!-- the row with the subentities related to this 
@@ -159,7 +185,7 @@
 									</button>
 								</td>
 								<td width="50%" align="right" class="plain">
-									<button type="button" onclick="getAndTransform('mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
+									<button type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
 										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
@@ -172,7 +198,7 @@
 							</xsl:when>
 							<xsl:otherwise>
 								<td  align="center" class="plain">
-									<button type="button" onclick="getAndTransform('mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
+									<button type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
 										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
@@ -219,11 +245,11 @@
 		</td>
 		<td colspan="2" align="right">	
 			<xsl:if test="offset > 0">
-				<a href="javascript:getAndTransform('list{//@name}.{//@ext}?ini={offset - page-size}{$ids}','list.xsl','center')"><img src="images/less.gif" class="border" align="absmiddle"/></a>&nbsp;
+				<a href="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?ini={offset - page-size}{$ids}','list.xsl','center')"><img src="images/less.gif" class="border" align="absmiddle"/></a>&nbsp;
 			</xsl:if>
 			<xsl:value-of select="ceiling(offset div page-size)+1"/>/<xsl:value-of select="ceiling(total-rows div page-size)"/>
 			<xsl:if test="offset &lt; total-rows - page-size">
-				&nbsp;<a href="javascript:getAndTransform('list{//@name}.{//@ext}?ini={offset + page-size}{$ids}','list.xsl','center')"><img src="images/more.gif" class="border" align="absmiddle"/></a>
+				&nbsp;<a href="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?ini={offset + page-size}{$ids}','list.xsl','center')"><img src="images/more.gif" class="border" align="absmiddle"/></a>
 			</xsl:if>
 		</td>
 	</xsl:template>

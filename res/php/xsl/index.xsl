@@ -2,8 +2,8 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" >
  	<xsl:output method="text" encoding="utf-8" indent="no"/>
 	
-	<xsl:template match="/">
-<![CDATA[<!-- one page to rule them all, changing the ajax calls-->
+	<xsl:template match="/"><![CDATA[<? include("../includes.php"); ?>
+<!-- one page to rule them all, changing the ajax calls-->
 <html>
 	<head>
 		<meta http-equiv="Expires" content="Tue, 01 Jan 2000 12:12:12 GMT"/>
@@ -27,8 +27,12 @@
 					formNode: document.forms.login,
 					handle: function(type, data, evt) {  },
 					load: function(load, data,evt){ 
-						dojo.byId('login').style.display='none';
-						dojo.byId('options').style.display='block';
+						if(data=='0'){
+							dojo.byId('login').style.display='none';
+							dojo.byId('options').style.display='block';
+						}else{
+							alert(data);
+						}
 					},
 					mimetype: "text/html"
 				});
@@ -43,16 +47,13 @@
 			<div id="menu">
 				<!-- if authentication is passed => show the dojo menu-->
 				<ul id="options" style="display:none">
-					<li dojoType="TitlePane" label="Title Pane #1" labelNodeClass="submenulabel" containerNodeClass="menucontent">
-						<ul>
-							<li><a href=""><img src="images/bullet.png" align="absmiddle"/>item</a></li>
-							<li><a href="javascript:getAndTransform('mod.xml','mod.xsl','center')"><img src="images/bullet.png" align="absmiddle"/>Mod</a></li>
-						</ul>
-					</li>]]>
+					<? include_once('../users/admin/index.php'); ?>	
+					]]>
+					<xsl:apply-templates select="/project/modules/module"/>
 					<xsl:apply-templates select="/project/entities/entity"/>
-					<![CDATA[<li><a href=""><img src="images/logout.png" align="absmiddle"/>&#160;<b>Log out</b></a></li>
+					<![CDATA[<li><a href="logoff.php"><img src="images/logout.png" align="absmiddle"/>&#160;<b>Log out</b></a></li>
 				</ul>
-				<form action="?" method="post" id="login" name="login">
+				<form action="authenticate.php" method="post" id="login" name="login">
 					<table border="0"> 
 						<tr>
 							<td>Login:</td>
@@ -80,10 +81,20 @@
 			<div id="center"/>
 		</div>
 	</body>
+	<script>
+	<? if($_SESSION['user_id']!=NULL){?>
+		dojo.byId('login').style.display='none';
+		dojo.byId('options').style.display='block';
+	<? }?>
+	</script>
 </html>]]>
 	</xsl:template>
 
 	<xsl:template match="entity">
 	<![CDATA[<li><a href="javascript:getAndTransform('list]]><xsl:value-of select="@name"/><![CDATA[.php','list.xsl','center')"><img src="images/bullet.png" align="absmiddle"/>]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]>
+	</xsl:template>
+	
+	<xsl:template match="module">
+	<![CDATA[<? secureInclude('../]]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>
 	</xsl:template>
 </xsl:stylesheet>

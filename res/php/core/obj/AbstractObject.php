@@ -91,8 +91,8 @@ class AbstractObject{
 					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
 					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
 					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
-					
-					$query.=($k>0?',':'').$str."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
+					 
+					$query.=($k>0?',':'').$str."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars(''.$DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
 				}
 			}
@@ -183,6 +183,7 @@ class AbstractObject{
 		if($cant!=-1) $query.=" LIMIT ".$ini.",".$cant;
 		
 		//echo $query;
+		logOn($query);
 		return $this->makeObjects(mysql_query($query));
 	}
 	
@@ -244,7 +245,7 @@ class AbstractObject{
 			for($j=0,$m=count($keys);$j<$m;$j++)
 				$str[$j].=($i>0?' AND ':'').$keys[$j]." like'%".$toks[$i]."%'";
 
-		array_push($criteria,'('.implode(' ) OR (',$str).')');	
+		array_push($criteria,'(('.implode(' ) OR (',$str).'))');	
 			
 		return $this->getList($criteria,$ini,$cant,$orderby);
 	}
@@ -402,6 +403,8 @@ class AbstractObject{
 		$listables=$this->getFieldsByType(LISTABLE);
 		for($i=0,$n=count($listables);$i<$n;$i++)
 			$ret.='<field map="'.$listables[$i].'" name="'.$this->fields[$listables[$i]][TITLE].'" type="'.$this->fields[$listables[$i]][TYPE].'"/>';
+		for($i=0,$n=count($this->childs);$i<$n;$i++)
+			$ret.='<child name="'.$this->childs[$i].'"/>';
 		$ret.="</listable>";
 
 		for($i=0,$n=count($objects);$i<$n;$i++){

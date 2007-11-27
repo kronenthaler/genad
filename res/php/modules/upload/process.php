@@ -9,4 +9,5 @@ if($error->code!=0)
 	header('Location: component.php?finish=1&name='.$_REQUEST['fieldName'].'&error='.$error->description.$upload->getParams());
 else{
 	header('Location: component.php?finish=1&name='.$_REQUEST['fieldName'].'&path='.$error->description.$upload->getParams());
-}?>
+}
+?>

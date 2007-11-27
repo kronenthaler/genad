@@ -189,7 +189,7 @@ public class Engine extends Model{
 			
 			if(stop){ allStop=true; notifyAll(); return; }
 			//8) index.xhtml (index.xsl). ask for overwrite if exists
-			File index=new File(model.getDestinationPath()+"/admin/index.html");
+			File index=new File(model.getDestinationPath()+"/admin/index."+model.getLanguage());
 			if(replaceIfExists(index)){
 				out=new PrintStream(index);
 				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/index.xsl", out);
@@ -198,19 +198,19 @@ public class Engine extends Model{
 			progress.setProgress(progress.getProgress()+1);
 			
 			//9) copy, configure, and dump database for each module following the T.S. calculated in (2)
-			for(String s:order){
-				progress.setText("Copying Module "+s+"...");
+			for(String module:order){
+				progress.setText("Copying Module "+module+"...");
 				
 				if(stop){ allStop=true; notifyAll(); return; }
 				
-				File base=new File(model.getDestinationPath()+"/"+s);
-				int cont=Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+s), base);
+				File base=new File(model.getDestinationPath()+"/"+module);
+				int cont=Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+module), base);
 				
 				progress.setProgress(progress.getProgress()+cont);
 				
 				if(base.exists()){
-					StringReader in=new StringReader(model.getModule(s).toString());
-					File config=new File(model.getDestinationPath()+"/"+s+"/"+s+"Conf."+model.getLanguage());
+					StringReader in=new StringReader(model.getModule(module).toString());
+					File config=new File(model.getDestinationPath()+"/"+module+"/"+module+"Conf."+model.getLanguage());
 					if(replaceIfExists(config)){
 						out=new PrintStream(config);
 						transformXML(in, "res/"+model.getLanguage()+"/xsl/configModule.xsl",out);
@@ -218,8 +218,8 @@ public class Engine extends Model{
 					}
 
 					//execute script (read if exists the file <module>/<module>.sql)
-					progress.setText("Making database structure for "+s+"...");
-					File sql=new File(model.getDestinationPath()+"/"+s+"/"+s+".sql");
+					progress.setText("Making database structure for "+module+"...");
+					File sql=new File(model.getDestinationPath()+"/"+module+"/"+module+".sql");
 					if(sql.exists()){
 						StringBuffer query=new StringBuffer();
 						BufferedReader tmp=new BufferedReader(new FileReader(sql));

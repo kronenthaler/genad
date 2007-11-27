@@ -8,7 +8,7 @@
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
 	</xsl:variable>
-	
+
  	<xsl:template match="/">
  		<!--html><head>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
@@ -19,17 +19,24 @@
  				<script src="../upload/js/upload.js"></script>
  				<script>dojo.require('dojo.widget.*');</script>
  				</head><body><div id="container"><div id="center"-->
-		<script>var queue=Array();</script>
-		<div id="content-header">
-			<center>
-				<table width="100%" border="1">
-					<tr>
-						<td valign="middle" align="left"><h2><xsl:value-of select="/entity/title"/></h2></td>
-					</tr>
-				</table>
-			</center>
-		</div>
-		<xsl:apply-templates select="entity/fields"/>
+		<xsl:choose>
+			<xsl:when test="error != ''">
+				<xsl:apply-imports/>
+			</xsl:when>
+			<xsl:otherwise>
+				<script>var queue=Array();</script>
+				<div id="content-header">
+					<center>
+						<table width="100%" border="1">
+							<tr>
+								<td valign="middle" align="left"><h2><xsl:value-of select="/entity/title"/></h2></td>
+							</tr>
+						</table>
+					</center>
+				</div>
+				<xsl:apply-templates select="entity/fields"/>
+			</xsl:otherwise>
+		</xsl:choose>
 		<!--/div></div></body></html-->
 	</xsl:template>
  	
@@ -40,8 +47,8 @@
 		<div id="content">
 			<form name="frm_{//@name}"
 				  id="frm_{//@name}" 
-				  action="exec{//@name}.{//@ext}"
-				  method="post" 
+				  action="{/entity/prefix}exec{//@name}.{//@ext}"
+				  method="POST" 
 				  enctype="multipart/form-data" 
 				  >
 				<center>
@@ -52,7 +59,7 @@
 					<table>
 						<tr>
 							<td align="left" class="plain" id="id">
-								<button type="button" onclick="getAndTransform('list{//@name}.{//@ext}?{$ids}','list.xsl','center')">
+								<button type="button" onclick="getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','list.xsl','center')">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/cancel.png" align="left"/></td>
@@ -95,6 +102,22 @@
 		</div>
  	</xsl:template>
  	
+	<xsl:template match="error">
+		<div id="content">
+			<center>
+				<table height="50%">
+					<tr height="100%" valign="top">
+						<td width="100"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
+						<td>
+							<h1>Forbidden</h1>
+							<xsl:value-of select="/error"/>
+						</td>
+					</tr>
+				</table>
+			</center>
+		</div>
+	</xsl:template>
+
  	<xsl:template match="textfield | integer | decimal | email">
  		<tr class="part1">
 			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
@@ -137,15 +160,17 @@
 			<td class="part1" align="right" ><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<xsl:for-each select="option">
+					<p>
 					<xsl:choose>
 						<xsl:when test="@selected = 'true'">
-							<input type="checkbox" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
+							<input type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<input type="checkbox" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
+							<input type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
 					<label for="{../@map}{position()}"><xsl:value-of select="@name"/></label><br/>
+					</p>
 				</xsl:for-each>
 			</td>
 		</tr>

@@ -10,15 +10,6 @@ define('PREFIX','prefix');
 define('DEST_PATH','destPath');
 define('PREV','prev');
 
-define('KB',1024);
-define('MB',KB*KB);
-define('GB',MB*MB);
-
-define('DEF_VALID_EXTS','*');
-define('DEF_MAX_SIZE',1*MB);
-define('DEF_PREFIX','arc_');
-define('DEF_DEST_PATH','archivos/');
-
 class Upload{
 	var $fieldName;	//name of the field
 	var $fieldValue;	//value of the field a.k.a. the path.
@@ -64,7 +55,7 @@ class Upload{
 		$ext=substr($_FILES[$file]['name'],strrpos($_FILES[$file]['name'],'.'));
 		
 		$error=$this->isValid($file);
-		if($error!=NULL) return $error;
+		if($error != NULL) return $error;
 		
 		$fileName="";
 		if($ARRAY[$prev]=="" && $ARRAY[$hdd]!=""){
@@ -76,13 +67,13 @@ class Upload{
 			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.$ARRAY[$prev]);
 			$fileName=$ARRAY[$prev];
 		}else{
-			return new Error(666,'fuck');
+			return new Error(666,'Unexpected error');
 		}
 		
 		if(!file_exists(ROOT.$fileName))
-			return new Error(-9,"File not moved");
+			return new Error(-9, "File not moved");
 			
-		chmod(ROOT.$fileName,0755);		//can download the file from FTP client.
+		//chmod(ROOT.$fileName,0755);	//can download the file from FTP client.
 			
 		return new Error(0,$fileName); 	//everything ok
 	}
@@ -105,19 +96,17 @@ class Upload{
 		//validate the mimetypes
 		$exts=$this->opts[VALID_EXTS];
 		$type=$_FILES[$file]['type'];
+		$flag=true;
+		
 		if($type!="" && stristr($exts,"*")==""){ //no wildcard
-			$exts=split(",",$exts);
-			$flag=false;
-			for($i=0;$i<count($exts) && !$flag ;$i++){
-				if($this->MIMES[$exts[$i]]==$type){
-					$flag=true;
-				}
-			}
-		}else
-			$flag=true;
+			$exts = implode("','",split(',',$exts)); 
+			$rs=mysql_query("SELECT * FROM mimetypes WHERE ext in ('".$exts."') AND mime='".$type."'");
+			$flag=($rs && mysql_num_rows($rs)>0);
+		}
 		
 		if(!$flag) 
-			return new Error(-3,"The file type of '".$_FILES[$file]['name']."' isn't valid. Expected: ".$this->opts[VALID_EXTS]);
+			return new Error(-3,"The file type of '".$_FILES[$file]['name']."' isn't valid (".
+								substr($_FILES[$file]['name'],strrpos($_FILES[$file]['name'],'.'))."). Expected: ".$this->opts[VALID_EXTS]);
 		
 		return NULL;
 	}

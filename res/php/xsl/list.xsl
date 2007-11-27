@@ -31,7 +31,8 @@
 	echo '<?xml version="1.0" encoding="utf-8"?>
 		  <?xml-stylesheet type="text/xsl" href="list.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
-		  	<error>'.$_REQUEST['error'].'</error>';
+		  	<error>'.$_REQUEST['error'].'</error>
+			<prefix></prefix>';
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();

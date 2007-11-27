@@ -3,7 +3,7 @@ define('KB',1024);
 define('MB',KB*KB);
 define('GB',MB*MB);
   
-  /**
+ /**
  *	Transform a $date of type $type using the string $format 
  *	Basically replace the placeholders for the equivalents in $date accoding to $type 
  *	remainning the rest of the format
@@ -49,5 +49,22 @@ function format($date, $type, $format){
 function secureInclude($path){
 	if(file_exists(ROOT.'/'.$path))
 		include_once(ROOT.'/'.$path);
+}
+
+//loggind on file
+function logOn($str){
+	$f = fopen(ROOT.'/archivos/log.txt', 'a');
+	fprintf($f,"%s",$str);
+	fclose($f);
+}
+
+function writeError($msg){
+	header("Content-Type: text/xml");
+	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
+	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
+	
+	echo '<?xml version="1.0" encoding="utf-8"?>';
+	echo '<?xml-stylesheet type="text/xsl" href="list.xsl"?>';
+	echo '<error href="'.$_SERVER['HTTP_REFERER'].'">'.$msg.'</error>';
 }
 ?>
