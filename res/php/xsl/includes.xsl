@@ -3,10 +3,10 @@
  	<xsl:output method="text" encoding="utf-8" indent="no"/>
 	
 	<xsl:template match="/"><![CDATA[<?
+include_once('common/utils.php');
 include_once('obj/AbstractObject.php');	
 include_once('obj/Connection.php');
 include_once('obj/Error.php');
-include_once('common/utils.php');
 
 define('ROOT',']]><xsl:value-of select="/project/file-server-conf/base-directory"/><![CDATA[');
 

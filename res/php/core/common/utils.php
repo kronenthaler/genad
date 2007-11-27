@@ -1,5 +1,9 @@
 <?
-/**
+define('KB',1024);
+define('MB',KB*KB);
+define('GB',MB*MB);
+  
+  /**
  *	Transform a $date of type $type using the string $format 
  *	Basically replace the placeholders for the equivalents in $date accoding to $type 
  *	remainning the rest of the format

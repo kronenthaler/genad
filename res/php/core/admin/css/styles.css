@@ -4,7 +4,7 @@
 body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
 
 ul{
-	list-style-type:none;
+	list-style-type: disc; 
 	width: 142px;
 }
 
@@ -14,13 +14,14 @@ ul li{
 	width: 142px;
 	vertical-align: middle;
 }
-
+ul li a,
 ul li a:link, 
 ul li a:visited{
 	padding:0px 0px 0px 5px;
+	height:20px;
 	width: 137px;
 	color:#999;
-	text-decoration:none;
+	text-decoration: none;
 	float:left;
 	vertical-align: middle;
 }
@@ -28,6 +29,7 @@ ul li a:visited{
 ul li a:hover {
 	padding:0px 0px 0px 5px;
 	background-color:#FFF;
+	height:20px;	
 	width: 137px;
 	color:#333;
 	text-decoration:none;
@@ -69,9 +71,11 @@ a {
 #container button {
 	background-color: #eee; 
 	margin: 0px;
+	padding: 0px;
 	border: 1px solid #999;
 	width: 70px;
-	cursor:pointer;
+	cursor: pointer;
+	/*vertical-align: middle;*/
 }
 
 #container button img{
@@ -90,7 +94,7 @@ a {
 	text-align: left;
 	font-size: inherit;
 	width: 90%;
-	border-left: 1px solid #ccc;
+/*	border-left: 1px solid #ccc;*/
 }
 
 #content table th{
@@ -124,11 +128,12 @@ a {
 	text-align: center;
 	width: 24px;
 	cursor:pointer;
+	vertical-align: middle;
 }
 
 #content table td{
 	background: #fff;
-	border-right: 1px solid #ccc;
+	/*border-right: 1px solid #ccc;*/
 	border-bottom: 1px dotted #999;
 	vertical-align: middle;
 	padding: 1px;
@@ -145,10 +150,17 @@ a {
 /*#content table tr.part1{
 	display: none;
 }*/
+
 #content table td button img {
 	border: 0px;
 	width: 16px;
 	height: 16px;
+	text-align: left;
+}
+
+#content table td button table td {
+	border: 0px;
+	background: #eee;	
 	text-align: left;
 }
 
@@ -261,3 +273,6 @@ a {
 	height: 10px;
 }
 
+.file{
+	border: 1px solid #999;
+}

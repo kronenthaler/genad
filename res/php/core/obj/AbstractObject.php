@@ -450,12 +450,14 @@ class AbstractObject{
 				foreach($option as $key => $val)
 					$ret.=' '.$key.'="'.$val.'" ';
 			$ret.='>';
-			if($option[$keys[0]]!=NULL && is_array($option[$keys[0]])){ //append the options
-				for($j=0,$m=count($option);$j<$m;$j++)
-					$ret.='<option name="'.$option[$j]['name'].'" 
-								   value="'.$option[$j]['value'].'" 
-								   selected="'.$option[$j]['selected'].'" 
-								   onclick="'.$option[$j]['onclick'].'"/>';	
+			if($option[$keys[0]]!=NULL || $current[TYPE] == 'select'){ //append the options
+				for($j=0,$m=count($option);$j<$m;$j++){
+					if(is_array($option[$j]))
+						$ret.='<option name="'.$option[$j]['name'].'" 
+									   value="'.$option[$j]['value'].'" 
+									   selected="'.$option[$j]['selected'].'" 
+									   onclick="'.$option[$j]['onclick'].'"/>';	
+				}
 			}else
 				$ret.="<![CDATA[".htmlspecialchars_decode(stripslashes($value))."]]>";
 			

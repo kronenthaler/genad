@@ -64,7 +64,13 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button type="submit"><img src="images/key.png" align="left"/><span>Enter</span></button>
+								<button type="submit">
+									<table border="0" cellpadding="0" cellspacing="1">
+										<tr>
+											<td><img src="images/key.png" align="left"/></td>
+											<td>Enter</td></tr>
+									</table>
+								</button>
 							</td>
 						</tr>
 					</table>

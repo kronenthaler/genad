@@ -10,10 +10,12 @@
 	</xsl:variable>
 	
  	<xsl:template match="/">
- 		<!--html><head><link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
+ 		<!--html><head>
+				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 				<script src="../js/dojo/dojo.js"></script>
 				<script src="../js/tinymce/tiny_mce.js"></script>
  				<script src="../js/utils.js"></script>
+				<script src="js/validators.js"></script>
  				<script src="../upload/js/upload.js"></script>
  				<script>dojo.require('dojo.widget.*');</script>
  				</head><body><div id="container"><div id="center"-->
@@ -43,14 +45,32 @@
 				  enctype="multipart/form-data" 
 				  >
 				<center>
-					<table cellpadding="0" cellspacing="0" border="0">
+					<table cellpadding="0" cellspacing="0" border="0" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
 						<tr><th width="15%" colspan="2"><xsl:value-of select="/entity/title"/></th></tr>
 						<xsl:apply-templates/>
 					</table>
-					<table class="plain" border="1">
+					<table>
 						<tr>
-							<td align="left" class="plain" id="id"><button type="button" onclick="getAndTransform('list{//@name}.{//@ext}?{$ids}','list.xsl','center')"><img src="images/cancel.png" align="left"/><span>Cancel</span></button></td>
-							<td width="50%" align="right" class="plain"><button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();"><img src="images/accept.png" align="left"/><span>Apply</span></button></td>
+							<td align="left" class="plain" id="id">
+								<button type="button" onclick="getAndTransform('list{//@name}.{//@ext}?{$ids}','list.xsl','center')">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tr>
+											<td><img src="images/cancel.png" align="left"/></td>
+											<td align="right">Cancel</td>
+										</tr>
+									</table>
+								</button>
+							</td>
+							<td width="50%" align="right" class="plain">
+								<button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%">
+										<tr>
+											<td><img src="images/accept.png" align="left"/></td>
+											<td align="right">Apply</td>
+										</tr>
+									</table>
+								</button>
+							</td>
 						</tr>
 					</table>
 				</center>
@@ -65,12 +85,11 @@
 				dojo.addOnLoad(function (){
 					var x = new dojo.io.FormBind({
 						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
-						error: function(type,error){ prompt("",type+" : "+error.message);},
+						error: 	function(type, error){ alert(error.message);},
 						handle: function(type, data, evt){ alert(type+"/"+data+"/"+evt); },
-						load: function(load, data, evt){ transform(evt.responseXML, 'list.xsl','center'); },
+						load: 	function(load, data, evt){ transform(evt.responseXML, 'list.xsl','center'); },
 						mimetype: "text/html"
 					});
-					upload.formComp = x;
 				});//*/
 			</script>
 		</div>
@@ -266,13 +285,12 @@
  		<tr class="part1">
 			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
-				<img src="../upload/images/spacer.gif" id="loading_{@map}" align="absmiddle" style="display:none"/>
 				<xsl:if test="$prev != ''">
-				<a href="../{$prev}" target="_blank">View File</a>
+				<a href="../{$prev}" target="_blank" id="link_{@map}">View File</a>
 				</xsl:if>
 				<iframe id="if_{@map}" name="if_{@map}" src="../upload/component.php?name={@map}{$params}" scrolling="no" frameborder="0" width="100%" height="25px"/>
 				<!--input type="file" name="file_{@map}" id="file_{@map}" onclick="dojo.byId('str_{@map}').value='changed';"/-->
-				<input type="hidden" name="str_{@map}" id="str_{@map}"/>
+				<input type="hidden" name="str_{@map}" id="str_{@map}" value="{$prev}"/>
 			</td>
 		</tr>
  	</xsl:template>

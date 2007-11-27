@@ -47,7 +47,7 @@
 		<xsl:when test="@type = 'datetime'">
 		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'M/D/Y'), 'time' => format($obj-><xsl:value-of select="db-field"/>,TIME,'H:m:s'));</xsl:when>
 		<xsl:when test="@type = 'password'">
-		$options["<xsl:value-of select="db-field"/>"]=array('confirm'=>'Confirm');</xsl:when>
+		$options["<xsl:value-of select="db-field"/>"]=array('confirm'=>'Confirm <xsl:value-of select="label"/>');</xsl:when>
 		<xsl:when test="@type = 'radio' or @type='checkbox'">
 		$options["<xsl:value-of select="db-field"/>"]=array(
 			//one array per option with the label, the value associated with, if is selected for this object or not and the javascript 'onclick' code.

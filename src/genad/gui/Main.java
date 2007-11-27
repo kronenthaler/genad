@@ -36,6 +36,8 @@ public class Main extends javax.swing.JFrame implements View{
 		loadRecents();
 		initComponents();
 		setVisible(true);
+		
+		statusBar.setText("Ready");
 	}
 	
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -52,8 +54,7 @@ public class Main extends javax.swing.JFrame implements View{
         tabbedPanel=new TabbedContainer(new DefaultTabDataModel(), TabbedContainer.TYPE_EDITOR);
         tree = new  TreeView(tabbedPanel);
 
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel1 = new javax.swing.JLabel();
+        statusBar = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         projectMen = new javax.swing.JMenu();
         newItem = new javax.swing.JMenuItem();
@@ -158,10 +159,8 @@ public class Main extends javax.swing.JFrame implements View{
 
         splitPanel.setLeftComponent(jScrollPane1);
 
-        jProgressBar1.setValue(25);
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("jLabel1");
+        statusBar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        statusBar.setText("jLabel1");
 
         projectMen.setText("Project");
         newItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
@@ -331,14 +330,9 @@ public class Main extends javax.swing.JFrame implements View{
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 148, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .add(jToolBar1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
             .add(splitPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, statusBar, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -347,9 +341,7 @@ public class Main extends javax.swing.JFrame implements View{
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(splitPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jProgressBar1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel1))
+                .add(statusBar)
                 .addContainerGap())
         );
         pack();
@@ -468,9 +460,7 @@ public class Main extends javax.swing.JFrame implements View{
     protected javax.swing.JButton generateBtn;
     protected javax.swing.JMenuItem generateItem;
     protected javax.swing.JMenu helpMen;
-    protected javax.swing.JLabel jLabel1;
     protected javax.swing.JMenuBar jMenuBar2;
-    protected javax.swing.JProgressBar jProgressBar1;
     protected javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JSeparator jSeparator5;
     protected javax.swing.JSeparator jSeparator6;
@@ -491,6 +481,7 @@ public class Main extends javax.swing.JFrame implements View{
     protected javax.swing.JMenuItem saveItem;
     protected javax.swing.JMenu settingsMen;
     protected javax.swing.JSplitPane splitPanel;
+    protected javax.swing.JLabel statusBar;
     protected javax.swing.JTree tree;
     // End of variables declaration//GEN-END:variables
 	protected TabbedContainer tabbedPanel;

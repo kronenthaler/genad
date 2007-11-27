@@ -15,11 +15,15 @@
 	</xsl:variable>
 	
 	<xsl:template match="/">
-		<!--html><head><script src="js/dojo/dojo.js"></script>
- 				<script src="js/utils.js"></script>
- 				<script>
- 					dojo.require('dojo.widget.*');
- 				</script></head><body><div id="center"-->
+		<!--html><head>
+				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
+				<script src="../js/dojo/dojo.js"></script>
+				<script src="../js/tinymce/tiny_mce.js"></script>
+ 				<script src="../js/utils.js"></script>
+				<script src="js/validators.js"></script>
+ 				<script src="../upload/js/upload.js"></script>
+ 				<script>dojo.require('dojo.widget.*');</script>
+ 				</head><body><div id="container"><div id="center"-->
 		<div id="content-header">
 			<center>
 				<table width="100%" border="1">
@@ -56,7 +60,7 @@
 			</center>
 		</div>
 		<xsl:apply-templates select="entity/list"/>
-		<!--/div></body></html-->
+		<!--/div></div></body></html-->
 	</xsl:template>
 	
 	<xsl:template match="list">
@@ -68,7 +72,7 @@
 					  method="post" 
 					  enctype="multipart/form-data"
 					  >
-				<table cellspacing="0" cellpadding="0" border="0">
+				<table cellspacing="0" cellpadding="0" border="0" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
 					<xsl:choose>
 						<xsl:when test="count(instance) &gt; 0">
 							<thead>
@@ -140,15 +144,44 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</table>
-				<table class="plain" border="1">
+				<table>
 					<tr>
 						<xsl:choose>
 							<xsl:when test="count(instance) &gt; 0">
-								<td align="left" class="plain"><button type="submit" onclick="return confirm('Do you really want to delete the selected items?')"><img src="images/delete.png" align="left"/><span>Remove</span></button></td>
-								<td width="50%" align="right" class="plain"><button type="button" onclick="getAndTransform('mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')"><img src="images/add.png" align="left"/><span>Add</span></button></td>
+								<td align="left" class="plain">
+									<button type="submit" onclick="return confirm('Do you really want to delete the selected items?')">
+										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
+										<table border="0" cellpadding="0" cellspacing="0" width="100%">
+											<tr>
+												<td><img src="images/delete.png" align="left"/></td>
+												<td>Remove</td></tr>
+										</table>
+									</button>
+								</td>
+								<td width="50%" align="right" class="plain">
+									<button type="button" onclick="getAndTransform('mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
+										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
+										<table border="0" cellpadding="0" cellspacing="0" width="100%">
+											<tr>
+												<td><img src="images/add.png" align="left"/></td>
+												<td>Add</td>
+											</tr>
+										</table>
+									</button>
+								</td>
 							</xsl:when>
 							<xsl:otherwise>
-								<td  align="center" class="plain"><button type="button" onclick="getAndTransform('mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')"><img src="images/add.png" align="left"/><span>Add</span></button></td>
+								<td  align="center" class="plain">
+									<button type="button" onclick="getAndTransform('mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
+										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
+										<table border="0" cellpadding="0" cellspacing="0" width="100%">
+											<tr>
+												<td><img src="images/add.png" align="left"/></td>
+												<td>Add</td>
+											</tr>
+										</table>
+									</button>
+								</td>
 							</xsl:otherwise>
 						</xsl:choose>
 					</tr>
