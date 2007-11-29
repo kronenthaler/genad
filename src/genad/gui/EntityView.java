@@ -69,6 +69,29 @@ public class EntityView extends javax.swing.JPanel implements View{
 			public void insertUpdate(DocumentEvent e){ changedUpdate(e); }
 			public void removeUpdate(DocumentEvent e){ changedUpdate(e); }
 		});
+		
+		ActionListener al=new ActionListener(){
+			public void actionPerformed(ActionEvent evt){
+				if(standardRadio.isSelected())
+					entity.setPermissions(Entity.STANDARD);
+				else if(standardPlusRadio.isSelected())
+					entity.setPermissions(Entity.STANDARD_PLUS);
+				else if(othersRadio.isSelected())
+					entity.setPermissions(Entity.OTHERS);
+				else 
+					entity.setPermissions(Entity.NONE);
+			}
+		};
+		
+		standardRadio.addActionListener(al);
+		standardPlusRadio.addActionListener(al);
+		othersRadio.addActionListener(al);
+		noneRadio.addActionListener(al);
+		
+		standardRadio.setSelected(entity.getPermissions().equals(Entity.STANDARD));
+		standardPlusRadio.setSelected(entity.getPermissions().equals(Entity.STANDARD_PLUS));
+		othersRadio.setSelected(entity.getPermissions().equals(Entity.OTHERS));
+		noneRadio.setSelected(entity.getPermissions().equals(Entity.NONE));
 	}
 		
     // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
@@ -90,10 +113,10 @@ public class EntityView extends javax.swing.JPanel implements View{
         justSchemaChk = new javax.swing.JCheckBox();
         justPagesChk = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        standardRadio = new javax.swing.JRadioButton();
+        standardPlusRadio = new javax.swing.JRadioButton();
+        othersRadio = new javax.swing.JRadioButton();
+        noneRadio = new javax.swing.JRadioButton();
         fieldsPanel = new FieldsPanel(entity);
 
         propertiesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Properties"));
@@ -248,25 +271,25 @@ public class EntityView extends javax.swing.JPanel implements View{
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Permissions"));
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Standard (CRUD)");
-        jRadioButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        jRadioButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        buttonGroup1.add(standardRadio);
+        standardRadio.setText("Standard (CRUD)");
+        standardRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        standardRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Standard + Others");
-        jRadioButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        jRadioButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        buttonGroup1.add(standardPlusRadio);
+        standardPlusRadio.setText("Standard + Others");
+        standardPlusRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        standardPlusRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Others");
-        jRadioButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        jRadioButton3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        buttonGroup1.add(othersRadio);
+        othersRadio.setText("Others");
+        othersRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        othersRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("None");
-        jRadioButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        jRadioButton4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        buttonGroup1.add(noneRadio);
+        noneRadio.setText("None");
+        noneRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        noneRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
         org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -275,25 +298,25 @@ public class EntityView extends javax.swing.JPanel implements View{
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jRadioButton1)
-                    .add(jRadioButton2)
-                    .add(jRadioButton3)
-                    .add(jRadioButton4))
+                    .add(standardRadio)
+                    .add(standardPlusRadio)
+                    .add(othersRadio)
+                    .add(noneRadio))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2Layout.linkSize(new java.awt.Component[] {jRadioButton1, jRadioButton2, jRadioButton3, jRadioButton4}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
+        jPanel2Layout.linkSize(new java.awt.Component[] {standardRadio, standardPlusRadio, othersRadio, noneRadio}, org.jdesktop.layout.GroupLayout.HORIZONTAL);
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
-                .add(jRadioButton1)
+                .add(standardRadio)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jRadioButton2)
+                .add(standardPlusRadio)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jRadioButton3)
+                .add(othersRadio)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jRadioButton4)
+                .add(noneRadio)
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -374,10 +397,10 @@ public class EntityView extends javax.swing.JPanel implements View{
     protected javax.swing.JLabel jLabel4;
     protected javax.swing.JPanel jPanel1;
     protected javax.swing.JPanel jPanel2;
-    protected javax.swing.JRadioButton jRadioButton1;
-    protected javax.swing.JRadioButton jRadioButton2;
-    protected javax.swing.JRadioButton jRadioButton3;
-    protected javax.swing.JRadioButton jRadioButton4;
+    protected javax.swing.JRadioButton standardRadio;
+    protected javax.swing.JRadioButton standardPlusRadio;
+    protected javax.swing.JRadioButton othersRadio;
+    protected javax.swing.JRadioButton noneRadio;
     protected javax.swing.JCheckBox justPagesChk;
     protected javax.swing.JCheckBox justSchemaChk;
     protected javax.swing.JCheckBox pagerChk;

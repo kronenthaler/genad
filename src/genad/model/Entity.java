@@ -22,10 +22,16 @@ import genad.config.*;
 public class Entity implements Serializable{
 	private Vector<Field> form;
 	private Hashtable<String, Entity> childs;
-	public Entity parent;
+	private Entity parent;
 	private String name, title, primaryKey, tableName;
+	private String permissions = "";
 	private boolean pager, search, sortable, justSchema, justPages;
 	private boolean changed=false;
+	
+	public static final String STANDARD = "standard";
+	public static final String STANDARD_PLUS = "plus";
+	public static final String OTHERS = "others";
+	public static final String NONE = "";
 	
 	public Entity(){
 		form=new Vector<Field>();
@@ -73,7 +79,7 @@ public class Entity implements Serializable{
 					}//ignore anything else
 				}
 			}else if(aux.item(i).getNodeName().equalsIgnoreCase("permissions")){
-				//ret.setPermissions(Integer.parseInt(aux.item(i).getAttributes().getNamedItem("value").getTextContent()));
+				permissions = aux.item(i).getAttributes().getNamedItem("value").getTextContent();
 			}else if(aux.item(i).getNodeName().equalsIgnoreCase("entity")){
 				//recurrir para cargar subentidades
 				Entity child=new Entity();
@@ -150,7 +156,10 @@ public class Entity implements Serializable{
 	
 	public boolean hasJustSchema(){ return justSchema; }
 	public void setJustSchema(boolean v){ justSchema=v; setChanged();}
-		
+	
+	public String getPermissions(){ return permissions; }
+	public void setPermissions(String v){ permissions=v; setChanged();}
+	
 	//@unsafe: shouldn't return the vector reference
 	public Vector<Field> getFields(){ return form; }
 	
@@ -247,7 +256,7 @@ public class Entity implements Serializable{
 		StringBuffer ret =new StringBuffer();
 		ret.append(deep+"<entity name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n")
 			.append(deep+"	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n")
-		//ret.append(deep+"	<permissions value=\""+permissions+"\"/>\n")
+			.append(deep+"	<permissions value=\""+permissions+"\"/>\n")
 			.append(deep+"	<splitpage value=\""+(pager?1:0)+"\"/>\n")
 			.append(deep+"	<search value=\""+(search?1:0)+"\"/>\n")
 			.append(deep+"	<just-pages value=\""+(justPages?1:0)+"\"/>\n")
@@ -280,7 +289,7 @@ public class Entity implements Serializable{
 		}
 		
 		ret.append("	<table name=\""+Utils.sanitize(tableName)+"\" primary-key=\""+Utils.sanitize(primaryKey)+"\"/>\n")
-		//ret.append("	<permissions value=\""+permissions+"\"/>\n")
+			.append("	<permissions value=\""+permissions+"\"/>\n")
 			.append("	<splitpage value=\""+(pager?1:0)+"\"/>\n")
 			.append("	<search value=\""+(search?1:0)+"\"/>\n")
 			.append("	<just-pages value=\""+(justPages?1:0)+"\"/>\n")

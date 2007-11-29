@@ -138,6 +138,51 @@ public class Engine extends Model{
 			progress.setText("Copying files "+coreFiles+"/"+(coreFiles+moduleFiles)+"...");
 			progress.setProgress((int)coreFiles);
 			
+			//Make DB schema
+			executeScript("CREATE DATABASE IF NOT EXISTS `"+model.getDBSchema()+"` CHARACTER SET utf8;",model);
+			conn.close();
+			
+			conn=DriverManager.getConnection("jdbc:mysql://"+model.getDBHost()+"/"+model.getDBSchema(),model.getDBLogin(),model.getDBPassword());
+			progress.setProgress(progress.getProgress()+1);
+			
+			//9) copy, configure, and dump database for each module following the T.S. calculated in (2)
+			for(String module:order){
+				progress.setText("Copying Module "+module+"...");
+				
+				if(stop){ allStop=true; notifyAll(); return; }
+				
+				File base=new File(model.getDestinationPath()+"/"+module);
+				int cont=Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+module), base);
+				
+				progress.setProgress(progress.getProgress()+cont);
+				
+				if(base.exists()){
+					StringReader in=new StringReader(model.getModule(module).toString());
+					File config=new File(model.getDestinationPath()+"/"+module+"/"+module+"Conf."+model.getLanguage());
+					if(replaceIfExists(config)){
+						out=new PrintStream(config);
+						transformXML(in, "res/"+model.getLanguage()+"/xsl/configModule.xsl",out);
+						out.close();
+					}
+
+					//execute script (read if exists the file <module>/<module>.sql)
+					progress.setText("Making database structure for "+module+"...");
+					File sql=new File(model.getDestinationPath()+"/"+module+"/"+module+".sql");
+					if(sql.exists()){
+						StringBuffer query=new StringBuffer();
+						BufferedReader tmp=new BufferedReader(new FileReader(sql));
+						char[] buffer = new char[1024];
+						int aux=0;
+						while((aux=tmp.read(buffer))!=-1) 
+							query.append(buffer,0,aux);
+						
+						if(stop){ allStop=true; notifyAll(); return; }
+						executeScript(query.toString(), model);
+						tmp.close();
+					}
+				}
+			}
+			
 			//4) make DB (db.xsl)
 			progress.setText("Making database structure...");
 			File dbSQL=new File(model.getDestinationPath()+"/db.sql");
@@ -152,10 +197,6 @@ public class Engine extends Model{
 				out.print(dbOut.getBuffer());
 				out.close();
 			}
-
-			conn.close();
-			conn=DriverManager.getConnection("jdbc:mysql://"+model.getDBHost()+"/"+model.getDBSchema(),model.getDBLogin(),model.getDBPassword());
-			progress.setProgress(progress.getProgress()+1);
 			
 			progress.setText("Generating configuration files...");
 			//5) make the DB connection file (connection.xsl). asf for overwrite if exists
@@ -196,44 +237,6 @@ public class Engine extends Model{
 				out.close();
 			}
 			progress.setProgress(progress.getProgress()+1);
-			
-			//9) copy, configure, and dump database for each module following the T.S. calculated in (2)
-			for(String module:order){
-				progress.setText("Copying Module "+module+"...");
-				
-				if(stop){ allStop=true; notifyAll(); return; }
-				
-				File base=new File(model.getDestinationPath()+"/"+module);
-				int cont=Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+module), base);
-				
-				progress.setProgress(progress.getProgress()+cont);
-				
-				if(base.exists()){
-					StringReader in=new StringReader(model.getModule(module).toString());
-					File config=new File(model.getDestinationPath()+"/"+module+"/"+module+"Conf."+model.getLanguage());
-					if(replaceIfExists(config)){
-						out=new PrintStream(config);
-						transformXML(in, "res/"+model.getLanguage()+"/xsl/configModule.xsl",out);
-						out.close();
-					}
-
-					//execute script (read if exists the file <module>/<module>.sql)
-					progress.setText("Making database structure for "+module+"...");
-					File sql=new File(model.getDestinationPath()+"/"+module+"/"+module+".sql");
-					if(sql.exists()){
-						StringBuffer query=new StringBuffer();
-						BufferedReader tmp=new BufferedReader(new FileReader(sql));
-						char[] buffer = new char[1024];
-						int aux=0;
-						while((aux=tmp.read(buffer))!=-1) 
-							query.append(buffer,0,aux);
-						
-						if(stop){ allStop=true; notifyAll(); return; }
-						executeScript(query.toString(), model);
-						tmp.close();
-					}
-				}
-			}
 			
 			progress.setText("Generating entity files...");
 			//10) entities files. ask for overwrite if exists
