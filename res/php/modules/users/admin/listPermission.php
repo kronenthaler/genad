@@ -1,17 +1,21 @@
 <?
 	include_once('../../includes.php');
 	
+	$action = 'VIEW'; //accion a realizar
+	$section = 'Permissions'; //Nombre de la seccion.
+	include_once('../../common/checksession.php');
+	
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
 	
 	$obj=new Permission();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
-	$pageSize=3;
+	$pageSize=20;
 	
-	$criteria=array("u02_id='".$_REQUEST['u02_id']."'"); //parent id
+	$criteria=array(); //parent id
 		
-	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize);
+	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,'u04_id, u03_name');
 		
 	echo '<?xml version="1.0" encoding="utf-8"?>
 		  <?xml-stylesheet type="text/xsl" href="list.xsl"?>

@@ -12,15 +12,5 @@ class UserProfile extends AbstractObject{
 		$this->childs=array(); //childs classes
 		$this->ancestor = ''; //ancestor class
 	}
-	
-	/*function delete($ids){
-		$pk = $this->primarykey;
-		$this->primaryKey = 'u01_id';
-		
-		$flag = parent::delete($ids);
-		
-		$this->primarykey = $pk;
-		return $flag;
-	}*/
 }
 ?>

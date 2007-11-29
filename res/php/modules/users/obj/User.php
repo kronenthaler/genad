@@ -29,6 +29,32 @@ class User extends AbstractObject{
 			return false;
 	}
 	
+	function insert($DATA=NULL){
+		$DATA = $DATA == NULL?$_REQUEST:$DATA;
+
+		if(parent::insert($DATA)){
+			$id = mysql_insert_id();
+			
+			$userProfiles = new UserProfile();
+			$profiles = $DATA['str_u02_id'];
+			$flag = true;
+
+			if(!is_array($profiles)){
+				$flag = $userProfiles->insert(array('str_u01_id'=> $id, 'str_u02_id'=>$profiles));
+			} else {
+				for($i=0; $i<count($profiles) && $flag; $i++)
+					$flag &= $userProfiles->insert(array('str_u01_id' => $id, 'str_u02_id'=>$profiles[$i]));
+			}
+			
+			if(!$flag)
+				$this->error = $userProfiles->error;
+				
+			return $flag;
+		} else {
+			return false;
+		}
+	}
+	
 	function update($id, $DATA=NULL){
 		$DATA = $DATA == NULL?$_REQUEST:$DATA;
 
@@ -49,17 +75,25 @@ class User extends AbstractObject{
 				}
 				
 				if(!$flag)
-					$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
+					$this->error=$userProfiles->error;
 					
 				return $flag;
 			} else {
-				$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
+				$this->error=$userProfiles->error;
 				return false;
 			}
 		} else {
 			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
 			return false;
 		}
+	}
+	
+	function delete($ids){
+		//eliminar todas las referencias de u01u02_has
+		$userProfiles= new UserProfile();
+		$userProfiles->primarykey = 'u01_id';
+		
+		return $userProfiles->delete($ids) && parent::delete($ids);
 	}
 	
 	/**
@@ -69,11 +103,12 @@ class User extends AbstractObject{
 		if($this->userProfiles == NULL)
 			$this->loadProfiles();
 		
-		//logOn("profiles: ".print_r($this->userProfiles,true));
-		
-		$userPermissions = new Permission();
-		$userPermissions = $userPermissions->getList(array('u02_id in ('.implode(',',$this->userProfiles).') GROUP BY u04_id'));
-
+		$userPermissions = new ProfilePermission();
+		$userPermissions->tablename .= ',u03_permissions';
+		if(is_array($this->userProfiles))
+			$userPermissions = $userPermissions->getList(array('u02u03_has.u02_id in ('.implode(',',$this->userProfiles).') AND u02u03_has.u03_id=u03_permissions.u03_id GROUP BY u03_permissions.u03_id'),0,-1,'u04_id ASC');
+		else
+			$userPermissions = $userPermissions->getList(array('u02u03_has.u02_id = '.$this->userProfiles.' AND u02u03_has.u03_id=u03_permissions.u03_id GROUP BY u03_permissions.u03_id'),0,-1,'u04_id ASC');
 		$this->userPermissions = array();
 
 		$prev = $current = '';
@@ -103,7 +138,7 @@ class User extends AbstractObject{
 	function youCanDo($action, $section, $permissions=NULL){
 		if($permissions == NULL)
 			$permissions = $this->userPermissions;
-		
+
 		return $permissions[$section][$action] != NULL;
 	}
 	
@@ -113,7 +148,9 @@ class User extends AbstractObject{
 	function autenticate($login, $password){
 		$this->primarykey = 'u01_login';
 	
-		return $this->load($login) && (base64_encode($password) == $this->u01_password);
+		return $this->load($login) && 
+			   (($this->primarykey='u01_id') != '') && //restore the primary key, just in case
+			   (base64_encode($password) == $this->u01_password);
 	}
 }
 ?>

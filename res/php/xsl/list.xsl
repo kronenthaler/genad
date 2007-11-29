@@ -5,6 +5,19 @@
 	<xsl:template match="/"><![CDATA[<?]]>
 	include_once('../includes.php');
 	
+	<xsl:if test="/entity/permissions/@value != 'none'">
+		<xsl:choose>
+			<xsl:when test="/entity/permissions/@value = 'standard' or /entity/permissions/@value = 'plus'">
+	$action = 'VIEW';
+			</xsl:when>
+			<xsl:otherwise>
+	$action = 'your-action-here';
+			</xsl:otherwise>
+		</xsl:choose>
+	$section = '<xsl:value-of select="//@name"/>';
+	include_once('../common/checksession.php');
+	</xsl:if>
+	
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past

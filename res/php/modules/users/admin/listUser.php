@@ -1,10 +1,9 @@
 <?
 	include_once('../../includes.php');
 	
-	/*//bloque de permisologia
-	$action = 'asas'; //accion a realizar
-	$section = 'Admin'; //Nombre de la seccion.
-	include_once('../common/checksession.php');//*/
+	$action = 'VIEW'; //accion a realizar
+	$section = 'Users'; //Nombre de la seccion.
+	include_once('../../common/checksession.php');
 	
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
@@ -12,7 +11,7 @@
 	
 	$obj=new User();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
-	$pageSize=3;
+	$pageSize=20;
 	
 	$criteria=array(); //filters in the search
 		

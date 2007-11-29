@@ -143,6 +143,7 @@ a {
 
 #content table td.part1{
 	border-bottom: 1px solid #ccc;
+	border-left:  1px solid #ccc;
 }
 #content table td.part2{
 	border: 1px solid #ccc;

@@ -1,5 +1,9 @@
 <?
 	include_once('../../includes.php');
+	
+	$action = strtoupper($_REQUEST['action']);
+	$section = 'Profiles';
+	include_once('../../common/checksession.php');
 		
 	$action =  $_REQUEST['action'];
 	$id = $_REQUEST['id'];

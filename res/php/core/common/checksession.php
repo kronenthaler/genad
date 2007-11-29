@@ -23,7 +23,7 @@ if($permissions == NULL){
 		exit();
 	}
 }
-	
+
 if(!$user->youCanDo($action, $section, $permissions)){
 	writeError('This section requires especial permissions and you haven\'t.');
 	exit();

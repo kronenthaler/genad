@@ -97,7 +97,7 @@
 					  method="post" 
 					  enctype="multipart/form-data"
 					  >
-				<table cellspacing="0" cellpadding="0" border="0" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
+				<table cellspacing="0" cellpadding="0" border="0" style="border-right: 1px solid #ccc;">
 					<xsl:choose>
 						<xsl:when test="count(instance) &gt; 0">
 							<thead>

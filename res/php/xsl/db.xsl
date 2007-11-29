@@ -34,6 +34,19 @@
 			PRIMARY KEY (`<xsl:value-of select="table/@primary-key"/>`)
 		);
 		</xsl:if>
+		
+		#<xsl:value-of select="permissions/@value"/>
+		
+		<xsl:if test="permissions/@value != 'none'">
+		INSERT INTO u04_sections (u04_name) VALUES ('<xsl:value-of select="@name"/>');
+		<xsl:if test="permissions/@value = 'standard' or permissions/@value ='plus'">
+		INSERT INTO u03_permissions (u03_name, u03_action, u02_id, u04_id) VALUES 
+			('View on <xsl:value-of select="@name"/>','VIEW',1, last_insert_ID()),
+			('Add on <xsl:value-of select="@name"/>','ADD',1, last_insert_ID()),
+			('Modify on <xsl:value-of select="@name"/>','MOD',1, last_insert_ID()),
+			('Delete on <xsl:value-of select="@name"/>','DEL',1, last_insert_ID());
+		</xsl:if>	
+		</xsl:if>
 		<xsl:apply-templates select="entity"/>
 	</xsl:template>
 	

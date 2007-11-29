@@ -1,13 +1,17 @@
 <?
 	include_once('../../includes.php');
 	
+	$action = 'VIEW'; //accion a realizar
+	$section = 'Sections'; //Nombre de la seccion.
+	include_once('../../common/checksession.php');
+	
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
 	
 	$obj=new Section();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
-	$pageSize=3;
+	$pageSize=20;
 	
 	$criteria=array(); //filters in the search
 		

@@ -54,7 +54,7 @@
 					<![CDATA[<li><a href="logoff.php"><img src="images/logout.png" align="absmiddle"/>&#160;<b>Log out</b></a></li>
 				</ul>
 				<form action="authenticate.php" method="post" id="login" name="login">
-					<table border="0"> 
+					<table border="0">
 						<tr>
 							<td>Login:</td>
 							<td><input type="text" name="login"/></td>

@@ -56,6 +56,8 @@ class AbstractObject{
 					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
 					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
 					
+					if(is_array($DATA[$keys[$i]])) continue;
+					
 					//repeat preprocessing for other types like upload
 					$query.=($k>0?',':'').$str;
 					$values.=($k>0?',':'').$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
@@ -182,8 +184,8 @@ class AbstractObject{
 		if($orderby!='') $query.= " ORDER BY ".$orderby; 		
 		if($cant!=-1) $query.=" LIMIT ".$ini.",".$cant;
 		
-		//echo $query;
-		logOn($query);
+		//echo $query.'<br/>';
+		//logOn($query);
 		return $this->makeObjects(mysql_query($query));
 	}
 	

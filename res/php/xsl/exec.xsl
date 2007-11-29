@@ -3,7 +3,20 @@
  	<xsl:output method="text" encoding="utf-8" indent="no"/>
 	<xsl:template match="/"><![CDATA[<?]]>
 	include_once('../includes.php');
-		
+	
+	<xsl:if test="/entity/permissions/@value != 'none'">
+		<xsl:choose>
+			<xsl:when test="/entity/permissions/@value = 'standard' or /entity/permissions/@value = 'plus'">
+				$action = strtoupper($_REQUEST['action']);
+			</xsl:when>
+			<xsl:otherwise>
+				$action = 'your-action-here';
+			</xsl:otherwise>
+		</xsl:choose>
+	$section = '<xsl:value-of select="//@name"/>';
+	include_once('../common/checksession.php');
+	</xsl:if>
+	
 	$action =  $_REQUEST['action'];
 	$id = $_REQUEST['id'];
 	$obj = new <xsl:value-of select="//@name"/>();
