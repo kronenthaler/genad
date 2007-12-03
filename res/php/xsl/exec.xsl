@@ -4,7 +4,7 @@
 	<xsl:template match="/"><![CDATA[<?]]>
 	include_once('../includes.php');
 	
-	<xsl:if test="/entity/permissions/@value != 'none'">
+	<xsl:if test="/entity/permissions/@value != ''">
 		<xsl:choose>
 			<xsl:when test="/entity/permissions/@value = 'standard' or /entity/permissions/@value = 'plus'">
 				$action = strtoupper($_REQUEST['action']);

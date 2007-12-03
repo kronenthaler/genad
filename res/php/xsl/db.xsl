@@ -3,11 +3,12 @@
  	<xsl:output method="text" encoding="utf-8"/>
 	
 	<xsl:template match="/">
-		#comentario 1  
-		# comentario 2
 		CREATE DATABASE IF NOT EXISTS `<xsl:value-of select="project/db-server-conf/dev-schema" />` CHARACTER SET utf8;
 		USE `<xsl:value-of select="project/db-server-conf/dev-schema" />`;
-		<xsl:apply-templates select="/project/entities/entity"/> 
+		<xsl:apply-templates select="/project/entities/entity"/>
+		
+		#Set full permissions for the profile Administrator
+		INSERT INTO u02u03_has (u02_id, u03_id) (SELECT 1,u03_id FROM u03_permissions) ON DUPLICATE KEY UPDATE u02_id = 1;
 	</xsl:template>
 	
 	<xsl:template match="entity">
@@ -35,8 +36,7 @@
 		);
 		</xsl:if>
 		
-		#<xsl:value-of select="permissions/@value"/>
-		
+		#Permissions set to: <xsl:value-of select="permissions/@value"/>
 		<xsl:if test="permissions/@value != 'none'">
 		INSERT INTO u04_sections (u04_name) VALUES ('<xsl:value-of select="@name"/>');
 		<xsl:if test="permissions/@value = 'standard' or permissions/@value ='plus'">
