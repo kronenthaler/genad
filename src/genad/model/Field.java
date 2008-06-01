@@ -36,6 +36,8 @@ public class Field implements Serializable{
 		NodeList info=current.getChildNodes();
 		type=current.getAttributes().getNamedItem("type").getTextContent();
 		
+		if(type.equals("primary-key")) return null; //skip
+		
 		fCfg=ConfigManager.getInstance()
 						.getLangConfig(Model.getInstance().getLanguage())
 						.getFieldConfig(type);
@@ -90,6 +92,8 @@ public class Field implements Serializable{
 		//de acuerdo al tipo actual inicializar las opciones con las opciones en el fieldConfig asociado
 		options.clear();
 		
+		if(type.equals("primary-key")) return; //es un campo temporal
+			
 		fCfg=ConfigManager.getInstance()
 						.getLangConfig(Model.getInstance().getLanguage())
 						.getFieldConfig(type);
@@ -167,5 +171,17 @@ public class Field implements Serializable{
 
 	public void cleanOptions() {
 		options.clear();
+	}
+
+	public boolean equals(Object o1){
+		Field o = (Field)o1;
+		return map.equals(o.map);	
+	}
+
+	@Override
+	public int hashCode(){
+		int hash = 7;
+		hash = 97 * hash + (this.map != null ? this.map.hashCode() : 0);
+		return hash;
 	}
 }

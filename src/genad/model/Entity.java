@@ -230,7 +230,7 @@ public class Entity implements Serializable{
 			if(buffer.get(f.getMap())!=null){ repited=true;break; }
 		}
 		
-		if(searchable && !searchable)
+		if(search && !searchable)
 			return Utils.showError("At least one field must be searchable in entity: "+name);
 			
 		if(!justPages && !listable)
@@ -263,6 +263,15 @@ public class Entity implements Serializable{
 			.append(deep+"	<just-schema value=\""+(justSchema?1:0)+"\"/>\n")
 			.append(deep+"	<sortable value=\""+(sortable?1:0)+"\"/>\n")
 			.append(deep+"	<form>\n");
+		
+		//buscar si el campo primarykey esta en la lista de fields, sino escribirlo
+		Field pk=new Field(this);
+		pk.setMap(primaryKey);
+		pk.setType("primary-key");
+		
+		if(!form.contains(pk))
+			ret.append(pk.toString(deep));
+		
 		for(Field f:form)
 			ret.append(f.toString(deep));
 		ret.append(deep+"	</form>\n");

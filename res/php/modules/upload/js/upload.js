@@ -5,6 +5,7 @@ Upload = function(mainform){
 	var mainForm = mainform; /* MUST HAVE an absolute URL*/
 	var list = new dojo.collections.ArrayList();
 	var answers = new dojo.collections.ArrayList();
+	var sender = _sender;
 	
 	this.EMPTY = 0;
 	this.READY = 1;
@@ -70,7 +71,8 @@ Upload = function(mainform){
 			if(action.indexOf("://")==-1) //do the action absolute for the bind
 				form.setAttribute('action', window.location.href.substring(0, window.location.href.lastIndexOf('/')+1) + action);
 
-			dojo.io.bind({
+			sender();
+			/*dojo.io.bind({
 				formNode: form,
 				load: 	function(type, data, evt){ transform(evt.responseXML, 'list.xsl','center');},
 				error: 	function(type, error){ alert(error.message); },

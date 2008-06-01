@@ -86,7 +86,7 @@ function showNextRow(comp){
  *	@param	targetDiv	The ID of the container component to render the output.
  */
 function transform(XMLdoc,targetStyle,targetDiv){
- 	if(window.XMLHttpRequest) {
+ 	if(window.navigator.appName != 'Microsoft Internet Explorer') {
 		var xsltProcessor = new XSLTProcessor();
 		var request = new XMLHttpRequest();
 		request.open("GET",targetStyle , false);
@@ -95,13 +95,17 @@ function transform(XMLdoc,targetStyle,targetDiv){
 		xsltProcessor.importStylesheet(request.responseXML)
 				
 		fragment = xsltProcessor.transformToFragment(XMLdoc,document);
+		
 	}else{
 		// Load the XSL
-		var xsl = new ActiveXObject("Microsoft.XMLDOM");
-		xsl.async = false;
-		xsl.load(targetStyle);
-
-		fragment=XMLDoc.transformNode(xsl);
+		//var xsl = new ActiveXObject("Microsoft.XMLDOM");
+		var xsl = new ActiveXObject("Msxml2.FreeThreadedDOMDocument.3.0");
+		xsl.async = "false"
+		xsl.load(targetStyle)
+		fragment=XMLdoc.transformNode(xsl);
+		
+		targetDiv = document.getElementById(targetDiv);
+		targetDiv.innerHTML = fragment;
 	}
 	
 	//remove all the child nodes of the target div, and append the new processed root.
@@ -181,8 +185,19 @@ function isValidRTE(input, name, label, required){
 	return true;
 }
 
+function showHide(id){	
+	var elem= document.getElementById(id);
+	if(elem.style.display == 'none')
+		elem.style.display = 'block';
+	else
+		elem.style.display = 'none';
+}
+
 function clean(q){
 	for(var x in q)
 		tinyMCE.removeMCEControl(x);
 	return true;
+}
+function reload(doc){
+	document.location.reload();
 }

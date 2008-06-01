@@ -25,6 +25,7 @@ class AbstractObject{
 	var $ancestor = '';						/** name of the ancestor class in the hierarchy */
 	var $title = '';						/** title of this entity in the list or mod pages */
 	var $error = '';
+	var $id = 0;							/** last id inserted */
 	
 	/**
 	 *	Initialize this object with the data in the record pointed by $id.
@@ -55,10 +56,8 @@ class AbstractObject{
 					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
 					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
 					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
+					if(is_array($DATA[$keys[$i]])) continue; //array skip it
 					
-					if(is_array($DATA[$keys[$i]])) continue;
-					
-					//repeat preprocessing for other types like upload
 					$query.=($k>0?',':'').$str;
 					$values.=($k>0?',':'').$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
@@ -71,6 +70,7 @@ class AbstractObject{
 			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
 			return false;
 		}
+		$this->id = mysql_insert_id();
 		return true;
 	}
 	
@@ -93,6 +93,7 @@ class AbstractObject{
 					if($this->fields[$str][TYPE]=='password') $DATA[$keys[$i]]=base64_encode($DATA[$keys[$i]]);
 					if($this->fields[$str][TYPE]=='time') $DATA[$keys[$i]]=substr(str_replace(':','',$DATA[$keys[$i]]),0,6);
 					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
+					if(is_array($DATA[$keys[$i]])) continue; //array skip it
 					 
 					$query.=($k>0?',':'').$str."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars(''.$DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
@@ -118,7 +119,8 @@ class AbstractObject{
 		if(count($ids)==0) return true;
 		if(count($this->childs)>0){
 			$allids=array();//of arrays
-			$objs=array();//of wkObjects
+			$objs=array();//of AbstractObjects
+			
 			for($i=0,$n=count($this->childs);$i<$n;$i++){
 				eval("\$objs[\$i]=new ".$this->childs[$i]."();");
 				$allids[$i]=array();
@@ -247,7 +249,8 @@ class AbstractObject{
 			for($j=0,$m=count($keys);$j<$m;$j++)
 				$str[$j].=($i>0?' AND ':'').$keys[$j]." like'%".$toks[$i]."%'";
 
-		array_push($criteria,'(('.implode(' ) OR (',$str).'))');	
+		if(count($keys)>0)
+			array_push($criteria,'(('.implode(' ) OR (',$str).'))');	
 			
 		return $this->getList($criteria,$ini,$cant,$orderby);
 	}
@@ -265,6 +268,9 @@ class AbstractObject{
 		return $search;
 	}
 	
+	/**
+	 *	@return a querystring-like with the ids of the ancestors of this instance
+	 */
 	function getAncestorsIds($array=NULL){
 		if($array==NULL) $array=$_REQUEST;
 		
@@ -279,63 +285,6 @@ class AbstractObject{
 
 	function getError(){
 		return $this->error->description;
-	}
-	
-	/**
-	 *  @deprecated
-	 *	Encode each password field contained in $array using base64 encode algorithm
-	 */
-	function encodePasswords(&$array){
-		$pass=$this->getFieldsByType(TYPE,'password');
-		for($i=0,$n=count($pass);$i<$n;$i++){
-			$keys=array_keys($array);
-			for($j=0,$m=count($keys);$j<$m;$j++){
-				for($k=0,$p=count($this->prefixes);$k<$p;$k++){
-					if(substr($keys[$j],strlen($this->prefixes[$k])) == $pass[$i]){
-						$array[$keys[$j]]=base64_encode($array[$keys[$j]]);
-						break;
-					}
-				}
-			}
-		}
-	}
-	
-	/**
-	 *  @deprecated
-	 *	Format each time to remove ':' from the string.
-	 */
-	function formatTimes(&$array){
-		$time=$this->getFieldsByType(TYPE,'time');
-		for($i=0,$n=count($time);$i<$n;$i++){
-			$keys=array_keys($array);
-			for($j=0,$m=count($keys);$j<$m;$j++){
-				for($k=0,$p=count($this->prefixes);$k<$p;$k++){
-					if(substr($keys[$j],strlen($this->prefixes[$k])) == $time[$i]){
-						$array[$keys[$j]]=substr(str_replace(':','',$array[$keys[$j]]),0,6);
-						break;
-					}
-				}
-			}
-		}
-	}
-	
-	/**
-	 *  @deprecated 
-	 *	Format each datetime to remove ':' from the string.
-	 */
-	function formatDatetimes(&$array){
-		$time=$this->getFieldsByType(TYPE,'datetime');
-		for($i=0,$n=count($time);$i<$n;$i++){
-			$keys=array_keys($array);
-			for($j=0,$m=count($keys);$j<$m;$j++){
-				for($k=0,$p=count($this->prefixes);$k<$p;$k++){
-					if(substr($keys[$j],strlen($this->prefixes[$k])) == $time[$i]."_time"){
-						$array[substr($keys[$j],0,strlen($keys[$j])-5)]=$array[substr($keys[$j],0,strlen($keys[$j])-5).'_date'].substr(str_replace(':','',$array[$keys[$j]]),0,6);
-						break;
-					}
-				}
-			}
-		}
 	}
 	
 	//<!--------------------------------- METHODS FOR XML GENERATION ---------------------------------------------->
@@ -437,6 +386,9 @@ class AbstractObject{
 		return $ret;
 	}
 	
+	/**
+	 *	@return the XML for the form rendering
+	 */
 	function getXMLForm($options){
 		//sort the field by their positions in the form.
 		uasort($this->fields, create_function('$a,$b','return $a[ONFORMPOS] - $b[ONFORMPOS];'));
@@ -471,5 +423,7 @@ class AbstractObject{
 		$ret.='</fields>';
 		return $ret;
 	}
+	
+	//<!--------------------------------- METHODS FOR OPEN SOCIAL XML GENERATION ---------------------------------------------->
 }
 ?>

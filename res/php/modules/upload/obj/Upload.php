@@ -59,18 +59,18 @@ class Upload{
 		
 		$fileName="";
 		if($ARRAY[$prev]=="" && $ARRAY[$hdd]!=""){
-			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.$this->opts[DEST_PATH]."/".$name.$ext);
+			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.'/'.$this->opts[DEST_PATH]."/".$name.$ext);
 			$fileName=$this->opts[DEST_PATH]."/".$name.$ext;
 		}else if($ARRAY[$prev]!="" && $ARRAY[$hdd]==""){
-			$this->deleteFile(ROOT.$ARRAY[$prev]);
+			$this->deleteFile(ROOT.'/'.$ARRAY[$prev]);
 		}else if($ARRAY[$prev]!="" && $ARRAY[$hdd]!=""){
-			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.$ARRAY[$prev]);
+			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.'/'.$ARRAY[$prev]);
 			$fileName=$ARRAY[$prev];
 		}else{
 			return new Error(666,'Unexpected error');
 		}
 		
-		if(!file_exists(ROOT.$fileName))
+		if(!file_exists(ROOT.'/'.$fileName))
 			return new Error(-9, "File not moved");
 			
 		//chmod(ROOT.$fileName,0755);	//can download the file from FTP client.

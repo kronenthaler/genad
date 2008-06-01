@@ -22,7 +22,7 @@ Cronograma:
 	+ cambiar el xsl de llist para renderizar los checks como imagenes con links que redireccionen a la misma pagina.
 	+ confirm al eliminar.
 	+ campos de tipo date, datetime o time deben transformarse a una forma legible
-	- boton o algo en la navegacion para volver a la pagina anterior, cuando se tienen ancestros en la jerarquia.
+	+ boton o algo en la navegacion para volver a la pagina anterior, cuando se tienen ancestros en la jerarquia.
 
 + exec:
 	+ pagina exec tradicional add, mod, delete

@@ -2,7 +2,21 @@
 define('KB',1024);
 define('MB',KB*KB);
 define('GB',MB*MB);
-  
+
+$months = array('01'=>'Enero',
+				'02'=>'Febrero',
+				'03'=>'Marzo',
+				'04'=>'Abril',
+				'05'=>'Mayo',
+				'06'=>'Junio',
+				'07'=>'Julio',
+				'08'=>'Agosto',
+				'09'=>'Septiembre',
+				'10'=>'Octubre',
+				'11'=>'Noviembre',
+				'12'=>'Diciembre');
+$days = array('','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');  
+
  /**
  *	Transform a $date of type $type using the string $format 
  *	Basically replace the placeholders for the equivalents in $date accoding to $type 
@@ -51,7 +65,7 @@ function secureInclude($path){
 		include_once(ROOT.'/'.$path);
 }
 
-//loggind on file
+//logging on file
 function logOn($str){
 	$f = fopen(ROOT.'/archivos/log.txt', 'a');
 	fprintf($f,"%s",$str);
@@ -64,7 +78,7 @@ function writeError($msg){
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
 	
 	echo '<?xml version="1.0" encoding="utf-8"?>';
-	echo '<?xml-stylesheet type="text/xsl" href="list.xsl"?>';
-	echo '<error href="'.$_SERVER['HTTP_REFERER'].'">'.$msg.'</error>';
+	echo '<!--?xml-stylesheet type="text/xsl" href="list.xsl"?-->';
+	echo '<error href="'.str_replace("&","&amp;",$_SERVER['HTTP_REFERER']).'">'.$msg.'</error>';
 }
 ?>

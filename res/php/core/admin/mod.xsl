@@ -42,7 +42,15 @@
  	
  	<xsl:template match="fields">
  		<script>
-			var upload=new Upload('frm_<xsl:value-of select="//@name"/>');
+			function sender(){
+				dojo.io.bind({
+					formNode: dojo.byId("frm_<xsl:value-of select="//@name"/>"),
+					load: 	function(type, data, evt){ transform(evt.responseXML, 'list.xsl','center');},
+					error: 	function(type, error){ alert(error.message); },
+					mimetype: 'text/xml'
+				});
+			}
+			var upload=new Upload('frm_<xsl:value-of select="//@name"/>',sender);
  		</script>
 		<div id="content">
 			<form name="frm_{//@name}"
@@ -293,7 +301,7 @@
 		</tr>
  	</xsl:template>
  	
- 	<xsl:template match="file">
+ 	<xsl:template match="file|image">
  		<xsl:variable name="params">
  		<xsl:for-each select="option">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="@value"/></xsl:for-each>
 		</xsl:variable>
@@ -320,6 +328,6 @@
 		</tr>
  	</xsl:template>
  	
- 	<xsl:template match="image">
- 	</xsl:template>
+ 	<!--xsl:template match="image">
+ 	</xsl:template-->
 </xsl:stylesheet>

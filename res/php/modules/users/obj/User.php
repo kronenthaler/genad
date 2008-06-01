@@ -145,7 +145,7 @@ class User extends AbstractObject{
 	/**
 	 *	Autentica un usuario en base al login y el password no-encriptado 
 	 */
-	function autenticate($login, $password){
+	function authenticate($login, $password){
 		$this->primarykey = 'u01_login';
 	
 		return $this->load($login) && 

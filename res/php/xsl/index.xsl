@@ -13,6 +13,7 @@
 		<script src="../js/dojo/dojo.js"></script>
 		<script src="../js/tinymce/tiny_mce.js"></script>
 		<script src="../js/jquery.js"></script>
+		<script src="../js/jquery.xslt.js"></script>
 		<script src="../js/utils.js"></script>
 		<script src="../upload/js/upload.js"></script>
 		<script src="js/validators.js"></script>

@@ -4,7 +4,7 @@
 body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
 
 ul{
-	list-style-type: disc; 
+	list-style-type: none; 
 	width: 142px;
 }
 
