@@ -67,7 +67,7 @@ function secureInclude($path){
 
 //logging on file
 function logOn($str){
-	$f = fopen(ROOT.'/archivos/log.txt', 'a');
+	$f = fopen(ROOT.'/files/log.txt', 'a');
 	fprintf($f,"%s",$str);
 	fclose($f);
 }

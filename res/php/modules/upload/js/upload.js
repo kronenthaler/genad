@@ -1,7 +1,7 @@
 dojo.require("dojo.collections.ArrayList");
 dojo.require("dojo.io.*");
 
-Upload = function(mainform){
+Upload = function(mainform,_sender){
 	var mainForm = mainform; /* MUST HAVE an absolute URL*/
 	var list = new dojo.collections.ArrayList();
 	var answers = new dojo.collections.ArrayList();

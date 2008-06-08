@@ -1,57 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1192213605305" by="kronenthaler" language="php">
+<project lastsaved="1212960775076" by="kronenthaler" language="php">
 	<file-server-conf>
-		<base-directory><![CDATA[/usr/share/resin/webapps/temp/]]></base-directory>
+		<base-directory><![CDATA[/var/www/testing]]></base-directory>
 	</file-server-conf>
 	<db-server-conf>
 		<dev-host><![CDATA[localhost]]></dev-host>
 		<dev-user><![CDATA[root]]></dev-user>
 		<dev-password><![CDATA[]]></dev-password>
-		<dev-schema><![CDATA[temp]]></dev-schema>
+		<dev-schema><![CDATA[testing]]></dev-schema>
 		<prod-host><![CDATA[null]]></prod-host>
 		<prod-user><![CDATA[null]]></prod-user>
 		<prod-password><![CDATA[]]></prod-password>
 		<prod-schema><![CDATA[null]]></prod-schema>
 	</db-server-conf>
 	<modules>
-		<module name="wkrte">
+		<module name="upload">
+			<option name="DEF_PREFIX" value="arc_"/>
+			<option name="DEF_MAX_SIZE" value="(100*MB)"/>
+			<option name="DEF_MAX_THUMB_HEIGHT" value="50"/>
+			<option name="DEF_MAX_IMG_WIDTH" value="150"/>
+			<option name="DEF_MAX_IMG_HEIGHT" value="150"/>
+			<option name="DEF_DEST_PATH" value="archivos/"/>
+			<option name="DEF_FORCE_SCALE" value=""/>
+			<option name="DEF_ASPECT_RATIO" value=""/>
+			<option name="DEF_CREATE_THUMB" value=""/>
+			<option name="DEF_ENABLE_PREVIEW" value=""/>
+			<option name="DEF_VALID_EXTS" value="*"/>
+			<option name="DEF_MAX_THUMB_WIDTH" value="50"/>
+		</module>
+		<module name="rte">
 			<option name="TOOL_BAR" value=""/>
 		</module>
-		<module name="wklogs">
+		<module name="obj">
 		</module>
-		<module name="upload">
-			<option name="MAX_SIZE" value="(100*MB)"/>
-			<option name="MAX_THUMB_HEIGHT" value="50"/>
-			<option name="FORCE_SCALE" value=""/>
-			<option name="MAX_IMG_HEIGHT" value="150"/>
-			<option name="VALID_EXTENSIONS" value="*"/>
-			<option name="IMAGES_PATH" value="images/"/>
-			<option name="PREFIX" value="arc_"/>
-			<option name="DEST_PATH" value="archivos/"/>
-			<option name="CREATE_THUMB" value=""/>
-			<option name="ASPECT_RATIO" value=""/>
-			<option name="MAX_IMG_WIDTH" value="150"/>
-			<option name="MAX_THUMB_WIDTH" value="50"/>
-			<option name="CONTROL_TYPE" value="IMAGE"/>
-			<option name="ENABLE_PREVIEW" value=""/>
-		</module>
-		<module name="wkobj">
-		</module>
-		<module name="wkusers">
+		<module name="users">
 		</module>
 	</modules>
 	<entities>
-		<entity name="Prueba" title="Prueba">
-			<table name="t01_test" primary-key="t01_id"/>
+		<entity name="Car" title="Carros">
+			<table name="cars" primary-key="car_id"/>
+			<permissions value=""/>
 			<splitpage value="0"/>
 			<search value="0"/>
 			<just-pages value="0"/>
 			<just-schema value="0"/>
 			<sortable value="0"/>
 			<form>
+				<field type="primary-key">
+					<label><![CDATA[null]]></label>
+					<db-field><![CDATA[car_id]]></db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>0</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
 				<field type="textfield">
-					<label><![CDATA[Name]]></label>
-					<db-field><![CDATA[t01_name]]></db-field>
+					<label><![CDATA[Modelo]]></label>
+					<db-field><![CDATA[model]]></db-field>
 					<required>1</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
@@ -59,36 +66,24 @@
 					<options>
 					</options>
 				</field>
-				<field type="file">
-					<label><![CDATA[File1]]></label>
-					<db-field><![CDATA[t01_file1]]></db-field>
-					<required>0</required><!-- 0|1 -->
+				<field type="image">
+					<label><![CDATA[Foto]]></label>
+					<db-field><![CDATA[photo]]></db-field>
+					<required>1</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
 					<options>
-						<option name="CONTROL_TYPE" value="BUTTON"/>
-						<option name="DEST_PATH" value="archivos/"/>
-						<option name="PREFIX" value="arc_"/>
-						<option name="VALID_EXTENSIONS" value="*"/>
-						<option name="IMAGES_PATH" value="images/"/>
-						<option name="MAX_SIZE" value="(100*MB)"/>
 					</options>
 				</field>
-				<field type="file">
-					<label><![CDATA[File2]]></label>
-					<db-field><![CDATA[t01_file2]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
+				<field type="datetime">
+					<label><![CDATA[Fecha]]></label>
+					<db-field><![CDATA[date]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>0</searchable><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
 					<options>
-						<option name="CONTROL_TYPE" value="BUTTON"/>
-						<option name="DEST_PATH" value="archivos/"/>
-						<option name="PREFIX" value="arc_"/>
-						<option name="VALID_EXTENSIONS" value="*"/>
-						<option name="IMAGES_PATH" value="images/"/>
-						<option name="MAX_SIZE" value="(100*MB)"/>
 					</options>
 				</field>
 			</form>

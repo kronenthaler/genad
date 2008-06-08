@@ -79,7 +79,7 @@
 				<option name="DEF_MAX_SIZE" value="(100*MB)" default="500"/>
 				<option name="DEF_VALID_EXTS" value="*" />
 				<option name="DEF_PREFIX" value="arc_" />
-				<option name="DEF_DEST_PATH" value="/archivos/" />
+				<option name="DEF_DEST_PATH" value="files/" />
 				<!-- images DEFAULTS -->
 				<option name="DEF_MAX_THUMB_HEIGHT" value="50" />
 				<option name="DEF_FORCE_SCALE" value="true|false" />

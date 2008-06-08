@@ -67,11 +67,14 @@ class Upload{
 			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.'/'.$ARRAY[$prev]);
 			$fileName=$ARRAY[$prev];
 		}else{
+			logOn('Unexpected error.\n');
 			return new Error(666,'Unexpected error');
 		}
 		
-		if(!file_exists(ROOT.'/'.$fileName))
+		if(!file_exists(ROOT.'/'.$fileName)){
+			logOn('File not moved:'.$fileName.'\n');
 			return new Error(-9, "File not moved");
+		}
 			
 		//chmod(ROOT.$fileName,0755);	//can download the file from FTP client.
 			
