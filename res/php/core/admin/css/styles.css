@@ -230,7 +230,7 @@ a {
 	width: 127px;
 	cursor: pointer;
 	border-bottom: 1px dotted #999 ;
-	background-image: url('images/close.gif');
+	/*background-image: url('images/close.gif');*/
 	background-repeat: no-repeat;
 	background-position: left;
 	padding-left: 15px;

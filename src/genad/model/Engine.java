@@ -246,10 +246,15 @@ public class Engine extends Model{
 		}catch(RuntimeException e){
 			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
 		}catch(Exception e){
+			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
 			e.printStackTrace();
 		}finally{
 			if(conn!=null)
-				try{conn.close();}catch(Exception e){Utils.showError("Warning: The connection cannot be closed. The database server is running?");}
+				try{
+					conn.close();
+				}catch(Exception e){
+					Utils.showError("Warning: The connection cannot be closed. The database server is running?");
+				}
 		}
 	}
 	

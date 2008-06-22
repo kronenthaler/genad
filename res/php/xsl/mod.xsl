@@ -53,6 +53,8 @@
 			adicionalmente los de configuracion -->
 		<xsl:choose>
 		<!-- ignore: textfield, integer, decimal, textarea -->	
+		<xsl:when test="@type = 'richtext'">
+		$options["<xsl:value-of select="db-field"/>"]=array('toolbar'=>'<xsl:value-of select="options/option/@value"/>');</xsl:when>
 		<xsl:when test="@type = 'hidden'">
 		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_');</xsl:when>
 		<xsl:when test="@type = 'time'">

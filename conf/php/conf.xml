@@ -92,9 +92,10 @@
 			</options>
 		</module>
 		<module name="rte" mandatory="1">
-			<options>
-				<option name="TOOL_BAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons" />
-			</options>
+			<!-- options moved to the field -->
+			<!--options> 
+				<option name="TOOL_BAR" value="Basic|Html|Default" />
+			</options-->
 		</module>
 	</modules>
 	
@@ -135,7 +136,7 @@
 		<field type="datetime" visible="true" listable="true" searchable="true" editable="false" />
 		<field type="email" visible="true" listable="true" searchable="true" editable="false" />
 		<field type="richtext" visible="true" listable="false" searchable="true" editable="false" >
-			<option name="TOOLBAR" value="Basic|html|Default|richtext|richtext_with_emoticons_horario|richtext_with_emoticons|" default="Default"/>
+			<option name="TOOLBAR" value="Basic|Html|Default" default="Default"/>
 		</field>
 		<field type="select" visible="true" listable="true" searchable="true" editable="true" />
 		<field type="textarea" visible="true" listable="false" searchable="true" editable="false" >

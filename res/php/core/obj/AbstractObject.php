@@ -58,14 +58,14 @@ class AbstractObject{
 					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
 					if(is_array($DATA[$keys[$i]])) continue; //array skip it
 					
-					$query.=($k>0?',':'').$str;
+					$query.=($k>0?',':'').'`'.$str.'`';
 					$values.=($k>0?',':'').$this->bounds[$j].addslashes(stripslashes(htmlspecialchars($DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
 				}
 			}
 		}
 		$query.=") ".$values.")";
-		//echo $query;
+		//logOn($query);
 		if(!mysql_query($query)){
 			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
 			return false;
@@ -95,13 +95,13 @@ class AbstractObject{
 					if($this->fields[$str][TYPE]=='datetime') $DATA[$keys[$i]]=$DATA[$keys[$i]."_date"].substr(str_replace(':','',$DATA[$keys[$i]."_time"]),0,6);
 					if(is_array($DATA[$keys[$i]])) continue; //array skip it
 					 
-					$query.=($k>0?',':'').$str."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars(''.$DATA[$keys[$i]]))).$this->bounds[$j];
+					$query.=($k>0?',':'').'`'.$str.'`'."=".$this->bounds[$j].addslashes(stripslashes(htmlspecialchars(''.$DATA[$keys[$i]]))).$this->bounds[$j];
 					$k++;
 				}
 			}
 		}
 		$query.=$values;
-		//echo $query;
+		//logOn($query);
 		if(!mysql_query($query)){
 			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
 			return false;
@@ -247,7 +247,7 @@ class AbstractObject{
 		
 		for($i=0,$n=count($toks);$i<$n;$i++)
 			for($j=0,$m=count($keys);$j<$m;$j++)
-				$str[$j].=($i>0?' AND ':'').$keys[$j]." like'%".$toks[$i]."%'";
+				$str[$j].=($i>0?' AND ':'').'`'.$keys[$j]."` like '%".$toks[$i]."%'";
 
 		if(count($keys)>0)
 			array_push($criteria,'(('.implode(' ) OR (',$str).'))');	
@@ -424,6 +424,6 @@ class AbstractObject{
 		return $ret;
 	}
 	
-	//<!--------------------------------- METHODS FOR OPEN SOCIAL XML GENERATION ---------------------------------------------->
+	//<!--------------------------------- METHODS FOR OTHER XML GENERATION ---------------------------------------------->
 }
 ?>

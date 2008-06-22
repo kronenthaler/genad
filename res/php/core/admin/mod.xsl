@@ -13,7 +13,7 @@
  		<!--html><head>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 				<script src="../js/dojo/dojo.js"></script>
-				<script src="../js/tinymce/tiny_mce.js"></script>
+				<script src="../js/fckeditor/fckeditor.js"></script>
  				<script src="../js/utils.js"></script>
 				<script src="js/validators.js"></script>
  				<script src="../upload/js/upload.js"></script>
@@ -220,12 +220,19 @@
 			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<input type="hidden" name="str_{@map}" id="str_{@map}" />
-				<div id="rte_{@map}"><xsl:value-of select="."/></div>
+				<textarea id="rte_{@map}"><xsl:value-of select="."/></textarea>
 				<script type="text/javascript">
 					dojo.addOnLoad(function(){
-						queue['rte_<xsl:value-of select="@map"/>']=1;
+						//var div = document.getElementById("rte_<xsl:value-of select="@map"/>");
+						var fck = new FCKeditor("rte_<xsl:value-of select="@map"/>");
+						fck.BasePath = "../js/fckeditor/" ;
+						fck.ToolbarSet = '<xsl:value-of select="@toolbar"/>';
+						fck.ReplaceTextarea();
+						//div.innerHTML = fck.CreateHtml();
+						
+						/*queue['rte_<xsl:value-of select="@map"/>']=1;
 						tinyMCE.execCommand('mceAddControl', true, 'rte_<xsl:value-of select="@map"/>');
-						tinyMCE.setContent(tinyMCE.entityDecode(tinyMCE.getContent('rte_<xsl:value-of select="@map"/>')));
+						tinyMCE.setContent(tinyMCE.entityDecode(tinyMCE.getContent('rte_<xsl:value-of select="@map"/>')));*/
 					});
 				</script>
 			</td>
@@ -321,8 +328,12 @@
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">View File</a>
 				</xsl:if>
-				<iframe id="if_{@map}" name="if_{@map}" src="../upload/component.php?name={@map}{$params}" scrolling="no" frameborder="0" width="100%" height="25px"/>
-				<!--input type="file" name="file_{@map}" id="file_{@map}" onclick="dojo.byId('str_{@map}').value='changed';"/-->
+				<iframe id="if_{@map}" name="if_{@map}" 
+						src="../upload/component.php?name={@map}{$params}" 
+						scrolling="no" 
+						frameborder="0" 
+						width="100%" 
+						height="25px"/>
 				<input type="hidden" name="str_{@map}" id="str_{@map}" value="{$prev}"/>
 			</td>
 		</tr>

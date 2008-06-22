@@ -11,7 +11,7 @@
 		
 		<link href="css/styles.css" rel="stylesheet" type="text/css"/>
 		<script src="../js/dojo/dojo.js"></script>
-		<script src="../js/tinymce/tiny_mce.js"></script>
+		<script src="../js/fckeditor/fckeditor.js"></script>
 		<script src="../js/jquery.js"></script>
 		<script src="../js/jquery.xslt.js"></script>
 		<script src="../js/utils.js"></script>
@@ -39,7 +39,7 @@
 				});
 			});
 			
-			tinyMCE.init({mode: 'none', theme:'simple'});
+			//tinyMCE.init({mode: 'none', theme:'simple'});
 		</script>
 	</head>
 	<body>

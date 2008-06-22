@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1212960775076" by="kronenthaler" language="php">
+<project lastsaved="1214174016113" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/var/www/testing]]></base-directory>
 	</file-server-conf>
@@ -20,7 +20,7 @@
 			<option name="DEF_MAX_THUMB_HEIGHT" value="50"/>
 			<option name="DEF_MAX_IMG_WIDTH" value="150"/>
 			<option name="DEF_MAX_IMG_HEIGHT" value="150"/>
-			<option name="DEF_DEST_PATH" value="archivos/"/>
+			<option name="DEF_DEST_PATH" value="files/"/>
 			<option name="DEF_FORCE_SCALE" value=""/>
 			<option name="DEF_ASPECT_RATIO" value=""/>
 			<option name="DEF_CREATE_THUMB" value=""/>
@@ -66,6 +66,28 @@
 					<options>
 					</options>
 				</field>
+				<field type="richtext">
+					<label><![CDATA[Otro]]></label>
+					<db-field><![CDATA[asdf]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
+					<options>
+						<option name="TOOLBAR" value="Default"/>
+					</options>
+				</field>
+				<field type="richtext">
+					<label><![CDATA[Fecha]]></label>
+					<db-field><![CDATA[desc]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
+					<options>
+						<option name="TOOLBAR" value="Default"/>
+					</options>
+				</field>
 				<field type="image">
 					<label><![CDATA[Foto]]></label>
 					<db-field><![CDATA[photo]]></db-field>
@@ -73,16 +95,6 @@
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="datetime">
-					<label><![CDATA[Fecha]]></label>
-					<db-field><![CDATA[date]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>1</searchable><!-- 0|1 -->
 					<options>
 					</options>
 				</field>

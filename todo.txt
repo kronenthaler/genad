@@ -1,3 +1,5 @@
+- hacer un dialogo que revise todos los archivos que pueden ser sobreescritos y marcar los que se desean sobreescribir. 
+
 + guardar las configuraciones de los Fields y los Modules.
 
 + cambiar los toString de + por StringBuffer.append
