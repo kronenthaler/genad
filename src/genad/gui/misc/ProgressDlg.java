@@ -1,6 +1,9 @@
 package genad.gui.misc;
 
+import java.util.*;
+
 import genad.*;
+import genad.gui.*;
 import genad.model.*;
 
 /**
@@ -9,6 +12,7 @@ import genad.model.*;
  */
 public class ProgressDlg extends javax.swing.JDialog implements View{
 	private Engine engine;
+	private Thread runner;
 	
 	public ProgressDlg(java.awt.Frame parent, boolean modal) {
 		super(parent, modal);
@@ -89,17 +93,23 @@ public class ProgressDlg extends javax.swing.JDialog implements View{
 	}
 
 	public void attachToModel(Model subject){ 
-		//este model deberia ser una instancia de engine
-		if(subject instanceof Engine){
+		if(subject instanceof Engine){ //must be an Engine instance.
 			engine=(Engine)subject;
 			final Engine e=engine;
 			e.attachView(this);
-			new Thread(new Runnable(){
+			runner = new Thread(new Runnable(){
 				public void run(){
-					e.generate();
+					ArrayList<DelayedFile> files=e.generate();
+					if(!e.wasStopped()){
+						if(files!=null && files.size()!=0)
+							new ReplaceFilesDlg(genad.gui.Main.getInstance(), true, files).setVisible(true);
+						Utils.showInformation("Generation complete successfully.");
+					}else
+						Utils.showWarning("Generation aborted by user.");
 					setVisible(false);
 				}
-			}).start();
+			});
+			runner.start();
 		}
 	}
 	

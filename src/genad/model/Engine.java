@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.*; 
 import javax.swing.*;
 
-//import org.w3c.dom.*;
+import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
@@ -18,7 +18,7 @@ import genad.gui.misc.*;
 
 /**
  *  copy and generate the CRUD pages for the entities applying xsl to simples xml files.
- *	the engine can be extends of Model to attach the view for show the progress or any other event 
+ *	the engine extends of Model to attach the view for show the progress or any other event 
  *	@author kronenthaler
  */
 public class Engine extends Model{
@@ -27,9 +27,11 @@ public class Engine extends Model{
 	private Model model;
 	private ProgressDlg progress;
 	private boolean stop=false,allStop=false;
+	private ArrayList<DelayedFile> createLater;
 
 	public Engine(ProgressDlg p){
 		progress=p;
+		createLater =new ArrayList<DelayedFile>();
 	}
 	
 	public void transformXML(String xml, String xsl, OutputStream out){
@@ -95,22 +97,24 @@ public class Engine extends Model{
 	public void setModel(Model m){model=m;}
 	
 	/**
-	calcular # archivos a copiar
-	ordenamiento topologico de los modulos
-	copiar archivos base => estructura de directorios
-	generar BD (bd.xsl)
-	generar js (js.xsl)
-	generar archivo de includes (includes.xsl)
-	generar archivo de conexion a BD (connection.xsl)
+	Calculate # of files to copy
+	Topological sort of the modules (resolve dependencies)
+	Copy base files 
 	foreach Module
-		copiar modulo
-		config modulo (configModule.xsl)1
-		execute sql script
-	generar entidades (mod.xsl, list.xsl, exec.xsl, obj.xsl)
-		usan un xml modificado para poder generar todos los archivos, el nuevo xml es basicamente el mismo que se usa para
-		definir cada entidad pero con un tag <parent id="primary-key" class="ClassName"/>
+		Copy module
+		Config module (configModule.xsl)1
+		Execute sql script
+	Generate BD (bd.xsl)
+	Generate js (js.xsl)
+	Generate includes files (includes.xsl)
+	Generate DB connection file (connection.xsl)
+	
+	Generate entities (mod.xsl, list.xsl, exec.xsl, obj.xsl)
+		Uses a modified XML of the project, in order to generate all the files needed.
+		The new XML is basically the same used to define each entity, with a extra tag
+		<parent id="primary-key" class="ClassName"/>
 	*/
-	public synchronized void generate(){
+	public synchronized ArrayList<DelayedFile> generate(){
 		try{
 			PrintStream out=null;
 			
@@ -132,7 +136,7 @@ public class Engine extends Model{
 			//2) topological sort, which module must be first that other one
 			String[] order=Utils.topologicalSort(Utils.convert(model.getModules()), ConfigManager.getInstance().getLangConfig(model.getLanguage()));
 			
-			if(stop){ allStop=true; notifyAll(); return; }
+			if(stop){ allStop=true; notifyAll(); return null; }
 			//3) copy base files (basic structure and core inmutable files)
 			Utils.copyDirectory(new File("res/"+model.getLanguage()+"/core"), new File(model.getDestinationPath()));
 			progress.setText("Copying files "+coreFiles+"/"+(coreFiles+moduleFiles)+"...");
@@ -149,7 +153,7 @@ public class Engine extends Model{
 			for(String module:order){
 				progress.setText("Copying Module "+module+"...");
 				
-				if(stop){ allStop=true; notifyAll(); return; }
+				if(stop){ allStop=true; notifyAll(); return null; }
 				
 				File base=new File(model.getDestinationPath()+"/"+module);
 				int cont=Utils.copyDirectory(new File("res/"+model.getLanguage()+"/modules/"+module), base);
@@ -159,7 +163,9 @@ public class Engine extends Model{
 				if(base.exists()){
 					StringReader in=new StringReader(model.getModule(module).toString());
 					File config=new File(model.getDestinationPath()+"/"+module+"/"+module+"Conf."+model.getLanguage());
-					if(replaceIfExists(config)){
+					if(config.exists()){
+						createLater.add(new DelayedFile(this,config,"res/"+model.getLanguage()+"/xsl/configModule.xsl",in));
+					}else{
 						out=new PrintStream(config);
 						transformXML(in, "res/"+model.getLanguage()+"/xsl/configModule.xsl",out);
 						out.close();
@@ -176,7 +182,7 @@ public class Engine extends Model{
 						while((aux=tmp.read(buffer))!=-1) 
 							query.append(buffer,0,aux);
 						
-						if(stop){ allStop=true; notifyAll(); return; }
+						if(stop){ allStop=true; notifyAll(); return null; }
 						executeScript(query.toString(), model);
 						tmp.close();
 					}
@@ -186,52 +192,60 @@ public class Engine extends Model{
 			//4) make DB (db.xsl)
 			progress.setText("Making database structure...");
 			File dbSQL=new File(model.getDestinationPath()+"/db.sql");
-			if(replaceIfExists(dbSQL)){
+			//if(replaceIfExists(dbSQL)){ //can omit this validation
 				StringWriter dbOut=new StringWriter();
 				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/db.xsl" ,dbOut);
 
-				if(stop){ allStop=true; notifyAll(); return; }
+				if(stop){ allStop=true; notifyAll(); return null; }
 				executeScript(dbOut.getBuffer().toString(),model);
 
 				out=new PrintStream(dbSQL);
 				out.print(dbOut.getBuffer());
 				out.close();
-			}
+			//}
 			
 			progress.setText("Generating configuration files...");
 			//5) make the DB connection file (connection.xsl). asf for overwrite if exists
 			File connex=new File(model.getDestinationPath()+"/obj/Connection."+model.getLanguage());
-			if(replaceIfExists(connex)){
+			if(connex.exists()){
+				createLater.add(new DelayedFile(this,connex,"res/"+model.getLanguage()+"/xsl/connection.xsl",model.getLoadedPath()));
+			}else{
 				out=new PrintStream(connex);
 				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/connection.xsl", out);
 				out.close();
 			}
 			progress.setProgress(progress.getProgress()+1);
 			
-			if(stop){ allStop=true; notifyAll(); return; }
+			if(stop){ allStop=true; notifyAll(); return null; }
 			//6) make JS validators (js.xsl). ask for overwrite if exists
 			File js=new File(model.getDestinationPath()+"/admin/js/validators.js");
-			if(replaceIfExists(js)){
+			if(js.exists()){
+				createLater.add(new DelayedFile(this,js,"res/"+model.getLanguage()+"/xsl/js.xsl",model.getLoadedPath()));
+			}else{
 				out=new PrintStream(js);
 				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/js.xsl", out);
 				out.close();
 			}
 			progress.setProgress(progress.getProgress()+1);
 			
-			if(stop){ allStop=true; notifyAll(); return; }
+			if(stop){ allStop=true; notifyAll(); return null; }
 			//7) make the includes file (includes.xsl). asf for overwrite if exists
 			File includes=new File(model.getDestinationPath()+"/includes."+model.getLanguage());
-			if(replaceIfExists(includes)){
+			if(includes.exists()){
+				createLater.add(new DelayedFile(this,includes,"res/"+model.getLanguage()+"/xsl/includes.xsl",model.getLoadedPath()));
+			}else{
 				out=new PrintStream(includes);
 				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/includes.xsl", out);
 				out.close();
 			}
 			progress.setProgress(progress.getProgress()+1);
 			
-			if(stop){ allStop=true; notifyAll(); return; }
+			if(stop){ allStop=true; notifyAll(); return null; }
 			//8) index.xhtml (index.xsl). ask for overwrite if exists
 			File index=new File(model.getDestinationPath()+"/admin/index."+model.getLanguage());
-			if(replaceIfExists(index)){
+			if(index.exists()){
+				createLater.add(new DelayedFile(this,index,"res/"+model.getLanguage()+"/xsl/index.xsl",model.getLoadedPath()));
+			}else{
 				out=new PrintStream(index);
 				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/index.xsl", out);
 				out.close();
@@ -242,7 +256,6 @@ public class Engine extends Model{
 			//10) entities files. ask for overwrite if exists
 			for(Enumeration<String> e=model.getEntities();e.hasMoreElements();)
 				transformEntities(model.getEntity(e.nextElement()), model);
-			
 		}catch(RuntimeException e){
 			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
 		}catch(Exception e){
@@ -256,6 +269,7 @@ public class Engine extends Model{
 					Utils.showError("Warning: The connection cannot be closed. The database server is running?");
 				}
 		}
+		return createLater;
 	}
 	
 	private synchronized void transformEntities(Entity ent, Model model){
@@ -271,22 +285,30 @@ public class Engine extends Model{
 			File obj = new File(model.getDestinationPath()+"/obj/"+ent.getName()+"."+model.getLanguage());
 
 			if((ent.hasJustPages() && !ent.hasJustSchema()) || (!ent.hasJustPages() && !ent.hasJustSchema())){
-				if(replaceIfExists(list)){
+				if(list.exists()){
+					createLater.add(new DelayedFile(this,list,"res/"+model.getLanguage()+"/xsl/list.xsl",new StringReader(xml)));		
+				}else{
 					out=new PrintStream(list);
 					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/list.xsl", out);
 					out.close();
 				}
-				if(replaceIfExists(exec)){
+				if(exec.exists()){
+					createLater.add(new DelayedFile(this,exec,"res/"+model.getLanguage()+"/xsl/exec.xsl",new StringReader(xml)));		
+				}else{
 					out=new PrintStream(exec);
 					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/exec.xsl", out);
 					out.close();
 				}
-				if(replaceIfExists(mod)){
+				if(mod.exists()){
+					createLater.add(new DelayedFile(this,mod,"res/"+model.getLanguage()+"/xsl/mod.xsl",new StringReader(xml)));		
+				}else{
 					out=new PrintStream(mod);
 					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/mod.xsl", out);
 					out.close();
 				}
-				if(replaceIfExists(obj)){
+				if(obj.exists()){
+					createLater.add(new DelayedFile(this,obj,"res/"+model.getLanguage()+"/xsl/obj.xsl",new StringReader(xml)));		
+				}else{
 					out=new PrintStream(obj);
 					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/obj.xsl", out);
 					out.close();
@@ -343,5 +365,9 @@ public class Engine extends Model{
 		notifyAll();
 		while(!allStop)
 			try{wait();}catch(Exception e){e.printStackTrace();}
+	}
+	
+	public boolean wasStopped(){
+		return stop;
 	}
 }

@@ -159,6 +159,10 @@ public class TreeView extends JTree implements View{
 		Object[] path=tp.getPath();
 		
 		Module current=Model.getInstance().getModule(path[path.length-1].toString());
+		if(current.getModuleConfig().getOptionSize()==0){
+			Utils.showInformation("The module '"+current.getName()+"' hasn't options to configure");
+			return;
+		}
 		
 		for(int i=0,n=viewer.getTabCount();i<n;i++){
 			if(viewer.getModel().getTab(i).getTooltip().equals(path[path.length-1].toString())){

@@ -273,6 +273,15 @@ public class FieldsPanel extends javax.swing.JPanel {
 			if(columnIndex==4) fields.get(rowIndex).setVisible((Boolean)aValue);
 			if(columnIndex==5) fields.get(rowIndex).setListable((Boolean)aValue);
 			if(columnIndex==6) fields.get(rowIndex).setSearchable((Boolean)aValue);
+			
+			if(columnIndex==2){
+				String type=fields.get(rowIndex).getType();
+				if(type==null) return;
+				FieldConfig fc=cfg.getFieldConfig(type);
+				if(!fc.isListable())	fields.get(rowIndex).setListable(false);
+				if(!fc.isSearchable())	fields.get(rowIndex).setSearchable(false);
+				if(!fc.isVisible())		fields.get(rowIndex).setVisible(false);
+			}
 		}
 
 		public void addRow(){

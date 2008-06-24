@@ -1,4 +1,8 @@
-- hacer un dialogo que revise todos los archivos que pueden ser sobreescritos y marcar los que se desean sobreescribir. 
+- Mejorar el mecanismo de cancelar la generacion.
+- cambiar los controles de fecha de dojo por alguno de jquery
+- revisar los archivos recientes. Eliminar los archivos que no se consigan. No intentar abrirlos.
+
++ hacer un dialogo que revise todos los archivos que pueden ser sobreescritos y marcar los que se desean sobreescribir. 
 
 + guardar las configuraciones de los Fields y los Modules.
 
@@ -38,7 +42,7 @@
 		  objeto upload.
 	+ hacer que muestre el link en el caso que la accion sea MOD y el archivo ya exista
 
-- modulo para el manejo de usuarios y permisologia en la generacion
++ modulo para el manejo de usuarios y permisologia en la generacion
 
 - archivo de licencias
 - DTD o schemas para los archivos de configuracion general, plugin, y del proyecto, van dentro del .jar para evitar que se modifiquen o eliminen facilmente.

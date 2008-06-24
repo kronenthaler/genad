@@ -181,8 +181,6 @@ function isValidDecimal(input, label,required){
 function isValidRTE(input, name, label, required){
 	var oEditor = FCKeditorAPI.GetInstance(name);
 	input.value = oEditor.GetHTML();
-//	input.value=tinyMCE.getContent(name);	
-//	tinyMCE.removeMCEControl(name);
 	if(required && !isRequired(input, label)) return false;
 	return true;
 }

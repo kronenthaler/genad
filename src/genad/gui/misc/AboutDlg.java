@@ -80,7 +80,7 @@ public class AboutDlg extends javax.swing.JDialog {
 									"<b>Other software involved</b>\n"+
 									"Java 5\n"+					
 									"Dojo Toolkit\n"+
-									"TinyMCE\n"+
+									"FCKEditor\n"+
 									"jQuery";
 		private Image background;
 		private Font font=new Font("Courier New",Font.PLAIN,14);
