@@ -11,7 +11,7 @@ define('DEST_PATH','destPath');
 define('PREV','prev');
 
 class Upload{
-	var $fieldName;	//name of the field
+	var $fieldName;		//name of the field
 	var $fieldValue;	//value of the field a.k.a. the path.
 	var $opts;	
 	
@@ -76,7 +76,7 @@ class Upload{
 			return new Error(-9, "File not moved");
 		}
 			
-		//chmod(ROOT.$fileName,0755);	//can download the file from FTP client.
+		//chmod(ROOT.'/'.$fileName,0755);	//can download the file from FTP client.
 			
 		return new Error(0,$fileName); 	//everything ok
 	}
@@ -104,6 +104,7 @@ class Upload{
 		if($type!="" && stristr($exts,"*")==""){ //no wildcard
 			$exts = implode("','",split(',',$exts)); 
 			$rs=mysql_query("SELECT * FROM mimetypes WHERE ext in ('".$exts."') AND mime='".$type."'");
+			//logOn("SELECT * FROM mimetypes WHERE ext in ('".$exts."') AND mime='".$type."';\n");
 			$flag=($rs && mysql_num_rows($rs)>0);
 		}
 		

@@ -56,8 +56,10 @@ dojo._ie_clobber = new function () {
 			var el = na[i];
 			try {
 				if (el && el["__clobberAttrs__"]) {
-					for (var j = 0; j < el.__clobberAttrs__.length; j++) {
-						nukeProp(el, el.__clobberAttrs__[j]);
+					if(el.__clobberAttrs__ != null){
+						for (var j = 0; j < el.__clobberAttrs__.length; j++) {
+							nukeProp(el, el.__clobberAttrs__[j]);
+						}
 					}
 					nukeProp(el, "__clobberAttrs__");
 					nukeProp(el, "__doClobber__");
@@ -142,7 +144,8 @@ dojo.event.browser = new function () {
 		}
 		this.addClobberNode(node);
 		for (var x = 0; x < props.length; x++) {
-			node.__clobberAttrs__.push(props[x]);
+			if(node.__clobberAttrs__ != null)
+				node.__clobberAttrs__.push(props[x]);
 		}
 	};
 	this.removeListener = function (node, evtName, fp, capture) {

@@ -68,16 +68,11 @@ Upload = function(mainform,_sender){
 			var form=document.getElementById(mainForm);
 			var action=form.getAttribute("action");
 		
+			/*
 			if(action.indexOf("://")==-1) //do the action absolute for the bind
 				form.setAttribute('action', window.location.href.substring(0, window.location.href.lastIndexOf('/')+1) + action);
-
+			*/
 			sender();
-			/*dojo.io.bind({
-				formNode: form,
-				load: 	function(type, data, evt){ transform(evt.responseXML, 'list.xsl','center');},
-				error: 	function(type, error){ alert(error.message); },
-				mimetype: 'text/xml'
-			});//*/
 		}
 	};
 	

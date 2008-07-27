@@ -1,13 +1,46 @@
++ Hacer el merge con el esquema sin llamadas ajax.
+	+ plantillas xsl
+	+ menu.php <- reemplazo del antiguo index.php
+	+ index.html <- estatico
+	+ top.php <- puede ser estatico
+	+ welcome.php <- puede ser estatico
+
++ Estandarizar el modulo Poll
++ Estandarizar la propiedad sortable.
+	+ el campo de ordenamiento se llama _sort
++ Hacer el sortable algo que se pueda realizar sin necesidad de involucrar crear paginas nuevas.
+	+ copiar el order.xsl del proyecto del diario.
+	+ la pagina de ordenar puede usar el mismo xml que se genera para el listado (pero completo)
+	+ se toma solamente el primer primer atributo listable para mostrar.
+	
++ copiar el arreglo de controls. (se puede manipular este arreglo para el tema de los permisos)
+	+ meter los $this->properties dentro de los controles o viceversa
+
+- ImageUpload:
+	- eliminar todos los posibles thumbnails [eliminar todos los prefijos y reemplazarlo por un * en la llamada a unlink()]
+		
+- hacer algo que permita cambiar los idiomas de las palabras basicas. 
+	- trabajar con entidades en los xsl puede ser una buena opcion.		
+		
+- se podria copiar el esquema de CMS como un tipo de forma extra.
+
++ Campatibilidad con safari:
+	- En lineas generales todos los componentes que involucren la llamada a dojo.addOnLoad deben reemplazarse por algun otro mecanismo
+	para capturar este evento como por ejemplo: alguna imagen spacer o similar.
+	- El imageUpload funciona bien llamandose en modo directo, pero falla al estar detras de una llamada ajax (posiblemente el error
+	de arriba solucione el problema).	
+
 - Mejorar el mecanismo de cancelar la generacion.
 - cambiar los controles de fecha de dojo por alguno de jquery
 - revisar los archivos recientes. Eliminar los archivos que no se consigan. No intentar abrirlos.
+- hay un bug en el menu de open recent. (reemplazar el archivo por una pequeña bd de sqlite)
 
 + hacer un dialogo que revise todos los archivos que pueden ser sobreescritos y marcar los que se desean sobreescribir. 
 
 + guardar las configuraciones de los Fields y los Modules.
 
 + cambiar los toString de + por StringBuffer.append
-- revisar el open recents -> los tabs se vuelven ineditables??, problema de foco
++ revisar el open recents -> los tabs se vuelven ineditables??, problema de foco
 
 + validar los fields soportados
 	+ en el dialogo de propiedades/new
@@ -21,15 +54,15 @@
 	+ WARNING DE GENERACION si existen archivos en el directorio destino, y las tablas de BD.
 	+ cancelacion de la generacion de codigo.
 
-- como importar los menues de los modulos y sus respectivos js para el index.html
-	- puede ser language-dependent
++ como importar los menues de los modulos y sus respectivos js para el index.html
+	+ puede ser language-dependent
 
 - acomodar los estilos:
 	- calendario 
 	- timepicker
 	- rte
 
-- hacer controles file e image
++ hacer controles file e image
 	+ Cambiar el esquema de direccionamiento por iframes? 
 		+ usar un esquema como el de uploadFE, un iframe que sube ese archivo especificamente, => esperar que se resuelvan los
 		  uploads antes de enviar el form

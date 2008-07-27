@@ -190,7 +190,7 @@ dojo.event = new function () {
 		if (ao.adviceFunc) {
 			var mjp2 = dojo.event.MethodJoinPoint.getForMethod(ao.adviceObj, ao.adviceFunc);
 		}
-		mjp.kwAddAdvice(ao);
+		try { mjp.kwAddAdvice(ao); } catch (e) { return null; } 
 		return mjp;
 	};
 	this.log = function (a1, a2) {
@@ -273,7 +273,7 @@ dojo.event = new function () {
 			return null;
 		}
 		var mjp = dojo.event.MethodJoinPoint.getForMethod(ao.srcObj, ao.srcFunc, true);
-		mjp.removeAdvice(ao.adviceObj, ao.adviceFunc, ao.adviceType, ao.once);
+		try{mjp.removeAdvice(ao.adviceObj, ao.adviceFunc, ao.adviceType, ao.once);}catch(e){ return null; }
 		return mjp;
 	};
 	this.kwDisconnect = function (kwArgs) {

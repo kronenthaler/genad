@@ -11,21 +11,22 @@
 	
 	$obj=new Section();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
-	$pageSize=20;
+	$pageSize=$obj->properties[PAGER]?30:-1;
 	
 	$criteria=array(); //filters in the search
 		
 	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize);
 		
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="list.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="../../admin/list.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
 		  	<error>'.$_REQUEST['error'].'</error>
 			<prefix>../users/admin/</prefix>';
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();
-		echo $obj->getXMLListPager($obj->totalRows($criteria),$pageSize,$ini);
+		if($obj->properties[PAGER])
+			echo $obj->getXMLListPager($obj->totalRows($criteria),$pageSize,$ini);
 		echo $obj->getXMLList($list);
 	echo "</entity>";
 ?>

@@ -24,7 +24,7 @@
 	
 	$obj=new <xsl:value-of select="//@name"/>();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
-	$pageSize=3;
+	$pageSize=$obj->properties[PAGER] && $_REQUEST['action']==''?30:-1;
 	<xsl:choose>
 		<xsl:when test="entity/parent/@id != ''">
 	$criteria=array("<xsl:value-of select="entity/parent/@id"/>='".$_REQUEST['<xsl:value-of select="entity/parent/@id"/>']."'"); //parent id
@@ -33,23 +33,20 @@
 	$criteria=array(); //filters in the search
 		</xsl:otherwise>
 	</xsl:choose>
-	<xsl:choose>
-		<xsl:when test="/entity/search/@value = '1'">
-	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize);
-		</xsl:when>
-		<xsl:otherwise>
-	$list=$obj->getList($criteria,$ini,$pageSize);//change for search($_REQUEST['search'],$criteria,$ini,$pageSize); if is necessary
-		</xsl:otherwise>
-	</xsl:choose><![CDATA[
+	
+	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize<xsl:if test="/entity/sortable/@value=1">,'_sort'</xsl:if>);
+	
+	<![CDATA[
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="list.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
 		  	<error>'.$_REQUEST['error'].'</error>
 			<prefix></prefix>';
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();
-		echo $obj->getXMLListPager($obj->totalRows($criteria),$pageSize,$ini);
+		if($obj->properties[PAGER])
+			echo $obj->getXMLListPager($obj->totalRows($criteria),$pageSize,$ini);
 		echo $obj->getXMLList($list);
 	echo "</entity>";
 ?>]]></xsl:template>

@@ -34,9 +34,11 @@ function clean(complete){
 	
 	if(complete){ //i want remove it
 		parent.document.getElementById('str_<?=$name?>').value='';
+		var img = parent.document.getElementById('img_link_<?=$name?>');
+		if(img!=null) img.src = 'images/0.gif';
 		anychange = true;
 	}else //upload failed
-		parent.document.getElementById('str_<?=$name?>').value='<?= $_REQUEST['prev']; ?>';
+		parent.document.getElementById('str_<?=$name?>').value='<?= $_REQUEST["prev"];?>';
 	
 	var link = parent.document.getElementById('link_<?=$name?>');
 	if(link && complete) link.style.display='none';
@@ -88,7 +90,7 @@ function clean(complete){
 </div>
 </body>
 <script>
-<? 
+<?
 if($_REQUEST['finish']==1){
 	if($_REQUEST['error']==''){?>
 		parent.document.getElementById('str_<?=$name?>').value='<?=$_REQUEST['path']?>';

@@ -5,14 +5,14 @@
 	include_once('../includes.php');
 	
 	<xsl:if test="/entity/permissions/@value != ''">
-		<xsl:choose>
-			<xsl:when test="/entity/permissions/@value = 'standard' or /entity/permissions/@value = 'plus'">
-				$action = strtoupper($_REQUEST['action']);
-			</xsl:when>
-			<xsl:otherwise>
-				$action = 'your-action-here';
-			</xsl:otherwise>
-		</xsl:choose>
+	<xsl:choose>
+		<xsl:when test="/entity/permissions/@value = 'standard' or /entity/permissions/@value = 'plus'">
+	$action = strtoupper($_REQUEST['action']);
+		</xsl:when>
+		<xsl:otherwise>
+	$action = 'your-action-here';
+		</xsl:otherwise>
+	</xsl:choose>
 	$section = '<xsl:value-of select="//@name"/>';
 	include_once('../common/checksession.php');
 	</xsl:if>
@@ -29,6 +29,9 @@
 			$error=$obj->getError();
 	}else if($action == 'del'){
 		if(!$obj->delete($id))
+			$error=$obj->getError();
+	}else if($action == 'sort'){
+		if(!$obj->order($id))
 			$error=$obj->getError();
 	}else{
 		$error="No action especified";

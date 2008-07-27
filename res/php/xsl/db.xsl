@@ -18,7 +18,9 @@
 		CREATE TABLE `<xsl:value-of select="table/@name"/>` (
 		<xsl:for-each select="form/field">
 			<xsl:apply-templates select="."/>
-			<xsl:if test="../../table/@primary-key = db-field"> NOT NULL</xsl:if>,</xsl:for-each>
+			<xsl:if test="../../table/@primary-key = db-field">AUTO_INCREMENT NOT NULL</xsl:if>,</xsl:for-each>
+		<xsl:if test="sortable/@value = 1">
+		_sort BIGINT(10), </xsl:if>
 		<xsl:if test="../table/@name != ./table/@name">
 			<xsl:if test="../table/@primary-key != ./table/@primary-key">
 			<xsl:variable name="pk"><xsl:value-of select="../table/@primary-key"/></xsl:variable>
@@ -33,6 +35,7 @@
 		INSERT INTO u04_sections (u04_name) VALUES ('<xsl:value-of select="@name"/>');
 		<xsl:if test="permissions/@value = 'standard' or permissions/@value ='plus'">
 		INSERT INTO u03_permissions (u03_name, u03_action, u02_id, u04_id) VALUES 
+			<xsl:if test="sortable/@value = 1">('Sort on <xsl:value-of select="@name"/>','SORT',1, last_insert_ID()),</xsl:if>	
 			('View on <xsl:value-of select="@name"/>','VIEW',1, last_insert_ID()),
 			('Add on <xsl:value-of select="@name"/>','ADD',1, last_insert_ID()),
 			('Modify on <xsl:value-of select="@name"/>','MOD',1, last_insert_ID()),
@@ -47,7 +50,7 @@
 	<xsl:template match="field">
 		<xsl:choose>
 			<xsl:when test="@type = 'primary-key'">
-			`<xsl:value-of select="db-field"/>` BIGINT (30) UNSIGNED AUTO_INCREMENT </xsl:when>
+			`<xsl:value-of select="db-field"/>` BIGINT (30) UNSIGNED </xsl:when>
 			<xsl:when test="@type = 'textfield' or @type = 'password' or @type = 'email' or @type = 'select' or @type = 'hidden'">
 			`<xsl:value-of select="db-field"/>` VARCHAR (50) DEFAULT '' </xsl:when>
 			<xsl:when test="@type = 'integer' or @type = 'radio' or @type = 'checkbox'">

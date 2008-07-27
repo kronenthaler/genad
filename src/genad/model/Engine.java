@@ -242,7 +242,7 @@ public class Engine extends Model{
 			
 			if(stop){ allStop=true; notifyAll(); return null; }
 			//8) index.xhtml (index.xsl). ask for overwrite if exists
-			File index=new File(model.getDestinationPath()+"/admin/index."+model.getLanguage());
+			File index=new File(model.getDestinationPath()+"/admin/menu."+model.getLanguage());
 			if(index.exists()){
 				createLater.add(new DelayedFile(this,index,"res/"+model.getLanguage()+"/xsl/index.xsl",model.getLoadedPath()));
 			}else{
@@ -313,10 +313,10 @@ public class Engine extends Model{
 					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/obj.xsl", out);
 					out.close();
 				}
-				
-				for(Enumeration<String> e=ent.getChilds();e.hasMoreElements();)
-					transformEntities(ent.getChild(e.nextElement()), model);
 			}
+			
+			for(Enumeration<String> e=ent.getChilds();e.hasMoreElements();)
+					transformEntities(ent.getChild(e.nextElement()), model);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

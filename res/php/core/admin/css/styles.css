@@ -5,13 +5,13 @@ body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
 
 ul{
 	list-style-type: none; 
-	width: 142px;
+	width: 100%;
 }
 
 ul li{
 	border-bottom: 1px dotted #999;
 	height:20px;
-	width: 142px;
+	width: 100%;
 	vertical-align: middle;
 }
 ul li a,
@@ -19,7 +19,7 @@ ul li a:link,
 ul li a:visited{
 	padding:0px 0px 0px 5px;
 	height:20px;
-	width: 137px;
+	width: 100%;
 	color:#999;
 	text-decoration: none;
 	float:left;
@@ -30,7 +30,7 @@ ul li a:hover {
 	padding:0px 0px 0px 5px;
 	background-color:#FFF;
 	height:20px;	
-	width: 137px;
+	width: 100%;
 	color:#333;
 	text-decoration:none;
 	float:left;
@@ -66,7 +66,7 @@ a {
 }
 
 #menu input{ 
-	width: 70px;
+	width: 80px;
 }
 
 #container button {
@@ -74,7 +74,7 @@ a {
 	margin: 0px;
 	padding: 0px;
 	border: 1px solid #999;
-	width: 70px;
+	width: 80px;
 	cursor: pointer;
 	/*vertical-align: middle;*/
 }
@@ -206,8 +206,8 @@ a {
 	border:0;
 	margin:0;
 	padding:0;
-	width: 142px;
-	min-height: 100%;
+	width: 100%;
+	/*min-height: 100%;*/
 	float:left;
 	background-color:#EEE;
 }
@@ -216,7 +216,7 @@ a {
 	margin-left:0px;
 	padding:0px;
 	width:75%;/* cambiar por static sizes*/
-	min-height: 50px;
+	/*min-height: 50px;*/
 	float:left;
 	color:#999;
 	background-color: #FFF;
@@ -227,7 +227,7 @@ a {
 .submenulabel{
 	background: #ccc;
 	height: 20px;
-	width: 127px;
+	width: 100%;
 	cursor: pointer;
 	border-bottom: 1px dotted #999 ;
 	/*background-image: url('images/close.gif');*/
@@ -237,24 +237,24 @@ a {
 }
 
 .menucontent{
-	width: 142px;
+	width: 100%;
 }
 
 .menucontent ul{
 	list-style-type:none;
-	width: 142px;
+	width: 100%;
 }
 
 .menucontent ul li{
 	border-bottom: 1px dotted #999;
 	height:20px;
-	width: 142px;
+	width: 100%;
 }
 
 .menucontent ul li a:link, 
 .menucontent ul li a:visited{
 	padding:0px 0px 0px 15px;
-	width: 132px;
+	width: 100%;
 	color:#999;
 	text-decoration:none;
 	float:left;
@@ -263,7 +263,7 @@ a {
 .menucontent ul li a:hover {
 	padding:0px 0px 0px 15px;
 	background-color:#FFF;
-	width: 132px;
+	width: 100%;
 	color:#333;
 	text-decoration:none;
 	float:left;

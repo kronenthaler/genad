@@ -40,8 +40,9 @@ public class Main extends javax.swing.JFrame implements View{
 		statusBar.setText("Ready");
 	}
 	
-    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         jToolBar1 = new javax.swing.JToolBar();
         newBtn = new javax.swing.JButton();
         openBtn = new javax.swing.JButton();
@@ -87,6 +88,7 @@ public class Main extends javax.swing.JFrame implements View{
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
+
         newBtn.setIcon(IconsManager.NEW);
         newBtn.setMargin(new java.awt.Insets(5, 5, 5, 5));
         newBtn.setMaximumSize(new java.awt.Dimension(24, 24));
@@ -95,7 +97,6 @@ public class Main extends javax.swing.JFrame implements View{
                 newActionPerformed(evt);
             }
         });
-
         jToolBar1.add(newBtn);
 
         openBtn.setIcon(IconsManager.OPEN);
@@ -106,7 +107,6 @@ public class Main extends javax.swing.JFrame implements View{
                 openActionPerformed(evt);
             }
         });
-
         jToolBar1.add(openBtn);
 
         saveBtn.setIcon(IconsManager.SAVE);
@@ -118,7 +118,6 @@ public class Main extends javax.swing.JFrame implements View{
                 saveActionPerformed(evt);
             }
         });
-
         jToolBar1.add(saveBtn);
 
         jSeparator5.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -136,7 +135,6 @@ public class Main extends javax.swing.JFrame implements View{
                 propertiesActionPerformed(evt);
             }
         });
-
         jToolBar1.add(propertiesBtn);
 
         generateBtn.setIcon(IconsManager.GENERATE);
@@ -149,12 +147,12 @@ public class Main extends javax.swing.JFrame implements View{
                 generateActionPerformed(evt);
             }
         });
-
         jToolBar1.add(generateBtn);
 
         splitPanel.setDividerLocation(200);
         splitPanel.setDividerSize(7);
         splitPanel.setRightComponent(tabbedPanel);
+
         jScrollPane1.setViewportView(tree);
 
         splitPanel.setLeftComponent(jScrollPane1);
@@ -163,6 +161,7 @@ public class Main extends javax.swing.JFrame implements View{
         statusBar.setText("jLabel1");
 
         projectMen.setText("Project");
+
         newItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         newItem.setIcon(IconsManager.NEW);
         newItem.setText("New Project...");
@@ -171,9 +170,7 @@ public class Main extends javax.swing.JFrame implements View{
                 newActionPerformed(evt);
             }
         });
-
         projectMen.add(newItem);
-
         projectMen.add(jSeparator6);
 
         openItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -184,7 +181,6 @@ public class Main extends javax.swing.JFrame implements View{
                 openActionPerformed(evt);
             }
         });
-
         projectMen.add(openItem);
 
         openRecentMen.setEnabled(recents.size()>0);
@@ -229,9 +225,7 @@ public class Main extends javax.swing.JFrame implements View{
                 closeItemActionPerformed(evt);
             }
         });
-
         projectMen.add(closeItem);
-
         projectMen.add(jSeparator7);
 
         saveItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
@@ -243,7 +237,6 @@ public class Main extends javax.swing.JFrame implements View{
                 saveActionPerformed(evt);
             }
         });
-
         projectMen.add(saveItem);
 
         saveAsItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -255,9 +248,7 @@ public class Main extends javax.swing.JFrame implements View{
                 saveAsActionPerformed(evt);
             }
         });
-
         projectMen.add(saveAsItem);
-
         projectMen.add(jSeparator8);
 
         propertiesItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_MASK));
@@ -269,7 +260,6 @@ public class Main extends javax.swing.JFrame implements View{
                 propertiesActionPerformed(evt);
             }
         });
-
         projectMen.add(propertiesItem);
 
         generateItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, java.awt.event.InputEvent.CTRL_MASK));
@@ -281,9 +271,7 @@ public class Main extends javax.swing.JFrame implements View{
                 generateActionPerformed(evt);
             }
         });
-
         projectMen.add(generateItem);
-
         projectMen.add(jSeparator9);
 
         exitItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
@@ -294,12 +282,12 @@ public class Main extends javax.swing.JFrame implements View{
                 exitItemActionPerformed(evt);
             }
         });
-
         projectMen.add(exitItem);
 
         jMenuBar2.add(projectMen);
 
         settingsMen.setText("Settings");
+
         configureItem.setIcon(IconsManager.CONFIGURE);
         configureItem.setText("Configure GenAd...");
         configureItem.addActionListener(new java.awt.event.ActionListener() {
@@ -307,19 +295,18 @@ public class Main extends javax.swing.JFrame implements View{
                 configureItemActionPerformed(evt);
             }
         });
-
         settingsMen.add(configureItem);
 
         jMenuBar2.add(settingsMen);
 
         helpMen.setText("Help");
+
         aboutItem.setText("About GenAd...");
         aboutItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aboutItemActionPerformed(evt);
             }
         });
-
         helpMen.add(aboutItem);
 
         jMenuBar2.add(helpMen);
@@ -344,6 +331,7 @@ public class Main extends javax.swing.JFrame implements View{
                 .add(statusBar)
                 .addContainerGap())
         );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -511,7 +499,7 @@ public class Main extends javax.swing.JFrame implements View{
 		try{
 			PrintStream out=new PrintStream(new FileOutputStream(System.getProperty("user.home")+"/.genad/recents"),true);
 			Hashtable<String, Boolean> exists=new Hashtable<String, Boolean>();
-			for(int i=0;i<4 && recents.size()>0;i++){
+			for(int i=0;i<4 && !recents.isEmpty();i++){
 				FileRecent fr=recents.poll();
 				if(exists.get(fr.path)==null){
 					out.println(fr);
@@ -587,7 +575,7 @@ public class Main extends javax.swing.JFrame implements View{
 		}
 	}
 	
-	private static class FileRecent implements Comparable{
+	private static class FileRecent implements Comparable<FileRecent>{
 		protected long date;
 		protected String path; 
 		public FileRecent(long d,String p){
@@ -599,9 +587,8 @@ public class Main extends javax.swing.JFrame implements View{
 			return date+" "+path;
 		}
 
-		public int compareTo(Object o) {
-			if(path.equals(((FileRecent)o).path)) return 0;
-			return (int)(((FileRecent)o).date - date);
+		public int compareTo(FileRecent o){
+			return (o.date > date)?1:-1;
 		}
 	}
 }

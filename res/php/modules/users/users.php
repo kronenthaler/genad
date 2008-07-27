@@ -5,4 +5,5 @@ include_once('obj/Permission.php');
 include_once('obj/Section.php');
 include_once('obj/UserProfile.php');
 include_once('obj/ProfilePermission.php');
+$_SESSION['modules']->enableModule('/users/admin/js/validators.js');
 ?>

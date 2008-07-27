@@ -199,12 +199,15 @@ dojo.widget.PopupManager = new function () {
 	this.focusNode = null;
 	this.registeredWindows = [];
 	this.registerWin = function (win) {
+		try {
 		if (!win.__PopupManagerRegistered) {
 			dojo.event.connect(win.document, "onmousedown", this, "onClick");
 			dojo.event.connect(win, "onscroll", this, "onClick");
 			dojo.event.connect(win.document, "onkey", this, "onKey");
 			win.__PopupManagerRegistered = true;
 			this.registeredWindows.push(win);
+		}
+		}catch(e){
 		}
 	};
 	this.registerAllWindows = function (targetWindow) {

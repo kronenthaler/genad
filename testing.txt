@@ -1,0 +1,30 @@
+<?
+if(stristr($_SERVER['HTTP_HOST'],'localhost')){
+	define('ROOT','/var/www/testing');
+	define('HTTP_ROOT','http://localhost/');
+}else{
+	define('ROOT','/var/www/testing');			  //cambiar por la ruta final
+	define('HTTP_ROOT','http://'.$_SERVER['HTTP_HOST'].'/'); //cambiar por la ruta final
+}
+
+include_once(ROOT.'/common/utils.php');
+include_once(ROOT.'/obj/AbstractObject.php');	
+include_once(ROOT.'/obj/Connection.php');
+include_once(ROOT.'/obj/Error.php');
+include_once(ROOT.'/obj/Modules.php');
+
+//module's includes
+
+secureInclude('upload/upload.php');
+secureInclude('rte/rte.php');
+secureInclude('obj/obj.php');
+secureInclude('poll/poll.php');
+secureInclude('users/users.php');
+
+//*/
+//project's classes
+
+
+//connect with the database
+$connection=new Connection();
+?>

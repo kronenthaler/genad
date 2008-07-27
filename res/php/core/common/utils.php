@@ -1,7 +1,7 @@
 <?
 define('KB',1024);
 define('MB',KB*KB);
-define('GB',MB*MB);
+define('GB',KB*MB);
 
 $months = array('01'=>'Enero',
 				'02'=>'Febrero',
@@ -68,7 +68,7 @@ function secureInclude($path){
 //logging on file
 function logOn($str){
 	$f = fopen(ROOT.'/files/log.txt', 'a');
-	fprintf($f,"%s",$str);
+	fprintf($f,"%s\n",$str);
 	fclose($f);
 }
 
@@ -78,7 +78,14 @@ function writeError($msg){
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
 	
 	echo '<?xml version="1.0" encoding="utf-8"?>';
-	echo '<!--?xml-stylesheet type="text/xsl" href="list.xsl"?-->';
-	echo '<error href="'.str_replace("&","&amp;",$_SERVER['HTTP_REFERER']).'">'.$msg.'</error>';
+	echo '<?xml-stylesheet type="text/xsl" href="'.HTTP_ROOT.'/admin/list.xsl"?>';
+	echo '<error><basepath><![CDATA['.HTTP_ROOT.'/admin/]]></basepath>';
+	echo '<msg href="'.str_replace("&","&amp;",$_SERVER['HTTP_REFERER']).'">'.$msg.'</msg></error>';
+}
+
+if (!function_exists("htmlspecialchars_decode")) {
+    function htmlspecialchars_decode($string, $quote_style = ENT_COMPAT) {
+        return strtr($string, array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style)));
+    }
 }
 ?>

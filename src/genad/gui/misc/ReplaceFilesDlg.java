@@ -61,6 +61,7 @@ public class ReplaceFilesDlg extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
+        selectAllBtn = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Replace files");
@@ -96,6 +97,13 @@ public class ReplaceFilesDlg extends javax.swing.JDialog {
             }
         });
 
+        selectAllBtn.setText("Select All");
+        selectAllBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectAllBtnActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,7 +113,10 @@ public class ReplaceFilesDlg extends javax.swing.JDialog {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 376, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton1))
+                    .add(layout.createSequentialGroup()
+                        .add(selectAllBtn, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 114, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 210, Short.MAX_VALUE)
+                        .add(jButton1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -116,7 +127,9 @@ public class ReplaceFilesDlg extends javax.swing.JDialog {
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 275, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jButton1)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(selectAllBtn)
+                    .add(jButton1))
                 .addContainerGap())
         );
 
@@ -139,11 +152,22 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 	setVisible(false);
 }//GEN-LAST:event_jButton1ActionPerformed
 
+private void selectAllBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllBtnActionPerformed
+	DefaultTableModel dtm=((DefaultTableModel)jTable1.getModel());
+	for(int i=0;i<dtm.getRowCount();i++)
+		dtm.setValueAt(new Boolean(selectAllBtn.isSelected()), i, 1);
+	if(selectAllBtn.isSelected())
+		selectAllBtn.setText("Unselect All");
+	else
+		selectAllBtn.setText("Select All");
+}//GEN-LAST:event_selectAllBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JButton jButton1;
     protected javax.swing.JLabel jLabel1;
     protected javax.swing.JScrollPane jScrollPane1;
     protected javax.swing.JTable jTable1;
+    protected javax.swing.JToggleButton selectAllBtn;
     // End of variables declaration//GEN-END:variables
 
 }

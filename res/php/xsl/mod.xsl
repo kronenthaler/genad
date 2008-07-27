@@ -28,7 +28,7 @@
 	$obj=new ]]><xsl:value-of select="//@name"/><![CDATA[();
 	
 	if($_REQUEST['action']=='mod' && $_REQUEST['id']!='' && !$obj->load($_REQUEST['id']))
-		die('No id found');	
+		die('ID not found');
 	
 	echo '<?xml version="1.0" encoding="utf-8"?>
 		  <?xml-stylesheet type="text/xsl" href="mod.xsl"?>
@@ -41,8 +41,7 @@
 		echo $obj->getXMLAncestors(); 
 		//begin field options]]>
 		<xsl:apply-templates select="/entity/form/field"/>
-<![CDATA[		
-		//end field options
+<![CDATA[//end field options
 		echo $obj->getXMLForm($options);
 	echo "</entity>";
 ?>]]></xsl:template>
@@ -77,9 +76,15 @@
 			<xsl:for-each select="options/option">array('name'=> '<xsl:value-of select="@name"/>','value' =>'<xsl:value-of select="@value"/>','selected'=>$obj-><xsl:value-of select="../../db-field"/>==<xsl:value-of select="@value"/>?'true':'')<xsl:if test="position() != last()">,
 			</xsl:if></xsl:for-each>
 		);</xsl:when>
-		<xsl:when test="@type='file' or @type='image'">
+		<xsl:when test="@type='file'">
 			<!-- crear una instancia del objeto upload y escribir las opciones utilizando el metodo -->
 			$upload=new Upload("<xsl:value-of select="db-field"/>",$obj-><xsl:value-of select="db-field"/>);
+			<xsl:comment>Use the function setProperty to change some parameter of the upload</xsl:comment>
+			$options["<xsl:value-of select="db-field"/>"]=$upload->getOptions();
+		</xsl:when>
+		<xsl:when test="@type='image'">
+			<!-- crear una instancia del objeto upload y escribir las opciones utilizando el metodo -->
+			$upload=new ImageUpload("<xsl:value-of select="db-field"/>",$obj-><xsl:value-of select="db-field"/>/*,0,array(array(thumb_width,thumb_height,thumb_prefix,filter-name), ... )*/);
 			<xsl:comment>Use the function setProperty to change some parameter of the upload</xsl:comment>
 			$options["<xsl:value-of select="db-field"/>"]=$upload->getOptions();
 		</xsl:when>

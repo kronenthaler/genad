@@ -38,13 +38,10 @@
 					mimetype: "text/html"
 				});
 			});
-			
-			//tinyMCE.init({mode: 'none', theme:'simple'});
 		</script>
 	</head>
-	<body>
+	<body style="background-color: #eee;">
 		<div id="container">
-			<div id="header"></div>
 			<div id="menu">
 				<!-- if authentication is passed => show the dojo menu-->
 				<ul id="options" style="display:none">
@@ -52,7 +49,7 @@
 					]]>
 					<xsl:apply-templates select="/project/modules/module"/>
 					<xsl:apply-templates select="/project/entities/entity"/>
-					<![CDATA[<li><a href="logoff.php"><img src="images/logout.png" align="absmiddle"/>&#160;<b>Log out</b></a></li>
+					<![CDATA[<li><a href="logoff.php" target="_parent"><img src="images/logout.png" align="absmiddle"/>&#160;<b>Log out</b></a></li>
 				</ul>
 				<form action="authenticate.php" method="post" id="login" name="login">
 					<table border="0">
@@ -78,8 +75,6 @@
 					</table>
 				</form>
 			</div>
-			<!-- include here the content list -->
-			<div id="center"/>
 		</div>
 	</body>
 	<script>
@@ -92,10 +87,12 @@
 	</xsl:template>
 
 	<xsl:template match="entity">
-	<![CDATA[<li><a href="javascript:getAndTransform('list]]><xsl:value-of select="@name"/><![CDATA[.php','list.xsl','center')"><img src="images/bullet.png" align="absmiddle"/>]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]>
+	<xsl:if test="just-schema/@value = 0">	
+	<![CDATA[<li><a href="list]]><xsl:value-of select="@name"/><![CDATA[.php" target="mainFrame"><img src="images/bullet.png" align="absmiddle"/>]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]>
+	</xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="module">
-	<![CDATA[<? secureInclude('../]]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>
+	<![CDATA[<? secureInclude(']]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>
 	</xsl:template>
 </xsl:stylesheet>

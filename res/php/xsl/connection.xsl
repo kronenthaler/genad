@@ -42,5 +42,7 @@ class Connection{
 		mysql_close($this->conn);
 	}
 }
+//connect with the database
+$connection=new Connection();
 ?>]]></xsl:template>
 </xsl:stylesheet>

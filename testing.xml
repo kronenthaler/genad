@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project lastsaved="1217195235256" by="kronenthaler" language="php">
+	<file-server-conf>
+		<base-directory><![CDATA[/var/www/testing]]></base-directory>
+	</file-server-conf>
+	<db-server-conf>
+		<dev-host><![CDATA[localhost]]></dev-host>
+		<dev-user><![CDATA[root]]></dev-user>
+		<dev-password><![CDATA[]]></dev-password>
+		<dev-schema><![CDATA[testing]]></dev-schema>
+		<prod-host><![CDATA[null]]></prod-host>
+		<prod-user><![CDATA[null]]></prod-user>
+		<prod-password><![CDATA[]]></prod-password>
+		<prod-schema><![CDATA[null]]></prod-schema>
+	</db-server-conf>
+	<modules>
+		<module name="upload">
+			<option name="DEF_FORCE_SCALE" value="true"/>
+			<option name="DEF_MAX_IMG_WIDTH" value="150"/>
+			<option name="DEF_PREFIX" value="arc_"/>
+			<option name="DEF_VALID_EXTS" value="*"/>
+			<option name="DEF_MAX_SIZE" value="(100*MB)"/>
+			<option name="DEF_DEST_PATH" value="files/"/>
+			<option name="DEF_ASPECT_RATIO" value="true"/>
+			<option name="DEF_MAX_IMG_HEIGHT" value="150"/>
+		</module>
+		<module name="rte">
+		</module>
+		<module name="obj">
+		</module>
+		<module name="poll">
+			<option name="POLL_ALLOW_GUEST_VOTING" value="false"/>
+		</module>
+		<module name="users">
+		</module>
+	</modules>
+	<entities>
+		<entity name="Car" title="car">
+			<table name="t01_car" primary-key="t01_id"/>
+			<permissions value=""/>
+			<splitpage value="0"/>
+			<search value="0"/>
+			<just-pages value="1"/>
+			<just-schema value="1"/>
+			<sortable value="1"/>
+			<form>
+				<field type="primary-key">
+					<label><![CDATA[null]]></label>
+					<db-field><![CDATA[t01_id]]></db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>0</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="textfield">
+					<label><![CDATA[Model]]></label>
+					<db-field><![CDATA[t01_model]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="date">
+					<label><![CDATA[Year]]></label>
+					<db-field><![CDATA[t01_year]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+		</entity>
+	</entities>
+</project>
+

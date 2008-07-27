@@ -15,18 +15,19 @@
 	</xsl:variable>
 	
 	<xsl:template match="/">
-		<!--html><head>
+		<html><head>
+				<xsl:if test="/entity/basepath != ''">
+					<base id="base" href="{/entity/basepath}" />
+				</xsl:if>
+				<xsl:if test="/error/basepath != ''">
+					<base id="base" href="{/error/basepath}" />
+				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
-				<script src="../js/dojo/dojo.js"></script>
-				<script src="../js/tinymce/tiny_mce.js"></script>
- 				<script src="../js/utils.js"></script>
-				<script src="js/validators.js"></script>
- 				<script src="../upload/js/upload.js"></script>
- 				<script>dojo.require('dojo.widget.*');</script>
- 				</head><body><div id="container"><div id="center"-->
+				<script src="../js/utils.js"></script>
+				</head><body><div id="container"><div id="center">
 		<xsl:choose>
-			<xsl:when test="error != ''">
-				<xsl:apply-templates select="error"/>
+			<xsl:when test="/error != ''">
+				<xsl:apply-templates select="/error"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<div id="content-header">
@@ -40,7 +41,7 @@
 							<tr>
 								<td align="left">
 									<xsl:if test="/entity/back/@entity != ''">
-										<a href="javascript:getAndTransform('{/entity/prefix}list{/entity/back/@entity}.{//@ext}?{$backids}','list.xsl','center')">&lt; <xsl:value-of select="/entity/back/@title"/></a>
+										<a href="{/entity/prefix}list{/entity/back/@entity}.{//@ext}?{$backids}">&lt; <xsl:value-of select="/entity/back/@title"/></a>
 									</xsl:if>
 								</td>
 								<td width="50%" align="left" style="color:#f66">
@@ -48,6 +49,7 @@
 										<img src="images/error.png"/>&nbsp;<xsl:value-of select="/entity/error"/>
 									</xsl:if>
 								</td>
+								<xsl:if test="/entity/properties/searchable = 1">
 								<td valign="middle" align="right">
 									<label for="search">Search:</label>
 									<input type="text" id="search" name="search"/>
@@ -57,6 +59,7 @@
 										<img src="images/search.png" border="0"/>
 									</button>
 								</td>
+								</xsl:if>
 							</tr>
 							<tr>
 								<xsl:apply-templates select="entity/pager"/>
@@ -68,7 +71,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 
-		<!--/div></div></body></html-->
+		</div></div></body></html>
 	</xsl:template>
 	
 	<xsl:template match="error">
@@ -76,10 +79,10 @@
 			<center>
 				<table height="50%">
 					<tr height="100%" valign="top">
-						<td width="100"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
-						<td>
-							<h1>Forbidden</h1>
-							<xsl:value-of select="/error"/><br/>
+						<td width="100" class="plain"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
+						<td class="plain">
+							<h1>Forbidden!</h1>
+							<xsl:value-of select="msg"/><br/>
 							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
 						</td>
 					</tr>
@@ -108,11 +111,17 @@
 											<xsl:when test="@type ='checkbox' or @type = 'radio'">
 												<th align="center" width="30px">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
 											</xsl:when>
+											<xsl:when test="@type ='image'">
+												<th align="left" width="100px">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
+											</xsl:when>
 											<xsl:otherwise>
-												<th>&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
+												<th align="left">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
 											</xsl:otherwise>
 										</xsl:choose>
 									</xsl:for-each>
+									<!--xsl:if test="/entity/properties/sortable = 1">
+										<th class="part1" width="50" align="center">Sort</th>
+									</xsl:if-->
 									<!-- problema aqui se esta trayendo TODOS los instance/child, deberia traerse solo los de name diferentes -->
 									<xsl:for-each select="listable/child">
 										<th align="center" width="50px"><xsl:value-of select="@name"/>&nbsp;</th>
@@ -137,10 +146,13 @@
 														</xsl:if-->
 														<xsl:choose>
 															<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																<center><a href="javascript:getAndTransform('{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}','list.xsl','center');"><img src="images/{$value}.gif"/></a></center>
-															</xsl:when>							
+																<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img src="images/{$value}.gif"/></a></center>
+															</xsl:when>					
+															<xsl:when test="@type = 'image'">
+																<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
+															</xsl:when>
 															<xsl:otherwise>
-																<a href="javascript:getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}','mod.xsl','center')">
+																<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}">
 																	&nbsp;<xsl:value-of select="$value" disable-output-escaping="yes"/>
 																</a>
 															</xsl:otherwise>
@@ -149,8 +161,20 @@
 												</xsl:if>	
 											</xsl:for-each>
 										</xsl:for-each>
+										<!--xsl:if test="/entity/properties/sortable = 1">
+											<td class="part1" align="center">
+											<xsl:choose>
+												<xsl:when test="position() = 1"><img src="images/unup.png" border="0"/></xsl:when>
+												<xsl:otherwise><a href="javascript:getAndTransform('exec{//@name}.{//@ext}?action=sort&amp;mode=up&amp;id={$key}{$ids}','list.xsl','center')"><img src="images/up.png" border="0"/></a></xsl:otherwise>
+											</xsl:choose>
+											<xsl:choose>
+												<xsl:when test="position() = last()"><img src="images/undown.png" border="0" /></xsl:when>
+												<xsl:otherwise><a href="javascript:getAndTransform('exec{//@name}.{//@ext}?action=sort&amp;mode=down&amp;id={$key}{$ids}','list.xsl','center')"><img src="images/down.png" border="0"/></a></xsl:otherwise>
+											</xsl:choose>
+											</td>
+										</xsl:if-->
 										<xsl:for-each select="child">
-											<td align="center" class="part1"><a href="javascript: getAndTransform('{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}','list.xsl','center')">(<xsl:value-of select="@count"/>)</a></td>
+											<td align="center" class="part1"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 										</xsl:for-each>
 									</tr>
 									<!-- the row with the subentities related to this 
@@ -175,38 +199,61 @@
 						<xsl:choose>
 							<xsl:when test="count(instance) &gt; 0">
 								<td align="left" class="plain">
-									<button type="submit" onclick="return confirm('Do you really want to delete the selected items?')">
-										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
-										<table border="0" cellpadding="0" cellspacing="0" width="100%">
-											<tr>
-												<td><img src="images/delete.png" align="left"/></td>
-												<td>Remove</td></tr>
-										</table>
-									</button>
+									<!--xsl:if test="/entity/properties/delete = 1"-->
+										<button id="_deleteBtn_" type="submit" onclick="return confirm('Do you really want to delete the selected items?')" >
+											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
+											<table border="0" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td><img src="images/delete.png" align="left"/></td>
+													<td>Delete</td></tr>
+											</table>
+										</button>
+										<script>document.getElementById('_deleteBtn_').disabled = <xsl:value-of select="/entity/properties/delete"/>==0;</script>
+									<!--/xsl:if-->
 								</td>
-								<td width="50%" align="right" class="plain">
-									<button type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
+								<xsl:if test="/entity/properties/sortable = 1">
+									<td align="center" class="plain">
+									<button id="_sortBtn_" type="button" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?action=sort{$ids}','','')">
 										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/add.png" align="left"/></td>
-												<td>Add</td>
+												<td><img src="images/order.png" align="left"/></td>
+												<td>Sort</td>
 											</tr>
 										</table>
 									</button>
+									<script>document.getElementById('_sortBtn_').disabled = <xsl:value-of select="count(instance)"/> &lt; 2;</script>
+									</td>
+								</xsl:if>
+								<td align="right" class="plain">
+									<!--xsl:if test="/entity/properties/add = 1"-->
+										<button id="_addBtn_" type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','','')">
+											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
+											<table border="0" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td><img src="images/add.png" align="left"/></td>
+													<td>Add</td>
+												</tr>
+											</table>
+										</button>
+										<script>document.getElementById('_addBtn_').disabled = <xsl:value-of select="/entity/properties/add"/>==0;</script>
+									<!--/xsl:if-->
 								</td>
 							</xsl:when>
 							<xsl:otherwise>
 								<td  align="center" class="plain">
-									<button type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','mod.xsl','center')">
-										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
-										<table border="0" cellpadding="0" cellspacing="0" width="100%">
-											<tr>
-												<td><img src="images/add.png" align="left"/></td>
-												<td>Add</td>
-											</tr>
-										</table>
-									</button>
+									<!--xsl:if test="/entity/properties/add = 1"-->
+										<button id="_addBtn_" type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','','')">
+											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
+											<table border="0" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td><img src="images/add.png" align="left"/></td>
+													<td>Add</td>
+												</tr>
+											</table>
+										</button>
+										<script>document.getElementById('_addBtn_').disabled = <xsl:value-of select="/entity/properties/add"/>==0;</script>
+									<!--/xsl:if-->
 								</td>
 							</xsl:otherwise>
 						</xsl:choose>
@@ -217,7 +264,7 @@
 					<input type="hidden" name="{@id}" id="{@id}" value="{@value}"/>
 				</xsl:for-each>
 			</form>
-			<script>
+			<!--script>
 				dojo.addOnLoad(function (){
 					new dojo.io.FormBind({
 						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
@@ -226,9 +273,8 @@
 						mimetype: "text/html"
 					});
 				});
-			</script>
+			</script-->
 		</center>
-		<img src="images/open.gif" height="20" width="1"/>
 	</div>
 	</xsl:template>
 	
@@ -245,11 +291,11 @@
 		</td>
 		<td colspan="2" align="right">	
 			<xsl:if test="offset > 0">
-				<a href="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?ini={offset - page-size}{$ids}','list.xsl','center')"><img src="images/less.gif" class="border" align="absmiddle"/></a>&nbsp;
+				<a href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset - page-size}{$ids}"><img src="images/less.gif" class="border" align="absmiddle"/></a>&nbsp;
 			</xsl:if>
 			<xsl:value-of select="ceiling(offset div page-size)+1"/>/<xsl:value-of select="ceiling(total-rows div page-size)"/>
 			<xsl:if test="offset &lt; total-rows - page-size">
-				&nbsp;<a href="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?ini={offset + page-size}{$ids}','list.xsl','center')"><img src="images/more.gif" class="border" align="absmiddle"/></a>
+				&nbsp;<a href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset + page-size}{$ids}"><img src="images/more.gif" class="border" align="absmiddle"/></a>
 			</xsl:if>
 		</td>
 	</xsl:template>

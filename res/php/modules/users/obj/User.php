@@ -16,6 +16,11 @@ class User extends AbstractObject{
 		$this->fields['u01_email'] = array(TITLE=>'E-mail', TYPE=>'email', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>3, ONFORMPOS=>3);
 		$this->fields['u02_id'] = array(TITLE=>'Profiles', TYPE=>'checkbox', VISIBLE=>1, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>4, ONFORMPOS=>4);
 		
+		$this->properties[PAGER]=1;
+		$this->properties[SEARCH]=1;
+		$this->properties[ADD]=1;
+		$this->properties[DELETE]=1;
+
 		$this->childs=array(); //childs classes
 		$this->ancestor = ''; //ancestor class
 	}

@@ -8,23 +8,29 @@
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
 	</xsl:variable>
+	<xsl:include href="modules.php"/><!-- change the extension for others languages -->
 
  	<xsl:template match="/">
- 		<!--html><head>
+ 		<html><head>
+				<xsl:if test="/entity/basepath != ''">
+					<base id="base" href="{/entity/basepath}" />
+				</xsl:if>
+				<xsl:if test="/error/basepath != ''">
+					<base id="base" href="{/error/basepath}" />
+				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 				<script src="../js/dojo/dojo.js"></script>
 				<script src="../js/fckeditor/fckeditor.js"></script>
  				<script src="../js/utils.js"></script>
 				<script src="js/validators.js"></script>
- 				<script src="../upload/js/upload.js"></script>
+				<xsl:apply-templates select="/entity/prefix"/><!-- trick to add the modules scripts prefix always exists-->
  				<script>dojo.require('dojo.widget.*');</script>
- 				</head><body><div id="container"><div id="center"-->
+ 				</head><body><div id="container"><div id="center">
 		<xsl:choose>
-			<xsl:when test="error != ''">
-				<xsl:apply-imports/>
+			<xsl:when test="/error != ''">
+				<xsl:apply-templates select="/error"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<script>var queue=Array();</script>
 				<div id="content-header">
 					<center>
 						<table width="100%" border="1">
@@ -37,18 +43,15 @@
 				<xsl:apply-templates select="entity/fields"/>
 			</xsl:otherwise>
 		</xsl:choose>
-		<!--/div></div></body></html-->
+		</div></div></body></html>
 	</xsl:template>
  	
  	<xsl:template match="fields">
  		<script>
 			function sender(){
-				dojo.io.bind({
-					formNode: dojo.byId("frm_<xsl:value-of select="//@name"/>"),
-					load: 	function(type, data, evt){ transform(evt.responseXML, 'list.xsl','center');},
-					error: 	function(type, error){ alert(error.message); },
-					mimetype: 'text/xml'
-				});
+				var finalForm = document.getElementById("frm_<xsl:value-of select="//@name"/>");
+				finalForm.onsubmit = null; //avoid revalidate
+				finalForm.submit();
 			}
 			var upload=new Upload('frm_<xsl:value-of select="//@name"/>',sender);
  		</script>
@@ -67,7 +70,7 @@
 					<table>
 						<tr>
 							<td align="left" class="plain" id="id">
-								<button type="button" onclick="getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','list.xsl','center')">
+								<button type="button" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','','');">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/cancel.png" align="left"/></td>
@@ -96,7 +99,7 @@
 					<input type="hidden" name="{@id}" id="{@id}" value="{@value}"/>
 				</xsl:for-each>	
 			</form>
-			<script>
+			<!--script>
 				dojo.addOnLoad(function (){
 					var x = new dojo.io.FormBind({
 						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
@@ -106,7 +109,7 @@
 						mimetype: "text/html"
 					});
 				});//*/
-			</script>
+			</script-->
 		</div>
  	</xsl:template>
  	
@@ -115,10 +118,11 @@
 			<center>
 				<table height="50%">
 					<tr height="100%" valign="top">
-						<td width="100"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
-						<td>
-							<h1>Forbidden</h1>
-							<xsl:value-of select="/error"/>
+						<td width="100" class="plain"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
+						<td class="plain">
+							<h1>Forbidden!</h1>
+							<xsl:value-of select="msg"/><br/>
+							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
 						</td>
 					</tr>
 				</table>
@@ -191,11 +195,18 @@
 				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}">
 					<xsl:for-each select="option">
 						<xsl:choose>
-							<xsl:when test="@selected = 'true'">
-								<option id="{../@map}{position()}" value="{@value}" selected=""><xsl:value-of select="@name"/></option>
+							<xsl:when test="@selected = 'optgroup'">
+								<optgroup label="{@value}" />
 							</xsl:when>
 							<xsl:otherwise>
-								<option id="{../@map}{position()}" value="{@value}"><xsl:value-of select="@name"/></option>
+								<xsl:choose>
+									<xsl:when test="@selected = 'true'">
+										<option id="{../@map}{position()}" value="{@value}" selected=""><xsl:value-of select="@name"/></option>
+									</xsl:when>
+									<xsl:otherwise>
+										<option id="{../@map}{position()}" value="{@value}"><xsl:value-of select="@name"/></option>
+									</xsl:otherwise>
+								</xsl:choose>
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:for-each>
@@ -222,18 +233,11 @@
 				<input type="hidden" name="str_{@map}" id="str_{@map}" />
 				<textarea id="rte_{@map}"><xsl:value-of select="."/></textarea>
 				<script type="text/javascript">
-					dojo.addOnLoad(function(){
-						//var div = document.getElementById("rte_<xsl:value-of select="@map"/>");
-						var fck = new FCKeditor("rte_<xsl:value-of select="@map"/>");
-						fck.BasePath = "../js/fckeditor/" ;
-						fck.ToolbarSet = '<xsl:value-of select="@toolbar"/>';
-						fck.ReplaceTextarea();
-						//div.innerHTML = fck.CreateHtml();
-						
-						/*queue['rte_<xsl:value-of select="@map"/>']=1;
-						tinyMCE.execCommand('mceAddControl', true, 'rte_<xsl:value-of select="@map"/>');
-						tinyMCE.setContent(tinyMCE.entityDecode(tinyMCE.getContent('rte_<xsl:value-of select="@map"/>')));*/
-					});
+					//var div = document.getElementById("rte_<xsl:value-of select="@map"/>");
+					var fck = new FCKeditor("rte_<xsl:value-of select="@map"/>");
+					fck.BasePath = "../js/fckeditor/" ;
+					fck.ToolbarSet = '<xsl:value-of select="@toolbar"/>';
+					fck.ReplaceTextarea();
 				</script>
 			</td>
 		</tr>
@@ -308,7 +312,7 @@
 		</tr>
  	</xsl:template>
  	
- 	<xsl:template match="file|image">
+ 	<xsl:template match="file">
  		<xsl:variable name="params">
  		<xsl:for-each select="option">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="@value"/></xsl:for-each>
 		</xsl:variable>
@@ -318,9 +322,9 @@
 			</xsl:for-each>
 		</xsl:variable>
 		<script>
-			dojo.addOnLoad(function(){
+			//dojo.addOnLoad(function(){
 				upload.addFile('<xsl:value-of select="@map"/>');
-			});
+			//});
 		</script>
  		<tr class="part1">
 			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
@@ -333,12 +337,66 @@
 						scrolling="no" 
 						frameborder="0" 
 						width="100%" 
-						height="25px"/>
+						height="30px"/>
 				<input type="hidden" name="str_{@map}" id="str_{@map}" value="{$prev}"/>
 			</td>
 		</tr>
  	</xsl:template>
+	
+	<xsl:template match="label">
+		<tr class="part1">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part1" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
+		</tr>
+	</xsl:template>
+
+	<xsl:template match="timestamp">
+		<tr class="part1">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part1" align="left">
+				<xsl:if test="@date=''">N/A</xsl:if><xsl:value-of select="@date"/>&nbsp;<xsl:value-of select="@time"/></td>
+		</tr>
+	</xsl:template>
  	
- 	<!--xsl:template match="image">
- 	</xsl:template-->
+ 	<xsl:template match="image">
+ 		<xsl:variable name="params">
+ 		<xsl:for-each select="option">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="@value"/></xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="prev">
+			<xsl:for-each select="option">
+				<xsl:if test="@name = 'prev'"><xsl:value-of select="@value"/></xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="iframe-width">
+			<xsl:for-each select="option">
+				<xsl:if test="@name = 'maxWidth'"><xsl:value-of select="@value"/></xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="iframe-height">
+			<xsl:for-each select="option">
+				<xsl:if test="@name = 'maxHeight'"><xsl:value-of select="@value"/></xsl:if>
+			</xsl:for-each>
+		</xsl:variable>
+		<script>
+			//dojo.addOnLoad(function(){
+				upload.addFile('<xsl:value-of select="@map"/>');
+			//});
+		</script>
+ 		<tr class="part1">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part1" align="left">
+				<xsl:if test="$prev != ''">
+				<a href="../{$prev}" target="_blank" id="link_{@map}">
+					<img src="../{$prev}" border="0" id="img_link_{@map}"/></a><!--width="{$iframe-width}" height="{$iframe-height}"-->
+				</xsl:if>
+				<iframe id="if_{@map}" name="if_{@map}" 
+						src="../upload/component.php?name={@map}{$params}" 
+						scrolling="no" 
+						frameborder="0" 
+						width="100%" 
+						height="30px"/>
+				<input type="hidden" name="str_{@map}" id="str_{@map}" value="{$prev}"/>
+			</td>
+		</tr>
+ 	</xsl:template>
 </xsl:stylesheet>

@@ -46,6 +46,9 @@ function connect(url,_text,handler){
  *	@param	targetDiv	The target container to write the result	
  */
 function getAndTransform(targetPage,targetStyle,targetDiv){
+	var base = document.getElementById('base');
+	document.location.href=(base != null?base.href:'')+targetPage;
+	/*
 	if(window.XMLHttpRequest) {
 		// load the xml file,
 		request = new XMLHttpRequest();
@@ -54,12 +57,13 @@ function getAndTransform(targetPage,targetStyle,targetDiv){
 		
 		transform(request.responseXML,targetStyle,targetDiv);
 	}else{
-		var xml = new ActiveXObject("Microsoft.XMLDOM");
-		xml.async = false;
-		xml.load(targetPage);
-		
-		transform(xml,targetStyle,targetDiv);
+		var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+		xmlDoc.async = false;
+		xmlDoc.load(targetPage);
+
+		transform(xmlDoc,targetStyle,targetDiv);
 	}
+	*/
 }
 
 /**	
@@ -96,24 +100,29 @@ function transform(XMLdoc,targetStyle,targetDiv){
 				
 		fragment = xsltProcessor.transformToFragment(XMLdoc,document);
 		
+		//remove all the child nodes of the target div, and append the new processed root.
+		targetDiv=document.getElementById(targetDiv);
+		while(targetDiv.childNodes.length!=0)
+			targetDiv.removeChild(targetDiv.childNodes[0]);
+
+	
+		targetDiv.appendChild(fragment);
 	}else{
 		// Load the XSL
+		/*
 		//var xsl = new ActiveXObject("Microsoft.XMLDOM");
-		var xsl = new ActiveXObject("Msxml2.FreeThreadedDOMDocument.3.0");
-		xsl.async = "false"
-		xsl.load(targetStyle)
-		fragment=XMLdoc.transformNode(xsl);
+		//var xsl = new ActiveXObject("Msxml2.FreeThreadedDOMDocument.3.0");
+		xsl.async = "false";
+		xsl.load(targetStyle);
+		fragment=XMLdoc.transformNode(xsl);//*/
 		
-		targetDiv = document.getElementById(targetDiv);
-		targetDiv.innerHTML = fragment;
-	}
+		/*targetDiv=document.getElementById(targetDiv);
+		while(targetDiv.childNodes.length!=0)
+			targetDiv.removeChild(targetDiv.childNodes[0]);
 	
-	//remove all the child nodes of the target div, and append the new processed root.
-	targetDiv=document.getElementById(targetDiv);
-	while(targetDiv.childNodes.length!=0)
-		targetDiv.removeChild(targetDiv.childNodes[0]);
-
-	targetDiv.appendChild(fragment);
+		targetDiv.appendChild(fragment);*/
+		
+	}
 }
 
  
@@ -127,7 +136,8 @@ function transform(XMLdoc,targetStyle,targetDiv){
 function isRequired(input, text){
  	if(input.value == ''){
  		alert('The "'+text+'" field is required. Cannot be left in blank.');
- 		input.focus();
+		if(input.type != 'hidden')
+			input.focus();
  		input.style.background='#ff8080';
  		//poner el icono de warning
  	}else 
@@ -200,4 +210,21 @@ function clean(q){
 }
 function reload(doc){
 	document.location.reload();
+}
+/** move elements of a list using jquery */
+function move(dir, id/*[, target, img]*/){
+	var $curr = $('option:selected','#'+id);
+	
+	for(i=0;i<$curr.length;i++)
+		if(dir == 'down')
+			$($curr.get(i)).before($($curr.get(i)).next());
+		else	
+			$($curr.get(i)).after($($curr.get(i)).prev());
+}
+
+function selectAll(id){
+	//iterate & mark items as selected
+	var list=document.getElementById(id);
+	for(i=0;i<list.length;i++)
+		list[i].selected = true;
 }

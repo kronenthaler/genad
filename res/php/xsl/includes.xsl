@@ -3,12 +3,19 @@
  	<xsl:output method="text" encoding="utf-8" indent="no"/>
 	
 	<xsl:template match="/"><![CDATA[<?
-include_once('common/utils.php');
-include_once('obj/AbstractObject.php');	
-include_once('obj/Connection.php');
-include_once('obj/Error.php');
+if(stristr($_SERVER['HTTP_HOST'],'localhost')){
+	define('ROOT',']]><xsl:value-of select="/project/file-server-conf/base-directory"/><![CDATA[');
+	define('HTTP_ROOT','http://localhost/');
+}else{
+	define('ROOT',']]><xsl:value-of select="/project/file-server-conf/base-directory"/><![CDATA[');			  //cambiar por la ruta final
+	define('HTTP_ROOT','http://'.$_SERVER['HTTP_HOST'].'/'); //cambiar por la ruta final
+}
 
-define('ROOT',']]><xsl:value-of select="/project/file-server-conf/base-directory"/><![CDATA[');
+include_once(ROOT.'/common/utils.php');
+include_once(ROOT.'/obj/AbstractObject.php');	
+include_once(ROOT.'/obj/Connection.php');
+include_once(ROOT.'/obj/Error.php');
+include_once(ROOT.'/obj/Modules.php');
 
 //module's includes
 ]]><xsl:apply-templates select="/project/modules/module"/>
@@ -16,16 +23,14 @@ define('ROOT',']]><xsl:value-of select="/project/file-server-conf/base-directory
 //*/
 //project's classes
 <xsl:apply-templates select="/project/entities/entity"/>
-<![CDATA[
-//connect with the database
-$connection=new Connection();
-?>]]></xsl:template>
+<![CDATA[?>]]></xsl:template>
 	
 	<xsl:template match="module">
 secureInclude('<xsl:value-of select="@name"/>/<xsl:value-of select="@name"/>.php');</xsl:template>
 	
 	<xsl:template match="entity">
-include_once('obj/<xsl:value-of select="@name"/>.php');<xsl:apply-templates select="entity"/>
+<xsl:if test="just-schema/@value = 0">include_once('obj/<xsl:value-of select="@name"/>.php');
+</xsl:if><xsl:apply-templates select="entity"/>
 	</xsl:template>		
 	
 </xsl:stylesheet>

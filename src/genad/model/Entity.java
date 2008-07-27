@@ -245,6 +245,9 @@ public class Entity implements Serializable{
 		if(repited)
 			return Utils.showError("The entity: "+name+" cannot contain repited map fields");
 		
+		if(justSchema && childs.size()>0)
+			return Utils.showError("The entity: "+name+" cannot contain childs because is just an schema");
+		
 		return true;
 	}
 	

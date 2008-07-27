@@ -9,6 +9,12 @@ define("SEARCHABLE",5);
 define("ONLISTPOS",6);
 define("ONFORMPOS",7);
 
+define("SORTABLE","sortable");
+define("PAGER","pager");
+define("SEARCH","searchable");
+define("ADD","add");
+define("DELETE","delete");
+
 /** Constants for the error codes */
 define(GENERAL_ERROR,1);
 
@@ -18,10 +24,11 @@ define('TIME',2);
 
 class AbstractObject{
 	var $tablename,$primarykey;
-	var $prefixes = array('str_','int_');	/** valids prefixes */
+	var $prefixes = array('str_','int_');	/** valid prefixes */
 	var $bounds = array("'",'');			/** sourounders for each prefix */
 	var $fields = array();					/** array for the definition of each field, map, and properties, one entry per field */
 	var $childs = array();					/** array with the names of the classes related with, under this in the hierarchy */
+	var $properties = array();				/** array with the properties relative to the class (like sortable, pager, etc)*/
 	var $ancestor = '';						/** name of the ancestor class in the hierarchy */
 	var $title = '';						/** title of this entity in the list or mod pages */
 	var $error = '';
@@ -71,6 +78,10 @@ class AbstractObject{
 			return false;
 		}
 		$this->id = mysql_insert_id();
+		
+		if($this->properties[SORTABLE])
+			return $this->update($this->id, array('str__sort'=>$this->id));
+		
 		return true;
 	}
 	
@@ -250,9 +261,34 @@ class AbstractObject{
 				$str[$j].=($i>0?' AND ':'').'`'.$keys[$j]."` like '%".$toks[$i]."%'";
 
 		if(count($keys)>0)
-			array_push($criteria,'(('.implode(' ) OR (',$str).'))');	
+			array_unshift($criteria,'(('.implode(' ) OR (',$str).'))');	
 			
 		return $this->getList($criteria,$ini,$cant,$orderby);
+	}
+	
+	/**
+	 * @param $ids Array with the ids to sort, the sorting is FIFO.
+	 * @return boolean 
+	 */
+	function order($ids){
+		$long = count($ids);	
+		for($i=0;$i<$long;$i++){
+			$query = "UPDATE ".$this->tablename." SET `_sort` = ".($i+1)." WHERE `".$this->primarykey."`='".$ids[$i]."'";
+			$rs &= mysql_query($query); 
+		}
+		return $rs?true:false;
+	}
+
+	/**
+	 *	Swap the record pointed by $id with the next pointed for the relation $mode
+	 */
+	function swap($id, $mode){
+		$this->load($id);
+		$next = $this->getList(array("_sort".($mode=='up'?'<':'>').$this->_sort),0,1,'_sort '.($mode == 'up'?'desc':'asc'));
+		if(count($next) == 0) return false;
+
+		eval("\$next_id = \$next[0]->".$this->primarykey.";");
+		return $this->update($id,array('str__sort'=>$next[0]->_sort)) && $next[0]->update($next_id,array('str__sort'=>$this->_sort));
 	}
 
 	/** 
@@ -314,7 +350,7 @@ class AbstractObject{
 			$str=$parent->title." > ".$str;
 			$ancestor=$parent->ancestor;
 		}
-		return '<title><![CDATA['.$str.']]></title>';
+		return '<title><![CDATA['.$str.']]></title><basepath><![CDATA['.HTTP_ROOT.'/admin/]]></basepath>';
 	}
 	
 	function getXMLBack($params=NULL){
@@ -347,15 +383,24 @@ class AbstractObject{
 	/**
 	 *	Get the list of elements to show from the $objects array and intersected with the $this->fields array
 	 */
-	function getXMLList($objects){
-		$ret="<list>";
+	function getXMLList($objects,$criteria=NULL){
+		$ret.="<properties>";
+		foreach($this->properties as $key => $value)
+			$ret.="<".$key.">".$value."</".$key.">";
+		$ret.="</properties>";
+		$ret.="<list>";
 		$ret.="<listable>";
 		uasort($this->fields, create_function('$a,$b','return $a[ONLISTPOS] - $b[ONLISTPOS];'));
 		$listables=$this->getFieldsByType(LISTABLE);
 		for($i=0,$n=count($listables);$i<$n;$i++)
 			$ret.='<field map="'.$listables[$i].'" name="'.$this->fields[$listables[$i]][TITLE].'" type="'.$this->fields[$listables[$i]][TYPE].'"/>';
-		for($i=0,$n=count($this->childs);$i<$n;$i++)
-			$ret.='<child name="'.$this->childs[$i].'"/>';
+		//for($i=0,$n=count($this->childs);$i<$n;$i++)
+		//	$ret.='<child name="'.$this->childs[$i].'"/>';
+		for($i=0,$n=count($this->childs);$i<$n;$i++){
+			eval("\$childTitle=new ".$this->childs[$i]."();");
+			$ret.='<child name="'.$childTitle->title.'"/>';
+		}
+			
 		$ret.="</listable>";
 
 		for($i=0,$n=count($objects);$i<$n;$i++){
@@ -364,8 +409,10 @@ class AbstractObject{
 			
 			foreach($this->childs as $name){
 				eval("\$child=new ".$name."();");
-				$ret.='<child name="'.$name.'" 
-							  count="'.$child->totalRows(array($this->primarykey."='".$key."'")).'"/>';
+				if($criteria[$name]!=NULL)
+					$ret.='<child name="'.$name.'" count="'.$child->totalRows(array_merge($criteria[$name],array($this->primarykey."='".$key."'"))).'"/>';
+				else
+					$ret.='<child name="'.$name.'" count="'.$child->totalRows(array($this->primarykey."='".$key."'")).'"/>';
 			}
 				
 			for($j=0,$m=count($listables);$j<$m;$j++){
@@ -376,6 +423,8 @@ class AbstractObject{
 					$value=format($value,DATE|TIME,'D/M/Y H:m:s');
 				if($this->fields[$listables[$j]][TYPE]=='time')
 					$value=format($value,TIME,'H:m:s');
+				if($this->fields[$listables[$j]][TYPE]=='image')
+					$value=str_replace(DEF_PREFIX,DEF_THUMB_PREFIX,$value);
 				
 				$ret.='<field map="'.$listables[$j].'"><![CDATA['.$value.']]></field>';
 			}
@@ -407,7 +456,7 @@ class AbstractObject{
 				foreach($option as $key => $val)
 					$ret.=' '.$key.'="'.$val.'" ';
 			$ret.='>';
-			if($option[$keys[0]]!=NULL || $current[TYPE] == 'select'){ //append the options
+			if(($option[$keys[0]]!=NULL && is_array($option[$keys[0]])) || $current[TYPE] == 'select'){ //append the options
 				for($j=0,$m=count($option);$j<$m;$j++){
 					if(is_array($option[$j]))
 						$ret.='<option name="'.$option[$j]['name'].'" 
