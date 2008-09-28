@@ -57,10 +57,11 @@ public class Utils{
 	}
 	
 	public static void sort(Vector<String> v){
-		String[] aux=v.toArray(new String[0]);
+		/*String[] aux=v.toArray(new String[0]);
 		Arrays.sort(aux);
 		v.clear();
-		for(int i=0;i<aux.length;v.add(aux[i++]));
+		for(int i=0;i<aux.length;v.add(aux[i++]));*/
+		Collections.sort(v);
 	}
 	
 	public static String capitalize(String s){

@@ -24,7 +24,7 @@
 	
 	$obj=new <xsl:value-of select="//@name"/>();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
-	$pageSize=$obj->properties[PAGER] && $_REQUEST['action']==''?30:-1;
+	$pageSize=$obj->properties[PAGER] <![CDATA[&&]]> $_REQUEST['action']==''?30:-1;
 	<xsl:choose>
 		<xsl:when test="entity/parent/@id != ''">
 	$criteria=array("<xsl:value-of select="entity/parent/@id"/>='".$_REQUEST['<xsl:value-of select="entity/parent/@id"/>']."'"); //parent id

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1214340981371" by="kronenthaler" language="php">
+<project lastsaved="1216938081450" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/var/www/testing]]></base-directory>
 	</file-server-conf>
@@ -15,18 +15,18 @@
 	</db-server-conf>
 	<modules>
 		<module name="upload">
-			<option name="DEF_PREFIX" value="arc_"/>
 			<option name="DEF_MAX_SIZE" value="(100*MB)"/>
+			<option name="DEF_PREFIX" value="arc_"/>
 			<option name="DEF_MAX_THUMB_HEIGHT" value="50"/>
 			<option name="DEF_MAX_IMG_WIDTH" value="150"/>
 			<option name="DEF_MAX_IMG_HEIGHT" value="150"/>
 			<option name="DEF_DEST_PATH" value="files/"/>
 			<option name="DEF_FORCE_SCALE" value=""/>
-			<option name="DEF_ASPECT_RATIO" value=""/>
 			<option name="DEF_CREATE_THUMB" value=""/>
+			<option name="DEF_ASPECT_RATIO" value=""/>
 			<option name="DEF_ENABLE_PREVIEW" value=""/>
-			<option name="DEF_VALID_EXTS" value="*"/>
 			<option name="DEF_MAX_THUMB_WIDTH" value="50"/>
+			<option name="DEF_VALID_EXTS" value="*"/>
 		</module>
 		<module name="rte">
 			<option name="TOOL_BAR" value=""/>
@@ -40,11 +40,11 @@
 		<entity name="Car" title="Carros">
 			<table name="cars" primary-key="car_id"/>
 			<permissions value=""/>
-			<splitpage value="0"/>
-			<search value="0"/>
+			<splitpage value="1"/>
+			<search value="1"/>
 			<just-pages value="0"/>
 			<just-schema value="0"/>
-			<sortable value="0"/>
+			<sortable value="1"/>
 			<form>
 				<field type="primary-key">
 					<label><![CDATA[null]]></label>
@@ -66,32 +66,20 @@
 					<options>
 					</options>
 				</field>
-				<field type="richtext">
+				<field type="integer">
 					<label><![CDATA[Otro]]></label>
 					<db-field><![CDATA[asdf]]></db-field>
-					<required>1</required><!-- 0|1 -->
+					<required>0</required><!-- 0|1 -->
 					<show-in-list>0</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
 					<options>
-						<option name="TOOLBAR" value="Default"/>
-					</options>
-				</field>
-				<field type="richtext">
-					<label><![CDATA[Fecha]]></label>
-					<db-field><![CDATA[desc]]></db-field>
-					<required>1</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>1</searchable><!-- 0|1 -->
-					<options>
-						<option name="TOOLBAR" value="Default"/>
 					</options>
 				</field>
 				<field type="integer">
 					<label><![CDATA[Foto]]></label>
 					<db-field><![CDATA[photo]]></db-field>
-					<required>1</required><!-- 0|1 -->
+					<required>0</required><!-- 0|1 -->
 					<show-in-list>1</show-in-list><!-- 0|1 -->
 					<show-in-form>1</show-in-form><!-- 0|1 -->
 					<searchable>0</searchable><!-- 0|1 -->
