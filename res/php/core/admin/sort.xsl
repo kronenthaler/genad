@@ -160,16 +160,6 @@
 					<input type="hidden" name="{@id}" id="{@id}" value="{@value}"/>
 				</xsl:for-each>
 			</form>
-			<!--script>
-				dojo.addOnLoad(function (){
-					new dojo.io.FormBind({
-						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
-						handle: function(type, data, evt) {  },
-						load: function(load, data,evt){ transform(evt.responseXML, 'list.xsl','center');},
-						mimetype: "text/html"
-					});
-				});
-			</script-->
 		</center>
 		<!--img src="images/open.gif" height="20" width="1"/-->
 	</div>

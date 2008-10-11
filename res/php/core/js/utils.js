@@ -203,14 +203,10 @@ function showHide(id){
 		elem.style.display = 'none';
 }
 
-function clean(q){
-	for(var x in q)
-		tinyMCE.removeMCEControl(x);
-	return true;
-}
 function reload(doc){
 	document.location.reload();
 }
+
 /** move elements of a list using jquery */
 function move(dir, id/*[, target, img]*/){
 	var $curr = $('option:selected','#'+id);
@@ -228,3 +224,24 @@ function selectAll(id){
 	for(i=0;i<list.length;i++)
 		list[i].selected = true;
 }
+
+function convertDate(src, fromFormat, toFormat){
+	var yearIndex = fromFormat.indexOf('y');
+	var monthIndex = fromFormat.indexOf('M');
+	var dayIndex = fromFormat.indexOf('d');
+	var hourIndex = fromFormat.indexOf('h');
+	var minutesIndex = fromFormat.indexOf('m');
+	
+	year = src.substring(yearIndex, yearIndex+4);
+	month = src.substring(monthIndex, monthIndex+2);
+	day = src.substring(dayIndex, dayIndex+2);
+	hour = src.substring(hourIndex, hourIndex+2);
+	minutes = src.substring(minutesIndex, minutesIndex+2);
+	
+	return toFormat.replace('y',year)
+					.replace('M',month)
+					.replace('d',day)
+					.replace('h',hour)
+					.replace('m',minutes);
+}
+

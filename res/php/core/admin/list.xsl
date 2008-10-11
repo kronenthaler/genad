@@ -52,7 +52,7 @@
 								<xsl:if test="/entity/properties/searchable = 1">
 								<td valign="middle" align="right">
 									<label for="search">Search:</label>
-									<input type="text" id="search" name="search"/>
+									<input type="text" id="search" name="search" value="{/entity/search}"/>
 								</td>
 								<td width="1%">
 									<button type="button" onclick="getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?search='+document.getElementById('search').value+'{$ids}','list.xsl','center');">
@@ -100,7 +100,7 @@
 					  method="post" 
 					  enctype="multipart/form-data"
 					  >
-				<table cellspacing="0" cellpadding="0" border="0" style="border-right: 1px solid #ccc;">
+				<table cellspacing="0" cellpadding="0" border="0" style="border-right: 1px solid #ccc;border-top: 1px solid #ccc;">
 					<xsl:choose>
 						<xsl:when test="count(instance) &gt; 0">
 							<thead>
@@ -132,60 +132,73 @@
 								<xsl:for-each select="instance">
 									<xsl:variable name="key" select="@key"/>
 									<xsl:variable name="primarykey" select="@primarykey"/>
-									<tr>
-										<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
-										<xsl:for-each select="field">
-											<xsl:variable name="mapping" select="@map"/>
-											<xsl:variable name="value" select="."/>
-											<xsl:variable name="childs" select="count(../child)"/>
-											<xsl:for-each select="../../listable/field">	
-												<xsl:if test="@map = $mapping">
-													<td class="part1">
-														<!--xsl:if test="position()=1 and $childs &gt; 0">
-															<img onclick="showNextRow(this)" src="images/close.gif" alt="+" title="Show relations"/>&nbsp;
-														</xsl:if-->
-														<xsl:choose>
-															<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img src="images/{$value}.gif"/></a></center>
-															</xsl:when>					
-															<xsl:when test="@type = 'image'">
-																<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
-															</xsl:when>
-															<xsl:otherwise>
-																<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}">
-																	&nbsp;<xsl:value-of select="$value" disable-output-escaping="yes"/>
-																</a>
-															</xsl:otherwise>
-														</xsl:choose>
-													</td>
-												</xsl:if>	
-											</xsl:for-each>
-										</xsl:for-each>
-										<!--xsl:if test="/entity/properties/sortable = 1">
-											<td class="part1" align="center">
-											<xsl:choose>
-												<xsl:when test="position() = 1"><img src="images/unup.png" border="0"/></xsl:when>
-												<xsl:otherwise><a href="javascript:getAndTransform('exec{//@name}.{//@ext}?action=sort&amp;mode=up&amp;id={$key}{$ids}','list.xsl','center')"><img src="images/up.png" border="0"/></a></xsl:otherwise>
-											</xsl:choose>
-											<xsl:choose>
-												<xsl:when test="position() = last()"><img src="images/undown.png" border="0" /></xsl:when>
-												<xsl:otherwise><a href="javascript:getAndTransform('exec{//@name}.{//@ext}?action=sort&amp;mode=down&amp;id={$key}{$ids}','list.xsl','center')"><img src="images/down.png" border="0"/></a></xsl:otherwise>
-											</xsl:choose>
-											</td>
-										</xsl:if-->
-										<xsl:for-each select="child">
-											<td align="center" class="part1"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
-										</xsl:for-each>
-									</tr>
-									<!-- the row with the subentities related to this 
-									<tr class="part1" style="display:none">
-										<td class="part1">&nbsp;</td>
-										<td class="part1" colspan="10">
-											<xsl:for-each select="child">
-												&nbsp;<a href="javascript: getAndTransform('list{@name}.{//@ext}?{$primarykey}={$key}{$ids}','list.xsl','center')"><xsl:value-of select="@name"/>(<xsl:value-of select="@count"/>)</a>
-											</xsl:for-each>
-										</td>
-									</tr>-->
+									<xsl:variable name="module"><xsl:value-of select="position() mod 2"/></xsl:variable>
+									<xsl:choose>
+										<xsl:when test="$module = 1">
+											<tr>
+												<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<xsl:for-each select="field">
+													<xsl:variable name="mapping" select="@map"/>
+													<xsl:variable name="value" select="."/>
+													<xsl:variable name="childs" select="count(../child)"/>
+													<xsl:for-each select="../../listable/field">	
+														<xsl:if test="@map = $mapping">
+															<td class="part1">
+																<xsl:choose>
+																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
+																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img src="images/{$value}.gif"/></a></center>
+																	</xsl:when>
+																	<xsl:when test="@type = 'image'">
+																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
+																	</xsl:when>
+																	<xsl:otherwise>
+																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}">
+																			&nbsp;<xsl:value-of select="$value" disable-output-escaping="yes"/>
+																		</a>
+																	</xsl:otherwise>
+																</xsl:choose>
+															</td>
+														</xsl:if>	
+													</xsl:for-each>
+												</xsl:for-each>
+												<xsl:for-each select="child">
+													<td align="center" class="part1"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+												</xsl:for-each>
+											</tr>
+										</xsl:when>
+										<xsl:otherwise>
+											<tr class="odd">
+												<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<xsl:for-each select="field">
+													<xsl:variable name="mapping" select="@map"/>
+													<xsl:variable name="value" select="."/>
+													<xsl:variable name="childs" select="count(../child)"/>
+													<xsl:for-each select="../../listable/field">	
+														<xsl:if test="@map = $mapping">
+															<td class="part1">
+																<xsl:choose>
+																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
+																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img src="images/{$value}.gif"/></a></center>
+																	</xsl:when>
+																	<xsl:when test="@type = 'image'">
+																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
+																	</xsl:when>
+																	<xsl:otherwise>
+																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}">
+																			&nbsp;<xsl:value-of select="$value" disable-output-escaping="yes"/>
+																		</a>
+																	</xsl:otherwise>
+																</xsl:choose>
+															</td>
+														</xsl:if>	
+													</xsl:for-each>
+												</xsl:for-each>
+												<xsl:for-each select="child">
+													<td align="center" class="part1"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+												</xsl:for-each>
+											</tr>
+										</xsl:otherwise>
+									</xsl:choose>
 								</xsl:for-each>	
 							</tbody>
 						</xsl:when>
@@ -208,7 +221,7 @@
 													<td>Delete</td></tr>
 											</table>
 										</button>
-										<script>document.getElementById('_deleteBtn_').disabled = <xsl:value-of select="/entity/properties/delete"/>==0;</script>
+										<script>document.getElementById('_deleteBtn_').disabled = '<xsl:value-of select="/entity/properties/delete"/>'=='0';</script>
 									<!--/xsl:if-->
 								</td>
 								<xsl:if test="/entity/properties/sortable = 1">
@@ -222,7 +235,7 @@
 											</tr>
 										</table>
 									</button>
-									<script>document.getElementById('_sortBtn_').disabled = <xsl:value-of select="count(instance)"/> &lt; 2;</script>
+									<script>document.getElementById('_sortBtn_').disabled = '<xsl:value-of select="count(instance)"/>' &lt; 2;</script>
 									</td>
 								</xsl:if>
 								<td align="right" class="plain">
@@ -236,7 +249,7 @@
 												</tr>
 											</table>
 										</button>
-										<script>document.getElementById('_addBtn_').disabled = <xsl:value-of select="/entity/properties/add"/>==0;</script>
+										<script>document.getElementById('_addBtn_').disabled = '<xsl:value-of select="/entity/properties/add"/>'=='0';</script>
 									<!--/xsl:if-->
 								</td>
 							</xsl:when>
@@ -264,16 +277,6 @@
 					<input type="hidden" name="{@id}" id="{@id}" value="{@value}"/>
 				</xsl:for-each>
 			</form>
-			<!--script>
-				dojo.addOnLoad(function (){
-					new dojo.io.FormBind({
-						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
-						handle: function(type, data, evt) {  },
-						load: function(load, data,evt){ transform(evt.responseXML, 'list.xsl','center');},
-						mimetype: "text/html"
-					});
-				});
-			</script-->
 		</center>
 	</div>
 	</xsl:template>

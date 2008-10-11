@@ -41,7 +41,7 @@ class AbstractObject{
 	function load($id){
 		$query="SELECT * FROM ".$this->tablename." WHERE ".$this->primarykey."='".$id."'";
 		$rs=mysql_query($query);
-		return $this->makeObject($rs,'$this') != NULL;
+		return $this->makeObject($rs,'$this') != NULL && ($this->id = $id) != NULL;
 	}
 	
 	/**
@@ -179,8 +179,10 @@ class AbstractObject{
 			if(!$rs) return;
 			for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
 				for($i=0,$n=count($files);$i<$n;$i++){
-					if(mysql_result($rs, $j, $files[$i])!='')
+					if(mysql_result($rs, $j, $files[$i])!=''){
+						//TODO: eliminate every file with the same timestamp between the prefix and the last dot
 						unlink(ROOT.'/'.mysql_result($rs, $j, $files[$i]));
+					}
 				}
 		}
 	}

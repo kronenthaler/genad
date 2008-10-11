@@ -107,10 +107,14 @@ a {
 	height: 20px;
 }
 
+#content table tr.odd{
+	background:#EEE;
+}
+
 #content-header {
 	margin-left:0px;
 	padding:0px;
-	width:75%;/* cambiar por static sizes*/
+	width:100%;/* cambiar por static sizes*/
 	min-height: 50px;
 	float:left;
 	background-color: #FFF;
@@ -133,7 +137,7 @@ a {
 }
 
 #content table td{
-	background: #fff;
+	/*background: #fff;*/
 	/*border-right: 1px solid #ccc;*/
 	border-bottom: 1px dotted #999;
 	vertical-align: middle;
@@ -141,17 +145,21 @@ a {
 	height: 20px;
 }
 
+#content table td.top{
+	vertical-align: top;
+	border-top: 0;
+}
+
 #content table td.part1{
 	border-bottom: 1px solid #ccc;
 	border-left:  1px solid #ccc;
 }
-#content table td.part2{
-	border: 1px solid #ccc;
-}
 
-/*#content table tr.part1{
-	display: none;
-}*/
+#content table td.part2{
+	border-bottom: 1px solid #ccc;
+	border-left:  1px solid #ccc;
+	width: 20%;
+}
 
 #content table td button img {
 	border: 0px;
@@ -215,7 +223,7 @@ a {
 #content{
 	margin-left:0px;
 	padding:0px;
-	width:75%;/* cambiar por static sizes*/
+	width:100%;/* cambiar por static sizes*/
 	/*min-height: 50px;*/
 	float:left;
 	color:#999;
@@ -233,7 +241,7 @@ a {
 	/*background-image: url('images/close.gif');*/
 	background-repeat: no-repeat;
 	background-position: left;
-	padding-left: 15px;
+	padding-left: 10px;
 }
 
 .menucontent{
@@ -271,8 +279,7 @@ a {
 
 .border{
 	border: 1px solid #999;
-	width: 10px;
-	height: 10px;
+	background-color: #eee;
 }
 
 .file{

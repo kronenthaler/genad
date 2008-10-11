@@ -19,12 +19,16 @@
 					<base id="base" href="{/error/basepath}" />
 				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
-				<script src="../js/dojo/dojo.js"></script>
-				<script src="../js/fckeditor/fckeditor.js"></script>
- 				<script src="../js/utils.js"></script>
-				<script src="js/validators.js"></script>
+				<link href="../css/ui.all.css" rel="stylesheet" type="text/css"/>
+				<script language="javascript" src="../js/utils.js"></script>
+				<script language="javascript" src="../js/jquery.js"></script>
+				<script language="javascript" src="../js/ui.core.js"></script>
+				<script language="javascript" src="../js/ui.datepicker.js"></script>
+				<script language="javascript" src="../js/ui.timepicker.js"></script>
+                <script language="javascript" src="../js/jsXMLParser/xmldom.js"></script>
+				<script language="javascript" src="../js/fckeditor/fckeditor.js"></script> 				
+                <script language="javascript" src="js/validators.js"></script>
 				<xsl:apply-templates select="/entity/prefix"/><!-- trick to add the modules scripts prefix always exists-->
- 				<script>dojo.require('dojo.widget.*');</script>
  				</head><body><div id="container"><div id="center">
 		<xsl:choose>
 			<xsl:when test="/error != ''">
@@ -60,8 +64,7 @@
 				  id="frm_{//@name}" 
 				  action="{/entity/prefix}exec{//@name}.{//@ext}"
 				  method="POST" 
-				  enctype="multipart/form-data" 
-				  >
+				  enctype="multipart/form-data">
 				<center>
 					<table cellpadding="0" cellspacing="0" border="0" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
 						<tr><th width="15%" colspan="2"><xsl:value-of select="/entity/title"/></th></tr>
@@ -97,19 +100,8 @@
 				<xsl:for-each select="/entity/ancestors/ancestor">
 					<input type="hidden" name="str_{@id}" id="str_{@id}" value="{@value}"/>
 					<input type="hidden" name="{@id}" id="{@id}" value="{@value}"/>
-				</xsl:for-each>	
+				</xsl:for-each>
 			</form>
-			<!--script>
-				dojo.addOnLoad(function (){
-					var x = new dojo.io.FormBind({
-						formNode: document.forms.frm_<xsl:value-of select="//@name"/>,
-						error: 	function(type, error){ alert(error.message);},
-						handle: function(type, data, evt){ alert(type+"/"+data+"/"+evt); },
-						load: 	function(load, data, evt){ transform(evt.responseXML, 'list.xsl','center'); },
-						mimetype: "text/html"
-					});
-				});//*/
-			</script-->
 		</div>
  	</xsl:template>
  	
@@ -132,14 +124,14 @@
 
  	<xsl:template match="textfield | integer | decimal | email">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left"><input type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="textarea">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left"><textarea name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
 		</tr>
  	</xsl:template>
@@ -150,7 +142,7 @@
  	 	
  	<xsl:template match="radio">
  		<tr class="part1">
-			<td class="part1" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="part2 top" align="right" ><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<xsl:for-each select="option">
 					<xsl:choose>
@@ -169,7 +161,7 @@
  	
  	<xsl:template match="checkbox">
  		<tr class="part1">
-			<td class="part1" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="part2 top" align="right" ><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<xsl:for-each select="option">
 					<p>
@@ -190,7 +182,7 @@
  	
  	<xsl:template match="select">
  		<tr class="part1">
-			<td class="part1" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="right" ><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}">
 					<xsl:for-each select="option">
@@ -217,18 +209,18 @@
  	
  	<xsl:template match="password">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left"><input type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
 		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@confirm"/>:</td>
+			<td class="part2" align="right"><xsl:value-of select="@confirm"/>:</td>
 			<td class="part1" align="left"><input type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="richtext">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<input type="hidden" name="str_{@map}" id="str_{@map}" />
 				<textarea id="rte_{@map}"><xsl:value-of select="."/></textarea>
@@ -245,19 +237,22 @@
  	
  	<xsl:template match="date">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
-				<div id="div_{@map}"/>
-				<script>
-					dojo.addOnLoad(function (){
-						dojo.widget.createWidget('DropdownDatePicker',
-							{id:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>',
-							name:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>',
-							value:'<xsl:value-of select="@date"/>',
-							displayWeeks:'4',
-							saveFormat:'yyyyMMdd',
-							displayFormat:'dd/MM/yyyy'},
-							document.getElementById('div_<xsl:value-of select="@map"/>'))
+				<input type="text" id="div_{@map}" value="{@date}"/>
+				<input type="hidden" id="{@prefix}{@map}" value="" name="{@prefix}{@map}" />
+				<script language="javascript">
+					$(function (){
+						$("#div_<xsl:value-of select="@map"/>").datepicker({
+							altField: "#<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>",
+							altFormat: "yymmdd",
+							dateFormat: "dd/mm/yy",
+							duration: "", 
+							showOn: "both",
+							buttonImage: "images/dateIcon.gif",
+							buttonImageOnly: true
+						}).attr("readonly", "readonly");
+						document.getElementById("<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>").value = convertDate('<xsl:value-of select="@date"/>','dd/MM/yyyy','yMd');
 					});
 				</script>
 			</td>
@@ -266,17 +261,15 @@
  	
  	<xsl:template match="time">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
-				<div id="div_{@map}"/>
-				<script>
-					dojo.addOnLoad(function (){
-						dojo.widget.createWidget('DropdownTimePicker',
-							{id:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>',
-							name:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>',
-							value:'<xsl:value-of select="@time"/>',
-							displayFormat:'HH:mm'},
-							document.getElementById('div_<xsl:value-of select="@map"/>'))
+				<input type="text" id="{@prefix}{@map}" value="{@time}" name="{@prefix}{@map}" size="5"/>
+				<img src="images/timeIcon.gif" id="div_{@map}"/>
+				<script language="javascript">
+					$(function (){
+						$('#div_<xsl:value-of select="@map"/>').timepicker({
+							altField: '<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>',
+						});
 					});
 				</script>
 			</td>
@@ -285,26 +278,29 @@
  	
  	<xsl:template match="datetime">
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
-				<div id="div_{@map}_date"/>
-				<div id="div_{@map}_time"/>
-				<script>
-					dojo.addOnLoad(function (){
-						dojo.widget.createWidget('DropdownDatePicker',
-							{id:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_date',
-							name:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_date',
-							value:'<xsl:value-of select="@date"/>',
-							displayWeeks:'4',
-							saveFormat:'yyyyMMdd',
-							displayFormat:'dd/MM/yyyy'},
-							document.getElementById('div_<xsl:value-of select="@map"/>_date'))
-						dojo.widget.createWidget('DropdownTimePicker',
-							{id:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_time',
-							name:'<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_time',
-							value:'<xsl:value-of select="@time"/>',
-							displayFormat:'HH:mm'},
-							document.getElementById('div_<xsl:value-of select="@map"/>_time'))
+				<input type="text" id="div_{@map}_date" value="{@date}" size="10" />
+				<input type="hidden" id="{@prefix}{@map}_date" name="{@prefix}{@map}_date" value="" />
+				<input type="text" id="{@prefix}{@map}_time" value="{@time}" name="{@prefix}{@map}_time" size="5"/>
+				<img src="images/timeIcon.gif" id="div_{@map}_time"/>
+				
+				<script language="javascript">
+					$(function (){
+						$("#div_<xsl:value-of select="@map"/>_date").datepicker({
+							altField: "#<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_date",
+							altFormat: "yymmdd",
+							dateFormat: "dd/mm/yy",
+							duration: "", 
+							showOn: "both",
+							buttonImage: "images/dateIcon.gif",
+							buttonImageOnly: true
+						}).attr("readonly", "readonly");
+						document.getElementById("<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_date").value = convertDate('<xsl:value-of select="@date"/>','dd/MM/yyyy','yMd');
+
+						$('#div_<xsl:value-of select="@map"/>_time').timepicker({
+							altField: '<xsl:value-of select="@prefix"/><xsl:value-of select="@map"/>_time',
+						});
 					});
 				</script>
 				<input type="hidden" name="{@prefix}{@map}" id="{@prefix}{@map}" value="."/>
@@ -322,12 +318,10 @@
 			</xsl:for-each>
 		</xsl:variable>
 		<script>
-			//dojo.addOnLoad(function(){
-				upload.addFile('<xsl:value-of select="@map"/>');
-			//});
+			upload.addFile('<xsl:value-of select="@map"/>');
 		</script>
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">View File</a>
@@ -342,25 +336,10 @@
 			</td>
 		</tr>
  	</xsl:template>
-	
-	<xsl:template match="label">
-		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
-		</tr>
-	</xsl:template>
-
-	<xsl:template match="timestamp">
-		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
-				<xsl:if test="@date=''">N/A</xsl:if><xsl:value-of select="@date"/>&nbsp;<xsl:value-of select="@time"/></td>
-		</tr>
-	</xsl:template>
  	
  	<xsl:template match="image">
  		<xsl:variable name="params">
- 		<xsl:for-each select="option">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="@value"/></xsl:for-each>
+		<xsl:for-each select="option">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="@value"/></xsl:for-each>
 		</xsl:variable>
 		<xsl:variable name="prev">
 			<xsl:for-each select="option">
@@ -378,12 +357,10 @@
 			</xsl:for-each>
 		</xsl:variable>
 		<script>
-			//dojo.addOnLoad(function(){
-				upload.addFile('<xsl:value-of select="@map"/>');
-			//});
+			upload.addFile('<xsl:value-of select="@map"/>');
 		</script>
  		<tr class="part1">
-			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part1" align="left">
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">
@@ -399,4 +376,19 @@
 			</td>
 		</tr>
  	</xsl:template>
+
+	<xsl:template match="label">
+		<tr class="part1">
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part1" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
+		</tr>
+	</xsl:template>
+
+	<xsl:template match="timestamp">
+		<tr class="part1">
+			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part1" align="left">
+				<xsl:if test="@date=''">N/A</xsl:if><xsl:value-of select="@date"/>&nbsp;<xsl:value-of select="@time"/></td>
+		</tr>
+	</xsl:template>
 </xsl:stylesheet>

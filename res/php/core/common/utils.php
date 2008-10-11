@@ -56,6 +56,46 @@ function format($date, $type, $format){
 }
 
 //rsa
+/**
+ * (b^p)%m
+ */
+function modpow($b,$p,$m){
+	$resul=0;
+	if($p == 0){
+		$resul = 1;
+	}else if($p == 1){
+		$resul = bcmod($b,$m);
+	}else if($p == 2){
+		$aux = bcmod($b,$m);
+		$resul = bcmod(bcmul($aux,$aux),$m);
+	}else{
+		$p1 = bcdiv($p,2); // p/2
+		$aux = modpow($b,$p1,$m); //
+		$resul = (bcmod($p,2) != 0)?
+				bcmod(bcmul(bcmod(bcmul($aux,$aux),$m), bcmod($b,$m)),$m) :
+				bcmod(bcmul($aux,$aux),$m);
+	}
+	return $resul;
+}
+
+/**
+ *	$publicKey: 	llave publica para el encriptamiento (debe cumplir con ciertos criterios)
+ *	$n:				valor del algoritmo. Numero primo alto
+ *	$msg:			mensaje a codificar. Debe ser un numero por los momentos.
+ */
+function encodeRSA($publicKey, $n, $msg){
+	return modpow($msg, $publicKey, $n);
+}
+
+/**
+ *	$privateKey:	llave privada para el desencriptado.
+ *	$n:				valor del algoritmo.
+ *	$msg:			mensaje a descodificar
+ */
+function decodeRSA($privateKey, $n, $msg){
+	return modpow($msg, $privateKey, $n);
+}
+
 //startWith
 //endsWith
 
