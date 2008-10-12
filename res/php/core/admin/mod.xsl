@@ -327,7 +327,7 @@
 				<a href="../{$prev}" target="_blank" id="link_{@map}">View File</a>
 				</xsl:if>
 				<iframe id="if_{@map}" name="if_{@map}" 
-						src="../upload/component.php?name={@map}{$params}" 
+						src="../upload/component.{//@ext}?name={@map}{$params}" 
 						scrolling="no" 
 						frameborder="0" 
 						width="100%" 
@@ -367,7 +367,7 @@
 					<img src="../{$prev}" border="0" id="img_link_{@map}"/></a><!--width="{$iframe-width}" height="{$iframe-height}"-->
 				</xsl:if>
 				<iframe id="if_{@map}" name="if_{@map}" 
-						src="../upload/component.php?name={@map}{$params}" 
+						src="../upload/component.{//@ext}?name={@map}{$params}" 
 						scrolling="no" 
 						frameborder="0" 
 						width="100%" 

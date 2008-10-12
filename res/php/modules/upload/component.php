@@ -31,9 +31,9 @@ function clean(complete){
 	document.getElementById('btn_del').disabled=true;
 	
 	document.getElementById('str_<?=$name?>').value='';
+	parent.document.getElementById('str_<?=$name?>').value='';
 	
 	if(complete){ //i want remove it
-		parent.document.getElementById('str_<?=$name?>').value='';
 		var img = parent.document.getElementById('img_link_<?=$name?>');
 		if(img!=null) img.src = 'images/0.gif';
 		anychange = true;
@@ -48,14 +48,15 @@ function clean(complete){
 <body>
 <div id="container">
 	<div id="center">
+		<div id="content">
 	<form action="process.php" method="POST" enctype="multipart/form-data" name="frm_up" id="frm_up" onsubmit="return true;">
 		<table cellpadding="0" cellspacing="0" border="0" width="100%">
 			<tr valign="middle">
-				<td align="left" id="thefile" width="1%">
+				<td class="plain" align="left" id="thefile" width="1%">
 					<? if($_REQUEST['path']==''){?>
 						<input type="file" name="file_<?=$name?>" id="file_<?=$name?>" onchange="touch()"/></p>
 						</td>
-						<td align="left">
+						<td class="plain" align="left">
 						<button type="button" id="btn_del" onclick="clean(true)">
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
@@ -66,7 +67,7 @@ function clean(complete){
 						</button>
 						<!--img src="../upload/images/spacer.gif" id="loading" align="absmiddle" /-->
 						<? if($_REQUEST['error']!=''){ ?>
-						</td><td align="right">
+						</td><td class="plain" align="right">
 						<a href="javascript:void(0);" onclick="alert('<?=$_REQUEST['error']?>')" id="error">
 							Error uploading file <img src="../admin/images/cancel.png" title="<?=str_replace("\\'","'",$_REQUEST['error'])?>" align="absmiddle" border="0"/>
 						</a>
@@ -86,6 +87,7 @@ function clean(complete){
 			</tr>
 		</table>
 	</form>
+	</div>
 	</div>
 </div>
 </body>

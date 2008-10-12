@@ -33,20 +33,21 @@ class ImageUpload extends Upload{
 		$error = parent::uploadFile($ARRAY);
 		if($error->code == 0){
 			$src = $error->description;
-			
-			if($this->opts[FORCE_SCALE])
-				$error=$this->scaleImage($src,$this->opts[MAX_WIDTH],$this->opts[MAX_HEIGHT],$this->opts[ASPECT_RATIO]);
-			
-			//generar thumbnails?
-			if($this->opts[THUMBS]!=0){
-				for($i=0,$n=$this->opts[THUMBS];$i<$n;$i++){
-					$error1=$this->scaleImage($src,
-												$this->opts[THUMB_WIDTH.$i],
-												$this->opts[THUMB_HEIGHT.$i],
-												$this->opts[ASPECT_RATIO],
-												$this->opts[THUMB_FILTER.$i],
-												str_replace($this->opts[PREFIX],$this->opts[THUMB_PREFIX.$i],$src)
-											  );
+			if($src != ''){
+				if($this->opts[FORCE_SCALE])
+					$error=$this->scaleImage($src,$this->opts[MAX_WIDTH],$this->opts[MAX_HEIGHT],$this->opts[ASPECT_RATIO]);
+				
+				//generar thumbnails?
+				if($this->opts[THUMBS]!=0){
+					for($i=0,$n=$this->opts[THUMBS];$i<$n;$i++){
+						$error1=$this->scaleImage($src,
+													$this->opts[THUMB_WIDTH.$i],
+													$this->opts[THUMB_HEIGHT.$i],
+													$this->opts[ASPECT_RATIO],
+													$this->opts[THUMB_FILTER.$i],
+													str_replace($this->opts[PREFIX],$this->opts[THUMB_PREFIX.$i],$src)
+												  );
+					}
 				}
 			}
 		}
@@ -152,6 +153,17 @@ class ImageUpload extends Upload{
 				imagesetpixel ($im, $i, $j, $val);
 			}
 		}	
+	}
+	
+	function deleteFile($path){
+		if(file_exists($path)) unlink($path);
+		if($this->opts[THUMBS]!=0){
+			for($i=0,$n=$this->opts[THUMBS];$i<$n;$i++){
+				$thumbPath=str_replace($this->opts[PREFIX],$this->opts[THUMB_PREFIX.$i],$path);
+				if(file_exists($thumbPath)) 
+					unlink($thumbPath);
+			}
+		}
 	}
 };
 ?>
