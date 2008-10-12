@@ -1,10 +1,7 @@
-dojo.require("dojo.collections.ArrayList");
-dojo.require("dojo.io.*");
-
 Upload = function(mainform,_sender){
 	var mainForm = mainform; /* MUST HAVE an absolute URL*/
-	var list = new dojo.collections.ArrayList();
-	var answers = new dojo.collections.ArrayList();
+	var list = new Array();
+	var answers = new Array();
 	var sender = _sender;
 	
 	this.EMPTY = 0;
@@ -16,23 +13,23 @@ Upload = function(mainform,_sender){
 	this.uploadFiles = function(){
 		var ready2send=true;
 	
-		for(k=0;k<list.count;k++)
-			if(answers.item(k) == this.WRONG)
-				this.uploadReady(list.item(k),this.EMPTY);
+		for(k=0;k<list.length;k++) //list.length
+			if(answers[k] == this.WRONG) //answers[k]
+				this.uploadReady(list[k],this.EMPTY); //list[k]
 		
 		var frames1 = Array();
 		for(i=0;i<frames.length;i++) //patch for avoid nullpointers on references
 			frames1[frames[i].name] = i;
 		
-		for(i=0;i<list.count;i++){
-			var frame = frames[frames1['if_'+list.item(i)]];
-			var ifdom = frame.document;//document.getElementById('if_'+list.item(i));
-			var hidden = ifdom.getElementById('file_'+list.item(i));
-			var form = ifdom.getElementById('frm_up');
-			
+		for(i=0;i<list.length;i++){ //list.length
+			var frame   = frames[frames1['if_'+list[i]]];
+			var ifdom   = frame.document;//document.getElementById('if_'+list.item(i));
+			var hidden  = ifdom.getElementById('file_'+list[i]);
+			var form 	= ifdom.getElementById('frm_up');
+					
 			//if(hidden != null && hidden.value != ''){
 			if(frame.anychange){
-				this.uploadReady(list.item(i), this.SENDING);
+				this.uploadReady(list[i], this.SENDING); //list[i]
 				
 				if(ifdom.getElementById('error'))
 					ifdom.getElementById('error').style.display="none";
@@ -42,11 +39,11 @@ Upload = function(mainform,_sender){
 			}
 		}
 		
-		for(i=0,n=list.count;i<n;i++){
-			var frame = frames[frames1['if_'+list.item(i)]];
+		for(i=0,n=list.length;i<n;i++){ //list.length
+			var frame = frames[frames1['if_'+list[i]]]; //list[i]
 			var ifdom = frame.document;
 			var form=ifdom.getElementById('frm_up');
-			var hidden=ifdom.getElementById('file_'+list.item(i));
+			var hidden=ifdom.getElementById('file_'+list[i]);//list[i]
 			
 			//if(hidden != null && hidden.value != '')
 			if(frame.anychange)
@@ -56,12 +53,14 @@ Upload = function(mainform,_sender){
 	};
 	
 	this.uploadReady = function (id, status){
-		var index = list.indexOf(id);
-		answers.removeAt(index);
-		answers.insert(index, status);
+		var index = jQuery.inArray(id, list);
+		answers.splice(index,1,status); //remove + insert
+		//var index = list.indexOf(id);
+		//answers.removeAt(index);
+		//answers.insert(index, status);
 		
-		for(k=0;k<answers.count;k++)
-			if(answers.item(k) == this.SENDING || answers.item(k) == this.WRONG)
+		for(k=0;k<answers.length;k++) //answers.length
+			if(answers[k] == this.SENDING || answers[k] == this.WRONG) //answers[k]
 				return;
 		
 		if(status != this.EMPTY){
@@ -77,7 +76,9 @@ Upload = function(mainform,_sender){
 	};
 	
 	this.addFile = function (name){
-		list.add(name);
-		answers.add(this.EMPTY);
+		//list.add(name);
+		//answers.add(this.EMPTY);
+		list.push(name);
+		answers.push(this.EMPTY);
 	};
 };

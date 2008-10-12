@@ -11,26 +11,18 @@
 		
 		<link href="css/styles.css" rel="stylesheet" type="text/css"/>
 		<script src="../js/dojo/dojo.js"></script>
-		<script src="../js/fckeditor/fckeditor.js"></script>
 		<script src="../js/jquery.js"></script>
-		<script src="../js/jquery.xslt.js"></script>
 		<script src="../js/utils.js"></script>
-		<script src="../upload/js/upload.js"></script>
 		<script src="js/validators.js"></script>
 		<script>
-			dojo.require("dojo.widget.*");
-			dojo.require("dojo.lang.*");
-			dojo.require("dojo.io.*");
-			dojo.hostenv.writeIncludes();
-			
 			dojo.addOnLoad(function (){
 				new dojo.io.FormBind({
 					formNode: document.forms.login,
 					handle: function(type, data, evt) {  },
 					load: function(load, data,evt){ 
 						if(data=='0'){
-							dojo.byId('login').style.display='none';
-							dojo.byId('options').style.display='block';
+							$('#login').hide();
+							$('#options').show();
 						}else{
 							alert(data);
 						}
@@ -79,8 +71,8 @@
 	</body>
 	<script>
 	<? if($_SESSION['user_id']!=NULL){?>
-		dojo.byId('login').style.display='none';
-		dojo.byId('options').style.display='block';
+		$('#login').hide();
+		$('#options').show();
 	<? }?>
 	</script>
 </html>]]>

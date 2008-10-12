@@ -160,7 +160,7 @@ public class ModulesConfigPanel extends javax.swing.JPanel implements Applicable
 					String value=tb.getValueAt(i,1).toString();
 
 					if(mc.getOption(key).indexOf('|')!=-1)
-						mc.setDefault(key,value);
+						mc.setDefault(key,tb.getValueAt(i, 1) instanceof JComboBox?((JComboBox)tb.getValueAt(i, 1)).getSelectedItem().toString():value);
 					else
 						mc.setOption(key,value);
 				}

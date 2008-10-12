@@ -24,7 +24,7 @@
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 	// Date in the past
-  
+
 	$obj=new ]]><xsl:value-of select="//@name"/><![CDATA[();
 	
 	if($_REQUEST['action']=='mod' && $_REQUEST['id']!='' && !$obj->load($_REQUEST['id']))

@@ -21,7 +21,7 @@
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
-	
+
 	$obj=new <xsl:value-of select="//@name"/>();
 	$ini=$_REQUEST['ini']==''?0:$_REQUEST['ini'];
 	$pageSize=$obj->properties[PAGER] <![CDATA[&&]]> $_REQUEST['action']==''?30:-1;
@@ -42,6 +42,12 @@
 		  <entity name="'.get_class($obj).'" ext="php">
 		  	<error>'.$_REQUEST['error'].'</error>
 			<prefix></prefix>';
+		if($obj->properties[SEARCH]){
+			echo '<search>';
+			echo '<![CDATA';
+			echo '['.$_REQUEST['search'].']';
+			echo ']></search>';
+		}
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();
