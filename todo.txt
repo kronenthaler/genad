@@ -1,3 +1,15 @@
+- http://tablesorter.com (para generacion de reportes)
+- http://code.google.com/apis/visualization/
++ Cambiar los componentes de fechas de dojo por el dojo nuevo o por un componente nuevo de jquery.
++ ui.jquery.com: 
+	- http://ui.jquery.com/repository/latest/demos/functional/#ui.datepicker
+/ Tratar de eliminar dojo del api (si es posible) o actualizarlo
+- Ordenar los campos del list.xsl (ahora es mucho mas facil)
+- http://plugins.jquery.com/project/js-menu-toggle-adder
+- http://plugins.jquery.com/project/autogrow
+- http://plugins.jquery.com/project/filestyle (mejor look-and-feel)
+- http://plugins.jquery.com/project/flexigrid
+
 + Hacer el merge con el esquema sin llamadas ajax.
 	+ plantillas xsl
 	+ menu.php <- reemplazo del antiguo index.php
