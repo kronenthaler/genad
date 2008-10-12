@@ -5,10 +5,11 @@
 	- http://ui.jquery.com/repository/latest/demos/functional/#ui.datepicker
 / Tratar de eliminar dojo del api (si es posible) o actualizarlo
 - Ordenar los campos del list.xsl (ahora es mucho mas facil)
-- http://plugins.jquery.com/project/js-menu-toggle-adder
+* http://plugins.jquery.com/project/js-menu-toggle-adder
 - http://plugins.jquery.com/project/autogrow
-- http://plugins.jquery.com/project/filestyle (mejor look-and-feel)
+* http://plugins.jquery.com/project/filestyle (muy complicado es un truco sobreponiendo un control encima del control y haciendolo transparente)
 - http://plugins.jquery.com/project/flexigrid
+- agregar un panel para manejar relaciones (n-arias => crear un xsl extra para generar las paginas que manejen la relacion.)
 
 + Hacer el merge con el esquema sin llamadas ajax.
 	+ plantillas xsl
@@ -28,8 +29,8 @@
 + copiar el arreglo de controls. (se puede manipular este arreglo para el tema de los permisos)
 	+ meter los $this->properties dentro de los controles o viceversa
 
-- ImageUpload:
-	- eliminar todos los posibles thumbnails [eliminar todos los prefijos y reemplazarlo por un * en la llamada a unlink()]
++ ImageUpload:
+	+ eliminar todos los posibles thumbnails [eliminar todos los prefijos y reemplazarlo por un * en la llamada a unlink()]
 		
 - hacer algo que permita cambiar los idiomas de las palabras basicas. 
 	- trabajar con entidades en los xsl puede ser una buena opcion.		
@@ -43,9 +44,9 @@
 	de arriba solucione el problema).	
 
 - Mejorar el mecanismo de cancelar la generacion.
-- cambiar los controles de fecha de dojo por alguno de jquery
-- revisar los archivos recientes. Eliminar los archivos que no se consigan. No intentar abrirlos.
-- hay un bug en el menu de open recent. (reemplazar el archivo por una pequeña bd de sqlite)
++ cambiar los controles de fecha de dojo por alguno de jquery
++ revisar los archivos recientes. Eliminar los archivos que no se consigan. No intentar abrirlos.
++ hay un bug en el menu de open recent. (reemplazar el archivo por una pequeña bd de sqlite)
 
 + hacer un dialogo que revise todos los archivos que pueden ser sobreescritos y marcar los que se desean sobreescribir. 
 
@@ -69,7 +70,7 @@
 + como importar los menues de los modulos y sus respectivos js para el index.html
 	+ puede ser language-dependent
 
-- acomodar los estilos:
++ acomodar los estilos:
 	- calendario 
 	- timepicker
 	- rte
