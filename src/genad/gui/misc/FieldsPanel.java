@@ -25,41 +25,42 @@ public class FieldsPanel extends javax.swing.JPanel {
 	public FieldsPanel(Entity _entity) {
 		entity=_entity;
 		initComponents();
-		
-		TableColumn column = null;
-        column = fieldsTable.getColumnModel().getColumn(3);
-        column.setResizable(false);
-        column.setMaxWidth(70);
-        column.setMinWidth(65);
-        column.setPreferredWidth(65);
-		
-		column = fieldsTable.getColumnModel().getColumn(6);
-        column.setResizable(false);
-        column.setMaxWidth(80);
-        column.setMinWidth(75);
-        column.setPreferredWidth(75);
-		
-		column = fieldsTable.getColumnModel().getColumn(4);
-        column.setResizable(false);
-        column.setMaxWidth(55);
-        column.setMinWidth(50);
-        column.setPreferredWidth(50);
-		
-		column = fieldsTable.getColumnModel().getColumn(5);
-        column.setResizable(false);
-        column.setMaxWidth(55);
-        column.setMinWidth(50);
-        column.setPreferredWidth(50);
-				
-		ConfigManager cfgMan=ConfigManager.getInstance();
-		cfg=cfgMan.getLangConfig(Model.getInstance().getLanguage());
-		
-		fieldsTable.setRowHeight(20);
-		fieldsTable.getTableHeader().setReorderingAllowed(false);
-		fieldsTable.setDefaultEditor(JComboBox.class,
-									 new DefaultCellEditor(new JComboBox(cfg.getValidTypes())));
-		fieldsTable.setDefaultRenderer(String.class, new FieldsTableRenderer());
-		
+		try{
+			TableColumn column = null;
+			column = fieldsTable.getColumnModel().getColumn(3);
+			column.setResizable(false);
+			column.setMaxWidth(70);
+			column.setMinWidth(65);
+			column.setPreferredWidth(65);
+
+			column = fieldsTable.getColumnModel().getColumn(6);
+			column.setResizable(false);
+			column.setMaxWidth(80);
+			column.setMinWidth(75);
+			column.setPreferredWidth(75);
+
+			column = fieldsTable.getColumnModel().getColumn(4);
+			column.setResizable(false);
+			column.setMaxWidth(55);
+			column.setMinWidth(50);
+			column.setPreferredWidth(50);
+
+			column = fieldsTable.getColumnModel().getColumn(5);
+			column.setResizable(false);
+			column.setMaxWidth(55);
+			column.setMinWidth(50);
+			column.setPreferredWidth(50);
+
+			ConfigManager cfgMan=ConfigManager.getInstance();
+			cfg=cfgMan.getLangConfig(Model.getInstance().getLanguage());
+
+			fieldsTable.setRowHeight(20);
+			fieldsTable.getTableHeader().setReorderingAllowed(false);
+			fieldsTable.setDefaultEditor(JComboBox.class,
+										 new DefaultCellEditor(new JComboBox(cfg.getValidTypes())));
+			fieldsTable.setDefaultRenderer(String.class, new FieldsTableRenderer());
+		}catch(Exception e){
+		}
 		notifyUI();
 	}
 	

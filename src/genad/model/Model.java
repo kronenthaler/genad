@@ -27,6 +27,7 @@ public class Model implements Serializable{
 	private ConfigManager cfgMan;
 	private Hashtable<String, Entity> entities;
 	private Hashtable<String, Module> modules;
+	private Hashtable<String, Relation> relations;
 	private Vector<View> views;
 	private boolean changed = false;
 	private String destPath="", loadedPath;
@@ -38,6 +39,7 @@ public class Model implements Serializable{
 		views=new Vector<View>();
 		entities=new Hashtable<String, Entity>();
 		modules=new Hashtable<String, Module>();
+		relations=new Hashtable<String, Relation>();
 		cfgMan=ConfigManager.getInstance();
 	}
 	
@@ -53,6 +55,7 @@ public class Model implements Serializable{
 			Node dbServer=doc.getElementsByTagName("db-server-conf").item(0);//solo debe haber una configuracion por proyecto
 			Node exts=doc.getElementsByTagName("modules").item(0);
 			Node ents=doc.getElementsByTagName("entities").item(0);
+			NodeList relList=doc.getElementsByTagName("relations");
 	
 			language=doc.getElementsByTagName("project").item(0).getAttributes().getNamedItem("language").getTextContent();
 			
@@ -86,7 +89,7 @@ public class Model implements Serializable{
 					pDBSchema=aux.item(i).getTextContent();
 			}
 			
-			//entities info
+			//entities infoaux=rels.getChildNodes();
 			aux=ents.getChildNodes();
 			for(int i=0,n=aux.getLength();i<n;i++){
 				if(aux.item(i).getNodeName().equalsIgnoreCase("entity")){
@@ -106,6 +109,17 @@ public class Model implements Serializable{
 					else
 						System.err.println("Warning: Unsuported module '"+name+"' for the language '"+language+"'");
 				}		
+			}
+			
+			if(relList.getLength()!=0){ //backwards compatibility. 
+				Node rels = relList.item(0);
+				aux=rels.getChildNodes();
+				for(int i=0,n=aux.getLength();i<n;i++){
+					if(aux.item(i).getNodeName().equalsIgnoreCase("relation")){
+						Relation temp = new Relation();
+						relations.put(Utils.capitalize(aux.item(i).getAttributes().getNamedItem("name").getTextContent().trim()),temp.load(aux.item(i)));
+					}
+				}
 			}
 		}catch(RuntimeException e){
 			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
@@ -248,6 +262,10 @@ public class Model implements Serializable{
 		for(Enumeration<String> e=entities.keys();e.hasMoreElements();)	
 			ret.append(entities.get(e.nextElement()).toString());
 		ret.append("	</entities>\n")
+			.append("	<relations>\n");
+		for(Enumeration<String> e=relations.keys();e.hasMoreElements();)	
+			ret.append(relations.get(e.nextElement()).toString());
+		ret.append("	</relations>\n")
 			.append("</project>\n");
 		return ret.toString();
 	}
@@ -264,5 +282,15 @@ public class Model implements Serializable{
 			}
 			ent.validateType(lc);
 		}
+	}
+	
+	protected Entity findEntity(String name){
+		if(entities.get(name)!=null) return entities.get(name);
+		
+		for(Enumeration<String> e=entities.keys();e.hasMoreElements();){
+			Entity result = entities.get(e.nextElement()).findEntity(name);
+			if(result != null) return result;
+		}
+		return null;
 	}
 }

@@ -59,6 +59,8 @@ public class IconsManager{
 	public static final ImageIcon DELETE=new ImageIcon(IconsManager.class.getResource("/images/icons/delete.png"));
 	public static final ImageIcon MOVEUP=new ImageIcon(IconsManager.class.getResource("/images/icons/arrow_up.png"));
 	public static final ImageIcon MOVEDOWN=new ImageIcon(IconsManager.class.getResource("/images/icons/arrow_down.png"));
+	public static final ImageIcon MOVELEFT=new ImageIcon(IconsManager.class.getResource("/images/icons/arrow_left.png"));
+	public static final ImageIcon MOVERIGHT=new ImageIcon(IconsManager.class.getResource("/images/icons/arrow_right.png"));
 	public static final ImageIcon OPTIONS=new ImageIcon(IconsManager.class.getResource("/images/icons/options.png"));
 	
 	//CONFIGURE

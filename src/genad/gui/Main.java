@@ -204,11 +204,11 @@ public class Main extends javax.swing.JFrame implements View{
                     tabbedPanel.getModel().removeTabs(0, tabbedPanel.getTabCount());//'close' all tabs
 
                     model=Model.getInstance(true);//create a new model, ONLY CAN BE CALL FROM HERE and newActionPerformed
-                    model.load(new File(mi.getText()));
-
-                    recents.add(new FileRecent(System.currentTimeMillis(),mi.getText()));
-
-                    attachToModel(model);
+                    if(model.load(new File(mi.getText()))){
+                        recents.add(new FileRecent(System.currentTimeMillis(),mi.getText()));
+                        attachToModel(model);
+                    }else
+                    Utils.showError("The project is corrupted and can't be opened");
                 }
             });
             openRecentMen.add(mi);
@@ -425,11 +425,12 @@ public class Main extends javax.swing.JFrame implements View{
 			tabbedPanel.getModel().removeTabs(0, tabbedPanel.getTabCount());//'close' all tabs
 			
 			model=Model.getInstance(true);//create a new model, ONLY CAN BE CALL FROM HERE and newActionPerformed
-			model.load(fc.getSelectedFile());
-			
-			recents.add(new FileRecent(System.currentTimeMillis(),fc.getSelectedFile().toString()));
-			
-			attachToModel(model);
+			if(model.load(fc.getSelectedFile())){
+				recents.add(new FileRecent(System.currentTimeMillis(),fc.getSelectedFile().toString()));
+				attachToModel(model);
+			}else
+				Utils.showError("The project is corrupted and can't be opened");
+				
 		}
 	}//GEN-LAST:event_openActionPerformed
 

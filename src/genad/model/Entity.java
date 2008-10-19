@@ -20,13 +20,13 @@ import genad.config.*;
  *	@author kronenthaler
  */
 public class Entity implements Serializable{
-	private Vector<Field> form;
+	protected Vector<Field> form;
 	private Hashtable<String, Entity> childs;
 	private Entity parent;
-	private String name, title, primaryKey, tableName;
-	private String permissions = "";
-	private boolean pager, search, sortable, justSchema, justPages;
-	private boolean changed=false;
+	protected String name, title, primaryKey, tableName;
+	protected String permissions = "";
+	protected boolean pager, search, sortable, justSchema, justPages;
+	protected boolean changed=false;
 	
 	public static final String STANDARD = "standard";
 	public static final String STANDARD_PLUS = "plus";
@@ -210,7 +210,18 @@ public class Entity implements Serializable{
 		}
 	}
 	
-	private boolean isValid(){
+	protected Entity findEntity(String name){
+		if(childs.get(name)!=null) return childs.get(name);
+		
+		for(Enumeration<String> e=childs.keys();e.hasMoreElements();){
+			Entity result = childs.get(e.nextElement()).findEntity(name);
+			if(result != null) return result;
+		}
+		
+		return null;
+	}
+	
+	protected boolean isValid(){
 		//validate the entity
 		if("".equals(title))		return Utils.showError("Title cannot be empty in entity: "+name);
 		if("".equals(name))			return Utils.showError("Name cannot be empty in entity: "+name);
@@ -330,5 +341,10 @@ public class Entity implements Serializable{
 			}
 			ent.validateType(lc);
 		}
+	}
+	
+	public boolean equals(Object o1){
+		Entity o = (Entity)o1;
+		return o.name.equals(this.name);
 	}
 }

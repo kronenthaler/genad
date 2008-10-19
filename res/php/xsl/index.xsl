@@ -10,25 +10,30 @@
 		<meta http-equiv="Pragma" content="no-cache"/>
 		
 		<link href="css/styles.css" rel="stylesheet" type="text/css"/>
-		<script src="../js/dojo/dojo.js"></script>
+		<!--script src="../js/dojo/dojo.js"></script-->
 		<script src="../js/jquery.js"></script>
+		<script src="../js/jquery.form.js"></script>
 		<script src="../js/utils.js"></script>
 		<script src="js/validators.js"></script>
 		<script>
-			dojo.addOnLoad(function (){
-				new dojo.io.FormBind({
-					formNode: document.forms.login,
-					handle: function(type, data, evt) {  },
-					load: function(load, data,evt){ 
-						if(data=='0'){
-							$('#login').hide();
-							$('#options').show();
-						}else{
-							alert(data);
-						}
-					},
-					mimetype: "text/html"
-				});
+			$(document).ready(function (){
+				// bind to the form's submit event 
+			    $('#login').submit(function() { 
+			        // inside event callbacks 'this' is the DOM element so we first 
+			        // wrap it in a jQuery object and then invoke ajaxSubmit 
+			        $(this).ajaxSubmit({success: function(data, status){
+									        	if(data=='0'){							
+													$('#login').hide();
+													$('#options').show();	
+												}else{
+													alert(data);
+												}
+								        	}  // post-submit callback 
+										});
+			        // !!! Important !!! 
+			        // always return false to prevent standard browser submit and page navigation 
+			        return false; 
+			    }); 
 			});
 		</script>
 	</head>
