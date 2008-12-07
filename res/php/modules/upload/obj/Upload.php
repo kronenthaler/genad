@@ -65,11 +65,13 @@ class Upload{
 			$this->deleteFile(ROOT.'/'.$ARRAY[$prev]);
 			$fileName = '';
 		}else if($ARRAY[$prev]!="" && $ARRAY[$hdd]!=""){
-			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.'/'.$this->opts[DEST_PATH]."/".$name.$ext);
-			$fileName=$this->opts[DEST_PATH]."/".$name.$ext;
+			move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.'/'.$ARRAY[$prev]);
+			$fileName=$ARRAY[$prev];
 			
+			//move_uploaded_file($_FILES[$file]['tmp_name'],ROOT.'/'.$this->opts[DEST_PATH]."/".$name.$ext);
+			//$fileName=$this->opts[DEST_PATH]."/".$name.$ext;
 			//delete the older file
-			$this->deleteFile(ROOT.'/'.$ARRAY[$prev]);
+			//$this->deleteFile(ROOT.'/'.$ARRAY[$prev]);
 		}else{
 			logOn('Unexpected error.\n');
 			return new Error(666,'Unexpected error');

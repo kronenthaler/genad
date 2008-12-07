@@ -177,6 +177,26 @@ public class TreeView extends JTree implements View{
 		viewer.getSelectionModel().setSelectedIndex(viewer.getTabCount()-1);
 		ent.attachToModel(Model.getInstance());
 	}
+
+	private void editRelation(ActionEvent evt){
+		TreePath tp=getPathForLocation(x,y);
+		Object[] path=tp.getPath();
+
+		Relation current=Model.getInstance().getRelation(path[path.length-1].toString());
+		
+		for(int i=0,n=viewer.getTabCount();i<n;i++){
+			if(viewer.getModel().getTab(i).getTooltip().equals(path[path.length-1].toString())){
+				viewer.getSelectionModel().setSelectedIndex(i);
+				return;
+			}
+		}
+
+		RelationView ent=new RelationView(current,viewer);
+		TabData td=new TabData(ent,IconsManager.RELATION,path[path.length-1].toString(),path[path.length-1].toString());
+		viewer.getModel().addTab(viewer.getTabCount(), td);
+		viewer.getSelectionModel().setSelectedIndex(viewer.getTabCount()-1);
+		ent.attachToModel(Model.getInstance());
+	}
 	
 	private void treeMouseClicked(MouseEvent evt){
 		TreePath tp=getPathForLocation(x=evt.getX(),y=evt.getY());
@@ -197,6 +217,8 @@ public class TreeView extends JTree implements View{
 					editEntity(null);
 				else if(path.length>2 && path[1].toString().equalsIgnoreCase("modules"))
 					editModule(null);//open for edition
+				else if(path.length>2 && path[1].toString().equalsIgnoreCase("relations"))
+					editRelation(null);
 			}
 		}
 	}
@@ -229,6 +251,12 @@ public class TreeView extends JTree implements View{
 			for(String s : Utils.convert(subject.getEntities()))
 				makeTree(ents, subject.getEntity(s));
 
+			DefaultMutableTreeNode rels = new DefaultMutableTreeNode("Relations");
+			root.add(rels);
+
+			for(String s: Utils.convert(subject.getRelations()))
+				rels.add(new DefaultMutableTreeNode(s));
+
 			setModel(new DefaultTreeModel(root));
 			for(int i=0;i<getRowCount();i++)
 				expandRow(i);
@@ -256,6 +284,8 @@ public class TreeView extends JTree implements View{
 						setIcon(IconsManager.ENTITIES);
 					else if(path[1].toString().equalsIgnoreCase("Modules"))
 						setIcon(IconsManager.MODULES);
+					else if(path[1].toString().equalsIgnoreCase("Relations"))
+						setIcon(IconsManager.RELATIONS);
 					else
 						setIcon(IconsManager.FOLDER);
 				}else{
@@ -263,6 +293,8 @@ public class TreeView extends JTree implements View{
 						setIcon(IconsManager.ENTITY);
 					else if(path[1].toString().equalsIgnoreCase("Modules"))
 						setIcon(IconsManager.MODULE);
+					else if(path[1].toString().equalsIgnoreCase("Relations"))
+						setIcon(IconsManager.RELATION);
 				}
 			}
 

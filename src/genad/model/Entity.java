@@ -220,6 +220,18 @@ public class Entity implements Serializable{
 		
 		return null;
 	}
+
+	protected Vector<Entity> getAllEntities(){
+		Vector<Entity> ret = new Vector<Entity>();
+
+		for(Enumeration<String> e=childs.keys();e.hasMoreElements();){
+			Entity ent = childs.get(e.nextElement());
+			ret.add(ent);
+			ret.addAll(ent.getAllEntities());
+		}
+
+		return ret;
+	}
 	
 	protected boolean isValid(){
 		//validate the entity

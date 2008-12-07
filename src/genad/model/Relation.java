@@ -30,7 +30,11 @@ public class Relation extends Entity implements Serializable{
 	public Relation(String _name){
 		name = _name;
 	}
-	
+
+	public Vector<Entity> getEntities(){
+		return entities;
+	}
+
 	protected Relation load(Node current){
 		Model model = Model.getInstance();
 		
@@ -78,23 +82,48 @@ public class Relation extends Entity implements Serializable{
 	}
 	
 	protected boolean isValid(){
-		return true;
+		//TODO: validate this relation, must have 2 entities at least, extra fields are optionals,
+		//the class name must be unique, equal to the entities.
+		return entities.size() >= 2;
 	}
+
+	public void addEntity(String ent){
+		entities.add(Model.getInstance().findEntity(ent));
+		setChanged();
+	}
+
+	public void removeEntity(String ent){
+		entities.remove(Model.getInstance().findEntity(ent));
+		setChanged();
+	}
+
+	public boolean setName(String s){
+		boolean flag=false;
+		s=Utils.capitalize(s.trim());
 		
+		flag=Model.getInstance().renameRelation(name,s);
+		
+		//TODO:must be a valid ID in almost every language
+		if(flag){
+			name=s;
+			setChanged();
+		}
+		
+		return flag && !"".equals(s);
+	} 
+	
 	public String toString(String deep){
 		if(!isValid()) throw new ArrayIndexOutOfBoundsException("Invalid Relation: "+name);
 		
 		StringBuffer ret = new StringBuffer();
 		ret.append(deep+"<relation name=\""+Utils.sanitize(name)+"\" title=\""+Utils.xmlSafe(title)+"\">\n")
 			.append(deep+"	<table name=\""+Utils.sanitize(tableName)+"\"/>\n")
-			/*
 			.append(deep+"	<permissions value=\""+permissions+"\"/>\n")
 			.append(deep+"	<splitpage value=\""+(pager?1:0)+"\"/>\n")
 			.append(deep+"	<search value=\""+(search?1:0)+"\"/>\n")
 			.append(deep+"	<just-pages value=\""+(justPages?1:0)+"\"/>\n")
 			.append(deep+"	<just-schema value=\""+(justSchema?1:0)+"\"/>\n")
 			.append(deep+"	<sortable value=\""+(sortable?1:0)+"\"/>\n")
-			 */
 			.append(deep+"	<form>\n");
 		
 		for(Field f:form)

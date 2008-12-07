@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1224456574712" by="kronenthaler" language="php">
+<project lastsaved="1228689867493" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/var/www/testing]]></base-directory>
 	</file-server-conf>
@@ -124,8 +124,14 @@
 		</entity>
 	</entities>
 	<relations>
-		<relation name="Hola" title="r1r2">
+		<relation name="NewClass" title="r1r2">
 			<table name="tablaRelacion"/>
+			<permissions value=""/>
+			<splitpage value="1"/>
+			<search value="1"/>
+			<just-pages value="1"/>
+			<just-schema value="1"/>
+			<sortable value="1"/>
 			<form>
 			</form>
 			<entity name="LittleCar"/>

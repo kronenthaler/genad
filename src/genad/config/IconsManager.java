@@ -53,6 +53,11 @@ public class IconsManager{
 	public static final ImageIcon DELENTITY=new ImageIcon(IconsManager.class.getResource("/images/icons/page_delete.png"));
 	public static final ImageIcon EDITMODULE=new ImageIcon(IconsManager.class.getResource("/images/icons/plugin_edit.png"));
 	public static final ImageIcon ADDMODULE=new ImageIcon(IconsManager.class.getResource("/images/icons/plugin_add.png"));
+	public static final ImageIcon RELATION=new ImageIcon(IconsManager.class.getResource("/images/icons/table.png"));
+	public static final ImageIcon RELATIONS=new ImageIcon(IconsManager.class.getResource("/images/icons/folder_table.png"));
+	public static final ImageIcon ADDRELATION=new ImageIcon(IconsManager.class.getResource("/images/icons/table_add.png"));
+	public static final ImageIcon DELRELATION=new ImageIcon(IconsManager.class.getResource("/images/icons/table_delete.png"));
+	public static final ImageIcon EDITRELATION=new ImageIcon(IconsManager.class.getResource("/images/icons/table_edit.png"));
 	
 	//ACTIONS
 	public static final ImageIcon ADD=new ImageIcon(IconsManager.class.getResource("/images/icons/add.png"));

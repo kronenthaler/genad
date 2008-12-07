@@ -1,3 +1,4 @@
+- review: http://www.livevalidation.com/examples
 - http://tablesorter.com (para generacion de reportes)
 - http://code.google.com/apis/visualization/
 + Cambiar los componentes de fechas de dojo por el dojo nuevo o por un componente nuevo de jquery.

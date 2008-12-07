@@ -167,6 +167,8 @@ public class Model implements Serializable{
 	public String getDBLogin(){	return dDBLogin; }
 	public String getDBPassword(){ return dDBPassword; }
 	public String getDBSchema(){ return dDBSchema; }
+	public Enumeration<String> getRelations(){ return relations.keys(); }
+	public Relation getRelation(String name){ return relations.get(name); }
 	
 	public void setLoadedPath(String path) { loadedPath=path; }
 	public void setDestinationPath(String path){ destPath=path; setChanged(); }
@@ -181,6 +183,14 @@ public class Model implements Serializable{
 		if("".equals(dst.trim()) || entities.get(src)==null) return false;
 		entities.put(dst,entities.get(src));
 		entities.remove(src);
+		return true;
+	}
+
+	public boolean renameRelation(String src, String dst){
+		if(relations.get(dst)!=null) return false;
+		if("".equals(dst.trim()) || relations.get(src)==null) return false;
+		relations.put(dst,relations.get(src));
+		relations.remove(src);
 		return true;
 	}
 	
@@ -292,5 +302,17 @@ public class Model implements Serializable{
 			if(result != null) return result;
 		}
 		return null;
+	}
+
+	public Vector<Entity> getAllEntities(){
+		Vector<Entity> ret = new Vector<Entity>();
+
+		for(Enumeration<String> e=entities.keys();e.hasMoreElements();){
+			Entity ent = entities.get(e.nextElement());
+			ret.add(ent);
+			ret.addAll(ent.getAllEntities());
+		}
+
+		return ret;
 	}
 }
