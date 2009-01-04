@@ -3,7 +3,7 @@ class Section extends AbstractObject{
 	function Section(){
 		$this->tablename='u04_sections';
 		$this->primarykey='u04_id';
-		$this->title = 'Section';
+		$this->title = MSG_USERS_SECTIONS;
 
 		//initialize the fields array
 		$this->fields['u04_id'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);

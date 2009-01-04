@@ -11,8 +11,10 @@ if(stristr($_SERVER['HTTP_HOST'],'localhost')){
 	define('HTTP_ROOT','http://'.$_SERVER['HTTP_HOST'].'/'); //cambiar por la ruta final
 }
 
+include_once(ROOT.'/common/localize.php');
 include_once(ROOT.'/common/utils.php');
-include_once(ROOT.'/obj/AbstractObject.php');	
+include_once(ROOT.'/obj/AbstractObject.php');
+include_once(ROOT.'/obj/AbstractRelation.php');
 include_once(ROOT.'/obj/Connection.php');
 include_once(ROOT.'/obj/Error.php');
 include_once(ROOT.'/obj/Modules.php');
@@ -23,6 +25,7 @@ include_once(ROOT.'/obj/Modules.php');
 //*/
 //project's classes
 <xsl:apply-templates select="/project/entities/entity"/>
+<xsl:apply-templates select="/project/relations/relation"/>
 <![CDATA[?>]]></xsl:template>
 	
 	<xsl:template match="module">
@@ -31,6 +34,11 @@ secureInclude('<xsl:value-of select="@name"/>/<xsl:value-of select="@name"/>.php
 	<xsl:template match="entity">
 <xsl:if test="just-schema/@value = 0">include_once('obj/<xsl:value-of select="@name"/>.php');
 </xsl:if><xsl:apply-templates select="entity"/>
-	</xsl:template>		
+	</xsl:template>
+
+	<xsl:template match="relation">
+<xsl:if test="just-schema/@value = 0">include_once('obj/<xsl:value-of select="@name"/>.php');
+</xsl:if>
+	</xsl:template>
 	
 </xsl:stylesheet>

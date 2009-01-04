@@ -4,6 +4,7 @@
 	
 	<xsl:template match="/">
 		<xsl:apply-templates select="project/entities/entity"/>
+		<xsl:apply-templates select="project/relations/relation"/>
 	</xsl:template>
 	
 	<xsl:template match="entity">
@@ -30,5 +31,33 @@ function validate<xsl:value-of select="@name"/>(f){
 	</xsl:for-each>;
 }
 		<xsl:apply-templates select="entity"/>
+	</xsl:template>
+
+	<xsl:template match="relation">
+function validate<xsl:value-of select="@name"/>(f){
+	return true
+	<xsl:for-each select="entity">
+		<![CDATA[&&]]> isRequired(f.str_<xsl:value-of select="@primarykey"/>,"<xsl:value-of select="."/>")
+	</xsl:for-each>
+	<xsl:for-each select="form/field">
+		<xsl:choose>
+		<xsl:when test="@type = 'textfield' or @type = 'select' or @type = 'hidden' or @type = 'date' or @type='time' or @type='file' or @type='image' or @type='textarea'">
+		<xsl:if test="required = 1"><![CDATA[&&]]> isRequired(f.str_<xsl:value-of select="db-field"/>,"<xsl:value-of select="label"/>")</xsl:if></xsl:when>
+		<xsl:when test="@type='datetime'">
+		<xsl:if test="required = 1"><![CDATA[&&]]> isRequired(f.str_<xsl:value-of select="db-field"/>_date,"<xsl:value-of select="label"/>")
+		<![CDATA[&&]]> isRequired(f.str_<xsl:value-of select="db-field"/>_time,"<xsl:value-of select="label"/>")</xsl:if></xsl:when>
+		<xsl:when test="@type = 'integer'">
+		<![CDATA[&&]]> isValidInteger(f.str_<xsl:value-of select="db-field"/>,"<xsl:value-of select="label"/>",<xsl:value-of select="required = 1"/>)</xsl:when>
+		<xsl:when test="@type = 'decimal'">
+		<![CDATA[&&]]> isValidDecimal(f.str_<xsl:value-of select="db-field"/>,"<xsl:value-of select="label"/>",<xsl:value-of select="required = 1"/>)</xsl:when>
+		<xsl:when test="@type = 'email'">
+		<![CDATA[&&]]> isValidEmail(f.str_<xsl:value-of select="db-field"/>,"<xsl:value-of select="label"/>",<xsl:value-of select="required = 1"/>)</xsl:when>
+		<xsl:when test="@type = 'password'">
+		<![CDATA[&&]]> isValidPassword(f.str_<xsl:value-of select="db-field"/>,f.conf_str_<xsl:value-of select="db-field"/>,"<xsl:value-of select="label"/>",<xsl:value-of select="required = 1"/>)</xsl:when>
+		<xsl:when test="@type = 'richtext'">
+		<![CDATA[&&]]> isValidRTE(f.str_<xsl:value-of select="db-field"/>,"rte_<xsl:value-of select="db-field"/>","<xsl:value-of select="label"/>",<xsl:value-of select="required = 1"/>)</xsl:when>
+		</xsl:choose>
+	</xsl:for-each>;
+}
 	</xsl:template>
 </xsl:stylesheet>

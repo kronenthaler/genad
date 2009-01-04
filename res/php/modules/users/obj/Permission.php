@@ -3,7 +3,7 @@ class Permission extends AbstractObject{
 	function Permission(){
 		$this->tablename='u03_permissions';
 		$this->primarykey='u03_id';
-		$this->title = 'Permission';
+		$this->title = MSG_USERS_PERMISSIONS;
 
 		//initialize the fields array
 		$this->fields['u03_id'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);

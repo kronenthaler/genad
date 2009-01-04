@@ -3,29 +3,29 @@ $permissions = $_SESSION['permissions'];
 $user = new User();
 
 if($action == ''){
-	writeError('Undefined action.');
+	writeError(MSG_UNDEFINED_ACTION);
 	exit();
 }
 
 if($section == ''){
-	writeError('Undefined section.');
+	writeError(MSG_UNDEFINED_SECTION);
 	exit();
 }
 
 if($permissions == NULL){
 	if($_SESSION["user_id"] == NULL){
-		writeError('Session expired, you must logging in.');
+		writeError(MSG_SESSION_EXPIRED);
 		exit();
 	}
 	
 	if(!$user->load($_SESSION["user_id"])){
-		writeError('Unknown/invalid user.');
+		writeError(MSG_INVALID_USER);
 		exit();
 	}
 }
 
 if(!$user->youCanDo($action, $section, $permissions)){
-	writeError('This section requires especial permissions and you haven\'t.');
+	writeError(MSG_PERMISSIONS_REQUIRED);
 	exit();
 }
 ?>

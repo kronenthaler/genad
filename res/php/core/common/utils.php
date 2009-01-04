@@ -3,21 +3,7 @@ define('KB',1024);
 define('MB',KB*KB);
 define('GB',KB*MB);
 
-$months = array('01'=>'Enero',
-				'02'=>'Febrero',
-				'03'=>'Marzo',
-				'04'=>'Abril',
-				'05'=>'Mayo',
-				'06'=>'Junio',
-				'07'=>'Julio',
-				'08'=>'Agosto',
-				'09'=>'Septiembre',
-				'10'=>'Octubre',
-				'11'=>'Noviembre',
-				'12'=>'Diciembre');
-$days = array('','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');  
-
- /**
+/**
  *	Transform a $date of type $type using the string $format 
  *	Basically replace the placeholders for the equivalents in $date accoding to $type 
  *	remainning the rest of the format
@@ -127,5 +113,17 @@ if (!function_exists("htmlspecialchars_decode")) {
     function htmlspecialchars_decode($string, $quote_style = ENT_COMPAT) {
         return strtr($string, array_flip(get_html_translation_table(HTML_SPECIALCHARS, $quote_style)));
     }
+}
+
+/**
+ *	Function to replace params placeholders in a message for their respectives values.
+ *	@param $msg	Message with the placeholders to be changed.
+ *	@param $params	Array with the params to be replaced. If params is null no changes are made.
+ *	@return	The message with the placeholders replaced for their respectives positional values.
+ */
+function getMessage($msg, $params=NULL){
+	for($i=0;$i<count($params);$i++)
+		$msg = str_replace('%'.($i+1), $params[$i], $msg);
+	return $msg;
 }
 ?>

@@ -3,7 +3,7 @@ class Profile extends AbstractObject{
 	function Profile(){
 		$this->tablename='u02_profiles';
 		$this->primarykey='u02_id';
-		$this->title = 'Profile';
+		$this->title = MSG_USERS_PROFILES;
 
 		//initialize the fields array
 		$this->fields['u02_id'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);

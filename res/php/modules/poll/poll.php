@@ -1,5 +1,6 @@
 <?
 include_once('pollConf.php');
+include_once('localize.php');
 include_once('obj/Poll.php');
 include_once('obj/Options.php');
 include_once('obj/Votes.php');

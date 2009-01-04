@@ -1,4 +1,6 @@
 <?
+include_once('usersConf.php');
+include_once('localize.php');
 include_once('obj/User.php');
 include_once('obj/Profile.php');
 include_once('obj/Permission.php');

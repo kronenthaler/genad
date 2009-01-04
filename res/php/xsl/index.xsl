@@ -46,16 +46,16 @@
 					]]>
 					<xsl:apply-templates select="/project/modules/module"/>
 					<xsl:apply-templates select="/project/entities/entity"/>
-					<![CDATA[<li><a href="logoff.php" target="_parent"><img src="images/logout.png" align="absmiddle"/>&#160;<b>Log out</b></a></li>
+					<![CDATA[<li><a href="logoff.php" target="_parent"><img src="images/logout.png" align="absmiddle"/>&#160;<b><?=MSG_LOGOUT?></b></a></li>
 				</ul>
 				<form action="authenticate.php" method="post" id="login" name="login">
 					<table border="0">
 						<tr>
-							<td>Login:</td>
+							<td><?=MSG_LOGIN?>:</td>
 							<td><input type="text" name="login"/></td>
 						</tr>
 						<tr>
-							<td>Password:</td>
+							<td><?=MSG_PASSWORD?>:</td>
 							<td><input type="password" name="password"/></td>
 						</tr>
 						<tr>
@@ -64,7 +64,8 @@
 									<table border="0" cellpadding="0" cellspacing="1">
 										<tr>
 											<td><img src="images/key.png" align="left"/></td>
-											<td>Enter</td></tr>
+											<td align="left"><?=MSG_ENTER?></td>
+										</tr>
 									</table>
 								</button>
 							</td>
@@ -85,7 +86,7 @@
 
 	<xsl:template match="entity">
 	<xsl:if test="just-schema/@value = 0">	
-	<![CDATA[<li><a href="list]]><xsl:value-of select="@name"/><![CDATA[.php" target="mainFrame"><img src="images/bullet.png" align="absmiddle"/>]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]>
+	<![CDATA[<li><a href="list]]><xsl:value-of select="@name"/><![CDATA[.php" target="mainFrame" onclick="markSelected(this)">]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]>
 	</xsl:if>
 	</xsl:template>
 	

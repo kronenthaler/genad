@@ -23,7 +23,7 @@
 			$error=$obj->getError();
 			
 	}else{
-		$error="No action especified";
+		$error=MSG_NO_ACTION;
 	}
 	
 	header("Location: listPoll.php?ini=".$_REQUEST['ini']."&error=".$error.$obj->getAncestorsIds());

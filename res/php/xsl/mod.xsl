@@ -4,12 +4,15 @@
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/parent">.'<![CDATA[&]]><xsl:value-of select="@id"/>='.$_REQUEST['<xsl:value-of select="@id"/>']</xsl:for-each>
 	</xsl:variable>
-	<xsl:template match="/"><![CDATA[<?
+
+	<xsl:template match="/"><xsl:apply-templates/></xsl:template>
+
+	<xsl:template match="entity"><![CDATA[<?
 	include_once('../includes.php');]]>
 	
-	<xsl:if test="/entity/permissions/@value != ''">
+	<xsl:if test="permissions/@value != ''">
 		<xsl:choose>
-			<xsl:when test="/entity/permissions/@value = 'standard' or /entity/permissions/@value = 'plus'">
+			<xsl:when test="permissions/@value = 'standard' or permissions/@value = 'plus'">
 	$action = 'MOD';
 			</xsl:when>
 			<xsl:otherwise>
@@ -40,9 +43,88 @@
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLAncestors(); 
 		//begin field options]]>
-		<xsl:apply-templates select="/entity/form/field"/>
+		<xsl:apply-templates select="form/field"/>
 <![CDATA[//end field options
 		echo $obj->getXMLForm($options);
+	echo "</entity>";
+?>]]></xsl:template>
+
+	<xsl:template match="relation"><![CDATA[<?
+	include_once('../includes.php');]]>
+
+	<xsl:if test="permissions/@value != ''">
+		<xsl:choose>
+			<xsl:when test="permissions/@value = 'standard' or permissions/@value = 'plus'">
+	$action = 'MOD';
+			</xsl:when>
+			<xsl:otherwise>
+	$action = 'your-action-here';
+			</xsl:otherwise>
+		</xsl:choose>
+	$section = '<xsl:value-of select="//@name"/>';
+	include_once('../common/checksession.php');
+	</xsl:if>
+
+	<![CDATA[
+	header("Content-Type: text/xml");
+	header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT"); 	// Date in the past
+
+	$obj=new ]]><xsl:value-of select="//@name"/><![CDATA[();
+	eval("\$currentClass = new ".$_REQUEST['currentClass']."();");
+
+	if($_REQUEST['action']=='mod' && $_REQUEST['id']!='' && !$obj->load($_REQUEST['id']))
+		die('ID not found');
+
+	echo '<?xml version="1.0" encoding="utf-8"?>
+		  <?xml-stylesheet type="text/xsl" href="modRelation.xsl"?>
+		  <entity name="'.get_class($obj).'"
+		  		  ext="php"
+		  		  action="'.$_REQUEST['action'].'"
+		  		  id="'.$_REQUEST['id'].'"
+				  rel_id="'.$_REQUEST['rel_id'].'">
+			<prefix></prefix>';
+		echo $currentClass->getXMLTitle();
+		echo $obj->getXMLAncestors($currentClass);
+
+		$listables = $obj->getFieldsByType(LISTABLE);
+
+		for($j=0;$j<count($obj->classes);$j++){
+			eval("\$o = new ".$obj->classes[$j]."();");
+			
+			if($o->primarykey == $currentClass->primarykey){
+				if($_REQUEST['action'] == 'add'){
+					$currentClass->load($_REQUEST['rel_id']);
+					foreach($currentClass->fields as $key => $value){
+						eval("\$obj->".$key."= \$currentClass->".$key.';');
+					}
+
+					$options[$o->primarykey] = array("value"=>$_REQUEST['rel_id'],"prefix"=>"str_");
+				}
+
+				continue;
+			}
+			
+			$field = '';
+			if(strpos($listables[$j],$o->tablename) !== FALSE)
+				$field = substr($listables[$j],strpos($listables[$j],'`.`')+3);//$o->fields[][TITLE];
+
+			$list = $o->getList();
+			$option=array('onclick'=>"");
+			for($i=0;$i<count($list);$i++){
+				echo "<!--".$field."-->";
+				eval("\$name = \$list[\$i]->".$field.";");//nombre del campo name
+				eval("\$value = \$list[\$i]->".$list[$i]->primarykey.";");
+				array_push($option,array("name"=>$name,"value"=>$value,"selected"=>$value == 0?"selected":""));
+			}
+
+			$options[$o->primarykey]=$option;
+		}
+		//begin field options]]>
+		<xsl:apply-templates select="form/field"/>
+<![CDATA[
+		//end field options
+		echo $obj->getXMLForm($options,$currentClass);
 	echo "</entity>";
 ?>]]></xsl:template>
 	

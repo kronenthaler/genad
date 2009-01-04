@@ -5,7 +5,9 @@
 <xsl:stylesheet version="2.0" 
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8"/>
-	
+
+	<xsl:include href="localize.xsl"/>
+
 	<!-- define the ids of the ancestors required for each link that modifies the entity -->
  	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
@@ -31,15 +33,22 @@
 				<xsl:apply-templates select="/entity/error"/>
 			</xsl:when>
 			<xsl:otherwise>
+				<ul id="navigation">
+					<xsl:for-each select="/entity/ancestors/ancestor">
+						<li><a href="{/entity/prefix}list{@class}.{//@ext}?{$backids}"><span><h2><xsl:value-of select="."/></h2></span></a></li>
+					</xsl:for-each>
+					<!--li><a href="#"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li-->
+					<li><a class="selected"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li>
+				</ul>
 				<div id="content-header">
 					<center>
-						<table width="100%" border="1">
+						<!--table width="100%" border="1">
 							<tr>
 								<td colspan="4" valign="middle" align="left">
 									<h2><xsl:value-of select="/entity/title"/> > Sort</h2>
 								</td>
 							</tr>
-						</table>
+						</table-->
 					</center>
 				</div>
 				<xsl:apply-templates select="entity/list"/>
@@ -55,7 +64,7 @@
 					<tr height="100%" valign="top">
 						<td width="100" class="plain"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
 						<td class="plain">
-							<h1>Forbidden!</h1>
+							<h1><xsl:call-template name="msg-Forbidden"/></h1>
 							<xsl:value-of select="msg"/><br/>
 							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
 						</td>
@@ -74,7 +83,7 @@
 					  method="post" 
 					  enctype="multipart/form-data"
 					  >
-				<table cellspacing="0" cellpadding="0" border="0" style="border-right: 1px solid #ccc;">
+				<table cellspacing="0" cellpadding="0" border="0">
 					<xsl:choose>
 						<xsl:when test="count(instance) &gt; 0">
 							<thead>
@@ -92,7 +101,7 @@
 											</xsl:for-each>
 										</select>
 									</td>
-									<td align="right">
+									<td align="right" class="part2">
 										<table width="1%">
 											<tr>
 												<td align="right" class="plain">
@@ -100,7 +109,7 @@
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
 																<td><img src="images/up.png" align="left"/></td>
-																<td align="right">Up</td>
+																<td align="right"><xsl:call-template name="msg-up"/></td>
 															</tr>
 														</table>
 													</button>
@@ -112,7 +121,7 @@
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
 																<td><img src="images/down.png" align="left"/></td>
-																<td>Down</td>
+																<td><xsl:call-template name="msg-down"/></td>
 															</tr>
 														</table>
 													</button>
@@ -124,7 +133,7 @@
 							</tbody>
 						</xsl:when>
 						<xsl:otherwise>
-							<tr><td class="part2" align="center">No hay elementos disponibles</td></tr>
+							<tr><td class="part2" align="center"><xsl:call-template name="msg-nothing"/></td></tr>
 						</xsl:otherwise>
 					</xsl:choose>
 				</table>
@@ -141,7 +150,6 @@
 								</table>
 							</button>
 						</td>
-
 						<td align="right" class="plain">
 							<button type="submit" onclick="javascript:selectAll('id')">
 								<!--img src="images/delete.png" align="left"/><span>Remove</span-->

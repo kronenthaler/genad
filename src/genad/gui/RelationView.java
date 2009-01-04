@@ -39,7 +39,8 @@ public class RelationView extends javax.swing.JPanel implements View{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        fieldsPanel1 = new genad.gui.misc.FieldsPanel();
+        permGroup = new javax.swing.ButtonGroup();
+        fieldsPanel1 = new genad.gui.misc.FieldsPanel(relation);
         jPanel3 = new javax.swing.JPanel();
         pagerChk = new javax.swing.JCheckBox();
         searchChk = new javax.swing.JCheckBox();
@@ -145,23 +146,28 @@ public class RelationView extends javax.swing.JPanel implements View{
                 .add(justSchemaChk)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(justPagesChk)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Permissions"));
 
+        permGroup.add(standardRadio);
         standardRadio.setText("Standard (CRUD)");
         standardRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         standardRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
+        permGroup.add(standardPlusRadio);
+        standardPlusRadio.setSelected(true);
         standardPlusRadio.setText("Standard + Others");
         standardPlusRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         standardPlusRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
+        permGroup.add(othersRadio);
         othersRadio.setText("Others");
         othersRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         othersRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
+        permGroup.add(noneRadio);
         noneRadio.setText("None");
         noneRadio.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         noneRadio.setMargin(new java.awt.Insets(0, 0, 0, 0));
@@ -250,7 +256,7 @@ public class RelationView extends javax.swing.JPanel implements View{
                 .add(propertiesPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel2)
                     .add(tableNameTxt, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Entities Available"));
@@ -310,7 +316,7 @@ public class RelationView extends javax.swing.JPanel implements View{
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
                 .add(delEntBtn)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
@@ -350,15 +356,15 @@ public class RelationView extends javax.swing.JPanel implements View{
                     .add(propertiesPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
                     .add(layout.createSequentialGroup()
                         .add(8, 8, 8)
                         .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(fieldsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                .add(fieldsPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -505,6 +511,7 @@ public class RelationView extends javax.swing.JPanel implements View{
     private javax.swing.JRadioButton noneRadio;
     private javax.swing.JRadioButton othersRadio;
     private javax.swing.JCheckBox pagerChk;
+    private javax.swing.ButtonGroup permGroup;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JCheckBox searchChk;
     private javax.swing.JCheckBox sortableChk;

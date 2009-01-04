@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1228689867493" by="kronenthaler" language="php">
+<project lastsaved="1231101506989" by="kronenthaler" language="php">
 	<file-server-conf>
-		<base-directory><![CDATA[/var/www/testing]]></base-directory>
+		<base-directory><![CDATA[/var/www/testing1]]></base-directory>
 	</file-server-conf>
 	<db-server-conf>
 		<dev-host><![CDATA[localhost]]></dev-host>
 		<dev-user><![CDATA[root]]></dev-user>
 		<dev-password><![CDATA[]]></dev-password>
-		<dev-schema><![CDATA[testing]]></dev-schema>
+		<dev-schema><![CDATA[testing1]]></dev-schema>
 		<prod-host><![CDATA[null]]></prod-host>
 		<prod-user><![CDATA[null]]></prod-user>
 		<prod-password><![CDATA[]]></prod-password>
@@ -36,7 +36,38 @@
 		</module>
 	</modules>
 	<entities>
-		<entity name="LittleCar" title="Carros">
+		<entity name="Brand" title="brand">
+			<table name="brand" primary-key="id_brand"/>
+			<permissions value=""/>
+			<splitpage value="0"/>
+			<search value="0"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
+			<sortable value="0"/>
+			<form>
+				<field type="primary-key">
+					<label><![CDATA[null]]></label>
+					<db-field><![CDATA[id_brand]]></db-field>
+					<required>0</required><!-- 0|1 -->
+					<show-in-list>0</show-in-list><!-- 0|1 -->
+					<show-in-form>0</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+				<field type="textfield">
+					<label><![CDATA[Nombre]]></label>
+					<db-field><![CDATA[name]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>0</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+		</entity>
+		<entity name="Car" title="Carros">
 			<table name="cars" primary-key="car_id"/>
 			<permissions value=""/>
 			<splitpage value="1"/>
@@ -65,76 +96,107 @@
 					<options>
 					</options>
 				</field>
-				<field type="integer">
-					<label><![CDATA[Foto]]></label>
-					<db-field><![CDATA[photo]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>0</searchable><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="date">
-					<label><![CDATA[fecha]]></label>
-					<db-field><![CDATA[date]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>0</searchable><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="time">
-					<label><![CDATA[hora]]></label>
-					<db-field><![CDATA[time]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>0</searchable><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="datetime">
-					<label><![CDATA[fecha-hora]]></label>
-					<db-field><![CDATA[datetime]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>1</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>0</searchable><!-- 0|1 -->
-					<options>
-					</options>
-				</field>
-				<field type="image">
-					<label><![CDATA[imagen]]></label>
-					<db-field><![CDATA[image]]></db-field>
-					<required>0</required><!-- 0|1 -->
-					<show-in-list>0</show-in-list><!-- 0|1 -->
-					<show-in-form>1</show-in-form><!-- 0|1 -->
-					<searchable>0</searchable><!-- 0|1 -->
-					<options>
-						<option name="MAX_IMG_WIDTH" value="150"/>
-						<option name="ASPECT_RATIO" value="javax.swing.JComboBox[,-181,-19,0x0,invalid,layout=com.jgoodies.looks.plastic.PlasticComboBoxUI$PlasticComboBoxLayoutManager,alignmentX=0.0,alignmentY=0.0,border=,flags=16777544,maximumSize=,minimumSize=,preferredSize=,isEditable=false,lightWeightPopupEnabled=true,maximumRowCount=8,selectedItemReminder=false]"/>
-						<option name="VALID_EXTENSIONS" value="*"/>
-						<option name="MAX_IMG_HEIGHT" value="150"/>
-						<option name="FORCE_SCALE" value="javax.swing.JComboBox[,-181,-19,0x0,invalid,layout=com.jgoodies.looks.plastic.PlasticComboBoxUI$PlasticComboBoxLayoutManager,alignmentX=0.0,alignmentY=0.0,border=,flags=16777544,maximumSize=,minimumSize=,preferredSize=,isEditable=false,lightWeightPopupEnabled=true,maximumRowCount=8,selectedItemReminder=true]"/>
-					</options>
-				</field>
 			</form>
+			<entity name="Engine" title="Engine">
+				<table name="t02_engines" primary-key="t02_id"/>
+				<permissions value="plus"/>
+				<splitpage value="1"/>
+				<search value="1"/>
+				<just-pages value="0"/>
+				<just-schema value="0"/>
+				<sortable value="1"/>
+				<form>
+					<field type="primary-key">
+						<label><![CDATA[null]]></label>
+						<db-field><![CDATA[t02_id]]></db-field>
+						<required>0</required><!-- 0|1 -->
+						<show-in-list>0</show-in-list><!-- 0|1 -->
+						<show-in-form>0</show-in-form><!-- 0|1 -->
+						<searchable>0</searchable><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+					<field type="textfield">
+						<label><![CDATA[Model]]></label>
+						<db-field><![CDATA[model]]></db-field>
+						<required>1</required><!-- 0|1 -->
+						<show-in-list>1</show-in-list><!-- 0|1 -->
+						<show-in-form>1</show-in-form><!-- 0|1 -->
+						<searchable>1</searchable><!-- 0|1 -->
+						<options>
+						</options>
+					</field>
+				</form>
+				<entity name="Something" title="Something">
+					<table name="t03_something" primary-key="t03_id"/>
+					<permissions value=""/>
+					<splitpage value="1"/>
+					<search value="1"/>
+					<just-pages value="0"/>
+					<just-schema value="0"/>
+					<sortable value="1"/>
+					<form>
+						<field type="primary-key">
+							<label><![CDATA[null]]></label>
+							<db-field><![CDATA[t03_id]]></db-field>
+							<required>0</required><!-- 0|1 -->
+							<show-in-list>0</show-in-list><!-- 0|1 -->
+							<show-in-form>0</show-in-form><!-- 0|1 -->
+							<searchable>0</searchable><!-- 0|1 -->
+							<options>
+							</options>
+						</field>
+						<field type="textfield">
+							<label><![CDATA[Something]]></label>
+							<db-field><![CDATA[t03_some]]></db-field>
+							<required>1</required><!-- 0|1 -->
+							<show-in-list>1</show-in-list><!-- 0|1 -->
+							<show-in-form>1</show-in-form><!-- 0|1 -->
+							<searchable>1</searchable><!-- 0|1 -->
+							<options>
+							</options>
+						</field>
+					</form>
+				</entity>
+			</entity>
 		</entity>
 	</entities>
 	<relations>
-		<relation name="NewClass" title="r1r2">
-			<table name="tablaRelacion"/>
-			<permissions value=""/>
+		<relation name="BrandCar" title="Brand-Car">
+			<table name="brand_car"/>
+			<permissions value="plus"/>
 			<splitpage value="1"/>
-			<search value="1"/>
-			<just-pages value="1"/>
-			<just-schema value="1"/>
+			<search value="0"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
 			<sortable value="1"/>
 			<form>
 			</form>
-			<entity name="LittleCar"/>
+			<entity name="Brand" primarykey="id_brand" type="primary-key"><![CDATA[brand]]></entity>
+			<entity name="Car" primarykey="car_id" type="primary-key"><![CDATA[Carros]]></entity>
+		</relation>
+		<relation name="BrandEngine" title="Brands">
+			<table name="brand_engine"/>
+			<permissions value="plus"/>
+			<splitpage value="1"/>
+			<search value="1"/>
+			<just-pages value="0"/>
+			<just-schema value="0"/>
+			<sortable value="1"/>
+			<form>
+				<field type="textfield">
+					<label><![CDATA[Field]]></label>
+					<db-field><![CDATA[field]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
+			</form>
+			<entity name="Brand" primarykey="id_brand" type="primary-key"><![CDATA[brand]]></entity>
+			<entity name="Engine" primarykey="t02_id" type="primary-key"><![CDATA[Engine]]></entity>
 		</relation>
 	</relations>
 </project>

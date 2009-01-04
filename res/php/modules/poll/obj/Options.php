@@ -3,7 +3,7 @@ class Options extends AbstractObject{
 	function Options(){
 		$this->tablename='p02_options';
 		$this->primarykey='p02_id';
-		$this->title = 'Poll Options';
+		$this->title = MSG_POLL_OPTIONS;
 		$this->order = 'p02_order';
 
 		//initialize the fields array

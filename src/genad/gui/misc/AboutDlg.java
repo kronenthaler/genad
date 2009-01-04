@@ -72,7 +72,13 @@ public class AboutDlg extends javax.swing.JDialog {
 		private int y;
 		private boolean loop=false,kill=false,intro=true;
 		private String msg="<b>Project Leader</b>\n" +
-							"Ignacio Calderon\n\n";
+							"Ignacio Calderon\n\n" +
+							"<b>Testers</b>\n" +
+							"José Ortegano (Hecticus Soft.)\n" +
+							"William López (Hecticus Soft.)\n" +
+							"Daniel Lares (BeeConcept)\n" +
+							"Ernesto Piñerua (BeeConcept)\n\n";
+
 		private String intromsg="Distributed under\n" +
 									"GNU General Public License (GPL)\n" +
 									"terms. Read the license file for\n" +

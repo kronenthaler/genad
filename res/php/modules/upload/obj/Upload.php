@@ -74,7 +74,7 @@ class Upload{
 			//$this->deleteFile(ROOT.'/'.$ARRAY[$prev]);
 		}else{
 			logOn('Unexpected error.\n');
-			return new Error(666,'Unexpected error');
+			return new Error(666,MSG_UPLOAD_UNEXPECTED);
 		}
 		
 		//chmod(ROOT.'/'.$fileName,0755);	//can download the file from FTP client.
@@ -88,13 +88,13 @@ class Upload{
 		if($_FILES[$file]['size'] > $this->opts[MAX_SIZE]){
 			if(file_exists($_FILES[$file]['tmp_name']))
 				unlink($_FILES[$file]['tmp_name']);
-			return new Error(-2,"The file '".$_FILES[$file]['name']."' exceeds ".($this->opts[MAX_SIZE]/1024)." KB.");
+			return new Error(-2,getMessage(MSG_UPLOAD_ERROR_EXCEEDS_SIZE,array($_FILES[$file]['name'],$this->opts[MAX_SIZE]/1024)));
 		}
 		
 		if($_FILES[$file]['error'] == UPLOAD_ERR_INI_SIZE){
 			if(file_exists($_FILES[$file]['tmp_name']))
 				unlink($_FILES[$file]['tmp_name']);
-			return new Error(-2,"The file '".$_FILES[$file]['name']."' exceeds ".ini_get('upload_max_filesize')."B.");
+			return new Error(-2,getMessage(MSG_UPLOAD_ERROR_EXCEEDS_PHP,array($_FILES[$file]['name'],ini_get('upload_max_filesize'))));
 		}
 		
 		//validate the mimetypes
@@ -110,8 +110,7 @@ class Upload{
 		}
 		
 		if(!$flag) 
-			return new Error(-3,"The file type of '".$_FILES[$file]['name']."' isn't valid (".
-								substr($_FILES[$file]['name'],strrpos($_FILES[$file]['name'],'.'))."). Expected: ".$this->opts[VALID_EXTS]);
+			return new Error(-3,getMessage(MSG_UPLOAD_ERROR_INVALID_TYPE,array($_FILES[$file]['name'],substr($_FILES[$file]['name'],strrpos($_FILES[$file]['name'],'.')),$this->opts[VALID_EXTS])));
 		
 		return NULL;
 	}

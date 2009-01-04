@@ -1,34 +1,37 @@
 /** Clases por nombre */
 *,body {margin:0; padding:0; border:0; font-family:Arial, Helvetica, sans-serif;}
-
 body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
+a { text-decoration:none; }
 
-ul{
+/** containers y clases globales */
+#menu ul{
 	list-style-type: none; 
 	width: 100%;
+	line-height:165%;
 }
 
-ul li{
-	border-bottom: 1px dotted #999;
-	height:20px;
+#menu ul li{
+	border-bottom: 1px solid #ccc;
+	height: 20px;
 	width: 100%;
 	vertical-align: middle;
 }
-ul li a,
-ul li a:link, 
-ul li a:visited{
-	padding:0px 0px 0px 5px;
-	height:20px;
+#menu ul li a,
+#menu ul li a:link,
+#menu ul li a:visited{
+	padding:0px 0px 0px 20px;
+	height: 20px;
 	width: 100%;
 	color:#999;
 	text-decoration: none;
-	float:left;
+	float: left;
 	vertical-align: middle;
 }
 
-ul li a:hover {
-	padding:0px 0px 0px 5px;
-	background-color:#FFF;
+#menu ul li a:hover,
+#menu ul li a.selected {
+	padding:0px 0px 0px 20px;
+	background: #FFF url(../images/selected.gif) left center no-repeat;
 	height:20px;	
 	width: 100%;
 	color:#333;
@@ -37,15 +40,10 @@ ul li a:hover {
 	vertical-align: middle;
 }
 
-a {
-	text-decoration:none;
+#menu input{
+	width: 80px;
 }
 
-#content-header h2{
-	color: #999;
-}
-
-/** containers y clases globales */
 #container{ 
 	width: 100%;
 	height: 600px; 
@@ -65,8 +63,10 @@ a {
 	height:200px;
 }
 
-#menu input{ 
-	width: 80px;
+#center {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #container button {
@@ -79,6 +79,10 @@ a {
 	/*vertical-align: middle;*/
 }
 
+#container button:hover{
+	background-color: #ccc;
+}
+
 #container button img{
 	vertical-align: top;
 	padding-top: 1px;
@@ -88,13 +92,13 @@ a {
 	font-size:inherit;
 	text-align: right;
 	/*border: 1px dotted #000;/**/
-	width:90%;
+	width: 100%;
 }
 
 #content table{
 	text-align: left;
 	font-size: inherit;
-	width: 90%;
+	width: 100%;
 /*	border-left: 1px solid #ccc;*/
 }
 
@@ -108,7 +112,7 @@ a {
 }
 
 #content table tr.odd{
-	background:#EEE;
+	background: #EEE;
 }
 
 #content-header {
@@ -116,7 +120,7 @@ a {
 	padding:0px;
 	width:100%;/* cambiar por static sizes*/
 	min-height: 50px;
-	float:left;
+	float: left;
 	background-color: #FFF;
 	text-align: right;
 }
@@ -136,10 +140,18 @@ a {
 	vertical-align: middle;
 }
 
+#content table th{
+	background: url(../images/title.gif) left top repeat-x;
+	height: 26px;
+}
+#content table th td{
+	border: 0px;
+}
+
 #content table td{
 	/*background: #fff;*/
 	/*border-right: 1px solid #ccc;*/
-	border-bottom: 1px dotted #999;
+	/*border-bottom: 1px dotted #999;*/
 	vertical-align: middle;
 	padding: 1px;
 	height: 20px;
@@ -153,12 +165,13 @@ a {
 #content table td.part1{
 	border-bottom: 1px solid #ccc;
 	border-left:  1px solid #ccc;
+	border-right:  1px solid #ccc;
 }
 
 #content table td.part2{
 	border-bottom: 1px solid #ccc;
-	border-left:  1px solid #ccc;
-	width: 20%;
+	border-right:  1px solid #ccc;
+	/*width: 20%;*/
 }
 
 #content table td button img {
@@ -170,12 +183,12 @@ a {
 
 #content table td button table td {
 	border: 0px;
-	background: #eee;	
+	/*background: #eee;	*/
 	text-align: left;
 }
 
 #content table td img {
-	background-color: #eee; 
+	/*background-color: #eee; */
 	margin: 1px; 
 	padding: 0px;
 	border: 1px solid #999;
@@ -233,21 +246,21 @@ a {
 }
 
 .submenulabel{
-	background: #ccc;
-	height: 20px;
+	background: #ccc url(../images/title.gif) left top repeat-x;
+	height: 22px;
 	width: 100%;
 	cursor: pointer;
-	border-bottom: 1px dotted #999 ;
+	/*border-bottom: 1px dotted #999 ;*/
 	/*background-image: url('images/close.gif');*/
-	background-repeat: no-repeat;
-	background-position: left;
 	padding-left: 10px;
+	padding-top: 5px;
 }
 
 .menucontent{
 	width: 100%;
+	border-bottom: 1px solid #999;
 }
-
+/*
 .menucontent ul{
 	list-style-type:none;
 	width: 100%;
@@ -255,7 +268,7 @@ a {
 
 .menucontent ul li{
 	border-bottom: 1px dotted #999;
-	height:20px;
+	height: 20px;
 	width: 100%;
 }
 
@@ -275,7 +288,7 @@ a {
 	color:#333;
 	text-decoration:none;
 	float:left;
-}
+}*/
 
 .border{
 	border: 1px solid #999;
@@ -284,4 +297,120 @@ a {
 
 .file{
 	border: 1px solid #999;
+}
+
+.error{
+	color: #990000;
+	/*background-color: #ffbbbb;*/
+	/*border: #ff0000 solid 1px;*/
+	height: 20px;
+}
+/* TABS navigation */
+
+#navigation a {
+	color: #333;
+	background: url(../images/left-tab-hover.gif) left bottom no-repeat;
+	text-decoration: none;
+	padding-left: 7px;
+	height: 30px;
+}
+
+#navigation a span {
+	background: url(../images/right-tab-hover.gif) right bottom no-repeat;
+	padding-top: 5px;
+	padding-right: 7px;
+	height: 25px;
+	vertical-align: middle;
+
+}
+
+#navigation a, #navigation a span{
+	display: block;
+	float: left;
+}
+
+/* Hide from IE5-Mac \*/
+#navigation a, #navigation a span 	{
+	float: none;
+}
+/* End hide */
+
+#navigation a:hover,
+#navigation a.selected{
+	color: #333333;
+	background: url(../images/left-tab.gif) left bottom no-repeat;
+	padding-left: 7px;
+}
+
+#navigation a:hover span,
+#navigation a.selected span{
+	background: url(../images/right-tab.gif) right bottom no-repeat;
+	padding-right: 7px;
+}
+
+#navigation ul{
+	list-style: none;
+	padding-left: 30px;
+	margin: 0;
+}
+
+#navigation li{
+	float: left;
+	list-style: none;
+	margin-left: 1px;
+}
+
+/* Relation's tabs*/
+#relation a {
+	color: #333;
+	background: url(../images/up-left-tab.gif) left top no-repeat;
+	text-decoration: none;
+	padding-left: 7px;
+	height: 25px;
+}
+
+#relation a span {
+	background: url(../images/up-right-tab.gif) right top no-repeat;
+	padding-top: 5px;
+	padding-right: 7px;
+	height: 20px;
+	vertical-align: middle;
+}
+
+#relation a,
+#relation a span{
+	display: block;
+	float: right;
+}
+
+/* Hide from IE5-Mac \*/
+#relation a,
+#relation a span 	{
+	float: none;
+}
+/* End hide */
+
+#relation a:hover,
+#relation a.selected{
+	color: #333;
+	background: url(../images/up-left-tab-hover.gif) left top no-repeat;
+	padding-left: 7px;
+}
+
+#relation a:hover span,
+#relation a.selected span{
+	background: url(../images/up-right-tab-hover.gif) right top no-repeat;
+	padding-right: 7px;
+}
+
+#relation ul{
+	list-style: none;
+	padding-left: 30px;
+	margin: 0;
+}
+
+#relation li{
+	float: right;
+	list-style: none;
+	margin-left: 1px;
 }

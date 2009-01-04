@@ -19,7 +19,7 @@
 		if(!$obj->delete($id))
 			$error=$obj->getError();
 	}else{
-		$error="No action especified";
+		$error=MSG_NO_ACTION;
 	}
 	
 	header("Location: listProfile.php?ini=".$_REQUEST['ini']."&error=".$error.$obj->getAncestorsIds());

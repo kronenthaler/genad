@@ -5,9 +5,13 @@
 <xsl:stylesheet version="1.0" 
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  	<xsl:output method="html" encoding="utf-8" indent="yes"/>
+	
+	<xsl:include href="localize.xsl"/>
+
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
 	</xsl:variable>
+	
 	<xsl:include href="modules.php"/><!-- change the extension for others languages -->
 
  	<xsl:template match="/">
@@ -35,14 +39,20 @@
 				<xsl:apply-templates select="/error"/>
 			</xsl:when>
 			<xsl:otherwise>
+				<ul id="navigation">
+					<xsl:for-each select="/entity/ancestors/ancestor">
+						<li><a href="{/entity/prefix}list{@class}.{//@ext}?{$ids}"><span><h2><xsl:value-of select="."/></h2></span></a></li>
+					</xsl:for-each>
+					<li><a class="selected"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li>
+				</ul>
 				<div id="content-header">
-					<center>
+					<!--center>
 						<table width="100%" border="1">
 							<tr>
 								<td valign="middle" align="left"><h2><xsl:value-of select="/entity/title"/></h2></td>
 							</tr>
 						</table>
-					</center>
+					</center-->
 				</div>
 				<xsl:apply-templates select="entity/fields"/>
 			</xsl:otherwise>
@@ -59,6 +69,21 @@
 			}
 			var upload=new Upload('frm_<xsl:value-of select="//@name"/>',sender);
  		</script>
+		<ul id="relation" style="padding-right: 30px;">
+			<xsl:for-each select="/entity/relations/relation">
+				<li>
+					<xsl:choose>
+					<xsl:when test="//@action = 'add'">
+						<a><span><h3><xsl:value-of select="."/></h3></span></a>
+					</xsl:when>
+					<xsl:otherwise>
+						<a href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}"><span><h3><xsl:value-of select="."/></h3></span></a>
+					</xsl:otherwise>
+					</xsl:choose>
+				</li>
+			</xsl:for-each>
+			<li><a class="selected"><span><h3><xsl:call-template name="msg-edit"/>&nbsp;<xsl:value-of select="/entity/title"/></h3></span></a></li>
+		</ul>
 		<div id="content">
 			<form name="frm_{//@name}"
 				  id="frm_{//@name}" 
@@ -66,8 +91,8 @@
 				  method="POST" 
 				  enctype="multipart/form-data">
 				<center>
-					<table cellpadding="0" cellspacing="0" border="0" style="border-left: 1px solid #ccc; border-right: 1px solid #ccc;">
-						<tr><th width="15%" colspan="2"><xsl:value-of select="/entity/title"/></th></tr>
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr><th width="15%" colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
 						<xsl:apply-templates/>
 					</table>
 					<table>
@@ -77,7 +102,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/cancel.png" align="left"/></td>
-											<td align="right">Cancel</td>
+											<td align="right"><xsl:call-template name="msg-cancel"/></td>
 										</tr>
 									</table>
 								</button>
@@ -87,7 +112,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/accept.png" align="left"/></td>
-											<td align="right">Apply</td>
+											<td align="right"><xsl:call-template name="msg-apply"/></td>
 										</tr>
 									</table>
 								</button>
@@ -112,7 +137,7 @@
 					<tr height="100%" valign="top">
 						<td width="100" class="plain"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
 						<td class="plain">
-							<h1>Forbidden!</h1>
+							<h1><xsl:call-template name="msg-forbidden"/></h1>
 							<xsl:value-of select="msg"/><br/>
 							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
 						</td>
@@ -124,15 +149,15 @@
 
  	<xsl:template match="textfield | integer | decimal | email">
  		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left"><input type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left"><input type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="textarea">
  		<tr class="part1">
-			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left"><textarea name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
+			<td class="part1 top" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left"><textarea name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
 		</tr>
  	</xsl:template>
  	
@@ -142,8 +167,8 @@
  	 	
  	<xsl:template match="radio">
  		<tr class="part1">
-			<td class="part2 top" align="right" ><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1 top" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<xsl:for-each select="option">
 					<xsl:choose>
 						<xsl:when test="@selected = 'true'">
@@ -161,8 +186,8 @@
  	
  	<xsl:template match="checkbox">
  		<tr class="part1">
-			<td class="part2 top" align="right" ><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1 top" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<xsl:for-each select="option">
 					<p>
 					<xsl:choose>
@@ -182,8 +207,8 @@
  	
  	<xsl:template match="select">
  		<tr class="part1">
-			<td class="part2" align="right" ><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}">
 					<xsl:for-each select="option">
 						<xsl:choose>
@@ -209,19 +234,19 @@
  	
  	<xsl:template match="password">
  		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left"><input type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left"><input type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
 		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@confirm"/>:</td>
-			<td class="part1" align="left"><input type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
+			<td class="part1" align="right"><xsl:value-of select="@confirm"/>:</td>
+			<td class="part2" align="left"><input type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="richtext">
  		<tr class="part1">
-			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1 top" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<input type="hidden" name="str_{@map}" id="str_{@map}" />
 				<textarea id="rte_{@map}"><xsl:value-of select="."/></textarea>
 				<script type="text/javascript">
@@ -237,8 +262,8 @@
  	
  	<xsl:template match="date">
  		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<input type="text" id="div_{@map}" value="{@date}"/>
 				<input type="hidden" id="{@prefix}{@map}" value="" name="{@prefix}{@map}" />
 				<script language="javascript">
@@ -261,8 +286,8 @@
  	
  	<xsl:template match="time">
  		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<input type="text" id="{@prefix}{@map}" value="{@time}" name="{@prefix}{@map}" size="5"/>
 				<img src="images/timeIcon.gif" id="div_{@map}"/>
 				<script language="javascript">
@@ -278,8 +303,8 @@
  	
  	<xsl:template match="datetime">
  		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<input type="text" id="div_{@map}_date" value="{@date}" size="10" />
 				<input type="hidden" id="{@prefix}{@map}_date" name="{@prefix}{@map}_date" value="" />
 				<input type="text" id="{@prefix}{@map}_time" value="{@time}" name="{@prefix}{@map}_time" size="5"/>
@@ -321,8 +346,8 @@
 			upload.addFile('<xsl:value-of select="@map"/>');
 		</script>
  		<tr class="part1">
-			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1 top" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">View File</a>
 				</xsl:if>
@@ -360,8 +385,8 @@
 			upload.addFile('<xsl:value-of select="@map"/>');
 		</script>
  		<tr class="part1">
-			<td class="part2 top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1 top" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">
 					<img src="../{$prev}" border="0" id="img_link_{@map}"/></a><!--width="{$iframe-width}" height="{$iframe-height}"-->
@@ -379,15 +404,24 @@
 
 	<xsl:template match="label">
 		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
+		</tr>
+	</xsl:template>
+
+	<xsl:template match="keylabel">
+		<tr class="part1">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">&nbsp;<xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/>
+				<input type="hidden" name="{@prefix}{@map}" id="{@prefix}{@map}" value="{@value}"/>
+			</td>
 		</tr>
 	</xsl:template>
 
 	<xsl:template match="timestamp">
 		<tr class="part1">
-			<td class="part2" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part1" align="left">
+			<td class="part1" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="part2" align="left">
 				<xsl:if test="@date=''">N/A</xsl:if><xsl:value-of select="@date"/>&nbsp;<xsl:value-of select="@time"/></td>
 		</tr>
 	</xsl:template>

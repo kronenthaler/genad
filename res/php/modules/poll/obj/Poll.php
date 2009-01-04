@@ -3,7 +3,7 @@ class Poll extends AbstractObject{
 	function Poll(){
 		$this->tablename='p01_poll';
 		$this->primarykey='p01_id';
-		$this->title = 'Poll';
+		$this->title = MSG_POLL_POLL;
 
 		//initialize the fields array
 		
@@ -31,7 +31,7 @@ class Poll extends AbstractObject{
 	function castVote($idPoll, $idOption){
 		$opt = new Options();
 		if(!$opt->load($idOption)){
-			$this->error = new Error(POLL_OPTION_ERROR, "Unknown option");
+			$this->error = new Error(POLL_OPTION_ERROR, MSG_POLL_ERROR_UNKNOWN_OPTION);
 			return false;
 		}
 		

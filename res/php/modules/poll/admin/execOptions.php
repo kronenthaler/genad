@@ -26,7 +26,7 @@
 		if(!$obj->order($ids))
 			$error = $obj->getError();
 	}else{
-		$error="No action especified";
+		$error=MSG_NO_ACTION;
 	}
 	
 	header("Location: listOptions.php?ini=".$_REQUEST['ini']."&error=".$error.$obj->getAncestorsIds());

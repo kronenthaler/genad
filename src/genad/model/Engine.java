@@ -256,6 +256,9 @@ public class Engine extends Model{
 			//10) entities files. ask for overwrite if exists
 			for(Enumeration<String> e=model.getEntities();e.hasMoreElements();)
 				transformEntities(model.getEntity(e.nextElement()), model);
+
+			for(Enumeration<String> e=model.getRelations();e.hasMoreElements();)
+				transformRelations(model.getRelation(e.nextElement()), model);
 		}catch(RuntimeException e){
 			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
 		}catch(Exception e){
@@ -317,6 +320,53 @@ public class Engine extends Model{
 			
 			for(Enumeration<String> e=ent.getChilds();e.hasMoreElements();)
 					transformEntities(ent.getChild(e.nextElement()), model);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
+	private synchronized void transformRelations(Relation ent, Model model){
+		try{
+			if(stop){ allStop=true; notifyAll(); return; }
+
+			String xml=ent.genXML();
+			PrintStream out =null;
+
+			File list = new File(model.getDestinationPath()+"/admin/list"+ent.getName()+"."+model.getLanguage());
+			File exec = new File(model.getDestinationPath()+"/admin/exec"+ent.getName()+"."+model.getLanguage());
+			File mod = new File(model.getDestinationPath()+"/admin/mod"+ent.getName()+"."+model.getLanguage());
+			File obj = new File(model.getDestinationPath()+"/obj/"+ent.getName()+"."+model.getLanguage());
+
+			if((ent.hasJustPages() && !ent.hasJustSchema()) || (!ent.hasJustPages() && !ent.hasJustSchema())){
+				if(list.exists()){
+					createLater.add(new DelayedFile(this,list,"res/"+model.getLanguage()+"/xsl/list.xsl",new StringReader(xml)));
+				}else{
+					out=new PrintStream(list);
+					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/list.xsl", out);
+					out.close();
+				}
+				if(exec.exists()){
+					createLater.add(new DelayedFile(this,exec,"res/"+model.getLanguage()+"/xsl/exec.xsl",new StringReader(xml)));
+				}else{
+					out=new PrintStream(exec);
+					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/exec.xsl", out);
+					out.close();
+				}
+				if(mod.exists()){
+					createLater.add(new DelayedFile(this,mod,"res/"+model.getLanguage()+"/xsl/mod.xsl",new StringReader(xml)));
+				}else{
+					out=new PrintStream(mod);
+					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/mod.xsl", out);
+					out.close();
+				}
+				if(obj.exists()){
+					createLater.add(new DelayedFile(this,obj,"res/"+model.getLanguage()+"/xsl/obj.xsl",new StringReader(xml)));
+				}else{
+					out=new PrintStream(obj);
+					transformXML(new StringReader(xml), "res/"+model.getLanguage()+"/xsl/obj.xsl", out);
+					out.close();
+				}
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}

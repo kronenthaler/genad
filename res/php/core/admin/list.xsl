@@ -2,9 +2,11 @@
 <!DOCTYPE xsl:stylesheet [
 	<!ENTITY nbsp "&#160;">
 ]>
-<xsl:stylesheet version="1.0" 
+<xsl:stylesheet version="1.0"
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  	<xsl:output method="html" encoding="utf-8"/>
+	
+	<xsl:include href="localize.xsl"/>
 	
  	<!-- define the ids of the ancestors required for each link that modifies the entity -->
  	<xsl:variable name="ids">
@@ -24,34 +26,39 @@
 				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 				<script src="../js/utils.js"></script>
-				</head><body><div id="container"><div id="center">
+				</head>
+				<body>
+					<div id="container">
+						<div id="center">
 		<xsl:choose>
 			<xsl:when test="/error != ''">
 				<xsl:apply-templates select="/error"/>
 			</xsl:when>
 			<xsl:otherwise>
+				<ul id="navigation">
+					<xsl:for-each select="/entity/ancestors/ancestor">
+						<li><a href="{/entity/prefix}list{@class}.{//@ext}?{$backids}"><span><h2><xsl:value-of select="."/></h2></span></a></li>
+					</xsl:for-each>
+					<!--li><a href="#"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li-->
+					<li><a class="selected"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li>
+				</ul>
 				<div id="content-header">
 					<center>
 						<table width="100%" border="1">
 							<tr>
-								<td colspan="4" valign="middle" align="left">
-									<h2><xsl:value-of select="/entity/title"/></h2>
+								<xsl:choose>
+								<xsl:when test="/entity/error != ''">
+								<td width="50%" align="left" class="error" style="background-color: #ff9999;border: #ff0000 solid 1px; padding-left: 10px;">
+									&nbsp;<img src="images/error.png"/>&nbsp;<xsl:value-of select="/entity/error"/>
 								</td>
-							</tr>
-							<tr>
-								<td align="left">
-									<xsl:if test="/entity/back/@entity != ''">
-										<a href="{/entity/prefix}list{/entity/back/@entity}.{//@ext}?{$backids}">&lt; <xsl:value-of select="/entity/back/@title"/></a>
-									</xsl:if>
-								</td>
-								<td width="50%" align="left" style="color:#f66">
-									<xsl:if test="/entity/error != ''">
-										<img src="images/error.png"/>&nbsp;<xsl:value-of select="/entity/error"/>
-									</xsl:if>
-								</td>
+								</xsl:when>
+								<xsl:otherwise>
+									<td width="50%" align="left">&nbsp;</td>
+								</xsl:otherwise>
+								</xsl:choose>
 								<xsl:if test="/entity/properties/searchable = 1">
 								<td valign="middle" align="right">
-									<label for="search">Search:</label>
+									<label for="search"><xsl:call-template name="msg-search"/>:</label>
 									<input type="text" id="search" name="search" value="{/entity/search}"/>
 								</td>
 								<td width="1%">
@@ -81,7 +88,7 @@
 					<tr height="100%" valign="top">
 						<td width="100" class="plain"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
 						<td class="plain">
-							<h1>Forbidden!</h1>
+							<h1><xsl:call-template name="msg-forbidden"/></h1>
 							<xsl:value-of select="msg"/><br/>
 							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
 						</td>
@@ -100,9 +107,9 @@
 					  method="post" 
 					  enctype="multipart/form-data"
 					  >
-				<table cellspacing="0" cellpadding="0" border="0" style="border-right: 1px solid #ccc;border-top: 1px solid #ccc;">
 					<xsl:choose>
 						<xsl:when test="count(instance) &gt; 0">
+							<table cellspacing="0" cellpadding="0" border="0">
 							<thead>
 								<tr>
 									<th width="30px">&nbsp;</th>
@@ -143,7 +150,7 @@
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="part1">
+															<td class="part2">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
 																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img src="images/{$value}.gif"/></a></center>
@@ -162,7 +169,7 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="part1"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="part2"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:when>
@@ -175,7 +182,7 @@
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="part1">
+															<td class="part2">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
 																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img src="images/{$value}.gif"/></a></center>
@@ -194,31 +201,35 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="part1"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="part2"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:otherwise>
 									</xsl:choose>
 								</xsl:for-each>	
 							</tbody>
+							</table>
 						</xsl:when>
 						<xsl:otherwise>
-							<tr><td class="part2" align="center">Nothing to show</td></tr>
+							<table cellspacing="0" cellpadding="0" border="0" style="border: 1px solid #ccc;">
+							<tr><td align="center"><xsl:call-template name="msg-nothing"/></td></tr>
+							</table>
 						</xsl:otherwise>
 					</xsl:choose>
-				</table>
+				
 				<table>
 					<tr>
 						<xsl:choose>
 							<xsl:when test="count(instance) &gt; 0">
 								<td align="left" class="plain">
 									<!--xsl:if test="/entity/properties/delete = 1"-->
-										<button id="_deleteBtn_" type="submit" onclick="return confirm('Do you really want to delete the selected items?')" >
+										<xsl:variable name="msg-confirm"><xsl:call-template name="msg-confirm"/></xsl:variable>
+										<button id="_deleteBtn_" type="submit" onclick="return confirm('{$msg-confirm}')" >
 											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 											<table border="0" cellpadding="0" cellspacing="0" width="100%">
 												<tr>
 													<td><img src="images/delete.png" align="left"/></td>
-													<td>Delete</td></tr>
+													<td><xsl:call-template name="msg-delete" /></td></tr>
 											</table>
 										</button>
 										<script>document.getElementById('_deleteBtn_').disabled = '<xsl:value-of select="/entity/properties/delete"/>'=='0';</script>
@@ -231,7 +242,7 @@
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><img src="images/order.png" align="left"/></td>
-												<td>Sort</td>
+												<td><xsl:call-template name="msg-sort" /></td>
 											</tr>
 										</table>
 									</button>
@@ -245,7 +256,7 @@
 											<table border="0" cellpadding="0" cellspacing="0" width="100%">
 												<tr>
 													<td><img src="images/add.png" align="left"/></td>
-													<td>Add</td>
+													<td><xsl:call-template name="msg-add" /></td>
 												</tr>
 											</table>
 										</button>
@@ -261,7 +272,7 @@
 											<table border="0" cellpadding="0" cellspacing="0" width="100%">
 												<tr>
 													<td><img src="images/add.png" align="left"/></td>
-													<td>Add</td>
+													<td><xsl:call-template name="msg-add"/></td>
 												</tr>
 											</table>
 										</button>
@@ -282,8 +293,8 @@
 	</xsl:template>
 	
 	<xsl:template match="pager">
-		<td colspan="2" align="left">
-			Showing <xsl:value-of select="offset + 1"/>
+		<td align="left">
+			<xsl:call-template name="msg-showing"/>: <xsl:value-of select="offset + 1"/>
 			- <xsl:choose>
 				<xsl:when test="offset + page-size &lt; total-rows">
 					<xsl:value-of select="offset + page-size"/>
@@ -292,7 +303,7 @@
 			</xsl:choose>
 			of <xsl:value-of select="total-rows"/>
 		</td>
-		<td colspan="2" align="right">	
+		<td colspan="2" align="right">
 			<xsl:if test="offset > 0">
 				<a href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset - page-size}{$ids}"><img src="images/less.gif" class="border" align="absmiddle"/></a>&nbsp;
 			</xsl:if>

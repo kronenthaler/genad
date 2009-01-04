@@ -221,6 +221,19 @@ public class Model implements Serializable{
 			setChanged();
 		}
 	}
+
+	public boolean addRelation(String name){
+		if(relations.get(name)!=null) return false;
+		relations.put(name, new Relation(name));
+		setChanged();
+		return true;
+	}
+	public void removeRelation(String name){
+		if(relations.get(name)!=null){
+			relations.remove(name);
+			setChanged();
+		}
+	}
 	
 	// Model/View pattern
 	public void attachView(View v){
@@ -311,6 +324,22 @@ public class Model implements Serializable{
 			Entity ent = entities.get(e.nextElement());
 			ret.add(ent);
 			ret.addAll(ent.getAllEntities());
+		}
+
+		return ret;
+	}
+
+	public Vector<Relation> getRelations(String entName){
+		Vector<Relation> ret = new Vector<Relation>();
+		
+		for(Enumeration<String> e=relations.keys();e.hasMoreElements();){
+			Relation r = relations.get(e.nextElement());
+			for(Entity ent : r.getEntities()){
+				if(ent.getName().equals(entName)){
+					ret.add(r);
+					break;
+				}
+			}
 		}
 
 		return ret;

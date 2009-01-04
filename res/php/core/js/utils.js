@@ -245,3 +245,7 @@ function convertDate(src, fromFormat, toFormat){
 					.replace('m',minutes);
 }
 
+function markSelected(obj){
+	$("a.selected").toggleClass("selected");
+	$(obj).addClass("selected");
+}

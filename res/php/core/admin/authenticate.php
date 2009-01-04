@@ -5,6 +5,6 @@ if($user->authenticate($_POST['login'],$_POST['password']) && $user->youCanDo('L
 	$_SESSION['user_id'] = $user->u01_id;
 	echo '0';
 }else{
-	echo "Invalid login or password";
+	echo MSG_INVALID_LOGIN;
 }
 ?>

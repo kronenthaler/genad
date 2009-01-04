@@ -76,7 +76,7 @@ class ImageUpload extends Upload{
 		}
 		
 		if($src=="" || $src==NULL) 
-			return new Error(-4,"Unsupported format. (Impossible to read file)");
+			return new Error(-4,MSG_UPLOAD_UNSUPPORTED_FORMAT_READ);
 		
 		$oriW=imagesx($src);
 		$oriH=imagesy($src);
@@ -126,7 +126,7 @@ class ImageUpload extends Upload{
 		ImageDestroy($src); 
 		ImageDestroy($resize); 
 		if($youcan) return new Error(0,$target);
-		return new Error(-4,"Unsupported format. (Impossible to write file)");
+		return new Error(-4,MSG_UPLOAD_UNSUPPORTED_FORMAT_WRITE);
 	}
 	
 	function image2grayscale(&$im){

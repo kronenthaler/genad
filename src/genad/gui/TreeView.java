@@ -21,8 +21,10 @@ import genad.gui.misc.*;
  *	@author kronenthaler
  */
 public class TreeView extends JTree implements View{
-	private JPopupMenu entityContextMenu,moduleContextMenu;
-	private JMenuItem editEntity, addEntity, deleteEntity, editModule;
+	private JPopupMenu entityContextMenu,moduleContextMenu, relationContextMenu;
+	private JMenuItem editEntity, addEntity, deleteEntity, 
+					  editModule,
+					  addRelation, deleteRelation, editRelation;
 	private TabbedContainer viewer;
 	private int x,y;
 		
@@ -38,7 +40,12 @@ public class TreeView extends JTree implements View{
 		moduleContextMenu=new JPopupMenu();
 		moduleContextMenu.add(editModule=new JMenuItem("Edit",IconsManager.EDITMODULE));
 		add(moduleContextMenu);
-		
+
+		relationContextMenu = new JPopupMenu();
+		relationContextMenu.add(addRelation = new JMenuItem("Add", IconsManager.EDITRELATION));
+		relationContextMenu.add(editRelation = new JMenuItem("Edit", IconsManager.EDITRELATION));
+		relationContextMenu.add(deleteRelation = new JMenuItem("Delete", IconsManager.DELRELATION));
+
 		setCellRenderer(new TreeViewRenderer());
 		update((Model)null);
 		setHandlers();
@@ -66,7 +73,25 @@ public class TreeView extends JTree implements View{
 				editModule(evt);
 			}
 		});
-		
+
+		addRelation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				addRelation(evt);
+			}
+		});
+
+		editRelation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				editRelation(evt);
+			}
+		});
+
+		deleteRelation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				deleteRelation(evt);
+			}
+		});
+
 		addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 treeMouseClicked(evt);
@@ -178,6 +203,19 @@ public class TreeView extends JTree implements View{
 		ent.attachToModel(Model.getInstance());
 	}
 
+	private void addRelation(ActionEvent evt){
+		String name=JOptionPane.showInputDialog(Main.getInstance(),"Relation name");
+		if(name==null || name.equals("")) return;
+
+		TreePath tp=getPathForLocation(x,y);
+		Object[] path=tp.getPath();
+		Model model=Model.getInstance();
+		if(path.length==2){
+			if(!model.addRelation(Utils.sanitize(name)))
+				Utils.showError("An entity with this name already exists");
+		}
+	}
+
 	private void editRelation(ActionEvent evt){
 		TreePath tp=getPathForLocation(x,y);
 		Object[] path=tp.getPath();
@@ -197,6 +235,26 @@ public class TreeView extends JTree implements View{
 		viewer.getSelectionModel().setSelectedIndex(viewer.getTabCount()-1);
 		ent.attachToModel(Model.getInstance());
 	}
+
+	private void deleteRelation(ActionEvent evt){
+		TreePath tp=getPathForLocation(x,y);
+		Object[] path=tp.getPath();
+		Model model=Model.getInstance();
+		if(path.length==3){
+			if(JOptionPane.showConfirmDialog(Main.getInstance(),
+											 "Are you really sure?",
+											 "Confirmation",
+											 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+				model.removeRelation(path[2].toString());
+				for(int i=0,n=viewer.getTabCount();i<n;i++){
+					if(viewer.getModel().getTab(i).getTooltip().equals(path[2].toString())){
+						viewer.getModel().removeTab(i);
+						break;
+					}
+				}
+			}
+		}
+	}
 	
 	private void treeMouseClicked(MouseEvent evt){
 		TreePath tp=getPathForLocation(x=evt.getX(),y=evt.getY());
@@ -210,6 +268,10 @@ public class TreeView extends JTree implements View{
 				entityContextMenu.show(evt.getComponent(),x,y);
 			}else if(path.length>2 && path[1].toString().equalsIgnoreCase("modules")){
 				moduleContextMenu.show(evt.getComponent(),x,y);
+			}else if(path.length>=2 && path[1].toString().equalsIgnoreCase("relations")){
+				editRelation.setEnabled(path.length!=2 || !path[1].toString().equalsIgnoreCase("relations"));
+				deleteRelation.setEnabled(path.length!=2 || !path[1].toString().equalsIgnoreCase("relations"));
+				relationContextMenu.show(evt.getComponent(),x,y);
 			}
 		}else{
 			if(evt.getClickCount()==2){

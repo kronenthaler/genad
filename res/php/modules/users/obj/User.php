@@ -3,7 +3,7 @@ class User extends AbstractObject{
 	function User(){
 		$this->tablename='u01_users';
 		$this->primarykey='u01_id';
-		$this->title = 'User';
+		$this->title = MSG_USERS_USERS;
 		
 		$this->userProfiles = NULL;
 		$this->userPermissions = NULL;

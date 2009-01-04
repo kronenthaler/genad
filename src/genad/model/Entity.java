@@ -243,14 +243,14 @@ public class Entity implements Serializable{
 		if(!justPages && form.size()==0)
 			return Utils.showError("The entity: "+name+" must has at least one field");
 		
-		boolean visible=false,listable=false,searchable=false,repited=false,empty=false;
+		boolean visible=false,listable=false,searchable=false,repeated=false,empty=false;
 		Hashtable<String, Boolean> buffer=new Hashtable<String, Boolean>();
 		for(Field f : form){
 			visible |= f.isVisible();
 			listable |= f.isListable();
 			searchable |= f.isSearchable();
 			if(f.getMap()!=null && "".equals(f.getMap())){ empty=true; break; }
-			if(buffer.get(f.getMap())!=null){ repited=true;break; }
+			if(buffer.get(f.getMap())!=null){ repeated=true;break; }
 		}
 		
 		if(search && !searchable)
@@ -265,8 +265,8 @@ public class Entity implements Serializable{
 		if(empty)
 			return Utils.showError("The fields cannot has a empty map in entity: "+name);
 		
-		if(repited)
-			return Utils.showError("The entity: "+name+" cannot contain repited map fields");
+		if(repeated)
+			return Utils.showError("The entity: "+name+" cannot contain repeated map fields");
 		
 		if(justSchema && childs.size()>0)
 			return Utils.showError("The entity: "+name+" cannot contain childs because is just an schema");
@@ -334,9 +334,14 @@ public class Entity implements Serializable{
 		for(Field f:form)
 			ret.append(f.toString(""));
 		ret.append("	</form>\n");
-			
+
+		ret.append("	<relations>");
+		for(Relation r:Model.getInstance().getRelations(name))
+			ret.append("		<relation name=\""+r.getName()+"\"/>");
+		ret.append("	</relations>");
+
 		ret.append("</entity>\n");
-		
+		System.err.println(ret);
 		return ret.toString();
 	}
 	

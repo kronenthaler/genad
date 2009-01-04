@@ -3,7 +3,7 @@ class Votes extends AbstractObject{
 	function Votes(){
 		$this->tablename='p03_votes';
 		$this->primarykey='p03_id';
-		$this->title = 'Votes';
+		$this->title = MSG_POLL_VOTES;
 
 		//initialize the fields array
 		$this->fields['p02_id'] = array(TITLE=>'PARENT_ID', TYPE=>'textfield', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);

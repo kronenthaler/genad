@@ -1,3 +1,4 @@
+<? include_once('../includes.php');?>
 <? $name = $_REQUEST['name']; ?>
 <html>
 <head>
@@ -47,21 +48,21 @@ function clean(complete){
 </head>
 <body>
 <div id="container">
-	<div id="center">
+	<!--div id="center"-->
 		<div id="content">
 	<form action="process.php" method="POST" enctype="multipart/form-data" name="frm_up" id="frm_up" onsubmit="return true;">
-		<table cellpadding="0" cellspacing="0" border="0" width="100%">
+		<table cellpadding="0" cellspacing="0" border="0" width="100%" >
 			<tr valign="middle">
 				<td class="plain" align="left" id="thefile" width="1%">
 					<? if($_REQUEST['path']==''){?>
-						<input type="file" name="file_<?=$name?>" id="file_<?=$name?>" onchange="touch()"/></p>
+						<input type="file" name="file_<?=$name?>" id="file_<?=$name?>" onchange="touch()"/>
 						</td>
 						<td class="plain" align="left">
 						<button type="button" id="btn_del" onclick="clean(true)">
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
 									<td><img src="../admin/images/delete.png" align="left"/></td>
-									<td>Remove</td>
+									<td><?=MSG_UPLOAD_REMOVE?></td>
 								</tr>
 							</table>
 						</button>
@@ -69,7 +70,7 @@ function clean(complete){
 						<? if($_REQUEST['error']!=''){ ?>
 						</td><td class="plain" align="right">
 						<a href="javascript:void(0);" onclick="alert('<?=$_REQUEST['error']?>')" id="error">
-							Error uploading file <img src="../admin/images/cancel.png" title="<?=str_replace("\\'","'",$_REQUEST['error'])?>" align="absmiddle" border="0"/>
+							<?=MSG_UPLOAD_ERROR_GUI?> <img src="../admin/images/cancel.png" title="<?=str_replace("\\'","'",$_REQUEST['error'])?>" align="absmiddle" border="0" style="border:0px;"/>
 						</a>
 						<? }
 						  foreach($_REQUEST as $key => $value)
@@ -81,7 +82,7 @@ function clean(complete){
 						<input type="hidden" name="str_<?=$name?>" id="str_<?=$name?>" value="<?=$_REQUEST['value']?>"/>
 					
 					<? }else{ ?>
-					<a href="../<?=$_REQUEST['path']?>" target="_blank"><img src="../admin/images/accept.png" border="0" align="absmiddle"/> File uploaded successfully</a>
+					<a href="../<?=$_REQUEST['path']?>" target="_blank"><img src="../admin/images/accept.png" border="0" align="absmiddle"/><?=MSG_UPLOAD_SUCCESSFULLY?></a>
 					<? }?>
 				</td>
 			</tr>
@@ -89,7 +90,7 @@ function clean(complete){
 	</form>
 	</div>
 	</div>
-</div>
+<!--/div-->
 </body>
 <script>
 <?

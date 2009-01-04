@@ -28,6 +28,7 @@ public class Relation extends Entity implements Serializable{
 	}
 	
 	public Relation(String _name){
+		this();
 		name = _name;
 	}
 
@@ -84,7 +85,32 @@ public class Relation extends Entity implements Serializable{
 	protected boolean isValid(){
 		//TODO: validate this relation, must have 2 entities at least, extra fields are optionals,
 		//the class name must be unique, equal to the entities.
-		return entities.size() >= 2;
+		
+		if(title==null || "".equals(title))		return Utils.showError("Title cannot be empty in relation: "+name);
+		if("".equals(name))			return Utils.showError("Name cannot be empty in relation: "+name);
+		if(tableName==null || "".equals(tableName))	return Utils.showError("Table Name cannot be empty in relation: "+name);
+		if(entities.size() < 2)		return Utils.showError("At least two entities must be related in relation: "+name);
+
+		boolean visible=false,listable=false,searchable=false,repeated=false,empty=false;
+		Hashtable<String, Boolean> buffer=new Hashtable<String, Boolean>();
+		for(Field f : form){
+			visible |= f.isVisible();
+			listable |= f.isListable();
+			searchable |= f.isSearchable();
+			if(f.getMap()!=null && "".equals(f.getMap())){ empty=true; break; }
+			if(buffer.get(f.getMap())!=null){ repeated=true;break; }
+		}
+
+		if(search && !searchable)
+			return Utils.showError("At least one field must be searchable in relation: "+name);
+
+		if(empty)
+			return Utils.showError("The fields cannot has a empty map in relation: "+name);
+
+		if(repeated)
+			return Utils.showError("The relation: "+name+" cannot contain repeated map fields");
+
+		return true;
 	}
 
 	public void addEntity(String ent){
@@ -103,7 +129,7 @@ public class Relation extends Entity implements Serializable{
 		
 		flag=Model.getInstance().renameRelation(name,s);
 		
-		//TODO:must be a valid ID in almost every language
+		//TODO: must be a valid ID in almost every language
 		if(flag){
 			name=s;
 			setChanged();
@@ -111,7 +137,12 @@ public class Relation extends Entity implements Serializable{
 		
 		return flag && !"".equals(s);
 	} 
-	
+
+	public String genXML(){
+		//TODO: generate a more comprenhensive and useful XML for the XSLT.
+		return toString();
+	}
+
 	public String toString(String deep){
 		if(!isValid()) throw new ArrayIndexOutOfBoundsException("Invalid Relation: "+name);
 		
@@ -130,8 +161,17 @@ public class Relation extends Entity implements Serializable{
 			ret.append(f.toString(deep));
 		ret.append(deep+"	</form>\n");
 			
-		for(Entity e: entities)
-			ret.append(deep+"	<entity name=\""+Utils.sanitize(e.getName())+"\"/>\n");
+		for(Entity e: entities){
+			Vector<Field> fs = e.getFields();
+			String type = "primary-key";
+			for(Field f : fs){
+				if(f.getMap().equals(e.primaryKey)){
+					type = f.getType();
+					break;
+				}
+			}
+			ret.append(deep+"	<entity name=\""+Utils.sanitize(e.getName())+"\" primarykey=\""+Utils.sanitize(e.getPrimaryKey())+"\" type=\""+type+"\"><![CDATA["+e.getTitle()+"]]></entity>\n");
+		}
 		
 		ret.append(deep+"</relation>\n");
 		changed = false;

@@ -33,6 +33,7 @@ class AbstractObject{
 	var $title = '';						/** title of this entity in the list or mod pages */
 	var $error = '';
 	var $id = 0;							/** last id inserted */
+	var $relations = array();				/** array with the names of the relation objects for this object (apply just for entities)*/
 	
 	/**
 	 *	Initialize this object with the data in the record pointed by $id.
@@ -147,14 +148,22 @@ class AbstractObject{
 					array_push($allids[$i],mysql_result($rs,$j));
 			}
 		}
+
+		$flag=true;
+		if(count($this->relations)>0){
+			for($i=0,$n=count($this->relations);$i<$n;$i++){
+				eval("\$obj = new ".$this->relations[$i].'();');
+				$obj->primarykey = $this->primarykey;
+				$flag &= $obj->delete($ids);
+			}
+		}
 		//delete the files pointed by the type fields file or image	
 		$this->deleteFiles($ids);
 		
 		$query="DELETE FROM ".$this->tablename." WHERE ".$this->primarykey;	
 		if(is_array($ids)) $query.=" IN ('".implode("','",$ids)."')";
 		else $query.=" = '".$ids."'";
-
-		$flag=true;
+		
 		for($i=0,$n=count($objs);$i<$n && $flag;$i++)
 			$flag &= $objs[$i]->delete($allids[$i]);
 			
@@ -243,6 +252,7 @@ class AbstractObject{
 		$query="SELECT count(*) FROM ".$this->tablename;
 		if($criteria!=NULL)
 			$query.=" WHERE ".implode(" AND ",$criteria);
+		//logOn($query);
 		return mysql_result(mysql_query($query),0);
 	}
 	
@@ -276,6 +286,7 @@ class AbstractObject{
 		$long = count($ids);	
 		for($i=0;$i<$long;$i++){
 			$query = "UPDATE ".$this->tablename." SET `_sort` = ".($i+1)." WHERE `".$this->primarykey."`='".$ids[$i]."'";
+			//logOn($query);
 			$rs &= mysql_query($query); 
 		}
 		return $rs?true:false;
@@ -331,13 +342,23 @@ class AbstractObject{
 	 */
 	function getXMLAncestors($params=NULL){
 		if($params==NULL) $params=$_REQUEST;
-		$ret='<ancestors>';
-		$keys=array_keys($params);
-		for($i=0,$n=count($keys);$i<$n;$i++){
-			if(!(strpos($keys[$i],'_')===false))
-				$ret.='<ancestor id="'.$keys[$i].'" value="'.$params[$keys[$i]].'"/>';
+		$ret='<basepath><![CDATA['.HTTP_ROOT.'/admin/]]></basepath>';
+		$ret.='<ancestors>';
+		$ancestor=$this->ancestor;
+		$ret1="";
+		while($ancestor!=''){
+			eval("\$parent=new ".$ancestor."();");
+			$ret1='<ancestor id="'.$parent->primarykey.'" value="'.$params[$parent->primarykey].'" class="'.$ancestor.'"><![CDATA['.$parent->title.']]></ancestor>'.$ret1;
+			$ancestor=$parent->ancestor;
 		}
-		$ret.='</ancestors>';
+		$ret.=$ret1.'</ancestors>';
+
+		$ret.='<relations>';
+		for($i=0;$i<count($this->relations);$i++){
+			eval("\$relation = new ".$this->relations[$i]."();");
+			$ret.='<relation active="" class="'.$this->relations[$i].'" currentClass="'.get_class($this).'"><![CDATA['.$relation->title.']]></relation>';
+		}
+		$ret.='</relations>';
 		return $ret;
 	}
 	
@@ -345,14 +366,7 @@ class AbstractObject{
 	 *	Create the path to the root entity crossing the hierarchy backwards
 	 */
 	function getXMLTitle(){
-		$str=$this->title;
-		$ancestor=$this->ancestor;
-		while($ancestor!=''){
-			eval("\$parent=new ".$ancestor."();");
-			$str=$parent->title." > ".$str;
-			$ancestor=$parent->ancestor;
-		}
-		return '<title><![CDATA['.$str.']]></title><basepath><![CDATA['.HTTP_ROOT.'/admin/]]></basepath>';
+		return '<title><![CDATA['.$this->title.']]></title>';
 	}
 	
 	function getXMLBack($params=NULL){
@@ -363,9 +377,11 @@ class AbstractObject{
 			
 		$ret='<back entity="'.$this->ancestor.'" title="'.($parent!=NULL?$parent->title:'').'">';
 		$keys=array_keys($params);
-		for($i=0,$n=count($keys);$i<$n && $parent!=NULL;$i++){
-			if(!(strpos($keys[$i],'_')===false) && $parent->primarykey!=$keys[$i])
-				$ret.='<ancestor id="'.$keys[$i].'" value="'.$params[$keys[$i]].'"/>';
+		$ancestor=$this->ancestor;
+		while($ancestor!=''){
+			eval("\$parent=new ".$ancestor."();");
+			$ret.='<ancestor id="'.$parent->primarykey.'" value="'.$params[$parent->primarykey].'" class="'.$ancestor.'"><![CDATA['.$parent->title.']]></ancestor>';
+			$ancestor=$parent->ancestor;
 		}
 		$ret.='</back>';
 		return $ret;
@@ -392,12 +408,13 @@ class AbstractObject{
 		$ret.="</properties>";
 		$ret.="<list>";
 		$ret.="<listable>";
+
 		uasort($this->fields, create_function('$a,$b','return $a[ONLISTPOS] - $b[ONLISTPOS];'));
 		$listables=$this->getFieldsByType(LISTABLE);
+
 		for($i=0,$n=count($listables);$i<$n;$i++)
 			$ret.='<field map="'.$listables[$i].'" name="'.$this->fields[$listables[$i]][TITLE].'" type="'.$this->fields[$listables[$i]][TYPE].'"/>';
-		//for($i=0,$n=count($this->childs);$i<$n;$i++)
-		//	$ret.='<child name="'.$this->childs[$i].'"/>';
+
 		for($i=0,$n=count($this->childs);$i<$n;$i++){
 			eval("\$childTitle=new ".$this->childs[$i]."();");
 			$ret.='<child name="'.$childTitle->title.'"/>';

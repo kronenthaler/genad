@@ -1,3 +1,13 @@
+- Relaciones:
+	+ generar los objetos que manejen relaciones => tengo que programar primero los objetos en PHP
+	- generar las paginas para list, mod, exec para relaciones => tengo que programarlas primero en PHP
+	+ generar los js para las relaciones => es mejor despues de haber programado la pagina de mod.
+	+ opciones para manejar las relaciones:
+		1. en las paginas mod de las entidades involucradas poner un link o una tabla que indique con quien esta relacionada esa entidad. => como editar esa relacion: popup? formulario dinamico?
+		2. Una pagina separada que tenga un nombre mnemonico para llegarle desde el menu.
+		3. alguna otra idea?
+		4. tabs
+
 - review: http://www.livevalidation.com/examples
 - http://tablesorter.com (para generacion de reportes)
 - http://code.google.com/apis/visualization/
