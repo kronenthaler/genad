@@ -1,4 +1,4 @@
-- Relaciones:
++ Relaciones:
 	+ generar los objetos que manejen relaciones => tengo que programar primero los objetos en PHP
 	- generar las paginas para list, mod, exec para relaciones => tengo que programarlas primero en PHP
 	+ generar los js para las relaciones => es mejor despues de haber programado la pagina de mod.
@@ -8,9 +8,11 @@
 		3. alguna otra idea?
 		4. tabs
 
+- banner manager.
 - review: http://www.livevalidation.com/examples
 - http://tablesorter.com (para generacion de reportes)
 - http://code.google.com/apis/visualization/
+- http://ole-laursen.blogspot.com/2007/12/flot-01-released.html (ploting realtime!!!)
 + Cambiar los componentes de fechas de dojo por el dojo nuevo o por un componente nuevo de jquery.
 + ui.jquery.com: 
 	- http://ui.jquery.com/repository/latest/demos/functional/#ui.datepicker

@@ -46,7 +46,12 @@ public class OptionTable extends JTable{
 	public void setData(Object[][] _d){
 		try{
 			data=new Object[_d.length][];
-			System.arraycopy(_d,0,data,0,_d.length);
+			for(int i=0;i<data.length;i++){
+				data[i] = new Object[_d[i].length];
+				for(int j=0;j<data[i].length;j++)
+					data[i][j] = _d[i][j];
+			}
+			//System.arraycopy(_d,0,data,0,_d.length);
 			
 			editor.clearEditors();
 			//parsear la data para poder construir el modelo que se necesita.

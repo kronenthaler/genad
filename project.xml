@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1231101506989" by="kronenthaler" language="php">
+<project lastsaved="1249231102248" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/var/www/testing1]]></base-directory>
 	</file-server-conf>
 	<db-server-conf>
 		<dev-host><![CDATA[localhost]]></dev-host>
 		<dev-user><![CDATA[root]]></dev-user>
-		<dev-password><![CDATA[]]></dev-password>
-		<dev-schema><![CDATA[testing1]]></dev-schema>
+		<dev-password><![CDATA[r00t]]></dev-password>
+		<dev-schema><![CDATA[testing]]></dev-schema>
 		<prod-host><![CDATA[null]]></prod-host>
 		<prod-user><![CDATA[null]]></prod-user>
 		<prod-password><![CDATA[]]></prod-password>
@@ -96,6 +96,16 @@
 					<options>
 					</options>
 				</field>
+				<field type="datetime">
+					<label><![CDATA[Fecha]]></label>
+					<db-field><![CDATA[in_date]]></db-field>
+					<required>1</required><!-- 0|1 -->
+					<show-in-list>1</show-in-list><!-- 0|1 -->
+					<show-in-form>1</show-in-form><!-- 0|1 -->
+					<searchable>1</searchable><!-- 0|1 -->
+					<options>
+					</options>
+				</field>
 			</form>
 			<entity name="Engine" title="Engine">
 				<table name="t02_engines" primary-key="t02_id"/>
@@ -146,7 +156,7 @@
 							<options>
 							</options>
 						</field>
-						<field type="textfield">
+						<field type="datetime">
 							<label><![CDATA[Something]]></label>
 							<db-field><![CDATA[t03_some]]></db-field>
 							<required>1</required><!-- 0|1 -->

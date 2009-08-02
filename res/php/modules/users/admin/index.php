@@ -1,11 +1,11 @@
 <script src="../users/admin/js/validators.js"></script>
-<div>
+<div class="ui-accordion-group">
 	<div class="submenulabel"
 		 onclick="$('#users').toggle();
 				  $('#users-img').attr('src',$('#users').css('display')=='none'?
 					  'images/expand.gif':
 					  'images/collapse.gif')">
-		 <img src="images/collapse.gif" id="users-img" align="absmiddle"/><?=MSG_USERS_TITLE?>
+		 <img src="images/collapse.gif" id="users-img" align="absmiddle"/>&nbsp;<?=MSG_USERS_TITLE?>
 	</div>
 	<div class="menucontent" id="users">
 		<ul>

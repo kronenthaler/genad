@@ -25,8 +25,14 @@
 					<base id="base" href="{/error/basepath}" />
 				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
-				<script src="../js/jquery.js"></script>
- 				<script src="../js/utils.js"></script>
+				<link href="../admin/css/ui.all.css" rel="stylesheet" type="text/css"/>
+				<script language="javascript" src="../js/utils.js"></script>
+				<script language="javascript" src="../js/jquery.js"></script>
+				<script language="javascript" src="../js/ui/ui.core.js"></script>
+				<script language="javascript" src="../js/ui/ui.datepicker.js"></script>
+				<script language="javascript" src="../js/ui/ui.dialog.js"></script>
+                <script language="javascript" src="../js/jsXMLParser/xmldom.js"></script>
+				<script language="javascript" src="../js/fckeditor/fckeditor.js"></script>
 				</head><body><div id="container"><div id="center">
 		<xsl:choose>
 			<xsl:when test="/entity/error != ''">
@@ -105,7 +111,7 @@
 										<table width="1%">
 											<tr>
 												<td align="right" class="plain">
-													<button type="button" id="subir" onclick="javascript:move('up','id')">
+													<button type="button" class="ui-default-state" id="subir" onclick="javascript:move('up','id')">
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
 																<td><img src="images/up.png" align="left"/></td>
@@ -117,7 +123,7 @@
 											</tr>
 											<tr>
 												<td align="right" class="plain">
-													<button type="button" id="bajar" onclick="javascript:move('down','id')">
+													<button type="button" id="bajar" class="ui-default-state" onclick="javascript:move('down','id')">
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
 																<td><img src="images/down.png" align="left"/></td>
@@ -141,7 +147,7 @@
 				<table>
 					<tr>
 						<td align="left" class="plain">
-							<button type="button" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','','')">
+							<button type="button" class="ui-default-state" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','','')">
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
 										<td><img src="images/cancel.png" align="left"/></td>
@@ -151,11 +157,11 @@
 							</button>
 						</td>
 						<td align="right" class="plain">
-							<button type="submit" onclick="javascript:selectAll('id')">
+							<button type="submit" class="ui-default-state" onclick="javascript:selectAll('id')">
 								<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
-										<td><img src="images/add.png" align="left"/></td>
+										<td><img src="images/accept.png" align="left"/></td>
 										<td>Sort</td>
 									</tr>
 								</table>

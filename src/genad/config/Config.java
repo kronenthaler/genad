@@ -29,7 +29,7 @@ public class Config implements Serializable{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//dbf.setValidating(true); //si se define un dtd para este archivo
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(path);
+			Document doc = db.parse(new FileInputStream(path));
 			
 			NodeList root=doc.getElementsByTagName("configuration").item(0).getChildNodes();
 			for(int i=0,n=root.getLength();i<n;i++){

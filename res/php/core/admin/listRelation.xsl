@@ -25,7 +25,15 @@
 					<base id="base" href="{/error/basepath}" />
 				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
-				<script src="../js/utils.js"></script>
+				<link href="../admin/css/ui.all.css" rel="stylesheet" type="text/css"/>
+				<script type="text/javascript" src= "../js/jquery.js"></script>
+				<script type="text/javascript" src= "../js/jquery.form.js"></script>
+				<script type="text/javascript" src= "../js/json.js"></script>
+				<script type="text/javascript" src= "../js/utils.js"></script>
+				<script type="text/javascript" src= "../js/ui/ui.core.js"></script>
+				<script type="text/javascript" src= "../js/ui/ui.accordion.js"></script>
+				<script type="text/javascript" src= "../js/ui/ui.dialog.js"></script>
+				<script type="text/javascript" src="../js/utils.js"></script>
 				</head>
 				<body>
 					<div id="container">
@@ -44,6 +52,7 @@
 				</ul>
 				<div id="content-header">
 					<center>
+						<form action="{/entity/prefix}list{//@name}.{//@ext}?{$ids}" method="GET">
 						<table width="100%" border="1">
 							<tr>
 								<xsl:choose>
@@ -62,16 +71,19 @@
 									<input type="text" id="search" name="search" value="{/entity/search}"/>
 								</td>
 								<td width="1%">
-									<button type="button" onclick="getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;search='+document.getElementById('search').value+'{$ids}','list.xsl','center');">
+									<button type="button" class="ui-default-state">
 										<img src="images/search.png" border="0"/>
 									</button>
 								</td>
+								<input type="hidden" name="currentClass" value="{//@currentClass}"/>
+								<input type="hidden" name="rel_id" value="{//@id}"/>
 								</xsl:if>
 							</tr>
 							<tr>
 								<xsl:apply-templates select="entity/pager"/>
 							</tr>
 						</table>
+						</form>
 					</center>
 				</div>
 				<xsl:apply-templates select="entity/list"/>
@@ -236,7 +248,7 @@
 								<td align="left" class="plain">
 									<!--xsl:if test="/entity/properties/delete = 1"-->
 										<xsl:variable name="msg-confirm"><xsl:call-template name="msg-confirm"/></xsl:variable>
-										<button id="_deleteBtn_" type="submit" onclick="return confirm('{$msg-confirm}')" >
+										<button id="_deleteBtn_" class="ui-default-state" type="submit" onclick="return confirm('{$msg-confirm}')" >
 											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 											<table border="0" cellpadding="0" cellspacing="0" width="100%">
 												<tr>
@@ -249,7 +261,7 @@
 								</td>
 								<xsl:if test="/entity/properties/sortable = 1">
 									<td align="center" class="plain">
-									<button id="_sortBtn_" type="button" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=sort{$ids}','','')">
+									<button id="_sortBtn_" class="ui-default-state" type="button" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=sort{$ids}','','')">
 										<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
@@ -263,7 +275,7 @@
 								</xsl:if>
 								<td align="right" class="plain">
 									<!--xsl:if test="/entity/properties/add = 1"-->
-										<button id="_addBtn_" type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')">
+										<button id="_addBtn_" class="ui-default-state" type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')">
 											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 											<table border="0" cellpadding="0" cellspacing="0" width="100%">
 												<tr>
@@ -279,7 +291,7 @@
 							<xsl:otherwise>
 								<td  align="center" class="plain">
 									<!--xsl:if test="/entity/properties/add = 1"-->
-										<button id="_addBtn_" type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')">
+										<button id="_addBtn_" class="ui-default-state" type="button" onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')">
 											<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 											<table border="0" cellpadding="0" cellspacing="0" width="100%">
 												<tr>

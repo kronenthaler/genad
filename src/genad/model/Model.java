@@ -48,7 +48,7 @@ public class Model implements Serializable{
 		try{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();     	
-			Document doc = db.parse(path);
+			Document doc = db.parse(new FileInputStream(path));
 			NodeList aux;
 
 			Node fileServer=doc.getElementsByTagName("file-server-conf").item(0); //solo debe haber una configuracion por proyecto

@@ -24,12 +24,12 @@
 					<base id="base" href="{/error/basepath}" />
 				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
-				<link href="../css/ui.all.css" rel="stylesheet" type="text/css"/>
+				<link href="../admin/css/ui.all.css" rel="stylesheet" type="text/css"/>
 				<script language="javascript" src="../js/utils.js"></script>
 				<script language="javascript" src="../js/jquery.js"></script>
-				<script language="javascript" src="../js/ui.core.js"></script>
-				<script language="javascript" src="../js/ui.datepicker.js"></script>
-				<script language="javascript" src="../js/ui.timepicker.js"></script>
+				<script language="javascript" src="../js/ui/ui.core.js"></script>
+				<script language="javascript" src="../js/ui/ui.datepicker.js"></script>
+				<script language="javascript" src="../js/ui/ui.dialog.js"></script>
                 <script language="javascript" src="../js/jsXMLParser/xmldom.js"></script>
 				<script language="javascript" src="../js/fckeditor/fckeditor.js"></script> 				
                 <script language="javascript" src="js/validators.js"></script>
@@ -96,13 +96,13 @@
 				  enctype="multipart/form-data">
 				<center>
 					<table cellpadding="0" cellspacing="0" border="0">
-						<tr><th width="15%" colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
+						<tr><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
 						<xsl:apply-templates/>
 					</table>
 					<table>
 						<tr>
 							<td align="left" class="plain" id="id">
-								<button type="button" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@rel_id}&amp;{$ids}','','');">
+								<button type="button" class="ui-default-state" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@rel_id}&amp;{$ids}','','');">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/cancel.png" align="left"/></td>
@@ -112,7 +112,7 @@
 								</button>
 							</td>
 							<td width="50%" align="right" class="plain">
-								<button type="submit" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
+								<button type="submit" class="ui-default-state" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/accept.png" align="left"/></td>

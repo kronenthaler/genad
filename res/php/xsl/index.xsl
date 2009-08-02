@@ -10,12 +10,18 @@
 		<meta http-equiv="Pragma" content="no-cache"/>
 		
 		<link href="css/styles.css" rel="stylesheet" type="text/css"/>
-		<!--script src="../js/dojo/dojo.js"></script-->
-		<script src="../js/jquery.js"></script>
-		<script src="../js/jquery.form.js"></script>
-		<script src="../js/utils.js"></script>
-		<script src="js/validators.js"></script>
-		<script>
+		<link href="css/ui.all.css" rel="stylesheet" type="text/css"/>
+
+		<script type="text/javascript" src= "../js/jquery.js"></script>
+		<script type="text/javascript" src= "../js/jquery.form.js"></script>
+		<script type="text/javascript" src= "../js/json.js"></script>
+		<script type="text/javascript" src= "../js/utils.js"></script>
+		<script type="text/javascript" src= "../js/ui/ui.core.js"></script>
+		<script type="text/javascript" src= "../js/ui/ui.accordion.js"></script>
+		<script type="text/javascript" src= "../js/ui/ui.dialog.js"></script>
+		
+		<script type="text/javascript" src="js/validators.js"></script>
+		<script type="text/javascript">
 			$(document).ready(function (){
 				// bind to the form's submit event 
 			    $('#login').submit(function() { 
@@ -41,7 +47,7 @@
 		<div id="container">
 			<div id="menu">
 				<!-- if authentication is passed => show the dojo menu-->
-				<ul id="options" style="display:none">
+				<ul id="options" style="display:none" class="ui-accordion">
 					<? include_once('../users/admin/index.php'); ?>	
 					]]>
 					<xsl:apply-templates select="/project/modules/module"/>
@@ -60,7 +66,7 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button type="submit">
+								<button type="submit" class="ui-default-state">
 									<table border="0" cellpadding="0" cellspacing="1">
 										<tr>
 											<td><img src="images/key.png" align="left"/></td>
@@ -75,7 +81,7 @@
 			</div>
 		</div>
 	</body>
-	<script>
+	<script type="text/javascript">
 	<? if($_SESSION['user_id']!=NULL){?>
 		$('#login').hide();
 		$('#options').show();
@@ -86,11 +92,9 @@
 
 	<xsl:template match="entity">
 	<xsl:if test="just-schema/@value = 0">	
-	<![CDATA[<li><a href="list]]><xsl:value-of select="@name"/><![CDATA[.php" target="mainFrame" onclick="markSelected(this)">]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]>
-	</xsl:if>
+	<![CDATA[<li><a href="list]]><xsl:value-of select="@name"/><![CDATA[.php" target="mainFrame" onclick="markSelected(this)">]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]></xsl:if>
 	</xsl:template>
 	
-	<xsl:template match="module">
-	<![CDATA[<? secureInclude(']]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>
+	<xsl:template match="module"><![CDATA[<? secureInclude(']]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>
 	</xsl:template>
 </xsl:stylesheet>

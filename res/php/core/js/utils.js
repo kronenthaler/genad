@@ -19,7 +19,7 @@ function connect(url,_text,handler){
 	}
 
 	if(!request){
-		alert("The XMLHttpRequest cannot be created");
+		alertMsg("The XMLHttpRequest cannot be created");
 		return;
 	}
 
@@ -29,7 +29,7 @@ function connect(url,_text,handler){
 				if(_text) handler(request.responseText);
 				else 	  handler(request.responseXML);
 			}else{ //answer with error, 404, 403, 500, or another
-				alert("Error "+request.status);
+				alertMsg("Error "+request.status);
 			}
 		}else{ // not ready yet, show some progress text 
 			
@@ -135,7 +135,7 @@ function transform(XMLdoc,targetStyle,targetDiv){
  */
 function isRequired(input, text){
  	if(input.value == ''){
- 		alert('The "'+text+'" field is required. Cannot be left in blank.');
+ 		alertMsg('The "'+text+'" field is required. Cannot be left in blank.');
 		if(input.type != 'hidden')
 			input.focus();
  		input.style.background='#ff8080';
@@ -151,7 +151,7 @@ function isValidPassword(input, confirm, label,required){
  	
  	if(!isRequired(confirm, label)) return false;
 	if(input.value!=confirm.value){
-		alert('The field "'+label+'" doesn\'t match with the confirmation.');
+		alertMsg('The field "'+label+'" doesn\'t match with the confirmation.');
 		return false;
 	}
 	return true;
@@ -161,7 +161,7 @@ function isValidEmail(input, label, required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(input.value.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1) {
-		alert('The field "' + label + '" only can be a valid email address.');
+		alertMsg('The field "' + label + '" only can be a valid email address.');
 		return false;
 	}
  	return true;
@@ -171,7 +171,7 @@ function isValidInteger(input, label,required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(input.value.search(/^[-]?[0-9]+$/)==-1){
-		alert('The field "' + label + '" only can be integers.');
+		alertMsg('The field "' + label + '" only can be integers.');
 		return false;
 	}
  	return true;
@@ -182,7 +182,7 @@ function isValidDecimal(input, label,required){
  	
  	input.value=input.value.replace(/,/,'.');	
  	if(input.value.search(/^[-]?([1-9]{1}[0-9]{0,}((\.)[0-9]+)?|0(\.[0-9]+)?|\.[0-9]{1,})$/)==-1){
-		alert('The field "' + label + '" only can be decimals.');
+		alertMsg('The field "' + label + '" only can be decimals.');
 		return false;
 	}
 	return true;
@@ -248,4 +248,48 @@ function convertDate(src, fromFormat, toFormat){
 function markSelected(obj){
 	$("a.selected").toggleClass("selected");
 	$(obj).addClass("selected");
+}
+
+
+function fillTimePicker(obj, suffix, value){
+	var hours='00',mins='00',seconds='00';
+	if(value != ''){
+		hours = value.substring(0,2);
+		mins = value.substring(3,5);
+	}
+
+	var html = '';
+	for(i=0;i<24;i++){
+		j = (i<10?'0':'')+i;
+		html+='<option '+(j==hours?'selected="selected"':'')+'>'+j+'</option>';
+	}
+	$('#hour_'+suffix).html(html);
+	
+	html='';
+	for(i=0;i<60;i+=5){
+		j = (i<10?'0':'')+i;
+		html+='<option '+(j==mins?'selected="selected"':'')+'>'+j+'</option>';
+	}
+	$('#min_'+suffix).html(html);
+
+	$('#'+obj).val(hours+":"+mins+":"+seconds);
+}
+
+function updateTimeHidden(obj,hidden,hours){
+	var h = '00',m='00',s='00';
+	var time = $('#'+hidden).val();
+	if(time=='') time = h+':'+m+':'+s;
+	if(hours){
+		h = $(obj).val();
+		m = time.substring(3,5);
+	}else{
+		h = time.substring(0,2);
+		m = $(obj).val();
+	}
+	$('#'+hidden).val(h+':'+m+':'+s);
+}
+
+//TODO: replace the code with jquery ui.dialog call
+function alertMsg(msg){
+	alert(msg);
 }

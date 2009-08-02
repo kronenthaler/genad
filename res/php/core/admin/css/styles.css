@@ -414,3 +414,7 @@ a { text-decoration:none; }
 	list-style: none;
 	margin-left: 1px;
 }
+
+.label {
+	width: 250px;
+}

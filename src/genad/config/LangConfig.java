@@ -33,7 +33,7 @@ public class LangConfig implements Serializable{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//dbf.setValidating(true); //si se define un dtd para este archivo
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(path);
+			Document doc = db.parse(new FileInputStream(path));
 			
 			name=doc.getElementsByTagName("name").item(0).getTextContent();
 			description=doc.getElementsByTagName("description").item(0).getTextContent();
@@ -111,7 +111,7 @@ public class LangConfig implements Serializable{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			//dbf.setValidating(true); //si se define un dtd para este archivo
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document doc = db.parse(path);
+			Document doc = db.parse(new FileInputStream(path));
 		
 			loadModules(doc);
 		}catch(Exception e){
