@@ -85,7 +85,6 @@ public class AboutDlg extends javax.swing.JDialog {
 									"details\n \n" +
 									"<b>Other software involved</b>\n"+
 									"Java 5\n"+					
-									"Dojo Toolkit\n"+
 									"FCKEditor\n"+
 									"jQuery";
 		private Image background;
