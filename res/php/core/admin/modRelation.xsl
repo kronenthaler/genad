@@ -8,7 +8,8 @@
 	
 	<xsl:include href="localize.xsl"/>
 	<xsl:include href="mod.xsl"/>
-
+	<xsl:include href="common.xsl"/>
+	
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
 	</xsl:variable>
@@ -24,14 +25,14 @@
 					<base id="base" href="{/error/basepath}" />
 				</xsl:if>
 				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
-				<link href="../admin/css/ui.all.css" rel="stylesheet" type="text/css"/>
-				<script language="javascript" src="../js/utils.js"></script>
-				<script language="javascript" src="../js/jquery.js"></script>
-				<script language="javascript" src="../js/ui/ui.core.js"></script>
-				<script language="javascript" src="../js/ui/ui.datepicker.js"></script>
-				<script language="javascript" src="../js/ui/ui.dialog.js"></script>
-                <script language="javascript" src="../js/jsXMLParser/xmldom.js"></script>
-				<script language="javascript" src="../js/fckeditor/fckeditor.js"></script> 				
+				<link href="../admin/css/ui.css" rel="stylesheet" type="text/css"/>
+				<script type="text/javascript" src= "../js/jquery.js"></script>
+				<script type="text/javascript" src= "../js/jquery-ui.js"></script>
+				<script type="text/javascript" src= "../js/jquery.form.js"></script>
+				<script type="text/javascript" src= "../js/json.js"></script>
+				<script type="text/javascript" src= "../js/utils.js"></script>
+				<script type="text/javascript" src="../js/jsXMLParser/xmldom.js"></script>
+				<script type="text/javascript" src="../js/fckeditor/fckeditor.js"></script>
                 <script language="javascript" src="js/validators.js"></script>
 				<xsl:apply-templates select="/entity/prefix"/><!-- trick to add the modules scripts prefix always exists-->
  				</head><body><div id="container"><div id="center">
@@ -42,9 +43,12 @@
 			<xsl:otherwise>
 				<ul id="navigation">
 					<xsl:for-each select="/entity/ancestors/ancestor">
-						<li><a href="{/entity/prefix}list{@class}.{//@ext}?{$ids}"><span><h2><xsl:value-of select="."/></h2></span></a></li>
+						<li><a class="ui-state-default ui-corner-bl ui-corner-br"
+								onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+								onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+								href="{/entity/prefix}list{@class}.{//@ext}?{$ids}"><xsl:value-of select="."/></a></li>
 					</xsl:for-each>
-					<li><a class="selected"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li>
+					<li><a class="ui-state-active ui-corner-bl ui-corner-br"><xsl:value-of select="/entity/title"/></a></li>
 				</ul>
 				<div id="content-header">
 					<!--center>
@@ -74,19 +78,37 @@
 			<xsl:for-each select="/entity/relations/relation">
 				<xsl:choose>
 					<xsl:when test="@active = 'selected'">
-						<xsl:if test="//@action = 'add'">
-							<li><a class="{@active}" href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@rel_id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}"><span><h3><xsl:value-of select="."/>:&nbsp;<xsl:call-template name="msg-adding"/></h3></span></a></li>
-						</xsl:if>
-						<xsl:if test="//@action = 'mod'">
-							<li><a class="{@active}" href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@rel_id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}"><span><h3><xsl:value-of select="."/>:&nbsp;<xsl:call-template name="msg-editing"/></h3></span></a></li>
-						</xsl:if>
+						<li><a class="ui-state-active ui-corner-tl ui-corner-tr"
+								onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-active')"
+								onmouseout="$(this).addClass('ui-state-active').removeClass('ui-state-hover')"
+								href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@rel_id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}">
+								<xsl:value-of select="."/>:&nbsp;
+								<xsl:if test="//@action = 'add'">
+									<xsl:call-template name="msg-adding"/>
+								</xsl:if>
+								<xsl:if test="//@action = 'mod'">
+									<xsl:call-template name="msg-editing"/>
+								</xsl:if>
+							</a>
+						</li>
 					</xsl:when>
 					<xsl:otherwise>
-						<li><a class="{@active}" href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@rel_id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}"><span><h3><xsl:value-of select="."/></h3></span></a></li>
+						<li><a class="ui-state-default ui-corner-tl ui-corner-tr"
+							onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+							onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+							href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@rel_id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}"><xsl:value-of select="."/>
+							</a>
+						</li>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:for-each>
-			<li><a href="{/entity/prefix}mod{//@currentClass}.{//@ext}?action=mod&amp;id={//@rel_id}&amp;{$ids}"><span><h3><xsl:call-template name="msg-edit"/>&nbsp;<xsl:value-of select="/entity/title"/></h3></span></a></li>
+			<li><a class="ui-state-default ui-corner-tl ui-corner-tr"
+					onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+					onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+					href="{/entity/prefix}mod{//@currentClass}.{//@ext}?action=mod&amp;id={//@rel_id}&amp;{$ids}">
+						<xsl:call-template name="msg-edit"/>&nbsp;<xsl:value-of select="/entity/title"/>
+					</a>
+			</li>
 		</ul>
 		<div id="content">
 			<form name="frm_{//@name}"
@@ -96,13 +118,17 @@
 				  enctype="multipart/form-data">
 				<center>
 					<table cellpadding="0" cellspacing="0" border="0">
-						<tr><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
+						<tr class="ui-state-active ui-corner-all"><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
 						<xsl:apply-templates/>
 					</table>
 					<table>
 						<tr>
 							<td align="left" class="plain" id="id">
-								<button type="button" class="ui-default-state" onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@rel_id}&amp;{$ids}','','');">
+								<button type="button" 
+										class="ui-state-default ui-corner-all"
+										onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+										onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@rel_id}&amp;{$ids}','','');">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/cancel.png" align="left"/></td>
@@ -112,7 +138,11 @@
 								</button>
 							</td>
 							<td width="50%" align="right" class="plain">
-								<button type="submit" class="ui-default-state" onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
+								<button type="submit" 
+										class="ui-state-default ui-corner-all"
+										onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+										onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><img src="images/accept.png" align="left"/></td>
@@ -135,21 +165,4 @@
 			</form>
 		</div>
  	</xsl:template>
- 	
-	<xsl:template match="error">
-		<div id="content">
-			<center>
-				<table height="50%">
-					<tr height="100%" valign="top">
-						<td width="100" class="plain"><img src="images/forbidden.png" style="background: #fff;border:0px;cursor: default;" /></td>
-						<td class="plain">
-							<h1><xsl:call-template name="msg-forbidden"/></h1>
-							<xsl:value-of select="msg"/><br/>
-							<!--a href="javascript: getAndTransform('{@href}','list.xsl','center');">Back</a-->
-						</td>
-					</tr>
-				</table>
-			</center>
-		</div>
-	</xsl:template>
 </xsl:stylesheet>

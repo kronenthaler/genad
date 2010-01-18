@@ -290,6 +290,52 @@ function updateTimeHidden(obj,hidden,hours){
 }
 
 //TODO: replace the code with jquery ui.dialog call
-function alertMsg(msg){
+/*function alertMsg(msg){
 	alert(msg);
+}
+
+function confirmMsg(msg){
+	return confirm(msg);
+}*/
+function alertMsg(msg){
+	//var p = $.prompt(msg,{opacity: 0.3, buttons:{Volver: true}, useImage: false});
+	//p.children('#jqi').corner("5px");
+	var div = document.createElement("div");
+	div.innerHTML = msg;
+	$(div).dialog({
+			title: 'Error',
+			bgiframe: true,
+			modal: true,
+			buttons:{
+				"OK":
+					function(){
+						$(this).dialog("close")
+					}
+				}
+			});
+	//p.children('#jqi').corner("5px");
+}
+
+function confirmMsg(msg, mycallback){
+	//var p = $.prompt(msg,{opacity: 0.3, buttons:{OK: true}, callback: mycallback});
+	//p.children('#jqi').corner("5px");
+	//alert('confirm');
+	var div = document.createElement("div");
+	div.innerHTML = msg;
+	$(div).dialog({
+			title: 'Error',
+			zIndex: 3999,
+			//position: 'top',
+			modal: true,
+			closeOnEscape: false,
+			beforeclose: function(event, ui) { mycallback(); },
+			buttons:{
+				"OK":
+					function(){
+						//mycallback();
+						$(this).dialog("close");
+					}
+				}
+			});
+	return false;
 }

@@ -1,3 +1,8 @@
+- Validaciones online. 
+	- Tratar de escribir el codigo de validacion en la clase php, para reutilizarla en el exec.
+
+- Integrar el look and feel con el theme-roller de jquery. 
+	
 + Relaciones:
 	+ generar los objetos que manejen relaciones => tengo que programar primero los objetos en PHP
 	- generar las paginas para list, mod, exec para relaciones => tengo que programarlas primero en PHP
@@ -23,7 +28,7 @@
 - http://plugins.jquery.com/project/autogrow
 * http://plugins.jquery.com/project/filestyle (muy complicado es un truco sobreponiendo un control encima del control y haciendolo transparente)
 - http://plugins.jquery.com/project/flexigrid
-- agregar un panel para manejar relaciones (n-arias => crear un xsl extra para generar las paginas que manejen la relacion.)
++ agregar un panel para manejar relaciones (n-arias => crear un xsl extra para generar las paginas que manejen la relacion.)
 
 + Hacer el merge con el esquema sin llamadas ajax.
 	+ plantillas xsl
@@ -46,8 +51,8 @@
 + ImageUpload:
 	+ eliminar todos los posibles thumbnails [eliminar todos los prefijos y reemplazarlo por un * en la llamada a unlink()]
 		
-- hacer algo que permita cambiar los idiomas de las palabras basicas. 
-	- trabajar con entidades en los xsl puede ser una buena opcion.		
++ hacer algo que permita cambiar los idiomas de las palabras basicas. 
+	+ trabajar con entidades en los xsl puede ser una buena opcion.		
 		
 - se podria copiar el esquema de CMS como un tipo de forma extra.
 

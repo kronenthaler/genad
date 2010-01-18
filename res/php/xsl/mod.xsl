@@ -141,9 +141,9 @@
 		<xsl:when test="@type = 'time'">
 		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','time' => format($obj-><xsl:value-of select="db-field"/>,TIME,'H:m:s'));</xsl:when>
 		<xsl:when test="@type = 'date'">
-		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'M/D/Y'));</xsl:when>
+		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'D/M/Y'));</xsl:when>
 		<xsl:when test="@type = 'datetime'">
-		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'M/D/Y'), 'time' => format(substr($obj-><xsl:value-of select="db-field"/>,8),TIME,'H:m:s'));</xsl:when>
+		$options["<xsl:value-of select="db-field"/>"]=array('prefix'=>'str_','date' => format($obj-><xsl:value-of select="db-field"/>,DATE,'D/M/Y'), 'time' => format(substr($obj-><xsl:value-of select="db-field"/>,8),TIME,'H:m:s'));</xsl:when>
 		<xsl:when test="@type = 'password'">
 		$options["<xsl:value-of select="db-field"/>"]=array('confirm'=>'Confirm <xsl:value-of select="label"/>');</xsl:when>
 		<xsl:when test="@type = 'radio' or @type='checkbox'">

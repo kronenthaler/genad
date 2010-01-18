@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1249231102248" by="kronenthaler" language="php">
+<project lastsaved="1263678046678" by="kronenthaler" language="php">
 	<file-server-conf>
-		<base-directory><![CDATA[/var/www/testing1]]></base-directory>
+		<base-directory><![CDATA[/var/www/testing]]></base-directory>
 	</file-server-conf>
 	<db-server-conf>
 		<dev-host><![CDATA[localhost]]></dev-host>

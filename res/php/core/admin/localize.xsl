@@ -13,6 +13,8 @@
 	<xsl:template name="msg-apply">Apply</xsl:template>
 	<xsl:template name="msg-up">Up</xsl:template>
 	<xsl:template name="msg-down">Down</xsl:template>
+	<xsl:template name="msg-prev">Prev</xsl:template>
+	<xsl:template name="msg-next">Next</xsl:template>
 	<xsl:template name="msg-confirm">Do you really want to delete the selected items?</xsl:template>
 	<xsl:template name="msg-adding">Adding</xsl:template>
 	<xsl:template name="msg-editing">Editing</xsl:template>

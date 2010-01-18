@@ -70,28 +70,14 @@ a { text-decoration:none; }
 }
 
 #container button {
-	background-color: #eee; 
-	margin: 0px;
-	padding: 0px;
-	border: 1px solid #999;
-	width: 80px;
+	min-width: 80px;
 	cursor: pointer;
-	/*vertical-align: middle;*/
-}
-
-#container button:hover{
-	background-color: #ccc;
-}
-
-#container button img{
-	vertical-align: top;
-	padding-top: 1px;
+	padding-right: 3px;
 }
 
 #container table {
 	font-size:inherit;
 	text-align: right;
-	/*border: 1px dotted #000;/**/
 	width: 100%;
 }
 
@@ -99,12 +85,6 @@ a { text-decoration:none; }
 	text-align: left;
 	font-size: inherit;
 	width: 100%;
-/*	border-left: 1px solid #ccc;*/
-}
-
-#content table th{
-	background: #ccc;
-	color: #333;
 }
 
 #content table tr{
@@ -125,33 +105,11 @@ a { text-decoration:none; }
 	text-align: right;
 }
 
-#content-header table td{
-	background: #fff;
-}
-
-#content-header table td button {
-	background-color: #eee; 
-	margin: 0px; 
-	padding: 0px;
-	border: 1px solid #999;
-	text-align: center;
-	width: 24px;
-	cursor:pointer;
-	vertical-align: middle;
-}
-
-#content table th{
-	background: url(../images/title.gif) left top repeat-x;
-	height: 26px;
-}
-#content table th td{
-	border: 0px;
+#content-header button img {
+	padding-top:2px;
 }
 
 #content table td{
-	/*background: #fff;*/
-	/*border-right: 1px solid #ccc;*/
-	/*border-bottom: 1px dotted #999;*/
 	vertical-align: middle;
 	padding: 1px;
 	height: 20px;
@@ -171,7 +129,6 @@ a { text-decoration:none; }
 #content table td.part2{
 	border-bottom: 1px solid #ccc;
 	border-right:  1px solid #ccc;
-	/*width: 20%;*/
 }
 
 #content table td button img {
@@ -181,19 +138,17 @@ a { text-decoration:none; }
 	text-align: left;
 }
 
+
 #content table td button table td {
 	border: 0px;
-	/*background: #eee;	*/
 	text-align: left;
 }
 
+
 #content table td img {
-	/*background-color: #eee; */
 	margin: 1px; 
 	padding: 0px;
-	border: 1px solid #999;
-	/*width: 10px;
-	height: 10px;*/
+	/*border: 1px solid #999;*/
 	text-align: center;
 	cursor: pointer;
 	vertical-align: middle;
@@ -204,10 +159,12 @@ a { text-decoration:none; }
 	text-decoration: none;
 }
 
+/*
 #content table.plain,
 #content table td.plain{
 	border:0px;
 }
+*/
 
 #header {
 	margin-top:0px;
@@ -228,7 +185,6 @@ a { text-decoration:none; }
 	margin:0;
 	padding:0;
 	width: 100%;
-	/*min-height: 100%;*/
 	float:left;
 	background-color:#EEE;
 }
@@ -245,16 +201,15 @@ a { text-decoration:none; }
 	vertical-align: top;
 }
 
-.submenulabel{
+/*.submenulabel{
 	background: #ccc url(../images/title.gif) left top repeat-x;
 	height: 22px;
 	width: 100%;
 	cursor: pointer;
-	/*border-bottom: 1px dotted #999 ;*/
-	/*background-image: url('images/close.gif');*/
 	padding-left: 10px;
 	padding-top: 5px;
 }
+*/
 
 .menucontent{
 	width: 100%;
@@ -290,68 +245,22 @@ a { text-decoration:none; }
 	float:left;
 }*/
 
-.border{
+/*.border{
 	border: 1px solid #999;
 	background-color: #eee;
-}
+}*/
 
-.file{
-	border: 1px solid #999;
-}
-
-.error{
-	color: #990000;
-	/*background-color: #ffbbbb;*/
-	/*border: #ff0000 solid 1px;*/
-	height: 20px;
-}
 /* TABS navigation */
 
 #navigation a {
-	color: #333;
-	background: url(../images/left-tab-hover.gif) left bottom no-repeat;
 	text-decoration: none;
 	padding-left: 7px;
-	height: 30px;
-}
-
-#navigation a span {
-	background: url(../images/right-tab-hover.gif) right bottom no-repeat;
 	padding-top: 5px;
 	padding-right: 7px;
-	height: 25px;
-	vertical-align: middle;
-
-}
-
-#navigation a, #navigation a span{
+	padding-bottom: 5px;
 	display: block;
+	border-top: none;
 	float: left;
-}
-
-/* Hide from IE5-Mac \*/
-#navigation a, #navigation a span 	{
-	float: none;
-}
-/* End hide */
-
-#navigation a:hover,
-#navigation a.selected{
-	color: #333333;
-	background: url(../images/left-tab.gif) left bottom no-repeat;
-	padding-left: 7px;
-}
-
-#navigation a:hover span,
-#navigation a.selected span{
-	background: url(../images/right-tab.gif) right bottom no-repeat;
-	padding-right: 7px;
-}
-
-#navigation ul{
-	list-style: none;
-	padding-left: 30px;
-	margin: 0;
 }
 
 #navigation li{
@@ -362,14 +271,17 @@ a { text-decoration:none; }
 
 /* Relation's tabs*/
 #relation a {
-	color: #333;
-	background: url(../images/up-left-tab.gif) left top no-repeat;
 	text-decoration: none;
 	padding-left: 7px;
-	height: 25px;
+	padding-top: 5px;
+	padding-right: 7px;
+	padding-bottom: 5px;
+	border-bottom: none;
+	display: block;
+	float: right;
 }
 
-#relation a span {
+/*#relation a span {
 	background: url(../images/up-right-tab.gif) right top no-repeat;
 	padding-top: 5px;
 	padding-right: 7px;
@@ -382,13 +294,6 @@ a { text-decoration:none; }
 	display: block;
 	float: right;
 }
-
-/* Hide from IE5-Mac \*/
-#relation a,
-#relation a span 	{
-	float: none;
-}
-/* End hide */
 
 #relation a:hover,
 #relation a.selected{
@@ -408,7 +313,7 @@ a { text-decoration:none; }
 	padding-left: 30px;
 	margin: 0;
 }
-
+*/
 #relation li{
 	float: right;
 	list-style: none;
@@ -417,4 +322,12 @@ a { text-decoration:none; }
 
 .label {
 	width: 250px;
+}
+
+.file{
+	border: 1px solid #999;
+}
+
+.checkbox{
+	border: 1px solid #999;
 }
