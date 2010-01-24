@@ -246,8 +246,8 @@ function convertDate(src, fromFormat, toFormat){
 }
 
 function markSelected(obj){
-	$("a.selected").toggleClass("selected");
-	$(obj).addClass("selected");
+	$("li.ui-state-active").toggleClass("ui-state-active");
+	$(obj).addClass("ui-state-active");
 }
 
 

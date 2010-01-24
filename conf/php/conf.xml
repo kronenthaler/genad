@@ -14,6 +14,7 @@
 				<option name="DEF_DEST_PATH" value="files/" />
 				<option name="DEF_ASPECT_RATIO" value="true|false" default="true"/>
 				<option name="DEF_MAX_IMG_HEIGHT" value="150" />
+				<option name="DEF_THUMB_PREFIX" value="arc_"/>
 			</options>
 		</module>
 		<module name="rte" mandatory="1"/>

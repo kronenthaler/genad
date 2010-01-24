@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project lastsaved="1263678046678" by="kronenthaler" language="php">
+<project lastsaved="1264371930457" by="kronenthaler" language="php">
 	<file-server-conf>
 		<base-directory><![CDATA[/var/www/testing]]></base-directory>
 	</file-server-conf>
@@ -15,14 +15,15 @@
 	</db-server-conf>
 	<modules>
 		<module name="upload">
-			<option name="DEF_FORCE_SCALE" value="true"/>
-			<option name="DEF_MAX_IMG_WIDTH" value="150"/>
-			<option name="DEF_PREFIX" value="arc_"/>
-			<option name="DEF_VALID_EXTS" value="*"/>
 			<option name="DEF_MAX_SIZE" value="104857600"/>
-			<option name="DEF_DEST_PATH" value="files/"/>
-			<option name="DEF_ASPECT_RATIO" value="true"/>
+			<option name="DEF_PREFIX" value="arc_"/>
+			<option name="DEF_MAX_IMG_WIDTH" value="150"/>
 			<option name="DEF_MAX_IMG_HEIGHT" value="150"/>
+			<option name="DEF_DEST_PATH" value="files/"/>
+			<option name="DEF_FORCE_SCALE" value="true"/>
+			<option name="DEF_ASPECT_RATIO" value="true"/>
+			<option name="DEF_THUMB_PREFIX" value="arc_"/>
+			<option name="DEF_VALID_EXTS" value="*"/>
 		</module>
 		<module name="rte">
 			<option name="TOOL_BAR" value=""/>

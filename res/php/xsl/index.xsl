@@ -9,10 +9,10 @@
 		<meta http-equiv="Expires" content="Tue, 01 Jan 2000 12:12:12 GMT"/>
 		<meta http-equiv="Pragma" content="no-cache"/>
 		
-		<link href="css/styles.css" rel="stylesheet" type="text/css"/>
-		<link href="css/ui.all.css" rel="stylesheet" type="text/css"/>
-
+		<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
+		<link href="../admin/css/ui.css" rel="stylesheet" type="text/css"/>
 		<script type="text/javascript" src= "../js/jquery.js"></script>
+		<script type="text/javascript" src= "../js/jquery-ui.js"></script>
 		<script type="text/javascript" src= "../js/jquery.form.js"></script>
 		<script type="text/javascript" src= "../js/json.js"></script>
 		<script type="text/javascript" src= "../js/utils.js"></script>
@@ -52,7 +52,7 @@
 					]]>
 					<xsl:apply-templates select="/project/modules/module"/>
 					<xsl:apply-templates select="/project/entities/entity"/>
-					<![CDATA[<li><a href="logoff.php" target="_parent"><img src="images/logout.png" align="absmiddle"/>&#160;<b><?=MSG_LOGOUT?></b></a></li>
+					<![CDATA[<li class="ui-state-default" onclick="markSelected(this); parent.document.location.href='logoff.php'" onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')" onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><img src="images/logout.png" align="absmiddle"/>&#160;<?=MSG_LOGOUT?></li>
 				</ul>
 				<form action="authenticate.php" method="post" id="login" name="login">
 					<table border="0">
@@ -66,11 +66,14 @@
 						</tr>
 						<tr>
 							<td colspan="2">
-								<button type="submit" class="ui-default-state">
+								<button type="submit"
+										class="ui-state-default ui-corner-all"
+										onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 									<table border="0" cellpadding="0" cellspacing="1">
 										<tr>
 											<td><img src="images/key.png" align="left"/></td>
-											<td align="left"><?=MSG_ENTER?></td>
+											<td align="left"><a><?=MSG_ENTER?></a></td>
 										</tr>
 									</table>
 								</button>
@@ -91,8 +94,8 @@
 	</xsl:template>
 
 	<xsl:template match="entity">
-	<xsl:if test="just-schema/@value = 0">	
-	<![CDATA[<li><a href="list]]><xsl:value-of select="@name"/><![CDATA[.php" target="mainFrame" onclick="markSelected(this)">]]><xsl:value-of select="@title"/><![CDATA[</a></li>]]></xsl:if>
+	<xsl:if test="just-schema/@value = 0">
+	<![CDATA[<li class="ui-state-default" onclick="markSelected(this); parent.mainFrame.document.location.href='list]]><xsl:value-of select="@name"/><![CDATA[.php'" onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')" onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')">]]><xsl:value-of select="@title"/><![CDATA[</li>]]></xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="module"><![CDATA[<? secureInclude(']]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>

@@ -2,6 +2,15 @@
 	- Tratar de escribir el codigo de validacion en la clase php, para reutilizarla en el exec.
 
 - Integrar el look and feel con el theme-roller de jquery. 
+	+ upload component
+	+ menu principal
+	- tablas (bordes, colores alternados)
+	+ textfields
+	+ selects
+	+ textareas.
+
++ las paginas de listados del modulo users, no tienen los tags para manejar los criterios de busqueda anteriores.
+- eliminar carpetas y archivos innecesarios del fckeditor (_samples para empezar)
 	
 + Relaciones:
 	+ generar los objetos que manejen relaciones => tengo que programar primero los objetos en PHP
@@ -16,8 +25,8 @@
 - banner manager.
 - review: http://www.livevalidation.com/examples
 - http://tablesorter.com (para generacion de reportes)
-- http://code.google.com/apis/visualization/
 - http://ole-laursen.blogspot.com/2007/12/flot-01-released.html (ploting realtime!!!)
+- http://code.google.com/apis/visualization/
 + Cambiar los componentes de fechas de dojo por el dojo nuevo o por un componente nuevo de jquery.
 + ui.jquery.com: 
 	- http://ui.jquery.com/repository/latest/demos/functional/#ui.datepicker

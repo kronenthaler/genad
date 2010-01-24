@@ -155,14 +155,14 @@
  	<xsl:template match="textfield | integer | decimal | email">
  		<tr class="part1">
 			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><input type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
+			<td class="part2" align="left"><input class="ui-widget" type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="textarea">
  		<tr class="part1">
 			<td class="part1 label  top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><textarea name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
+			<td class="part2" align="left"><textarea class="ui-widget" name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
 		</tr>
  	</xsl:template>
  	
@@ -177,13 +177,13 @@
 				<xsl:for-each select="option">
 					<xsl:choose>
 						<xsl:when test="@selected = 'true'">
-							<input type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
+							<input class="ui-widget" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<input type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
+							<input class="ui-widget" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
-					<label for="{../@map}{position()}"><xsl:value-of select="@name"/></label> &nbsp;
+					<label class="ui-widget" for="{../@map}{position()}"><xsl:value-of select="@name"/></label> &nbsp;
 				</xsl:for-each>
 			</td>
 		</tr>
@@ -197,13 +197,13 @@
 					<p>
 					<xsl:choose>
 						<xsl:when test="@selected = 'true'">
-							<input type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
+							<input class="ui-widget" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<input type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
+							<input class="ui-widget" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
-					<label for="{../@map}{position()}"><xsl:value-of select="@name"/></label><br/>
+					<label class="ui-widget" for="{../@map}{position()}"><xsl:value-of select="@name"/></label><br/>
 					</p>
 				</xsl:for-each>
 			</td>
@@ -214,7 +214,7 @@
  		<tr class="part1">
 			<td class="part1 label " align="right" ><xsl:value-of select="@name"/>:</td>
 			<td class="part2" align="left">
-				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}">
+				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}" class="ui-widget">
 					<xsl:for-each select="option">
 						<xsl:choose>
 							<xsl:when test="@selected = 'optgroup'">
@@ -240,11 +240,11 @@
  	<xsl:template match="password">
  		<tr class="part1">
 			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><input type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
+			<td class="part2" align="left"><input class="ui-widget" type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
 		<tr class="part1">
 			<td class="part1 label " align="right"><xsl:value-of select="@confirm"/>:</td>
-			<td class="part2" align="left"><input type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
+			<td class="part2" align="left"><input class="ui-widget" type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
 		</tr>
  	</xsl:template>
  	
@@ -253,7 +253,7 @@
 			<td class="part1 label  top" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part2" align="left">
 				<input type="hidden" name="str_{@map}" id="str_{@map}" />
-				<textarea id="rte_{@map}"><xsl:value-of select="."/></textarea>
+				<textarea id="rte_{@map}" class="ui-widget"><xsl:value-of select="."/></textarea>
 				<script type="text/javascript">
 					//var div = document.getElementById("rte_<xsl:value-of select="@map"/>");
 					var fck = new FCKeditor("rte_<xsl:value-of select="@map"/>");
@@ -297,8 +297,8 @@
 			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="part2" align="left">
 				<input type="hidden" id="{@prefix}{@map}" value="{@time}" name="{@prefix}{@map}" size="5"/>
-				<select name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',true)"></select>:
-				<select name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',false)"></select>
+				<select class="ui-widget" name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',true)"></select>:
+				<select class="ui-widget" name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',false)"></select>
 				<script language="javascript">
 					/*$(function (){
 						$('#div_<xsl:value-of select="@map"/>').timepicker({
@@ -321,8 +321,8 @@
 				<input type="hidden" id="{@prefix}{@map}_date" name="{@prefix}{@map}_date" value="" />
 				<input type="hidden" id="{@prefix}{@map}_time" value="{@time}" name="{@prefix}{@map}_time" size="5"/>
 				&nbsp;
-				<select name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',true)"></select>&nbsp;:
-				<select name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',false)"></select>
+				<select class="ui-widget" name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',true)"></select>&nbsp;:
+				<select class="ui-widget" name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',false)"></select>
 				
 				<script language="javascript">
 					$(function (){
@@ -420,14 +420,14 @@
 	<xsl:template match="label">
 		<tr class="part1">
 			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
+			<td class="ui-widget part2" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
 		</tr>
 	</xsl:template>
 
 	<xsl:template match="keylabel">
 		<tr class="part1">
 			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">&nbsp;<xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/>
+			<td class="ui-widget part2" align="left">&nbsp;<xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/>
 				<input type="hidden" name="{@prefix}{@map}" id="{@prefix}{@map}" value="{@value}"/>
 			</td>
 		</tr>
@@ -436,7 +436,7 @@
 	<xsl:template match="timestamp">
 		<tr class="part1">
 			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
+			<td class="ui-widget part2" align="left">
 				<xsl:if test="@date=''">N/A</xsl:if><xsl:value-of select="@date"/>&nbsp;<xsl:value-of select="@time"/></td>
 		</tr>
 	</xsl:template>

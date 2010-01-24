@@ -4,40 +4,12 @@ body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
 a { text-decoration:none; }
 
 /** containers y clases globales */
-#menu ul{
-	list-style-type: none; 
-	width: 100%;
-	line-height:165%;
-}
-
 #menu ul li{
-	border-bottom: 1px solid #ccc;
-	height: 20px;
+	padding-left: 10px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	width: 100%;
-	vertical-align: middle;
-}
-#menu ul li a,
-#menu ul li a:link,
-#menu ul li a:visited{
-	padding:0px 0px 0px 20px;
-	height: 20px;
-	width: 100%;
-	color:#999;
-	text-decoration: none;
-	float: left;
-	vertical-align: middle;
-}
-
-#menu ul li a:hover,
-#menu ul li a.selected {
-	padding:0px 0px 0px 20px;
-	background: #FFF url(../images/selected.gif) left center no-repeat;
-	height:20px;	
-	width: 100%;
-	color:#333;
-	text-decoration:none;
-	float:left;
-	vertical-align: middle;
+	cursor: pointer;
 }
 
 #menu input{
@@ -47,7 +19,6 @@ a { text-decoration:none; }
 #container{ 
 	width: 100%;
 	height: 600px; 
-	/*margin: 0 auto; /* esto hace que se centre */
 	font-size:inherit;
 }
 
@@ -144,7 +115,6 @@ a { text-decoration:none; }
 	text-align: left;
 }
 
-
 #content table td img {
 	margin: 1px; 
 	padding: 0px;
@@ -153,18 +123,6 @@ a { text-decoration:none; }
 	cursor: pointer;
 	vertical-align: middle;
 }
-
-#content table td a:link,
-#content table td a:visited{
-	text-decoration: none;
-}
-
-/*
-#content table.plain,
-#content table td.plain{
-	border:0px;
-}
-*/
 
 #header {
 	margin-top:0px;
@@ -178,15 +136,6 @@ a { text-decoration:none; }
 	color:#FFF;
 	width:100%;
 	height:30px;
-} 
-
-#menu{
-	border:0;
-	margin:0;
-	padding:0;
-	width: 100%;
-	float:left;
-	background-color:#EEE;
 }
 
 #content{
@@ -200,55 +149,6 @@ a { text-decoration:none; }
 	text-align: right;
 	vertical-align: top;
 }
-
-/*.submenulabel{
-	background: #ccc url(../images/title.gif) left top repeat-x;
-	height: 22px;
-	width: 100%;
-	cursor: pointer;
-	padding-left: 10px;
-	padding-top: 5px;
-}
-*/
-
-.menucontent{
-	width: 100%;
-	border-bottom: 1px solid #999;
-}
-/*
-.menucontent ul{
-	list-style-type:none;
-	width: 100%;
-}
-
-.menucontent ul li{
-	border-bottom: 1px dotted #999;
-	height: 20px;
-	width: 100%;
-}
-
-.menucontent ul li a:link, 
-.menucontent ul li a:visited{
-	padding:0px 0px 0px 15px;
-	width: 100%;
-	color:#999;
-	text-decoration:none;
-	float:left;
-}
-
-.menucontent ul li a:hover {
-	padding:0px 0px 0px 15px;
-	background-color:#FFF;
-	width: 100%;
-	color:#333;
-	text-decoration:none;
-	float:left;
-}*/
-
-/*.border{
-	border: 1px solid #999;
-	background-color: #eee;
-}*/
 
 /* TABS navigation */
 
@@ -281,39 +181,6 @@ a { text-decoration:none; }
 	float: right;
 }
 
-/*#relation a span {
-	background: url(../images/up-right-tab.gif) right top no-repeat;
-	padding-top: 5px;
-	padding-right: 7px;
-	height: 20px;
-	vertical-align: middle;
-}
-
-#relation a,
-#relation a span{
-	display: block;
-	float: right;
-}
-
-#relation a:hover,
-#relation a.selected{
-	color: #333;
-	background: url(../images/up-left-tab-hover.gif) left top no-repeat;
-	padding-left: 7px;
-}
-
-#relation a:hover span,
-#relation a.selected span{
-	background: url(../images/up-right-tab-hover.gif) right top no-repeat;
-	padding-right: 7px;
-}
-
-#relation ul{
-	list-style: none;
-	padding-left: 30px;
-	margin: 0;
-}
-*/
 #relation li{
 	float: right;
 	list-style: none;

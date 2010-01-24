@@ -22,6 +22,12 @@
 		  <entity name="'.get_class($obj).'" ext="php">
 		  	<error>'.$_REQUEST['error'].'</error>
 			<prefix>../users/admin/</prefix>';
+		if($obj->properties[SEARCH]){
+			echo '<search>';
+			echo '<![CDATA';
+			echo '['.$_REQUEST['search'].']';
+			echo ']></search>';
+		}
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();
