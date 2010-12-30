@@ -16,7 +16,8 @@
 	<xsl:include href="modules.php"/><!-- change the extension for others languages -->
 
  	<xsl:template match="/">
- 		<html><head>
+ 		<html>
+			<head>
 				<xsl:if test="/entity/basepath != ''">
 					<base id="base" href="{/entity/basepath}" />
 				</xsl:if>
@@ -35,43 +36,37 @@
 				
                 <script language="javascript" src="js/validators.js"></script>
 				<xsl:apply-templates select="/entity/prefix"/><!-- trick to add the modules scripts prefix always exists-->
- 				</head><body><div id="container"><div id="center">
-		<xsl:choose>
-			<xsl:when test="/error != ''">
-				<xsl:apply-templates select="/error"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<!--ul id="navigation">
-					<xsl:for-each select="/entity/ancestors/ancestor">
-						<li><a href="{/entity/prefix}list{@class}.{//@ext}?{$ids}"><span><h2><xsl:value-of select="."/></h2></span></a></li>
-					</xsl:for-each>
-					<li><a class="selected"><span><h2><xsl:value-of select="/entity/title"/></h2></span></a></li>
-				</ul-->
-				<ul id="navigation">
-					<xsl:for-each select="/entity/ancestors/ancestor">
-						<li><a class="ui-state-default ui-corner-bl ui-corner-br"
-								onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-								onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-								href="{/entity/prefix}list{@class}.{//@ext}?{$ids}"><xsl:value-of select="."/></a></li>
-					</xsl:for-each>
-					<li><a class="ui-state-active ui-corner-bl ui-corner-br"><xsl:value-of select="/entity/title"/></a></li>
-				</ul>
-				<div id="content-header">
-					<!--center>
-						<table width="100%" border="1">
-							<tr>
-								<td valign="middle" align="left"><h2><xsl:value-of select="/entity/title"/></h2></td>
-							</tr>
-						</table>
-					</center-->
+				<xsl:apply-templates select="/entity/validator"/>
+ 			</head>
+			<body>
+				<div id="container">
+					<div id="center">
+						<xsl:choose>
+							<xsl:when test="/error != ''">
+								<xsl:apply-templates select="/error"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<ul id="navigation">
+									<xsl:for-each select="/entity/ancestors/ancestor">
+										<li><a class="ui-state-default ui-corner-bl ui-corner-br"
+												onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+												onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+												href="{/entity/prefix}list{@class}.{//@ext}?{$ids}"><xsl:value-of select="."/></a></li>
+									</xsl:for-each>
+									<li><a class="ui-state-active ui-corner-bl ui-corner-br"><xsl:value-of select="/entity/title"/></a></li>
+								</ul>
+								<div id="content-header">
+								</div>
+								<xsl:apply-templates select="entity/fields"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</div>
 				</div>
-				<xsl:apply-templates select="entity/fields"/>
-			</xsl:otherwise>
-		</xsl:choose>
-		</div></div></body></html>
+			</body>
+		</html>
 	</xsl:template>
- 	
- 	<xsl:template match="fields">
+
+	<xsl:template match="fields">
  		<script>
 			function sender(){
 				var finalForm = document.getElementById("frm_<xsl:value-of select="//@name"/>");
@@ -106,7 +101,7 @@
 				  enctype="multipart/form-data">
 				<center>
 					<table cellpadding="0" cellspacing="0" border="0">
-						<tr class="ui-state-active ui-corner-all"><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
+						<tr class="ui-state-default ui-corner-all"><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
 						<xsl:apply-templates/>
 					</table>
 					<table>
@@ -119,7 +114,7 @@
 										onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','','');">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
-											<td><img src="images/cancel.png" align="left"/></td>
+											<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
 											<td align="right"><a><xsl:call-template name="msg-cancel"/></a></td>
 										</tr>
 									</table>
@@ -133,7 +128,7 @@
 										onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
-											<td><img src="images/accept.png" align="left"/></td>
+											<td><!--img src="images/accept.png" align="left"/--><span class="ui-icon ui-icon-check"/></td>
 											<td align="right"><a><xsl:call-template name="msg-apply"/></a></td>
 										</tr>
 									</table>
@@ -151,18 +146,18 @@
 			</form>
 		</div>
  	</xsl:template>
- 	
- 	<xsl:template match="textfield | integer | decimal | email">
- 		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><input class="ui-widget" type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
+
+	<xsl:template match="textfield | integer | decimal | email">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="text" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="textarea">
- 		<tr class="part1">
-			<td class="part1 label  top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><textarea class="ui-widget" name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><textarea class="ui-widget ui-widget-content" name="str_{@map}" id="str_{@map}"><xsl:value-of select="."/></textarea></td>
 		</tr>
  	</xsl:template>
  	
@@ -171,16 +166,16 @@
  	</xsl:template>
  	 	
  	<xsl:template match="radio">
- 		<tr class="part1">
-			<td class="part1 label  top" align="right" ><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
 				<xsl:for-each select="option">
 					<xsl:choose>
 						<xsl:when test="@selected = 'true'">
-							<input class="ui-widget" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
+							<input class="ui-widget ui-widget-content" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<input class="ui-widget" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
+							<input class="ui-widget ui-widget-content" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
 					<label class="ui-widget" for="{../@map}{position()}"><xsl:value-of select="@name"/></label> &nbsp;
@@ -190,17 +185,17 @@
  	</xsl:template>
  	
  	<xsl:template match="checkbox">
- 		<tr class="part1">
-			<td class="part1 label  top" align="right" ><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
 				<xsl:for-each select="option">
 					<p>
 					<xsl:choose>
 						<xsl:when test="@selected = 'true'">
-							<input class="ui-widget" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
+							<input class="ui-widget ui-widget-content" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" checked="" onclick="{@onclick}"/>
 						</xsl:when>
 						<xsl:otherwise>
-							<input class="ui-widget" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
+							<input class="ui-widget ui-widget-content" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
 					<label class="ui-widget" for="{../@map}{position()}"><xsl:value-of select="@name"/></label><br/>
@@ -211,10 +206,10 @@
  	</xsl:template>
  	
  	<xsl:template match="select">
- 		<tr class="part1">
-			<td class="part1 label " align="right" ><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
-				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}" class="ui-widget">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
+				<select name="str_{@map}" id="str_{@map}" onclick="{@onclick}" class="ui-widget ui-widget-content">
 					<xsl:for-each select="option">
 						<xsl:choose>
 							<xsl:when test="@selected = 'optgroup'">
@@ -238,22 +233,22 @@
  	</xsl:template>
  	
  	<xsl:template match="password">
- 		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left"><input class="ui-widget" type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
+ 		<tr class="ui-state-default" style="border-top:0px;background:#ffffff;">
+			<td class="label ui-state-default" style="border-top:0px; " align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
-		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@confirm"/>:</td>
-			<td class="part2" align="left"><input class="ui-widget" type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
+		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px; " align="right"><xsl:value-of select="@confirm"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
 		</tr>
  	</xsl:template>
  	
  	<xsl:template match="richtext">
- 		<tr class="part1">
-			<td class="part1 label  top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
 				<input type="hidden" name="str_{@map}" id="str_{@map}" />
-				<textarea id="rte_{@map}" class="ui-widget"><xsl:value-of select="."/></textarea>
+				<textarea id="rte_{@map}" class="ui-widget ui-widget-content"><xsl:value-of select="."/></textarea>
 				<script type="text/javascript">
 					//var div = document.getElementById("rte_<xsl:value-of select="@map"/>");
 					var fck = new FCKeditor("rte_<xsl:value-of select="@map"/>");
@@ -266,10 +261,10 @@
 	</xsl:template>
  	
  	<xsl:template match="date">
- 		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
-				<input type="text" id="div_{@map}" value="{@date}"/>
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
+				<input type="text" id="div_{@map}" value="{@date}" class="ui-widget ui-widget-content"/>
 				<input type="hidden" id="{@prefix}{@map}" value="" name="{@prefix}{@map}" />
 				<script language="javascript">
 					$(function (){
@@ -293,12 +288,12 @@
  	</xsl:template>
  	
  	<xsl:template match="time">
- 		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
-				<input type="hidden" id="{@prefix}{@map}" value="{@time}" name="{@prefix}{@map}" size="5"/>
-				<select class="ui-widget" name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',true)"></select>:
-				<select class="ui-widget" name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',false)"></select>
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
+				<input type="hidden" id="{@prefix}{@map}" value="{@time}" name="{@prefix}{@map}" size="5" class="ui-widget ui-widget-content"/>
+				<select class="ui-widget ui-widget-content" name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',true)"></select>:
+				<select class="ui-widget ui-widget-content" name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}',false)"></select>
 				<script language="javascript">
 					/*$(function (){
 						$('#div_<xsl:value-of select="@map"/>').timepicker({
@@ -314,15 +309,15 @@
  	</xsl:template>
  	
  	<xsl:template match="datetime">
- 		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
-				<input type="text" id="div_{@map}_date" value="{@date}" size="10" />
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
+				<input type="text" id="div_{@map}_date" value="{@date}" size="10" class="ui-widget ui-widget-content"/>
 				<input type="hidden" id="{@prefix}{@map}_date" name="{@prefix}{@map}_date" value="" />
 				<input type="hidden" id="{@prefix}{@map}_time" value="{@time}" name="{@prefix}{@map}_time" size="5"/>
 				&nbsp;
-				<select class="ui-widget" name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',true)"></select>&nbsp;:
-				<select class="ui-widget" name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',false)"></select>
+				<select class="ui-widget ui-widget-content" name="hour_{@map}" id="hour_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',true)"></select>&nbsp;:
+				<select class="ui-widget ui-widget-content" name="min_{@map}" id="min_{@map}" onchange="updateTimeHidden(this,'{@prefix}{@map}_time',false)"></select>
 				
 				<script language="javascript">
 					$(function (){
@@ -360,9 +355,9 @@
 		<script>
 			upload.addFile('<xsl:value-of select="@map"/>');
 		</script>
- 		<tr class="part1">
-			<td class="part1 label  top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">View File</a>
 				</xsl:if>
@@ -399,9 +394,9 @@
 		<script>
 			upload.addFile('<xsl:value-of select="@map"/>');
 		</script>
- 		<tr class="part1">
-			<td class="part1 label  top" align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="part2" align="left">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
 				<xsl:if test="$prev != ''">
 				<a href="../{$prev}" target="_blank" id="link_{@map}">
 					<img src="../{$prev}" border="0" id="img_link_{@map}"/></a><!--width="{$iframe-width}" height="{$iframe-height}"-->
@@ -418,25 +413,25 @@
  	</xsl:template>
 
 	<xsl:template match="label">
-		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="ui-widget part2" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
+		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-widget ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/></td>
 		</tr>
 	</xsl:template>
 
 	<xsl:template match="keylabel">
-		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="ui-widget part2" align="left">&nbsp;<xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/>
+		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-widget ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">&nbsp;<xsl:if test=".=''">N/A</xsl:if><xsl:value-of select="."/>
 				<input type="hidden" name="{@prefix}{@map}" id="{@prefix}{@map}" value="{@value}"/>
 			</td>
 		</tr>
 	</xsl:template>
 
 	<xsl:template match="timestamp">
-		<tr class="part1">
-			<td class="part1 label " align="right"><xsl:value-of select="@name"/>:</td>
-			<td class="ui-widget part2" align="left">
+		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="ui-widget ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
 				<xsl:if test="@date=''">N/A</xsl:if><xsl:value-of select="@date"/>&nbsp;<xsl:value-of select="@time"/></td>
 		</tr>
 	</xsl:template>

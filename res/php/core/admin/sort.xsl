@@ -67,21 +67,21 @@
 					<xsl:choose>
 						<xsl:when test="count(instance) &gt; 0">
 							<thead>
-								<tr class="ui-state-active ui-corner-all">
+								<tr class="ui-state-default ui-corner-all">
 									<th width="99%">&nbsp;<xsl:value-of select="listable/field/@name"/>&nbsp;</th>
 									<th>&nbsp;</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td align="center" class="part1">
+									<td align="center" class="ui-state-default" style="border-top:0px;background:#ffffff;">
 										<select multiple="" style="width:100%;height:300px" name="id[]" id="id">
 											<xsl:for-each select="instance">
 												<option value="{@key}"><xsl:value-of select="field" disable-output-escaping="yes"/></option>
 											</xsl:for-each>
 										</select>
 									</td>
-									<td align="right" class="part2">
+									<td align="right" class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;">
 										<table width="1%">
 											<tr>
 												<td align="right" class="plain">
@@ -93,7 +93,7 @@
 															onclick="javascript:move('up','id')">
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
-																<td><img src="images/up.png" align="left"/></td>
+																<td><!--img src="images/up.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-1-n"/></td>
 																<td align="right"><xsl:call-template name="msg-up"/></td>
 															</tr>
 														</table>
@@ -110,7 +110,7 @@
 															onclick="javascript:move('down','id')">
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
-																<td><img src="images/down.png" align="left"/></td>
+																<td><!--img src="images/down.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-1-s"/></td>
 																<td><xsl:call-template name="msg-down"/></td>
 															</tr>
 														</table>
@@ -123,7 +123,7 @@
 							</tbody>
 						</xsl:when>
 						<xsl:otherwise>
-							<tr><td class="part2" align="center"><xsl:call-template name="msg-nothing"/></td></tr>
+							<tr><td class="ui-state-default" style="border-top:0px;border-left:0px;" align="center"><xsl:call-template name="msg-nothing"/></td></tr>
 						</xsl:otherwise>
 					</xsl:choose>
 				</table>
@@ -138,7 +138,7 @@
 									onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','','')">
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
-										<td><img src="images/cancel.png" align="left"/></td>
+										<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
 										<td align="right"><xsl:call-template name="msg-cancel"/></td>
 									</tr>
 								</table>
@@ -153,7 +153,7 @@
 								<!--img src="images/delete.png" align="left"/><span>Remove</span-->
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
-										<td><img src="images/accept.png" align="left"/></td>
+										<td><!--img src="images/accept.png" align="left"/--><span class="ui-icon ui-icon-check"/></td>
 										<td><xsl:call-template name="msg-sort"/></td>
 									</tr>
 								</table>

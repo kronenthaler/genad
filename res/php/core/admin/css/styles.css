@@ -1,5 +1,5 @@
 /** Clases por nombre */
-*,body {margin:0; padding:0; border:0; font-family:Arial, Helvetica, sans-serif;}
+*,body {margin:0; padding:0; border:0; }
 body { background-color:#FFFFFF; font-size:11px; color:#333; height: 100%;}
 a { text-decoration:none; }
 
@@ -22,10 +22,11 @@ a { text-decoration:none; }
 	font-size:inherit;
 }
 
+/*
 #container input,
 #container select{
 	border: 1px solid #999; 
-}
+}*/
 
 #container textarea{
 	border: 1px solid #999; 
@@ -47,7 +48,7 @@ a { text-decoration:none; }
 }
 
 #container table {
-	font-size:inherit;
+	font-size: inherit;
 	text-align: right;
 	width: 100%;
 }
@@ -58,12 +59,8 @@ a { text-decoration:none; }
 	width: 100%;
 }
 
-#content table tr{
+#container table tr{
 	height: 20px;
-}
-
-#content table tr.odd{
-	background: #EEE;
 }
 
 #content-header {
@@ -91,17 +88,6 @@ a { text-decoration:none; }
 	border-top: 0;
 }
 
-#content table td.part1{
-	border-bottom: 1px solid #ccc;
-	border-left:  1px solid #ccc;
-	border-right:  1px solid #ccc;
-}
-
-#content table td.part2{
-	border-bottom: 1px solid #ccc;
-	border-right:  1px solid #ccc;
-}
-
 #content table td button img {
 	border: 0px;
 	width: 16px;
@@ -118,7 +104,6 @@ a { text-decoration:none; }
 #content table td img {
 	margin: 1px; 
 	padding: 0px;
-	/*border: 1px solid #999;*/
 	text-align: center;
 	cursor: pointer;
 	vertical-align: middle;
@@ -189,12 +174,4 @@ a { text-decoration:none; }
 
 .label {
 	width: 250px;
-}
-
-.file{
-	border: 1px solid #999;
-}
-
-.checkbox{
-	border: 1px solid #999;
 }

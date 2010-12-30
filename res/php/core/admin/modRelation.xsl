@@ -118,7 +118,7 @@
 				  enctype="multipart/form-data">
 				<center>
 					<table cellpadding="0" cellspacing="0" border="0">
-						<tr class="ui-state-active ui-corner-all"><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
+						<tr class="ui-state-default ui-corner-all"><th colspan="2">&nbsp;<!--<xsl:value-of select="/entity/title"/>--></th></tr>
 						<xsl:apply-templates/>
 					</table>
 					<table>
@@ -131,7 +131,7 @@
 										onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@rel_id}&amp;{$ids}','','');">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
-											<td><img src="images/cancel.png" align="left"/></td>
+											<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
 											<td align="right"><xsl:call-template name="msg-cancel"/></td>
 										</tr>
 									</table>
@@ -145,7 +145,7 @@
 										onclick="return validate{//@name}(document.forms.frm_{//@name}) &amp;&amp; upload.uploadFiles();">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
-											<td><img src="images/accept.png" align="left"/></td>
+											<td><!--img src="images/accept.png" align="left"/--><span class="ui-icon ui-icon-check"/></td>
 											<td align="right"><xsl:call-template name="msg-apply"/></td>
 										</tr>
 									</table>

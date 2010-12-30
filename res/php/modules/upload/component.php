@@ -2,10 +2,11 @@
 <? $name = $_REQUEST['name']; ?>
 <html>
 <head>
-<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 <link href="../admin/css/ui.css" rel="stylesheet" type="text/css"/>
+<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src= "../js/jquery.js"></script>
 <script type="text/javascript" src= "../js/jquery-ui.js"></script>
+<script type="text/javascript" src= "../js/utils.js"></script>
 <style>
 	/* force the top padding */
 	body{
@@ -25,12 +26,14 @@
 		parent.document.getElementById('str_<?=$name?>').value='changed';
 
 		document.getElementById('btn_del').disabled=false;
+		$('#btn_del').removeClass('ui-state-disabled');
 		anychange = true;
 	}
 
 	function clean(complete){
-		document.getElementById('thefile').innerHTML='<input type="file" name="file_<?=$name?>" id="file_<?=$name?>" onclick="touch()"/>';
+		document.getElementById('thefile').innerHTML='<input type="file" name="file_<?=$name?>" id="file_<?=$name?>" class="ui-widget ui-widget-content" onclick="touch()"/>';
 		document.getElementById('btn_del').disabled=true;
+		$('#btn_del').addClass('ui-state-disabled');
 
 		document.getElementById('str_<?=$name?>').value='';
 		parent.document.getElementById('str_<?=$name?>').value='';
@@ -67,18 +70,22 @@
 								onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tr>
-									<td><img src="../admin/images/delete.png" align="left"/></td>
+									<td><!--img src="../admin/images/delete.png" align="left"/--><span class="ui-icon ui-icon-minusthick"/></td>
 									<td align="right"><a><?=MSG_UPLOAD_REMOVE?></a></td>
 								</tr>
 							</table>
 						</button>
 						<? if($_REQUEST['error']!=''){ ?>
-						</td><td width="100%" class="ui-state-highlight ui-corner-all" align="left">
-						<a style="padding:5px;"
-						   href="javascript:void(0);"
-						   onclick="alert('<?=$_REQUEST['error']?>')" id="error">
-							<img src="../admin/images/cancel.png" title="<?=str_replace("\\'","'",$_REQUEST['error'])?>" align="absmiddle" border="0" style="border:0px;"/> <?=MSG_UPLOAD_ERROR_GUI?>
-						</a>
+						</td><td width="100%" align="left">
+						<div class="ui-state-highlight ui-corner-all" style="height:24px;" id="error">
+							<p style="margin:4px;">
+								<span class="ui-icon ui-icon-closethick" style="float:left;"></span>
+								<a href="#"
+								   onclick="alert('<?=addslashes($_REQUEST['error'])?>')" >
+									<?=MSG_UPLOAD_ERROR_GUI?>
+								</a>
+							</p>
+						</div>
 						<? }
 						  foreach($_REQUEST as $key => $value)
 						   	if($key!='finish' && $key!='error' && $key!='path')
@@ -89,10 +96,16 @@
 						<input type="hidden" name="str_<?=$name?>" id="str_<?=$name?>" value="<?=$_REQUEST['value']?>"/>
 					</td>
 					<? }else{ ?>
-					<td width="100%" class="ui-state-highlight ui-corner-all" align="left">
-					<a style="padding:5px;"
-					   href="../<?=$_REQUEST['path']?>"
-					   target="_blank"><img src="../admin/images/accept.png" border="0" align="absmiddle"/>&nbsp;<?=MSG_UPLOAD_SUCCESSFULLY?></a>
+					<td width="100%" align="left">
+						<div class="ui-state-highlight ui-corner-all" style="height:24px;">
+							<p style="margin:4px;">
+								<span class="ui-icon ui-icon-check" style="float:left;"></span>
+								<a href="../<?=$_REQUEST['path']?>"
+								   target="_blank">
+									<?=MSG_UPLOAD_SUCCESSFULLY?>
+								</a>
+							</p>
+						</div>
 					</td>
 					<? }?>
 				

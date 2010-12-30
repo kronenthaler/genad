@@ -4,17 +4,29 @@
 - Integrar el look and feel con el theme-roller de jquery. 
 	+ upload component
 	+ menu principal
-	- tablas (bordes, colores alternados)
+	+ tablas (bordes, colores alternados)
 	+ textfields
 	+ selects
 	+ textareas.
+	+ iconos
+	- implementar el sort de columnas.
+		- Copiar el ordenar sobre la tabla como esta hecho en el fervid subscription.
+		- Ordenar los campos del list.xsl (ahora es mucho mas facil)
+
+- Directrices para crear un tema en themeroller:
+	1. El clickable state-default, active, hover deben ser planos. y tener el mismo color de borde (para que la tabla no se descuadren)
+	2. El state-active puede tener otro color y textura (se usa para el tope de la tabla.) Idealmente deberia ser de color del borde del state-default.
+
+- Mejorar los cambios de tipos de datos: en el objConf.php cuando se genere crear un arreglo con las opciones por defecto de cada tipo de dato.
+	- en la generacion de las pagina mod, inicializar el arreglo options con un arreglo que se extraiga desde el objeto teniendo en cuenta los
+		campos en el arreglo fields que vayan a ser mostrados (funcion nueva en el AbstractObject).
 
 + las paginas de listados del modulo users, no tienen los tags para manejar los criterios de busqueda anteriores.
-- eliminar carpetas y archivos innecesarios del fckeditor (_samples para empezar)
++ eliminar carpetas y archivos innecesarios del fckeditor (_samples para empezar)
 	
 + Relaciones:
 	+ generar los objetos que manejen relaciones => tengo que programar primero los objetos en PHP
-	- generar las paginas para list, mod, exec para relaciones => tengo que programarlas primero en PHP
+	+ generar las paginas para list, mod, exec para relaciones => tengo que programarlas primero en PHP
 	+ generar los js para las relaciones => es mejor despues de haber programado la pagina de mod.
 	+ opciones para manejar las relaciones:
 		1. en las paginas mod de las entidades involucradas poner un link o una tabla que indique con quien esta relacionada esa entidad. => como editar esa relacion: popup? formulario dinamico?
@@ -32,7 +44,6 @@
 	- http://ui.jquery.com/repository/latest/demos/functional/#ui.datepicker
 + Tratar de eliminar dojo del api (si es posible) o actualizarlo
 	- http://malsup.com/jquery/form/#code-sample
-- Ordenar los campos del list.xsl (ahora es mucho mas facil)
 * http://plugins.jquery.com/project/js-menu-toggle-adder
 - http://plugins.jquery.com/project/autogrow
 * http://plugins.jquery.com/project/filestyle (muy complicado es un truco sobreponiendo un control encima del control y haciendolo transparente)

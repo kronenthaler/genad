@@ -8,6 +8,7 @@ define("EDITABLE",4);
 define("SEARCHABLE",5);
 define("ONLISTPOS",6);
 define("ONFORMPOS",7);
+define("REQUIRED",8);
 
 define("SORTABLE","sortable");
 define("PAGER","pager");
@@ -368,7 +369,7 @@ class AbstractObject{
 	function getXMLTitle(){
 		return '<title><![CDATA['.$this->title.']]></title>';
 	}
-	
+
 	function getXMLBack($params=NULL){
 		if($params==NULL) $params=$_REQUEST;
 		//eliminar del arreglo el id de mi ancestro
@@ -491,7 +492,59 @@ class AbstractObject{
 		$ret.='</fields>';
 		return $ret;
 	}
-	
+
+	function getXMLJSValidator($options){
+		uasort($this->fields, create_function('$a,$b','return $a[ONFORMPOS] - $b[ONFORMPOS];'));
+		$visibles=$this->getFieldsByType(VISIBLE);
+
+		$ret = '<validator language="javascript"><![CDATA[';
+		$ret.= 'function validate'.get_class($this).'(f){';
+		$ret.= '	return true ';
+		for($i=0,$n=count($visibles);$i<$n;$i++){
+			$ret.= $this->getJSString($visibles[$i],$options);
+		}
+		$ret.= "}";
+		$ret.= ']]></validator>';
+	}
+
+	function getJSString($name,$options){
+		$prefix = 'str_';
+
+		//dependiendo del campo se puede necesitar un prefix para la llamada.
+		if($options[$name] != NULL &&
+		   is_array($options[$name]) &&
+		   $options[$name]['prefix']!='')
+			$prefix = $options[$name]['prefix'];
+
+		switch($this->fields[$name][TYPE]){
+			case 'email':
+				$ret.= ' && isValidEmail(f.'.$prefix.$name.',"'.$this->fields[$name][TITLE].'",'.($this->fields[$name][REQUIRED]?'true':'false').')';
+				break;
+			case 'decimal':
+				$ret.= ' && isValidDecimal(f.'.$prefix.$name.',"'.$this->fields[$name][TITLE].'",'.($this->fields[$name][REQUIRED]?'true':'false').')';
+				break;
+			case 'integer':
+				$ret.= ' && isValidInteger(f.'.$prefix.$name.',"'.$this->fields[$name][TITLE].'",'.($this->fields[$name][REQUIRED]?'true':'false').')';
+				break;
+			case 'password':
+				$ret.= ' && isValidPassword(f.'.$prefix.$name.', f.conf_'.$prefix.$name.', "'.$this->fields[$name][TITLE].'",'.($this->fields[$name][REQUIRED]?'true':'false').')';
+				break;
+			case 'richtext':
+				$ret.= ' && isValidRTE(f.'.$prefix.$name.',"rte_'.$name.'","'.$this->fields[$name][TITLE].'",'.($this->fields[$visibles[$i]][REQUIRED]?'true':'false').')';
+				break;
+			case 'datetime':
+				if($this->fields[$name][REQUIRED]){
+					$ret.= ' && isRequired(f.'.$prefix.$name.'_date,"'.$this->fields[$name][TITLE].'")';
+					$ret.= ' && isRequired(f.'.$prefix.$name.'_time,"'.$this->fields[$name][TITLE].'")';
+				}
+				break;
+			default:
+				if($this->fields[$name][REQUIRED])
+					$ret.= ' && isRequired(f.'.$prefix.$name.',"'.$this->fields[$name][TITLE].'")';
+				break;
+		}
+		return $ret;
+	}
 	//<!--------------------------------- METHODS FOR OTHER XML GENERATION ---------------------------------------------->
 }
 ?>

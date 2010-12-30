@@ -63,7 +63,7 @@
 						<xsl:when test="count(instance) &gt; 0">
 							<table cellspacing="0" cellpadding="0" border="0">
 							<thead>
-								<tr class="ui-state-active ui-corner-all">
+								<tr class="ui-state-default ui-corner-all">
 									<th width="30px">&nbsp;</th>
 									<xsl:for-each select="listable/field">
 										<xsl:choose>
@@ -95,17 +95,23 @@
 									<xsl:choose>
 										<xsl:when test="$module = 1">
 											<tr>
-												<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<td align="center" class="ui-state-active" style="border-top:0px;"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
 												<xsl:for-each select="field">
 													<xsl:variable name="mapping" select="@map"/>
 													<xsl:variable name="value" select="."/>
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="part2">
+															<td class="ui-state-active" style="border-top:0px;border-left:0px;">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img class="checkbox" src="images/{$value}.png"/></a></center>
+																		<center>
+																			<a href="{/entity/prefix}exec{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}">
+																				<!--img class="checkbox" src="images/{$value}.png"/-->
+																				<xsl:if test="$value = '1'"><span class="ui-widget-content ui-icon ui-icon-check" /></xsl:if>
+																				<xsl:if test="$value = '0'"><span class="ui-widget-content ui-icon ui-icon-close" /></xsl:if>
+																			</a>
+																		</center>
 																	</xsl:when>
 																	<xsl:when test="@type = 'image'">
 																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
@@ -121,23 +127,29 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="part2"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="ui-state-active" style="border-top:0px;border-left:0px;"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:when>
 										<xsl:otherwise>
 											<tr class="odd">
-												<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<td align="center" class="ui-state-default" style="border-top:0px;"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
 												<xsl:for-each select="field">
 													<xsl:variable name="mapping" select="@map"/>
 													<xsl:variable name="value" select="."/>
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="part2">
+															<td class="ui-state-default" style="border-top:0px;border-left:0px;">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img class="checkbox" src="images/{$value}.png"/></a></center>
+																		<center>
+																			<a href="{/entity/prefix}exec{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}">
+																				<!--img class="checkbox" src="images/{$value}.png"/-->
+																				<xsl:if test="$value = '1'"><span class="ui-widget-content ui-icon ui-icon-check" /></xsl:if>
+																				<xsl:if test="$value = '0'"><span class="ui-widget-content ui-icon ui-icon-close" /></xsl:if>
+																			</a>
+																		</center>
 																	</xsl:when>
 																	<xsl:when test="@type = 'image'">
 																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
@@ -153,7 +165,7 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="part2"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="ui-state-default" style="border-top:0px;border-left:0px;"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:otherwise>
@@ -164,12 +176,11 @@
 						</xsl:when>
 						<xsl:otherwise>
 							<table cellspacing="0" cellpadding="0" border="0">
-								<tr class="ui-state-active ui-corner-all"><th>&nbsp;</th></tr>
-								<tr><td align="center" class="part1 part2"><xsl:call-template name="msg-nothing"/></td></tr>
+								<tr class="ui-state-default ui-corner-all"><th>&nbsp;</th></tr>
+								<tr><td align="center" class="ui-state-active"><xsl:call-template name="msg-nothing"/></td></tr>
 							</table>
 						</xsl:otherwise>
 					</xsl:choose>
-				
 				<table>
 					<tr>
 						<xsl:choose>
@@ -184,7 +195,7 @@
 										onclick="return confirm('{$msg-confirm}')">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
-											<td><img src="images/delete.png" align="left"/></td>
+											<td><!--img src="images/delete.png" align="left"/--><span class="ui-icon ui-icon-minusthick"/></td>
 											<td><xsl:call-template name="msg-delete" /></td></tr>
 									</table>
 								</button>
@@ -207,7 +218,7 @@
 											onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=sort{$ids}','','')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/order.png" align="left"/></td>
+												<td><!--img src="images/order.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-2-n-s"/></td>
 												<td><xsl:call-template name="msg-sort" /></td>
 											</tr>
 										</table>
@@ -231,7 +242,7 @@
 											onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/add.png" align="left"/></td>
+												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
 												<td><xsl:call-template name="msg-add" /></td>
 											</tr>
 										</table>
@@ -256,7 +267,7 @@
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/add.png" align="left"/></td>
+												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
 												<td><xsl:call-template name="msg-add"/></td>
 											</tr>
 										</table>

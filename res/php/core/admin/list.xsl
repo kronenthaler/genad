@@ -25,8 +25,9 @@
 				<xsl:if test="/error/basepath != ''">
 					<base id="base" href="{/error/basepath}" />
 				</xsl:if>
-				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 				<link href="../admin/css/ui.css" rel="stylesheet" type="text/css"/>
+				<link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
+				
 				<script type="text/javascript" src= "../js/jquery.js"></script>
 				<script type="text/javascript" src= "../js/jquery-ui.js"></script>
 				<script type="text/javascript" src= "../js/jquery.form.js"></script>
@@ -57,7 +58,7 @@
 							<tr>
 								<xsl:choose>
 								<xsl:when test="/entity/error != ''">
-								<td width="75%" align="left">
+								<td width="100%" align="left">
 									<div class="ui-state-error ui-corner-all" style="padding: 10px 10px 10px 10px ;">
 										<span class="ui-icon ui-icon-alert" style="float: left;"></span>&nbsp;
 										<xsl:value-of select="/entity/error"/>
@@ -70,7 +71,8 @@
 								</xsl:choose>
 								<xsl:if test="/entity/properties/searchable = 1">
 								<td valign="middle" align="right" width="100%">
-									<input type="text" id="search" name="search" value="{/entity/search}"/>
+									<input class="ui-progressbar ui-widget ui-widget-content ui-corner-all"
+									type="text" id="search" name="search" value="{/entity/search}"/>
 								</td>
 								<td>
 									<button type="submit"
@@ -79,7 +81,7 @@
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/search.png" border="0"/></td>
+												<td><!--img src="images/search.png" border="0"/--><span class="ui-icon ui-icon-search"/></td>
 												<td><xsl:call-template name="msg-search"/></td>
 											</tr>
 										</table>
@@ -94,9 +96,10 @@
 						</form>
 					</center>
 				</div>
-				<xsl:apply-templates select="entity/list"/>
+				
 			</xsl:otherwise>
 		</xsl:choose>
+		<xsl:apply-templates select="entity/list"/>
 		</div></div></body></html>
 	</xsl:template>
 	
@@ -113,7 +116,7 @@
 						<xsl:when test="count(instance) &gt; 0">
 							<table cellspacing="0" cellpadding="0" border="0">
 							<thead>
-								<tr class="ui-state-active ui-corner-all">
+								<tr class="ui-state-default ui-corner-all">
 									<th width="30px">&nbsp;</th>
 									<xsl:for-each select="listable/field">
 										<xsl:choose>
@@ -145,17 +148,23 @@
 									<xsl:choose>
 										<xsl:when test="$module = 1">
 											<tr>
-												<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<td align="center" class="ui-state-active" style="border-top:0px;"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
 												<xsl:for-each select="field">
 													<xsl:variable name="mapping" select="@map"/>
 													<xsl:variable name="value" select="."/>
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="part2">
+															<td class="ui-state-active" style="border-top:0px;border-left:0px;">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img class="checkbox" src="images/{$value}.png"/></a></center>
+																		<center>
+																			<a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}">
+																			<!--img class="checkbox" src="images/{$value}.png"/-->
+																			<xsl:if test="$value = '1'"><span class="ui-widget-content ui-icon ui-icon-check" /></xsl:if>
+																			<xsl:if test="$value = '0'"><span class="ui-widget-content ui-icon ui-icon-close" /></xsl:if>
+																			</a>
+																		</center>
 																	</xsl:when>
 																	<xsl:when test="@type = 'image'">
 																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
@@ -171,23 +180,29 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="part2"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="ui-state-active" style="border-top:0px;border-left:0px;"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:when>
 										<xsl:otherwise>
 											<tr class="odd">
-												<td align="center" class="part1"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<td align="center" class="ui-state-default" style="border-top:0px;"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
 												<xsl:for-each select="field">
 													<xsl:variable name="mapping" select="@map"/>
 													<xsl:variable name="value" select="."/>
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="part2">
+															<td class="ui-state-default" style="border-top:0px;border-left:0px;">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
-																		<center><a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}"><img class="checkbox" src="images/{$value}.png"/></a></center>
+																		<center>
+																			<a href="{/entity/prefix}exec{//@name}.{//@ext}?ini={/entity/pager/offset}&amp;action=mod&amp;id={$key}&amp;str_{@map}={1 - $value}{$ids}">
+																				<!--img class="checkbox" src="images/{$value}.png"/-->
+																				<xsl:if test="$value = '1'"><span class="ui-widget-content ui-icon ui-icon-check" /></xsl:if>
+																				<xsl:if test="$value = '0'"><span class="ui-widget-content ui-icon ui-icon-close" /></xsl:if>
+																			</a>
+																		</center>
 																	</xsl:when>
 																	<xsl:when test="@type = 'image'">
 																		<a href="{/entity/prefix}mod{//@name}.{//@ext}?action=mod&amp;id={$key}{$ids}"><img src="../{$value}" border="0"/></a>
@@ -203,7 +218,7 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="part2"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="ui-state-default" style="border-top:0px;border-left:0px;"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:otherwise>
@@ -213,8 +228,8 @@
 							</table>
 						</xsl:when>
 						<xsl:otherwise>
-							<table cellspacing="0" cellpadding="0" border="0" style="border: 1px solid #ccc;">
-							<tr><td align="center"><xsl:call-template name="msg-nothing"/></td></tr>
+							<table cellspacing="0" cellpadding="0" border="0">
+							<tr><td align="center" class="ui-state-active"><xsl:call-template name="msg-nothing"/></td></tr>
 							</table>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -233,7 +248,7 @@
 										onclick="return confirm('{$msg-confirm}')">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
-											<td><img src="images/delete.png" align="left"/></td>
+											<td><!--img src="images/delete.png" align="left"/--><span class="ui-icon ui-icon-minusthick"/></td>
 											<td><xsl:call-template name="msg-delete" /></td></tr>
 									</table>
 								</button>
@@ -256,7 +271,7 @@
 											onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?action=sort{$ids}','','')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/order.png" align="left"/></td>
+												<td><!--img src="images/order.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-2-n-s"/></td>
 												<td><xsl:call-template name="msg-sort" /></td>
 											</tr>
 										</table>
@@ -280,7 +295,7 @@
 											onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','','')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/add.png" align="left"/></td>
+												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
 												<td><xsl:call-template name="msg-add" /></td>
 											</tr>
 										</table>
@@ -305,7 +320,7 @@
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
-												<td><img src="images/add.png" align="left"/></td>
+												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
 												<td><xsl:call-template name="msg-add"/></td>
 											</tr>
 										</table>
@@ -344,25 +359,33 @@
 			of <xsl:value-of select="total-rows"/>
 		</td>
 		<td colspan="2" align="right">
-			<xsl:if test="offset > 0">
-				<a class="ui-state-default ui-corner-all"
-					style="padding-bottom:3px; padding-top:2px;"
-					onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-					onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-					href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset - page-size}{$ids}">
-					<img src="images/less.gif" align="absmiddle"/>
-				</a>&nbsp;
-			</xsl:if>
-			<xsl:value-of select="ceiling(offset div page-size)+1"/>/<xsl:value-of select="ceiling(total-rows div page-size)"/>
-			<xsl:if test="offset &lt; total-rows - page-size">
-				&nbsp;<a class="ui-state-default ui-corner-all"
-					style="padding-bottom:3px; padding-top:2px;"
-					onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-					onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-						href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset + page-size}{$ids}">
-							<img src="images/more.gif" align="absmiddle"/>
-						</a>
-			</xsl:if>
+			<table cellpadding="0" cellspacing="0" border="0" align="right" style="width:10px;">
+				<tr>
+					<xsl:if test="offset > 0">
+						<td>
+						<div class="ui-state-default ui-corner-all"
+							style="padding-bottom:3px; padding-top:2px;padding-right:2px;width:18px;"
+							onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+							onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
+							<a href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset - page-size}{$ids}"><span class="ui-icon ui-icon-triangle-1-w"/></a>
+						</div>
+						</td>
+					</xsl:if>
+					
+					<td>&nbsp;<xsl:value-of select="ceiling(offset div page-size)+1"/>/<xsl:value-of select="ceiling(total-rows div page-size)"/>&nbsp;</td>
+					
+					<xsl:if test="offset &lt; total-rows - page-size">
+						<td>
+						<div class="ui-state-default ui-corner-all"
+							style="padding-bottom:3px; padding-top:2px; padding-right:2px;width:18px;"
+							onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
+							onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
+							<a href="{/entity/prefix}list{//@name}.{//@ext}?ini={offset + page-size}{$ids}"><span class="ui-icon ui-icon-triangle-1-e"/></a>
+						</div>
+						</td>
+					</xsl:if>
+				</tr>
+			</table>
 		</td>
 	</xsl:template>
 </xsl:stylesheet>

@@ -16,4 +16,10 @@
 			</center>
 		</div>
 	</xsl:template>
+
+	<xsl:template match="validator">
+		<script language="{@language}">
+			<xsl:value-of select="."/>
+		</script>
+	</xsl:template>
 </xsl:stylesheet>
