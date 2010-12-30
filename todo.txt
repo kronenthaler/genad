@@ -1,7 +1,8 @@
 - Validaciones online. 
 	- Tratar de escribir el codigo de validacion en la clase php, para reutilizarla en el exec.
 
-- Integrar el look and feel con el theme-roller de jquery. 
+- Integrar el look and feel con el theme-roller de jquery.
+	current theme: http://jqueryui.com/themeroller/#ffDefault=Verdana%2CArial%2Csans-serif&fwDefault=normal&fsDefault=1.1em&cornerRadius=3px&bgColorHeader=cccccc&bgTextureHeader=12_gloss_wave.png&bgImgOpacityHeader=75&borderColorHeader=d3d3d3&fcHeader=222222&iconColorHeader=222222&bgColorContent=ffffff&bgTextureContent=01_flat.png&bgImgOpacityContent=75&borderColorContent=d3d3d3&fcContent=222222&iconColorContent=478c40&bgColorDefault=eeeeee&bgTextureDefault=01_flat.png&bgImgOpacityDefault=75&borderColorDefault=d3d3d3&fcDefault=555555&iconColorDefault=454545&bgColorHover=dddddd&bgTextureHover=01_flat.png&bgImgOpacityHover=75&borderColorHover=d3d3d3&fcHover=333333&iconColorHover=454545&bgColorActive=ffffff&bgTextureActive=01_flat.png&bgImgOpacityActive=65&borderColorActive=d3d3d3&fcActive=333333&iconColorActive=454545&bgColorHighlight=fef9dd&bgTextureHighlight=01_flat.png&bgImgOpacityHighlight=95&borderColorHighlight=fcefa1&fcHighlight=363636&iconColorHighlight=2e83ff&bgColorError=fbd0d3&bgTextureError=07_diagonals_medium.png&bgImgOpacityError=95&borderColorError=cd0a0a&fcError=cd0a0a&iconColorError=cd0a0a&bgColorOverlay=aaaaaa&bgTextureOverlay=01_flat.png&bgImgOpacityOverlay=0&opacityOverlay=30&bgColorShadow=aaaaaa&bgTextureShadow=01_flat.png&bgImgOpacityShadow=0&opacityShadow=30&thicknessShadow=8px&offsetTopShadow=-8px&offsetLeftShadow=-8px&cornerRadiusShadow=8px
 	+ upload component
 	+ menu principal
 	+ tablas (bordes, colores alternados)
