@@ -2,12 +2,10 @@
 <!DOCTYPE stylesheet [
 	<!ENTITY nbsp "&#160;">
 ]>
-<xsl:stylesheet version="2.0" 
-		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8"/>
 
-	<xsl:include href="localize.xsl"/>
-	<xsl:include href="common.xsl"/>
+	<xsl:include href="getResource.php?file=admin/common.xsl"/>
 
 	<!-- define the ids of the ancestors required for each link that modifies the entity -->
  	<xsl:variable name="ids">
@@ -94,7 +92,7 @@
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
 																<td><!--img src="images/up.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-1-n"/></td>
-																<td align="right"><xsl:call-template name="msg-up"/></td>
+																<td align="right">MSG_UP</td>
 															</tr>
 														</table>
 													</button>
@@ -111,7 +109,7 @@
 														<table border="0" cellpadding="0" cellspacing="0" width="100%">
 															<tr>
 																<td><!--img src="images/down.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-1-s"/></td>
-																<td><xsl:call-template name="msg-down"/></td>
+																<td>MSG_DOWN</td>
 															</tr>
 														</table>
 													</button>
@@ -123,7 +121,7 @@
 							</tbody>
 						</xsl:when>
 						<xsl:otherwise>
-							<tr><td class="ui-state-default" style="border-top:0px;border-left:0px;" align="center"><xsl:call-template name="msg-nothing"/></td></tr>
+							<tr><td class="ui-state-default" style="border-top:0px;border-left:0px;" align="center">MSG_NOTHING</td></tr>
 						</xsl:otherwise>
 					</xsl:choose>
 				</table>
@@ -139,7 +137,7 @@
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
 										<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
-										<td align="right"><xsl:call-template name="msg-cancel"/></td>
+										<td align="right">MSG_CANCEL</td>
 									</tr>
 								</table>
 							</button>
@@ -154,7 +152,7 @@
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
 										<td><!--img src="images/accept.png" align="left"/--><span class="ui-icon ui-icon-check"/></td>
-										<td><xsl:call-template name="msg-sort"/></td>
+										<td>MSG_SORT</td>
 									</tr>
 								</table>
 							</button>

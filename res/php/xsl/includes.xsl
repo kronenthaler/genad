@@ -13,6 +13,7 @@ if(stristr($_SERVER['HTTP_HOST'],'localhost')){
 
 include_once(ROOT.'/common/localize.php');
 include_once(ROOT.'/common/utils.php');
+include_once(ROOT.'/obj/localize.php');
 include_once(ROOT.'/obj/AbstractObject.php');
 include_once(ROOT.'/obj/AbstractRelation.php');
 include_once(ROOT.'/obj/Connection.php');

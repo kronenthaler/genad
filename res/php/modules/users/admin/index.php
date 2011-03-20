@@ -22,21 +22,21 @@
 			onclick="markSelected(this);
 					 parent.mainFrame.document.location.href='../users/admin/listUser.php'"
 			onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_USERS?></li>
+			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_USER_TITLE?></li>
 		<li class="ui-state-default"
 			onclick="markSelected(this);
 					 parent.mainFrame.document.location.href='../users/admin/listProfile.php'"
 			onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_PROFILES?></li>
+			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_PROFILE_TITLE?></li>
 		<li class="ui-state-default"
 			onclick="markSelected(this);
 					 parent.mainFrame.document.location.href='../users/admin/listPermission.php'"
 			onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_PERMISSIONS?></li>
+			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_PERMISSION_TITLE?></li>
 		<li class="ui-state-default"
 			onclick="markSelected(this);
 					 parent.mainFrame.document.location.href='../users/admin/listSection.php'"
 			onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_SECTIONS?></li>
+			onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_USERS_SECTION_TITLE?></li>
 	</ul>
 </div>

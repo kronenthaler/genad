@@ -98,15 +98,17 @@ function logOn($str){
 	fclose($f);
 }
 
-function writeError($msg){
+function writeError($msg,$refresh=FALSE){
 	header("Content-Type: text/xml");
 	header("Cache-Control: no-cache, must-revalidate");	// HTTP/1.1
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
 	
 	echo '<?xml version="1.0" encoding="utf-8"?>';
-	echo '<?xml-stylesheet type="text/xsl" href="'.HTTP_ROOT.'/admin/list.xsl"?>';
+	echo '<?xml-stylesheet type="text/xsl" href="'.HTTP_ROOT.'/admin/getResource.php?file=admin/list.xsl"?>';
 	echo '<error><basepath><![CDATA['.HTTP_ROOT.'/admin/]]></basepath>';
-	echo '<msg href="'.str_replace("&","&amp;",$_SERVER['HTTP_REFERER']).'">'.$msg.'</msg></error>';
+	echo '<msg href="'.str_replace("&","&amp;",$_SERVER['HTTP_REFERER']).'">'.$msg.'</msg>';
+	echo '<refresh>'.($refresh?'true':'false').'</refresh>';
+	echo '</error>';
 }
 
 if (!function_exists("htmlspecialchars_decode")) {

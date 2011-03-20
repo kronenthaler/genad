@@ -2,12 +2,10 @@
 <!DOCTYPE xsl:stylesheet [
 	<!ENTITY nbsp "&#160;">
 ]>
-<xsl:stylesheet version="1.0" 
-		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  	<xsl:output method="html" encoding="utf-8" indent="yes"/>
 	
-	<xsl:include href="localize.xsl"/>
-	<xsl:include href="common.xsl"/>
+	<xsl:include href="getResource.php?file=admin/common.xsl"/>
 
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
@@ -91,7 +89,7 @@
 					</xsl:choose>
 				</li>
 			</xsl:for-each>
-			<li><a class="ui-state-active ui-corner-tl ui-corner-tr"><xsl:call-template name="msg-edit"/>&nbsp;<xsl:value-of select="/entity/title"/></a></li>
+			<li><a class="ui-state-active ui-corner-tl ui-corner-tr">MSG_EDIT&nbsp;<xsl:value-of select="/entity/title"/></a></li>
 		</ul>
 		<div id="content">
 			<form name="frm_{//@name}"
@@ -115,7 +113,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
-											<td align="right"><a><xsl:call-template name="msg-cancel"/></a></td>
+											<td align="right"><a>MSG_CANCEL</a></td>
 										</tr>
 									</table>
 								</button>
@@ -129,7 +127,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><!--img src="images/accept.png" align="left"/--><span class="ui-icon ui-icon-check"/></td>
-											<td align="right"><a><xsl:call-template name="msg-apply"/></a></td>
+											<td align="right"><a>MSG_APPLY</a></td>
 										</tr>
 									</table>
 								</button>
@@ -234,11 +232,11 @@
  	
  	<xsl:template match="password">
  		<tr class="ui-state-default" style="border-top:0px;background:#ffffff;">
-			<td class="label ui-state-default" style="border-top:0px; " align="right"><xsl:value-of select="@name"/>:</td>
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@name"/>:</td>
 			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="password" name="str_{@map}" id="str_{@map}" value="{.}"/></td>
 		</tr>
 		<tr class="ui-state-default" style="border-top:0px;">
-			<td class="label ui-state-default" style="border-top:0px; " align="right"><xsl:value-of select="@confirm"/>:</td>
+			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@confirm"/>:</td>
 			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
 		</tr>
  	</xsl:template>

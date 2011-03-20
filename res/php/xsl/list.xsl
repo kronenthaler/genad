@@ -40,7 +40,7 @@
 
 	<![CDATA[
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="getResource.php?file=admin/'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
 		  	<error>'.$_REQUEST['error'].'</error>
 			<prefix></prefix>';

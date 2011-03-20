@@ -95,7 +95,7 @@
 
 	<xsl:template match="entity">
 	<xsl:if test="just-schema/@value = 0">
-	<![CDATA[<li class="ui-state-default" onclick="markSelected(this); parent.mainFrame.document.location.href='list]]><xsl:value-of select="@name"/><![CDATA[.php'" onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')" onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')">]]><xsl:value-of select="@title"/><![CDATA[</li>]]></xsl:if>
+	<![CDATA[<li class="ui-state-default" onclick="markSelected(this); parent.mainFrame.document.location.href='list]]><xsl:value-of select="@name"/><![CDATA[.php'" onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')" onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_]]><xsl:value-of select="translate(@name,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/><![CDATA[_TITLE?></li>]]></xsl:if>
 	</xsl:template>
 	
 	<xsl:template match="module"><![CDATA[<? secureInclude(']]><xsl:value-of select="@name"/><![CDATA[/admin/index.php')?>]]>

@@ -505,6 +505,8 @@ class AbstractObject{
 		}
 		$ret.= "}";
 		$ret.= ']]></validator>';
+
+		return $ret;
 	}
 
 	function getJSString($name,$options){
@@ -515,7 +517,8 @@ class AbstractObject{
 		   is_array($options[$name]) &&
 		   $options[$name]['prefix']!='')
 			$prefix = $options[$name]['prefix'];
-
+		
+		$ret = '';
 		switch($this->fields[$name][TYPE]){
 			case 'email':
 				$ret.= ' && isValidEmail(f.'.$prefix.$name.',"'.$this->fields[$name][TITLE].'",'.($this->fields[$name][REQUIRED]?'true':'false').')';

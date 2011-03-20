@@ -6,9 +6,8 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  	<xsl:output method="html" encoding="utf-8" indent="yes"/>
 	
-	<xsl:include href="localize.xsl"/>
-	<xsl:include href="mod.xsl"/>
-	<xsl:include href="common.xsl"/>
+	<xsl:include href="getResource.php?file=admin/mod.xsl"/>
+	<xsl:include href="getResource.php?file=admin/common.xsl"/>
 	
 	<xsl:variable name="ids">
 		<xsl:for-each select="/entity/ancestors/ancestor">&amp;<xsl:value-of select="@id"/>=<xsl:value-of select="@value"/></xsl:for-each>	
@@ -84,10 +83,10 @@
 								href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@rel_id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}">
 								<xsl:value-of select="."/>:&nbsp;
 								<xsl:if test="//@action = 'add'">
-									<xsl:call-template name="msg-adding"/>
+									MSG_ADDING
 								</xsl:if>
 								<xsl:if test="//@action = 'mod'">
-									<xsl:call-template name="msg-editing"/>
+									MSG_EDITING
 								</xsl:if>
 							</a>
 						</li>
@@ -106,7 +105,7 @@
 					onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 					onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
 					href="{/entity/prefix}mod{//@currentClass}.{//@ext}?action=mod&amp;id={//@rel_id}&amp;{$ids}">
-						<xsl:call-template name="msg-edit"/>&nbsp;<xsl:value-of select="/entity/title"/>
+						MSG_EDIT &nbsp;<xsl:value-of select="/entity/title"/>
 					</a>
 			</li>
 		</ul>
@@ -132,7 +131,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
-											<td align="right"><xsl:call-template name="msg-cancel"/></td>
+											<td align="right">MSG_CANCEL</td>
 										</tr>
 									</table>
 								</button>
@@ -146,7 +145,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><!--img src="images/accept.png" align="left"/--><span class="ui-icon ui-icon-check"/></td>
-											<td align="right"><xsl:call-template name="msg-apply"/></td>
+											<td align="right">MSG_APPLY</td>
 										</tr>
 									</table>
 								</button>

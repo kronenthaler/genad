@@ -6,9 +6,8 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
  	<xsl:output method="html" encoding="utf-8"/>
 	
-	<xsl:include href="localize.xsl"/>
-	<xsl:include href="list.xsl"/>
-	<xsl:include href="common.xsl"/>
+	<xsl:include href="getResource.php?file=admin/list.xsl"/>
+	<xsl:include href="getResource.php?file=admin/common.xsl"/>
 	
  	<!-- define the ids of the ancestors required for each link that modifies the entity -->
  	<xsl:variable name="ids">
@@ -27,7 +26,7 @@
 							onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-active')"
 							onmouseout="$(this).addClass('ui-state-active').removeClass('ui-state-hover')"
 							href="{/entity/prefix}list{@class}.{//@ext}?rel_id={//@id}&amp;class={@class}&amp;currentClass={@currentClass}&amp;{$ids}">
-								<xsl:value-of select="."/>:&nbsp;<xsl:call-template name="msg-listing"/>
+								<xsl:value-of select="."/>:&nbsp; MSG_LISTING
 						</a>
 					</li>
 				</xsl:if>	
@@ -47,7 +46,7 @@
 					onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 					onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
 					href="{/entity/prefix}mod{//@currentClass}.{//@ext}?action=mod&amp;id={//@id}&amp;{$ids}">
-					<xsl:call-template name="msg-edit"/>&nbsp;<xsl:value-of select="/entity/title"/>
+					MSG_EDIT &nbsp;<xsl:value-of select="/entity/title"/>
 				</a>
 			</li>
 		</ul>
@@ -177,7 +176,7 @@
 						<xsl:otherwise>
 							<table cellspacing="0" cellpadding="0" border="0">
 								<tr class="ui-state-default ui-corner-all"><th>&nbsp;</th></tr>
-								<tr><td align="center" class="ui-state-active"><xsl:call-template name="msg-nothing"/></td></tr>
+								<tr><td align="center" class="ui-state-active">MSG_NOTHING</td></tr>
 							</table>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -186,7 +185,7 @@
 						<xsl:choose>
 							<xsl:when test="count(instance) &gt; 0">
 								<td align="left" class="plain">
-								<xsl:variable name="msg-confirm"><xsl:call-template name="msg-confirm"/></xsl:variable>
+								<xsl:variable name="msg-confirm">MSG_CONFIRM_DELETE</xsl:variable>
 								<button id="_deleteBtn_"
 										type="submit"
 										class="ui-state-default ui-corner-all"
@@ -196,7 +195,7 @@
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
 											<td><!--img src="images/delete.png" align="left"/--><span class="ui-icon ui-icon-minusthick"/></td>
-											<td><xsl:call-template name="msg-delete" /></td></tr>
+											<td>MSG_DELETE</td></tr>
 									</table>
 								</button>
 								<xsl:if test="/entity/properties/delete = 0">
@@ -219,7 +218,7 @@
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/order.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-2-n-s"/></td>
-												<td><xsl:call-template name="msg-sort" /></td>
+												<td>MSG_SORT</td>
 											</tr>
 										</table>
 									</button>
@@ -243,7 +242,7 @@
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
-												<td><xsl:call-template name="msg-add" /></td>
+												<td>MSG_ADD</td>
 											</tr>
 										</table>
 									</button>
@@ -268,7 +267,7 @@
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
-												<td><xsl:call-template name="msg-add"/></td>
+												<td>MSG_ADD</td>
 											</tr>
 										</table>
 									</button>

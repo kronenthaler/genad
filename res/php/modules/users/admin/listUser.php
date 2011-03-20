@@ -18,7 +18,7 @@
 	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize);
 		
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="../../admin/list.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="../../admin/getResource.php?file=admin/list.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
 		  	<error>'.$_REQUEST['error'].'</error>
 			<prefix>../users/admin/</prefix>';

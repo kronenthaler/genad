@@ -217,6 +217,7 @@ public class Engine extends Model{
 			progress.setProgress(progress.getProgress()+1);
 			
 			if(stop){ allStop=true; notifyAll(); return null; }
+			//DEPRECATED: ESTE ARCHIVO EVENTUALMENTE VA A DESAPARECER
 			//6) make JS validators (js.xsl). ask for overwrite if exists
 			File js=new File(model.getDestinationPath()+"/admin/js/validators.js");
 			if(js.exists()){
@@ -259,6 +260,16 @@ public class Engine extends Model{
 
 			for(Enumeration<String> e=model.getRelations();e.hasMoreElements();)
 				transformRelations(model.getRelation(e.nextElement()), model);
+
+			//generar todos las constantes de titulos en el archivo localize.<ext>, concatenados.
+			File localization = new File(model.getDestinationPath()+"/obj/localize."+model.getLanguage());
+			if(index.exists()){
+				createLater.add(new DelayedFile(this,localization,"res/"+model.getLanguage()+"/xsl/localize.xsl",model.getLoadedPath()));
+			}else{
+				out=new PrintStream(localization);
+				transformXML(model.getLoadedPath(), "res/"+model.getLanguage()+"/xsl/localize.xsl", out);
+				out.close();
+			}
 		}catch(RuntimeException e){
 			Utils.showError("Fatal Error: "+e.getMessage()+"\n"+e.toString());
 		}catch(Exception e){
@@ -317,9 +328,9 @@ public class Engine extends Model{
 					out.close();
 				}
 			}
-			
+
 			for(Enumeration<String> e=ent.getChilds();e.hasMoreElements();)
-					transformEntities(ent.getChild(e.nextElement()), model);
+				transformEntities(ent.getChild(e.nextElement()), model);
 		}catch(Exception e){
 			e.printStackTrace();
 		}

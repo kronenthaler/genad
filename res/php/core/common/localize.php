@@ -36,13 +36,32 @@ define('MSG_PASSWORD','Password');
 define('MSG_LOGOUT','Logout');
 define('MSG_ENTER','Enter');
 
-//GENERALS
+//GENERALS MESSAGES
 define('MSG_NO_ACTION','No action especified');
 define('MSG_UNDEFINED_ACTION','Undefined action.');
 define('MSG_UNDEFINED_SECTION','Undefined section.');
-define('MSG_SESSION_EXPIRED','Session expired, you must logging in.');
+define('MSG_SESSION_EXPIRED','Session expired, you must log in again.');
 define('MSG_INVALID_USER','Unknown/invalid user.');
 define('MSG_PERMISSIONS_REQUIRED','This section requires especial permissions and you haven\'t.');
 define('MSG_INVALID_LOGIN',"Invalid login or password");
 
+define("MSG_ADD",'Add');
+define("MSG_DELETE",'Delete');
+define("MSG_SORT",'Sort');
+define("MSG_FORBIDDEN",'Forbidden!');
+define("MSG_SEARCH",'Search');
+define("MSG_NOTHING",'Nothing to show');
+define("MSG_SHOWING",'Showing');
+define("MSG_EDIT",'Edit');
+define("MSG_CANCEL",'Cancel');
+define("MSG_APPLY",'Apply');
+define("MSG_UP",'Up');
+define("MSG_DOWN",'Down');
+define("MSG_PREV",'Prev');
+define("MSG_NEXT",'Next');
+define("MSG_CONFIRM_DELETE",'Do you really want to delete the selected items?');
+define("MSG_ADDING",'Adding');
+define("MSG_EDITING",'Editing');
+define("MSG_SORTING",'Sorting');
+define("MSG_LISTING",'Listing');
 ?>

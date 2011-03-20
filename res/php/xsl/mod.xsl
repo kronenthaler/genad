@@ -34,7 +34,7 @@
 		die('ID not found');
 	
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="mod.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="getResource.php?file=admin/mod.xsl"?>
 		  <entity name="'.get_class($obj).'" 
 		  		  ext="php" 
 		  		  action="'.$_REQUEST['action'].'" 
@@ -45,6 +45,7 @@
 		//begin field options]]>
 		<xsl:apply-templates select="form/field"/>
 <![CDATA[//end field options
+		echo $obj->getXMLJSValidator($options);
 		echo $obj->getXMLForm($options);
 	echo "</entity>";
 ?>]]></xsl:template>
@@ -124,6 +125,7 @@
 		<xsl:apply-templates select="form/field"/>
 <![CDATA[
 		//end field options
+		echo $obj->getXMLJSValidator($options);
 		echo $obj->getXMLForm($options,$currentClass);
 	echo "</entity>";
 ?>]]></xsl:template>

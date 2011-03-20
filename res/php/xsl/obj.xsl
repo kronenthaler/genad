@@ -9,13 +9,14 @@ class <xsl:value-of select="//@name"/> extends AbstractObject{
 	function <xsl:value-of select="//@name"/>(){
 		$this->tablename='<xsl:value-of select="table/@name"/>';
 		$this->primarykey='<xsl:value-of select="table/@primary-key"/>';
-		$this->title = '<xsl:value-of select="//@title"/>';
+		$this->title = MSG_<xsl:value-of select="translate(//@name,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>_TITLE;
 
 		//initialize the fields array
+		<!-- usar MSG_<xsl:value-of select="translate(//@name,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>_<xsl:value-of select="translate(db-field,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>_TITLE-->
 		<xsl:if test="parent/@id != ''">$this->fields['<xsl:value-of select="parent/@id"/>'] = array(TITLE=>'PARENT_ID', TYPE=>'textfield', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);</xsl:if>
 		<xsl:if test="form/field/db-field != table/@primary-key">$this->fields['<xsl:value-of select="table/@primary-key"/>'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);</xsl:if>
 		<xsl:for-each select="form/field">
-		$this->fields['<xsl:value-of select="db-field"/>'] = array(TITLE=>'<xsl:value-of select="label"/>', TYPE=>'<xsl:value-of select="@type"/>', VISIBLE=><xsl:value-of select="show-in-form"/>, LISTABLE=><xsl:value-of select="show-in-list"/>, EDITABLE=><xsl:value-of select="0"/>, SEARCHABLE=><xsl:value-of select="searchable"/>, ONLISTPOS=><xsl:value-of select="position()"/>, ONFORMPOS=><xsl:value-of select="position()"/>);</xsl:for-each>	
+		$this->fields['<xsl:value-of select="db-field"/>'] = array(TITLE=>MSG_<xsl:value-of select="translate(//@name,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>_<xsl:value-of select="translate(db-field,'abcdefghijklmnopqrstuvwxyz','ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>_TITLE, TYPE=>'<xsl:value-of select="@type"/>', VISIBLE=><xsl:value-of select="show-in-form"/>, REQUIRED=><xsl:value-of select="required"/>, LISTABLE=><xsl:value-of select="show-in-list"/>, EDITABLE=><xsl:value-of select="0"/>, SEARCHABLE=><xsl:value-of select="searchable"/>, ONLISTPOS=><xsl:value-of select="position()"/>, ONFORMPOS=><xsl:value-of select="position()"/>);</xsl:for-each>
 		$this->fields['_sort'] = array(TITLE=>'Order', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>-1, ONFORMPOS=>-1);	
 		
 		$this->properties[ADD]=1;

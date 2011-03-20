@@ -8,12 +8,17 @@
 					<tr height="100%" valign="top">
 						<td width="100"><img src="images/forbidden.png" style="cursor: default; margin: 10px"/></td>
 						<td class="plain">
-							<h1><xsl:call-template name="msg-forbidden"/></h1>
+							<h1>MSG_FORBIDDEN</h1>
 							<xsl:value-of select="msg"/><br/>
 						</td>
 					</tr>
 				</table>
 			</center>
+			<xsl:if test="refresh = 'true'">
+				<script>
+					parent.leftFrame.reload();
+				</script>
+			</xsl:if>
 		</div>
 	</xsl:template>
 
