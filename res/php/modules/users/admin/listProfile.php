@@ -20,7 +20,7 @@
 	echo '<?xml version="1.0" encoding="utf-8"?>
 		  <?xml-stylesheet type="text/xsl" href="../../admin/getResource.php?file=admin/list.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
-		  	<error>'.$_REQUEST['error'].'</error>
+		  	<error><msg>'.str_replace("|", '</msg><msg>', $_REQUEST['error']).'</msg></error>
 			<prefix>../users/admin/</prefix>';
 		if($obj->properties[SEARCH]){
 			echo '<search>';

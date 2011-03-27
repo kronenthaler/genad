@@ -6,7 +6,7 @@
 <link href="../admin/css/styles.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src= "../js/jquery.js"></script>
 <script type="text/javascript" src= "../js/jquery-ui.js"></script>
-<script type="text/javascript" src= "../js/utils.js"></script>
+<script type="text/javascript" src= "../admin/getResource.php?file=js/utils.js"></script>
 <style>
 	/* force the top padding */
 	body{
@@ -108,7 +108,6 @@
 						</div>
 					</td>
 					<? }?>
-				
 			</tr>
 		</table>
 	</form>

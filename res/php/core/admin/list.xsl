@@ -30,7 +30,7 @@
 				<script type="text/javascript" src= "../js/jquery-ui.js"></script>
 				<script type="text/javascript" src= "../js/jquery.form.js"></script>
 				<script type="text/javascript" src= "../js/json.js"></script>
-				<script type="text/javascript" src= "../js/utils.js"></script>
+				<script type="text/javascript" src= "getResource.php?file=js/utils.js"></script>
 				</head>
 				<body>
 					<div id="container">
@@ -58,8 +58,16 @@
 								<xsl:when test="/entity/error != ''">
 								<td width="100%" align="left">
 									<div class="ui-state-error ui-corner-all" style="padding: 10px 10px 10px 10px ;">
-										<span class="ui-icon ui-icon-alert" style="float: left;"></span>&nbsp;
-										<xsl:value-of select="/entity/error"/>
+										<span class="ui-icon ui-icon-alert" style="float: left;"></span>
+										<!--xsl:value-of select="/entity/error"/-->
+										<xsl:for-each select="/entity/error/msg">
+											<xsl:if test="position() &gt; 2">
+												&nbsp;<span style="margin-left:16px"><xsl:value-of select="."/><br/></span>
+											</xsl:if>
+											<xsl:if test="position() &lt;= 2">
+												&nbsp;<span><xsl:value-of select="."/><br/></span>
+											</xsl:if>
+										</xsl:for-each>
 									</div>
 								</td>
 								</xsl:when>
@@ -68,11 +76,11 @@
 								</xsl:otherwise>
 								</xsl:choose>
 								<xsl:if test="/entity/properties/searchable = 1">
-								<td valign="middle" align="right" width="100%">
+								<td valign="bottom" align="right" width="100%">
 									<input class="ui-progressbar ui-widget ui-widget-content ui-corner-all"
 									type="text" id="search" name="search" value="{/entity/search}"/>
 								</td>
-								<td>
+								<td valign="bottom">
 									<button type="submit"
 											class="ui-state-default ui-corner-all"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
@@ -266,7 +274,7 @@
 											class="ui-state-default ui-corner-all"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-											onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?action=sort{$ids}','','')">
+											onclick="javascript:goTo('{/entity/prefix}list{//@name}.{//@ext}?action=sort{$ids}')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/order.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-2-n-s"/></td>
@@ -290,7 +298,7 @@
 											class="ui-state-default ui-corner-all"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-											onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','','')">
+											onclick="goTo('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
@@ -313,7 +321,7 @@
 									<button id="_addBtn_"
 											type="button"
 											class="ui-state-default ui-corner-all"
-											onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}','','')"
+											onclick="goTo('{/entity/prefix}mod{//@name}.{//@ext}?action=add{$ids}')"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">

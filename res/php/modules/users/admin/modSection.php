@@ -27,6 +27,7 @@
 		
 		
 		//end field options
+		echo $obj->getXMLJSValidator($options);
 		echo $obj->getXMLForm($options);
 	echo "</entity>";
 ?>

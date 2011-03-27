@@ -214,7 +214,7 @@
 											class="ui-state-default ui-corner-all"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-											onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=sort{$ids}','','')">
+											onclick="javascript:goTo('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=sort{$ids}')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/order.png" align="left"/--><span class="ui-icon ui-icon-arrowthick-2-n-s"/></td>
@@ -238,7 +238,7 @@
 											class="ui-state-default ui-corner-all"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-											onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')">
+											onclick="goTo('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">
 											<tr>
 												<td><!--img src="images/add.png" align="left"/--><span class="ui-icon ui-icon-plusthick"/></td>
@@ -261,7 +261,7 @@
 									<button id="_addBtn_"
 											type="button"
 											class="ui-state-default ui-corner-all"
-											onclick="getAndTransform('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}','','')"											
+											onclick="goTo('{/entity/prefix}mod{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;action=add{$ids}')"
 											onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 											onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 										<table border="0" cellpadding="0" cellspacing="0" width="100%">

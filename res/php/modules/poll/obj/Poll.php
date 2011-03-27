@@ -9,11 +9,11 @@ class Poll extends AbstractObject{
 		
 		$this->fields['p01_id'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);
 		
-		$this->fields['p01_title'] = array(TITLE=>'Title', TYPE=>'textfield', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
-		$this->fields['p01_question'] = array(TITLE=>'Question', TYPE=>'textfield', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>2, ONFORMPOS=>2);
-		$this->fields['p01_start_date'] = array(TITLE=>'Starting date', TYPE=>'datetime', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>3, ONFORMPOS=>3);
-		$this->fields['p01_end_date'] = array(TITLE=>'Ending date', TYPE=>'datetime', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>4, ONFORMPOS=>4);
-		$this->fields['p01_published'] = array(TITLE=>'Published', TYPE=>'radio', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>5, ONFORMPOS=>5);
+		$this->fields['p01_title'] = array(TITLE=>MSG_POLL_P01_TITLE, TYPE=>'textfield', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
+		$this->fields['p01_question'] = array(TITLE=>MSG_POLL_P01_QUESTION, TYPE=>'textfield', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>2, ONFORMPOS=>2);
+		$this->fields['p01_start_date'] = array(TITLE=>MSG_POLL_P01_START_DATE, TYPE=>'datetime', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>3, ONFORMPOS=>3);
+		$this->fields['p01_end_date'] = array(TITLE=>MSG_POLL_P01_END_DATE, TYPE=>'datetime', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>4, ONFORMPOS=>4);
+		$this->fields['p01_published'] = array(TITLE=>MSG_POLL_P01_PUBLISHED, TYPE=>'radio', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>5, ONFORMPOS=>5);
 		
 		$this->properties[PAGER]=1;
 		$this->properties[SEARCH]=1;

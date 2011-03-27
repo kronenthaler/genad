@@ -9,8 +9,8 @@ class Votes extends AbstractObject{
 		$this->fields['p02_id'] = array(TITLE=>'PARENT_ID', TYPE=>'textfield', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);
 		$this->fields['p03_id'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);
 		
-		$this->fields['u01_id'] = array(TITLE=>'User', TYPE=>'label', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>1, ONFORMPOS=>1);
-		$this->fields['u01_login'] = array(TITLE=>'User', TYPE=>'label', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
+		$this->fields['u01_id'] = array(TITLE=>MSG_POLL_U01_ID, TYPE=>'label', VISIBLE=>0, REQUIRED=>1, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>1, ONFORMPOS=>1);
+		$this->fields['u01_login'] = array(TITLE=>MSG_POLL_U01_LOGIN, TYPE=>'label', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
 		
 		$this->properties[PAGER]=1;
 		$this->properties[SEARCH]=1;

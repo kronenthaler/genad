@@ -21,9 +21,9 @@
 	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,'_sort');
 		
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="../../admin/'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="../../admin/getResource.php?file=admin/'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php">
-		  	<error>'.$_REQUEST['error'].'</error>
+		  	<error><msg>'.str_replace("|", '</msg><msg>', $_REQUEST['error']).'</msg></error>
 			<prefix>../poll/admin/</prefix>';
 		if($obj->properties[SEARCH]){
 			echo '<search>';

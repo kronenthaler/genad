@@ -10,8 +10,8 @@ class Options extends AbstractObject{
 		$this->fields['p01_id'] = array(TITLE=>'PARENT_ID', TYPE=>'textfield', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);
 		$this->fields['p02_id'] = array(TITLE=>'ID', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);
 		
-		$this->fields['p02_label'] = array(TITLE=>'Label', TYPE=>'textfield', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
-		$this->fields['p02_votes'] = array(TITLE=>'Votes', TYPE=>'label', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>2, ONFORMPOS=>3);
+		$this->fields['p02_label'] = array(TITLE=>MSG_POLL_P02_LABEL, TYPE=>'textfield', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
+		$this->fields['p02_votes'] = array(TITLE=>MSG_POLL_P02_VOTES, TYPE=>'label', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>2, ONFORMPOS=>3);
 		$this->fields['_sort'] = array(TITLE=>'Order', TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0, ONLISTPOS=>-1, ONFORMPOS=>-1);
 		
 		$this->properties[SORTABLE]=1;

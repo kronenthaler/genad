@@ -1,4 +1,3 @@
-<script src="../poll/admin/js/validators.js"></script>
 <li class="ui-state-default"
 	onclick="markSelected(this);
 	 parent.mainFrame.document.location.href='../poll/admin/listPoll.php'"

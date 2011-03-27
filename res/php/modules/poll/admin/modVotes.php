@@ -20,7 +20,7 @@
 		die('No id found');	
 	
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="../../admin/mod.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="../../admin/getResource.php?file=admin/mod.xsl"?>
 		  <entity name="'.get_class($obj).'" 
 		  		  ext="php" 
 		  		  action="'.$_REQUEST['action'].'" 
@@ -32,6 +32,7 @@
 		
 		
 		//end field options
+		echo $obj->getXMLJSValidator($options);
 		echo $obj->getXMLForm($options);
 	echo "</entity>";
 ?>

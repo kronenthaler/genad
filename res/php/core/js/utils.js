@@ -29,7 +29,7 @@ function connect(url,_text,handler){
 				if(_text) handler(request.responseText);
 				else 	  handler(request.responseXML);
 			}else{ //answer with error, 404, 403, 500, or another
-				alertMsg("Error "+request.status);
+				alertMsg("MSG_ERROR_GENERIC "+request.status);
 			}
 		}else{ // not ready yet, show some progress text 
 			
@@ -42,28 +42,10 @@ function connect(url,_text,handler){
 /**
  *	Retrieve and xml file, tranform with xsl file and write in the document
  *	@param	targetPage	The page with the target xml file.
- *	@param	targetStyle	The page xsl 
- *	@param	targetDiv	The target container to write the result	
  */
-function getAndTransform(targetPage,targetStyle,targetDiv){
+function goTo(targetPage){
 	var base = document.getElementById('base');
-	document.location.href=(base != null?base.href:'')+targetPage;
-	/*
-	if(window.XMLHttpRequest) {
-		// load the xml file,
-		request = new XMLHttpRequest();
-		request.open("GET", targetPage, false);
-		request.send(null);
-		
-		transform(request.responseXML,targetStyle,targetDiv);
-	}else{
-		var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
-		xmlDoc.async = false;
-		xmlDoc.load(targetPage);
-
-		transform(xmlDoc,targetStyle,targetDiv);
-	}
-	*/
+	document.location.href=(base != null ? base.href:'')+targetPage;
 }
 
 /**	
@@ -124,18 +106,18 @@ function transform(XMLdoc,targetStyle,targetDiv){
 		
 	}
 }
-
  
 /** 
  *	Validation functions, is neccessary add function to validate numbers (integers and decimals), 
  *	email, alphanumeric. include the type range?
  *	@param	input	The input object to validate
- *	@param	text	The label text for this input in the form.
+ *	@param	label	The label text for this input in the form.
  *	@return	true iif the input is not empty, false otherwise. 
  */
-function isRequired(input, text){
+function isRequired(input, label){
  	if(input.value == ''){
- 		alertMsg('The "'+text+'" field is required. Cannot be left in blank.');
+ 		alertMsg('MSG_IS_REQUIRED'.replace("%1", label));
+		//alertMsg('The "'+text+'" field is required. Cannot be left in blank.');
 		if(input.type != 'hidden')
 			input.focus();
  		input.style.background='#ff8080';
@@ -151,7 +133,7 @@ function isValidPassword(input, confirm, label,required){
  	
  	if(!isRequired(confirm, label)) return false;
 	if(input.value!=confirm.value){
-		alertMsg('The field "'+label+'" doesn\'t match with the confirmation.');
+		alertMsg('MSG_INVALID_PASSWORD'.replace("%1",label));
 		return false;
 	}
 	return true;
@@ -161,28 +143,28 @@ function isValidEmail(input, label, required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(input.value.search(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/) == -1) {
-		alertMsg('The field "' + label + '" only can be a valid email address.');
+		alertMsg('MSG_INVALID_EMAIL'.replace("%1",label));
 		return false;
 	}
  	return true;
 }
  
-function isValidInteger(input, label,required){
+function isValidInteger(input, label, required){
  	if(required && !isRequired(input,label)) return false;
  	
  	if(input.value.search(/^[-]?[0-9]+$/)==-1){
-		alertMsg('The field "' + label + '" only can be integers.');
+		alertMsg('MSG_INVALID_INTEGER'.replace("%1",label));
 		return false;
 	}
  	return true;
 }
  
-function isValidDecimal(input, label,required){
+function isValidDecimal(input, label, required){
  	if(required && !isRequired(input,label)) return false;
  	
  	input.value=input.value.replace(/,/,'.');	
  	if(input.value.search(/^[-]?([1-9]{1}[0-9]{0,}((\.)[0-9]+)?|0(\.[0-9]+)?|\.[0-9]{1,})$/)==-1){
-		alertMsg('The field "' + label + '" only can be decimals.');
+		alertMsg('MSG_INVALID_DECIMAL'.replace("%1",label));
 		return false;
 	}
 	return true;
@@ -289,21 +271,11 @@ function updateTimeHidden(obj,hidden,hours){
 	$('#'+hidden).val(h+':'+m+':'+s);
 }
 
-//TODO: replace the code with jquery ui.dialog call
-/*function alertMsg(msg){
-	alert(msg);
-}
-
-function confirmMsg(msg){
-	return confirm(msg);
-}*/
 function alertMsg(msg){
-	//var p = $.prompt(msg,{opacity: 0.3, buttons:{Volver: true}, useImage: false});
-	//p.children('#jqi').corner("5px");
 	var div = document.createElement("div");
 	div.innerHTML = msg;
 	$(div).dialog({
-			title: 'Error',
+			title: 'MSG_ERROR_GENERIC',
 			bgiframe: true,
 			modal: true,
 			buttons:{
@@ -313,7 +285,6 @@ function alertMsg(msg){
 					}
 				}
 			});
-	//p.children('#jqi').corner("5px");
 }
 
 function confirmMsg(msg, mycallback){
@@ -323,12 +294,12 @@ function confirmMsg(msg, mycallback){
 	var div = document.createElement("div");
 	div.innerHTML = msg;
 	$(div).dialog({
-			title: 'Error',
+			title: 'MSG_ERROR_GENERIC',
 			zIndex: 3999,
 			//position: 'top',
 			modal: true,
 			closeOnEscape: false,
-			beforeclose: function(event, ui) { mycallback(); },
+			beforeclose: function(event, ui) {mycallback();},
 			buttons:{
 				"OK":
 					function(){

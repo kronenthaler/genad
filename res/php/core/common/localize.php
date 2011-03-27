@@ -44,6 +44,14 @@ define('MSG_SESSION_EXPIRED','Session expired, you must log in again.');
 define('MSG_INVALID_USER','Unknown/invalid user.');
 define('MSG_PERMISSIONS_REQUIRED','This section requires especial permissions and you haven\'t.');
 define('MSG_INVALID_LOGIN',"Invalid login or password");
+define('MSG_ERROR_GENERIC','Error');
+
+//JS validations (utils.js)
+define('MSG_IS_REQUIRED','The "%1" field is required. Cannot be left in blank.');
+define('MSG_INVALID_PASSWORD','The field "%1" does not match with the confirmation.');
+define('MSG_INVALID_EMAIL','The field "%1" only can be a valid email address.');
+define('MSG_INVALID_INTEGER','The field "%1" only can be integers.');
+define('MSG_INVALID_DECIMAL','The field "%1" only can be decimals.');
 
 define("MSG_ADD",'Add');
 define("MSG_DELETE",'Delete');

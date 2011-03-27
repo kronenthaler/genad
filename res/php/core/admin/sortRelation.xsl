@@ -130,7 +130,7 @@
 									class="ui-state-default ui-corner-all"
 									onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 									onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-									onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;{$ids}','','')">
+									onclick="javascript:goTo('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;{$ids}')">
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
 										<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>

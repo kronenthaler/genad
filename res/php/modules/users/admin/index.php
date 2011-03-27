@@ -1,4 +1,3 @@
-<script type="text/javascript" src="../users/admin/js/validators.js"></script>
 <div id="useraccordion">
 	<table class="ui-state-active"
 		   cellspacing="0"

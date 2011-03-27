@@ -7,7 +7,7 @@ class Profile extends AbstractObject{
 
 		//initialize the fields array
 		$this->fields['u02_id'] = array(TITLE=>MSG_USERS_PROFILE_U02_ID, TYPE=>'integer', VISIBLE=>0, LISTABLE=>0, EDITABLE=>0, SEARCHABLE=>0);
-		$this->fields['u02_name'] = array(TITLE=>MSG_USERS_PROFILE_U02_NAME, TYPE=>'textfield', VISIBLE=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
+		$this->fields['u02_name'] = array(TITLE=>MSG_USERS_PROFILE_U02_NAME, TYPE=>'textfield', VISIBLE=>1, REQUIRED=>1, LISTABLE=>1, EDITABLE=>0, SEARCHABLE=>1, ONLISTPOS=>1, ONFORMPOS=>1);
 		$this->fields['u03_id'] = array(TITLE=>MSG_USERS_PERMISSION_TITLE, TYPE=>'checkbox', VISIBLE=>1, LISTABLE=>0, EDITABLE=>1, SEARCHABLE=>0,ONLISTPOS=>1, ONFORMPOS=>2);
 
 		$this->properties[PAGER]=1;

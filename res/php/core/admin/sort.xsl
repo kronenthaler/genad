@@ -29,7 +29,7 @@
 				<script type="text/javascript" src= "../js/jquery-ui.js"></script>
 				<script type="text/javascript" src= "../js/jquery.form.js"></script>
 				<script type="text/javascript" src= "../js/json.js"></script>
-				<script type="text/javascript" src= "../js/utils.js"></script>
+				<script type="text/javascript" src= "getResource.php?file=js/utils.js"></script>
 				</head><body><div id="container"><div id="center">
 		<xsl:choose>
 			<xsl:when test="/entity/error != ''">
@@ -133,7 +133,7 @@
 									class="ui-state-default ui-corner-all"
 									onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 									onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
-									onclick="javascript:getAndTransform('{/entity/prefix}list{//@name}.{//@ext}?{$ids}','','')">
+									onclick="javascript:goTo('{/entity/prefix}list{//@name}.{//@ext}?{$ids}')">
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>
 										<td><!--img src="images/cancel.png" align="left"/--><span class="ui-icon ui-icon-closethick"/></td>
