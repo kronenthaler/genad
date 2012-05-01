@@ -41,7 +41,7 @@
 		if(complete){ //i want remove it
 			var img = parent.document.getElementById('img_link_<?=$name?>');
 			if(img!=null) img.src = 'images/0.gif';
-			anychange = true;
+			anychange = '<?= $_REQUEST["prev"];?>'=='' ? false : true ;
 		}else //upload failed
 			parent.document.getElementById('str_<?=$name?>').value='<?= $_REQUEST["prev"];?>';
 

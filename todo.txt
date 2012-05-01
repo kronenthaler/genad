@@ -1,3 +1,6 @@
+- Usar Accordions para el menu lateral. Se ve mejor y se organiza mejor.
+- Cuando se especifica el primary key en la lista de campos como algo no integer da un error por el autoincremental.
+
 - Validaciones online. 
 	- Tratar de escribir el codigo de validacion en la clase php, para reutilizarla en el exec.
 

@@ -15,7 +15,7 @@
 		<script type="text/javascript" src= "../js/jquery-ui.js"></script>
 		<script type="text/javascript" src= "../js/jquery.form.js"></script>
 		<script type="text/javascript" src= "../js/json.js"></script>
-		<script type="text/javascript" src= "../js/utils.js"></script>
+		<script type="text/javascript" src= "getResource.php?file=js/utils.js"></script>
 		<script type="text/javascript" src= "../js/ui/ui.core.js"></script>
 		<script type="text/javascript" src= "../js/ui/ui.accordion.js"></script>
 		<script type="text/javascript" src= "../js/ui/ui.dialog.js"></script>
@@ -24,7 +24,8 @@
 		<script type="text/javascript">
 			$(document).ready(function (){
 				// bind to the form's submit event 
-			    $('#login').submit(function() { 
+			    $('#login').submit(function() {
+					$('#loading-img').toggle();
 			        // inside event callbacks 'this' is the DOM element so we first 
 			        // wrap it in a jQuery object and then invoke ajaxSubmit 
 			        $(this).ajaxSubmit({success: function(data, status){
@@ -34,6 +35,7 @@
 												}else{
 													alert(data);
 												}
+												$('#loading-img').toggle();
 								        	}  // post-submit callback 
 										});
 			        // !!! Important !!! 
@@ -52,27 +54,28 @@
 					]]>
 					<xsl:apply-templates select="/project/modules/module"/>
 					<xsl:apply-templates select="/project/entities/entity"/>
-					<![CDATA[<li class="ui-state-default" onclick="markSelected(this); parent.document.location.href='logoff.php'" onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')" onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><img src="images/logout.png" align="absmiddle"/>&#160;<?=MSG_LOGOUT?></li>
+					<![CDATA[<li class="ui-state-default" onclick="markSelected(this); parent.document.location.href='logoff.php'" onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')" onmouseout="$(this).removeClass('ui-state-hover').addClass('ui-state-default')"><?=MSG_LOGOUT?></li>
 				</ul>
 				<form action="authenticate.php" method="post" id="login" name="login">
 					<table border="0">
 						<tr>
 							<td><?=MSG_LOGIN?>:</td>
-							<td><input type="text" name="login"/></td>
+							<td><input type="text" name="login" class="ui-widget ui-widget-content"/></td>
 						</tr>
 						<tr>
 							<td><?=MSG_PASSWORD?>:</td>
-							<td><input type="password" name="password"/></td>
+							<td><input type="password" name="password" class="ui-widget ui-widget-content"/></td>
 						</tr>
 						<tr>
-							<td colspan="2">
+							<td><img src="images/loading.gif" style="display:none;" id="loading-img"/></td>
+							<td>
 								<button type="submit"
 										class="ui-state-default ui-corner-all"
 										onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
 										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')">
 									<table border="0" cellpadding="0" cellspacing="1">
 										<tr>
-											<td><img src="images/key.png" align="left"/></td>
+											<td><span class="ui-icon ui-icon-key"/><!--img src="images/key.png" align="left"/--></td>
 											<td align="left"><a><?=MSG_ENTER?></a></td>
 										</tr>
 									</table>
