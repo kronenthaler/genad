@@ -7,7 +7,7 @@
 
 <frameset rows="40,*" cols="" frameborder="no" border="0" framespacing="0">
   <frame src="top.php" name="topFrame" scrolling="No" noresize="noresize" id="topFrame" title="topFrame" />
-  <frameset cols="150,*" frameborder="no" border="0" framespacing="0">
+  <frameset cols="200,*" frameborder="no" border="0" framespacing="0">
     <frame src="menu.php" name="leftFrame" scrolling="No" noresize="noresize" id="leftFrame" title="leftFrame" />
     <frame src="welcome.php" name="mainFrame" id="mainFrame" title="mainFrame" />
   </frameset>

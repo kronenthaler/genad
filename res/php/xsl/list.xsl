@@ -93,7 +93,7 @@
 
 	<![CDATA[
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'Relation.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="getResource.php?file=admin/'.($_REQUEST['action']==''?'list':$_REQUEST['action']).'Relation.xsl"?>
 		  <entity name="'.get_class($obj).'" ext="php" id="'.$_REQUEST['rel_id'].'">
 		  	<error><msg>'.str_replace("|", '</msg><msg>', $_REQUEST['error']).'</msg></error>
 			<prefix></prefix>';

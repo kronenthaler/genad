@@ -272,7 +272,7 @@ function updateTimeHidden(obj,hidden,hours){
 }
 
 function alertMsg(msg){
-	var div = document.createElement("div");
+	/*var div = document.createElement("div");
 	div.innerHTML = msg;
 	$(div).dialog({
 			title: 'MSG_ERROR_GENERIC',
@@ -284,7 +284,8 @@ function alertMsg(msg){
 						$(this).dialog("close")
 					}
 				}
-			});
+			});*/
+	alert(msg);//problems with the initial authentication & the frames.
 }
 
 function confirmMsg(msg, mycallback){

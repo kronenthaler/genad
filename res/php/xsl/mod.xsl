@@ -78,7 +78,7 @@
 		die('ID not found');
 
 	echo '<?xml version="1.0" encoding="utf-8"?>
-		  <?xml-stylesheet type="text/xsl" href="modRelation.xsl"?>
+		  <?xml-stylesheet type="text/xsl" href="getResource.php?file=admin/modRelation.xsl"?>
 		  <entity name="'.get_class($obj).'"
 		  		  ext="php"
 		  		  action="'.$_REQUEST['action'].'"
