@@ -33,13 +33,52 @@ class Connection{
 				$this->password=']]><xsl:value-of select="dev-password"/><![CDATA[';
 				$this->db=']]><xsl:value-of select="dev-schema"/><![CDATA[';
 			}
-			$this->conn=mysql_connect($this->host,$this->login,$this->password);
-			mysql_select_db($this->db,$this->conn);
+			$this->connect($this->host,$this->login,$this->password, $this->db);
 		}
 	}
 	
 	function closeConnection(){
 		mysql_close($this->conn);
+	}
+	
+	function query($query){
+		return mysql_query($query,$this->conn);
+	}
+	
+	function getNumRows($rs){
+		return mysql_num_rows($rs);
+	}
+	
+	function getNumFields($rs){
+		return mysql_num_fields($rs);
+	}
+	
+	function getFieldName($rs,$index){
+		return mysql_field_name($rs, $index);
+	}
+	
+	function getResult($rs,$row,$field=NULL){
+		return mysql_result($rs, $row, $field);
+	}
+	
+	function getError(){
+		return mysql_error($this->conn);
+	}
+	
+	function getLastID(){
+		return mysql_insert_id($this->conn);
+	}
+	
+	function connect($host, $login, $pass, $schema){
+		//echo "<!-- $login:$pass@$host/$schema -->";
+		if($this->conn != NULL) mysql_close($this->conn);
+		
+		$this->conn = mysql_connect($host, $login, $pass);
+		mysql_select_db($schema,$this->conn);
+	}
+	
+	function restoreConnection(){
+		$this->connect($this->host, $this->login, $this->password, $this->db);
 	}
 }
 //connect with the database

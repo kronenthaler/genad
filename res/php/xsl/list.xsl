@@ -36,7 +36,12 @@
 		</xsl:otherwise>
 	</xsl:choose>
 	
-	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,$obj->properties[SORTABLE]?'_sort':'');
+	if($_REQUEST['asc']=='0') $_REQUEST['orderby']='';
+	if($_REQUEST['orderby']!='')
+		$sort = $_REQUEST['asc']==1?' ASC':($_REQUEST['asc']==2?' DESC':'');
+	
+	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,$obj->properties[SORTABLE]?'_sort':$_REQUEST['orderby'].$sort);
+	
 
 	<![CDATA[
 	echo '<?xml version="1.0" encoding="utf-8"?>
@@ -50,6 +55,13 @@
 			echo '['.$_REQUEST['search'].']';
 			echo ']></search>';
 		}
+		
+		if($_REQUEST['asc']=='') $_REQUEST['asc']=0;
+		echo '<order>';
+		echo '<field><![CDATA'.'['.(($_REQUEST['asc'])!=0?$_REQUEST['orderby']:'').']'.']></field>';
+		echo '<asc><![CDATA'.'['.(($_REQUEST['asc']+1)%3).']'.']></asc>';
+		echo '</order>';
+		
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();
@@ -89,7 +101,12 @@
 	$pageSize=$obj->properties[PAGER] <![CDATA[&&]]> $_REQUEST['action']==''?30:-1;
 	
 	$criteria=array('`'.$currentClass->tablename.'`.`'.$currentClass->primarykey.'`='.$currentClass->id); //filters in the search
-	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,$obj->properties[SORTABLE]?'`'.$obj->tablename.'`.`_sort`':'');
+	
+	if($_REQUEST['asc']=='0') $_REQUEST['orderby']='';
+	if($_REQUEST['orderby']!='')
+		$sort = $_REQUEST['asc']==1?' ASC':($_REQUEST['asc']==2?' DESC':'');
+	
+	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,$obj->properties[SORTABLE]?'`'.$obj->tablename.'`.`_sort`':$_REQUEST['orderby'].$sort);
 
 	<![CDATA[
 	echo '<?xml version="1.0" encoding="utf-8"?>
@@ -103,6 +120,13 @@
 			echo '['.$_REQUEST['search'].']';
 			echo ']></search>';
 		}
+		
+		if($_REQUEST['asc']=='') $_REQUEST['asc']=0;
+		echo '<order>';
+		echo '<field><![CDATA'.'['.(($_REQUEST['asc'])!=0?$_REQUEST['orderby']:'').']'.']></field>';
+		echo '<asc><![CDATA'.'['.(($_REQUEST['asc']+1)%3).']'.']></asc>';
+		echo '</order>';
+		
 		echo $currentClass->getXMLTitle();
 		echo $currentClass->getXMLBack();
 		echo $obj->getXMLAncestors($currentClass);

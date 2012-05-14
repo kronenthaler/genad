@@ -41,8 +41,9 @@ class AbstractObject{
 	 *	@return true if complete successfully
 	 */
 	function load($id){
+		global $connection;
 		$query="SELECT * FROM ".$this->tablename." WHERE ".$this->primarykey."='".$id."'";
-		$rs=mysql_query($query);
+		$rs=$connection->query($query);
 		return $this->makeObject($rs,'$this') != NULL && ($this->id = $id) != NULL;
 	}
 	
@@ -53,6 +54,7 @@ class AbstractObject{
 	 *	@return true if complete successfully 
 	 */
 	function insert($DATA=NULL){
+		global $connection;
 		$DATA=$DATA==NULL?$_REQUEST:$DATA;
 		$query="INSERT INTO ".$this->tablename." (";		
 		$values=" VALUES (";
@@ -75,11 +77,11 @@ class AbstractObject{
 		}
 		$query.=") ".$values.")";
 		//logOn($query);
-		if(!mysql_query($query)){
-			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
+		if(!$connection->query($query)){
+			$this->error=new Error(GENERAL_ERROR,'SQL error: '.$connection->getError());
 			return false;
 		}
-		$this->id = mysql_insert_id();
+		$this->id = $connection->getLastID();
 		
 		if($this->properties[SORTABLE])
 			return $this->update($this->id, array('str__sort'=>$this->id));
@@ -94,6 +96,7 @@ class AbstractObject{
 	 *	@return true if complete successfully
 	 */
 	function update($id, $DATA=NULL){
+		global $connection;
 		$DATA=$DATA==NULL?$_REQUEST:$DATA;
 		$query="UPDATE ".$this->tablename." SET ";		
 		$values=" WHERE ".$this->primarykey."='".$id."'";
@@ -115,8 +118,8 @@ class AbstractObject{
 		}
 		$query.=$values;
 		//logOn($query);
-		if(!mysql_query($query)){
-			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
+		if(!$connection->query($query)){
+			$this->error=new Error(GENERAL_ERROR,'SQL error: '.$connection->getError());
 			return false;
 		}
 		return true;
@@ -128,6 +131,7 @@ class AbstractObject{
 	 *	@return true if complete successfully
 	 */
 	function delete($ids){
+		global $connection;
 		//delete the relations with this instance, childs.
 		if(count($ids)==0) return true;
 		if(count($this->childs)>0){
@@ -142,11 +146,12 @@ class AbstractObject{
 				if(is_array($ids)) $query.=" in ('".implode("','",$ids)."')";
 				else $query.=" = '".$ids."'";
 				
-				$rs=mysql_query($query);
+				//logOn($query);
+				$rs=$connection->query($query);
 				
 				if(!$rs) continue;
-				for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
-					array_push($allids[$i],mysql_result($rs,$j));
+				for($j=0,$m=$connection->getNumRows($rs);$j<$m;$j++)
+					array_push($allids[$i],$connection->getResult($rs,$j));
 			}
 		}
 
@@ -169,14 +174,16 @@ class AbstractObject{
 			$flag &= $objs[$i]->delete($allids[$i]);
 			
 		//echo $query;
-		if(!(mysql_query($query) && $flag)){
-			$this->error=new Error(GENERAL_ERROR,'SQL error: '.mysql_error());
+		//logOn($query);
+		if(!($connection->query($query) && $flag)){
+			$this->error=new Error(GENERAL_ERROR,'SQL error: '.$connection->getError());
 			return false;
 		}
 		return true;
 	}
 	
 	function deleteFiles($ids){
+		global $connection;
 		$files=$this->getFieldsByType(TYPE,'file');
 		$files=array_merge($files, $this->getFieldsByType(TYPE,'image'));
 		
@@ -185,13 +192,13 @@ class AbstractObject{
 			if(is_array($ids)) $query.=" IN ('".implode("','",$ids)."')";
 			else $query.=" = '".$ids."'";
 			
-			$rs=mysql_query($query);
+			$rs=$connection->query($query);
 			if(!$rs) return;
-			for($j=0,$m=mysql_num_rows($rs);$j<$m;$j++)
+			for($j=0,$m=$connection->getNumRows($rs);$j<$m;$j++)
 				for($i=0,$n=count($files);$i<$n;$i++){
-					if(mysql_result($rs, $j, $files[$i])!=''){
+					if($connection->getResult($rs, $j, $files[$i])!=''){
 						//TODO: eliminate every file with the same timestamp between the prefix and the last dot
-						unlink(ROOT.'/'.mysql_result($rs, $j, $files[$i]));
+						unlink(ROOT.'/'.$connection->getResult($rs, $j, $files[$i]));
 					}
 				}
 		}
@@ -202,6 +209,7 @@ class AbstractObject{
 	 *	Following the criteria, begin in $ini and containning at most $cant records, ordered by $orderby.
 	 */
 	function getList($criteria=NULL, $ini=0, $cant=-1, $orderby=''){
+		global $connection;
 		$query="SELECT * FROM ".$this->tablename;
 		if($criteria!=NULL)
 			$query.=" WHERE ".implode(" AND ",$criteria);
@@ -211,20 +219,21 @@ class AbstractObject{
 		
 		//echo $query.'<br/>';
 		//logOn($query);
-		return $this->makeObjects(mysql_query($query));
+		return $this->makeObjects($connection->query($query));
 	}
 	
 	/**
 	 *	Build a list of objects from the resultset
 	 */	
 	function makeObjects($resultSet){
+		global $connection;
 		$array=array();
 		if(!$resultSet) return NULL;
-		for($i=0,$n=mysql_num_rows($resultSet);$i<$n;$i++){
+		for($i=0,$n=$connection->getNumRows($resultSet);$i<$n;$i++){
 			eval("\$obj=new ".get_class($this)."();");
-			for($j=0;$j<mysql_num_fields($resultSet);$j++){
-				$value = mysql_result($resultSet,$i,mysql_field_name($resultSet,$j));
-				eval("\$obj->".mysql_field_name($resultSet,$j)." = '".htmlspecialchars_decode(addslashes($value))."';");
+			for($j=0;$j<$connection->getNumFields($resultSet);$j++){
+				$value = $connection->getResult($resultSet,$i,$connection->getFieldName($resultSet,$j));
+				eval("\$obj->".$connection->getFieldName($resultSet,$j)." = '".htmlspecialchars_decode(addslashes($value))."';");
 			}
 			$array[$i]=$obj;
 		}
@@ -235,11 +244,12 @@ class AbstractObject{
 	 *	Build a single object from the resultset
 	 */	
 	function makeObject($resultSet,$target='$obj'){
-		if($resultSet!=NULL && mysql_num_rows($resultSet)>0){
-			for($j=0;$j<mysql_num_fields($resultSet);$j++){
-				$value = mysql_result($resultSet,0,mysql_field_name($resultSet,$j));
+		global $connection;
+		if($resultSet!=NULL && $connection->getNumRows($resultSet)>0){
+			for($j=0;$j<$connection->getNumFields($resultSet);$j++){
+				$value = $connection->getResult($resultSet,0,$connection->getFieldName($resultSet,$j));
 				//$value = addslashes($value);
-				eval($target."->".mysql_field_name($resultSet,$j)." = '".htmlspecialchars_decode(addslashes($value))."';");
+				eval($target."->".$connection->getFieldName($resultSet,$j)." = '".htmlspecialchars_decode(addslashes($value))."';");
 			}
 			return $target;
 		}else 
@@ -250,11 +260,12 @@ class AbstractObject{
 	 *	Return how many records have the criteria over the table
    	 */
 	function totalRows($criteria=NULL){
+		global $connection;
 		$query="SELECT count(*) FROM ".$this->tablename;
 		if($criteria!=NULL)
 			$query.=" WHERE ".implode(" AND ",$criteria);
 		//logOn($query);
-		return mysql_result(mysql_query($query),0);
+		return $connection->getResult($connection->query($query),0);
 	}
 	
 	/**
@@ -284,11 +295,12 @@ class AbstractObject{
 	 * @return boolean 
 	 */
 	function order($ids){
+		global $connection;
 		$long = count($ids);	
 		for($i=0;$i<$long;$i++){
 			$query = "UPDATE ".$this->tablename." SET `_sort` = ".($i+1)." WHERE `".$this->primarykey."`='".$ids[$i]."'";
 			//logOn($query);
-			$rs &= mysql_query($query); 
+			$rs &= $connection->query($query); 
 		}
 		return $rs?true:false;
 	}
@@ -459,11 +471,16 @@ class AbstractObject{
 	 *	@return the XML for the form rendering
 	 */
 	function getXMLForm($options){
+		$ret.="<properties>";
+		foreach($this->properties as $key => $value)
+			$ret.="<".$key.">".$value."</".$key.">";
+		$ret.="</properties>";
+
 		//sort the field by their positions in the form.
 		uasort($this->fields, create_function('$a,$b','return $a[ONFORMPOS] - $b[ONFORMPOS];'));
 		$visibles=$this->getFieldsByType(VISIBLE);
 		
-		$ret='<fields>';
+		$ret.='<fields>';
 		for($i=0,$n=count($visibles);$i<$n;$i++){
 			eval("\$value=\$this->".$visibles[$i].';');
 			$current=$this->fields[$visibles[$i]];
@@ -474,19 +491,52 @@ class AbstractObject{
 			$ret.='<'.$current[TYPE].' map="'.$visibles[$i].'" name="'.$current[TITLE].'"';
 			if($option[$keys[0]]!=NULL && !is_array($option[$keys[0]])) //append the options
 				foreach($option as $key => $val)
-					$ret.=' '.$key.'="'.$val.'" ';
+					if(!is_array($val))
+						$ret.=' '.$key.'="'.$val.'" ';
 			$ret.='>';
-			if(($option[$keys[0]]!=NULL && is_array($option[$keys[0]])) || $current[TYPE] == 'select'){ //append the options
-				for($j=0,$m=count($option);$j<$m;$j++){
-					if(is_array($option[$j]))
-						$ret.='<option name="'.$option[$j]['name'].'" 
-									   value="'.$option[$j]['value'].'" 
-									   selected="'.$option[$j]['selected'].'" 
-									   onclick="'.$option[$j]['onclick'].'"/>';	
+			//TODO: este ciclo y el inferior se puede integrar!
+			if($current[TYPE] == 'inoutlist'){
+				foreach($option['list'] as $key => $val){
+					if(is_array($option['list'][$key]))
+						$ret.='<option name="'.$option['list'][$key]['name'].'"
+									   value="'.$option['list'][$key]['value'].'"
+									   selected="'.$option['list'][$key]['selected'].'"
+									   onchange="'.$option['list'][$key]['onchange'].'"
+									   onclick="'.$option['list'][$key]['onclick'].'"
+									   extra="'.$option['list'][$key]['extra'].'"
+									   extra2="'.$option['list'][$key]['extra2'].'"/>';
 				}
-			}else
-				$ret.="<![CDATA[".htmlspecialchars_decode(stripslashes($value))."]]>";
-			
+			}else if($current[TYPE] == 'fieldset'){
+				for($j=0,$m=count($option);$j<$m;$j++){//cada opcion es un set
+					$ret .= '<set name="'.$option[$j][0].'">';//la primera posicion del set es el nombre.
+					for($key=1,$t=count($option[$j]);$key<$t;$key++){
+						$ret.='<option name="'.$option[$j][$key]['name'].'"
+									   value="'.$option[$j][$key]['value'].'"
+									   selected="'.$option[$j][$key]['selected'].'"
+									   onchange="'.$option[$j][$key]['onchange'].'"
+									   onclick="'.$option[$j][$key]['onclick'].'"
+									   extra="'.$option[$j][$key]['extra'].'"
+									   extra2="'.$option[$j][$key]['extra2'].'"/>';
+					}
+					$ret .= '</set>';
+				}
+			}else{
+				if(($option[$keys[0]]!=NULL && is_array($option[$keys[0]])) || $current[TYPE] == 'select'){ //append the options
+					for($j=0,$m=count($option);$j<$m;$j++){
+						if(is_array($option[$j]))
+							$ret.='<option name="'.$option[$j]['name'].'"
+										   value="'.$option[$j]['value'].'"
+										   selected="'.$option[$j]['selected'].'"
+										   onchange="'.$option[$j]['onchange'].'"
+										   onclick="'.$option[$j]['onclick'].'"
+										   extra="'.$option[$j]['extra'].'"
+										   extra2="'.$option[$j]['extra2'].'"/>';
+					}
+				}else if($current[TYPE] === 'password')
+					$ret .= "<![CDATA[".base64_decode($value)."]]>";
+				else
+					$ret.="<![CDATA[".htmlspecialchars_decode(stripslashes($value))."]]>";
+			}
 			$ret.= '</'.$current[TYPE].'>';
 		}
 		$ret.='</fields>';

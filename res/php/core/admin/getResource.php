@@ -15,10 +15,15 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");	// Date in the past
 
 $localization = get_defined_constants(true);
 $localization = $localization['user'];
+//ordenar estos strings por longitud.
 
-foreach($localization as $define => $value){
+$keys = array_keys($localization);
+uasort($keys, create_function('$a,$b','return strlen($b) - strlen($a);'));
+
+//foreach($localization as $define => $value){
+foreach($keys as $pos => $define){
 	if(strpos($define,"MSG_")!==FALSE)
-		$string = str_replace($define, $value, $string);
+		$string = str_replace($define, $localization[$define], $string);
 }
 
 echo $string;

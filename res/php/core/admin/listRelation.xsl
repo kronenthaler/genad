@@ -65,24 +65,26 @@
 								<tr class="ui-state-default ui-corner-all">
 									<th width="30px">&nbsp;</th>
 									<xsl:for-each select="listable/field">
-										<xsl:choose>
-											<xsl:when test="@type ='checkbox' or @type = 'radio'">
-												<th align="center" width="30px">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
-											</xsl:when>
-											<xsl:when test="@type ='image'">
-												<th align="left" width="100px">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
-											</xsl:when>
-											<xsl:otherwise>
-												<th align="left">&nbsp;<xsl:value-of select="@name"/>&nbsp;</th>
-											</xsl:otherwise>
-										</xsl:choose>
+										<th align="left" class="{@type}" style="padding-left:5px;padding-right:5px;">
+											<a href="{/entity/prefix}list{//@name}.{//@ext}?orderby={@map}&amp;asc={/entity/order/asc}&amp;search={/entity/search}&amp;ini={/entity/pager/offset}{$ids}">
+											<xsl:value-of select="@name"/>
+											<xsl:if test="/entity/order/field = @map">
+												<xsl:if test="/entity/order/asc = '0'">
+													<span class="ui-icon ui-icon-arrowthick-1-s" style="float:left;"/>
+												</xsl:if>
+												<xsl:if test="/entity/order/asc = '2'">
+													<span class="ui-icon ui-icon-arrowthick-1-n" style="float:left;"/>
+												</xsl:if>
+											</xsl:if>
+											</a>
+										</th>
 									</xsl:for-each>
 									<!--xsl:if test="/entity/properties/sortable = 1">
 										<th class="part1" width="50" align="center">Sort</th>
 									</xsl:if-->
 									<!-- problema aqui se esta trayendo TODOS los instance/child, deberia traerse solo los de name diferentes -->
 									<xsl:for-each select="listable/child">
-										<th align="center" width="50px"><xsl:value-of select="@name"/>&nbsp;</th>
+										<th align="center" width="70px"><xsl:value-of select="@name"/>&nbsp;</th>
 									</xsl:for-each>
 								</tr>
 							</thead>
@@ -94,14 +96,14 @@
 									<xsl:choose>
 										<xsl:when test="$module = 1">
 											<tr>
-												<td align="center" class="ui-state-active" style="border-top:0px;"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
+												<td align="center" class="ui-widget-content" style="border-top:0px;"><input type="checkbox" name="id[]" id="id[]" value="{@key}"/></td>
 												<xsl:for-each select="field">
 													<xsl:variable name="mapping" select="@map"/>
 													<xsl:variable name="value" select="."/>
 													<xsl:variable name="childs" select="count(../child)"/>
 													<xsl:for-each select="../../listable/field">	
 														<xsl:if test="@map = $mapping">
-															<td class="ui-state-active" style="border-top:0px;border-left:0px;">
+															<td class="ui-widget-content" style="border-top:0px;border-left:0px;">
 																<xsl:choose>
 																	<xsl:when test="@type = 'radio' or @type = 'checkbox'">
 																		<center>
@@ -126,7 +128,7 @@
 													</xsl:for-each>
 												</xsl:for-each>
 												<xsl:for-each select="child">
-													<td align="center" class="ui-state-active" style="border-top:0px;border-left:0px;"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
+													<td align="center" class="ui-widget-content" style="border-top:0px;border-left:0px;"><a href="{/entity/prefix}list{@name}.{//@ext}?{$primarykey}={$key}{$ids}">(<xsl:value-of select="@count"/>)</a></td>
 												</xsl:for-each>
 											</tr>
 										</xsl:when>
@@ -176,7 +178,7 @@
 						<xsl:otherwise>
 							<table cellspacing="0" cellpadding="0" border="0">
 								<tr class="ui-state-default ui-corner-all"><th>&nbsp;</th></tr>
-								<tr><td align="center" class="ui-state-active">MSG_NOTHING</td></tr>
+								<tr><td align="center" class="ui-widget-content">MSG_NOTHING</td></tr>
 							</table>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -189,8 +191,8 @@
 								<button id="_deleteBtn_"
 										type="submit"
 										class="ui-state-default ui-corner-all"
-										onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+										onmouseover="$(this).addClass('ui-state-error').removeClass('ui-state-default')"
+										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-error')"
 										onclick="return confirm('{$msg-confirm}')">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>

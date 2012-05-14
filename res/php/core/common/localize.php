@@ -42,7 +42,7 @@ define('MSG_UNDEFINED_ACTION','Undefined action.');
 define('MSG_UNDEFINED_SECTION','Undefined section.');
 define('MSG_SESSION_EXPIRED','Session expired, you must log in again.');
 define('MSG_INVALID_USER','Unknown/invalid user.');
-define('MSG_PERMISSIONS_REQUIRED','This section requires especial permissions and you haven\'t.');
+define('MSG_PERMISSIONS_REQUIRED','This section requires especial permissions and you don\'t have them.');
 define('MSG_INVALID_LOGIN',"Invalid login or password");
 define('MSG_ERROR_GENERIC','Error');
 
@@ -72,4 +72,7 @@ define("MSG_ADDING",'Adding');
 define("MSG_EDITING",'Editing');
 define("MSG_SORTING",'Sorting');
 define("MSG_LISTING",'Listing');
+
+define("MSG_YES",'Yes');
+define("MSG_NO",'No');
 ?>

@@ -128,8 +128,8 @@
 						<td align="left" class="plain">
 							<button type="button" 
 									class="ui-state-default ui-corner-all"
-									onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-									onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+									onmouseover="$(this).addClass('ui-state-error').removeClass('ui-state-default')"
+									onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-error')"
 									onclick="javascript:goTo('{/entity/prefix}list{//@name}.{//@ext}?currentClass={//@currentClass}&amp;rel_id={//@id}&amp;{$ids}')">
 								<table border="0" cellpadding="0" cellspacing="0" width="100%">
 									<tr>

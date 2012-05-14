@@ -107,8 +107,8 @@
 							<td align="left" class="plain" id="id">
 								<button type="button" 
 										class="ui-state-default ui-corner-all"
-										onmouseover="$(this).addClass('ui-state-hover').removeClass('ui-state-default')"
-										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-hover')"
+										onmouseover="$(this).addClass('ui-state-error').removeClass('ui-state-default')"
+										onmouseout="$(this).addClass('ui-state-default').removeClass('ui-state-error')"
 										onclick="javascript:goTo('{/entity/prefix}list{//@name}.{//@ext}?{$ids}');">
 									<table border="0" cellpadding="0" cellspacing="0" width="100%">
 										<tr>
@@ -176,7 +176,7 @@
 							<input class="ui-widget ui-widget-content" type="radio" name="str_{../@map}" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
-					<label class="ui-widget" for="{../@map}{position()}"><xsl:value-of select="@name"/></label> &nbsp;
+					<label class="ui-widget" for="{../@map}{position()}">&nbsp;<xsl:value-of select="@name"/></label> &nbsp;
 				</xsl:for-each>
 			</td>
 		</tr>
@@ -196,8 +196,35 @@
 							<input class="ui-widget ui-widget-content" type="checkbox" name="str_{../@map}[]" id="{../@map}{position()}" value="{@value}" onclick="{@onclick}"/>
 						</xsl:otherwise>
 					</xsl:choose>
-					<label class="ui-widget" for="{../@map}{position()}"><xsl:value-of select="@name"/></label><br/>
+					<label class="ui-widget" for="{../@map}{position()}">&nbsp;<xsl:value-of select="@name"/></label><br/>
 					</p>
+				</xsl:for-each>
+			</td>
+		</tr>
+ 	</xsl:template>
+	
+	<xsl:template match="fieldset">
+ 		<tr class="ui-state-default" style="border-top:0px;">
+			<td class="label top ui-state-default" style="border-top:0px;background:#ffffff;" align="right" ><xsl:value-of select="@name"/>:</td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left">
+				<xsl:for-each select="set">
+					<fieldset style="border:1px solid #ccc;padding:3px;margin:5px;">
+						<legend><xsl:value-of select="@name"/></legend>
+						<xsl:for-each select="option">
+							<p>
+							<xsl:choose>
+								<xsl:when test="@selected = 'true'">
+									<input type="checkbox" name="str_{../../@map}[]" id="{../../@map}" value="{@value}" checked="" onclick="{@onclick}" extra="{@extra}" extra2="{@extra2}"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<input type="checkbox" name="str_{../../@map}[]" id="{../../@map}" value="{@value}" onclick="{@onclick}" extra="{@extra}" extra2="{@extra2}"/>
+								</xsl:otherwise>
+							</xsl:choose>
+							<label for="{../../@map}{position()}">&nbsp;<xsl:value-of select="@name"/></label><br/>
+							</p>
+						</xsl:for-each>
+					</fieldset>
+					<br/>
 				</xsl:for-each>
 			</td>
 		</tr>
@@ -237,7 +264,7 @@
 		</tr>
 		<tr class="ui-state-default" style="border-top:0px;">
 			<td class="label ui-state-default" style="border-top:0px;background:#ffffff;" align="right"><xsl:value-of select="@confirm"/>:</td>
-			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="password" name="conf_str_{@map}" id="conf_str_{@map}" value=""/></td>
+			<td class="ui-state-default" style="border-top:0px;border-left:0px;background:#ffffff;" align="left"><input class="ui-widget ui-widget-content" type="password" name="conf_str_{@map}" id="conf_str_{@map}" value="{.}"/></td>
 		</tr>
  	</xsl:template>
  	

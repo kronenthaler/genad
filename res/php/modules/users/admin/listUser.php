@@ -14,8 +14,10 @@
 	$pageSize=$obj->properties[PAGER]?30:-1;
 	
 	$criteria=array(); //filters in the search
-		
-	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize);
+	if($_REQUEST['asc']=='0') $_REQUEST['orderby']='';
+	if($_REQUEST['orderby']!='')
+		$sort = $_REQUEST['asc']==1?' ASC':($_REQUEST['asc']==2?' DESC':'');	
+	$list=$obj->search($_REQUEST['search'],$criteria,$ini,$pageSize,$obj->properties[SORTABLE]?'_sort':$_REQUEST['orderby'].$sort);
 		
 	echo '<?xml version="1.0" encoding="utf-8"?>
 		  <?xml-stylesheet type="text/xsl" href="../../admin/getResource.php?file=admin/list.xsl"?>
@@ -28,6 +30,13 @@
 			echo '['.$_REQUEST['search'].']';
 			echo ']></search>';
 		}
+		
+		if($_REQUEST['asc']=='') $_REQUEST['asc']=0;
+		echo '<order>';
+		echo '<field><![CDATA['.(($_REQUEST['asc'])!=0?$_REQUEST['orderby']:'').']]></field>';
+		echo '<asc><![CDATA['.(($_REQUEST['asc']+1)%3).']]></asc>';
+		echo '</order>';
+		
 		echo $obj->getXMLTitle();
 		echo $obj->getXMLBack();
 		echo $obj->getXMLAncestors();

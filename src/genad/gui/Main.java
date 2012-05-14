@@ -77,7 +77,7 @@ public class Main extends javax.swing.JFrame implements View{
         aboutItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("GenAd v2.0");
+        setTitle("GenAd");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setState(JFrame.MAXIMIZED_BOTH);
         addWindowListener(new java.awt.event.WindowAdapter() {

@@ -24,8 +24,9 @@ public class AboutDlg extends javax.swing.JDialog {
 		setVisible(true);
 	}
 	
-    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         panel = new AboutPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -33,6 +34,11 @@ public class AboutDlg extends javax.swing.JDialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 aboutClosed(evt);
+            }
+        });
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
             }
         });
 
@@ -57,12 +63,18 @@ public class AboutDlg extends javax.swing.JDialog {
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(panel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
         );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
 	private void aboutClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_aboutClosed
 		((AboutPanel)panel).kill();	
 	}//GEN-LAST:event_aboutClosed
+
+	private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+		if(evt.getKeyCode()==KeyEvent.VK_ESCAPE)
+			this.dispose();
+	}//GEN-LAST:event_formKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected javax.swing.JPanel panel;
@@ -74,10 +86,11 @@ public class AboutDlg extends javax.swing.JDialog {
 		private String msg="<b>Project Leader</b>\n" +
 							"Ignacio Calderon\n\n" +
 							"<b>Testers</b>\n" +
-							"José Ortegano (Hecticus Soft.)\n" +
-							"William López (Hecticus Soft.)\n" +
-							"Daniel Lares (BeeConcept)\n" +
-							"Ernesto Piñerua (BeeConcept)\n\n";
+							"José Ortegano\n" +
+							"Alfonso Betancourt\n" +
+							"William López\n" +
+							"Daniel Lares\n" +
+							"Ernesto Piñerua\n\n";
 
 		private String intromsg="Distributed under\n" +
 									"GNU General Public License (GPL)\n" +
@@ -86,7 +99,8 @@ public class AboutDlg extends javax.swing.JDialog {
 									"<b>Other software involved</b>\n"+
 									"Java 5\n"+					
 									"FCKEditor\n"+
-									"jQuery";
+									"jQuery\n"+
+									"jQuery Theme Roller";
 		private Image background;
 		private Font font=new Font("Courier New",Font.PLAIN,14);
 		private RenderingHints rh = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
